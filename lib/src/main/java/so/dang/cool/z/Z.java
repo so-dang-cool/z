@@ -805,11 +805,100 @@ public class Z {
     /* BooleanSupplier [SKIPPED] Because Supplier<Boolean> matches.
        Unlike double/int/long, there's no auto-boxing optimizations to be had here. */
 
-    /* DoubleSupplier [TODO] */
-    /* IntSupplier [TODO] */
-    /* LongSupplier [TODO] */
-    /* UnaryOperator [TODO] */
-    /* BinaryOperator [TODO] */
+    /* DoubleSupplier */
+
+    public static <A> Supplier<A> fuse(DoubleSupplier initial, DoubleFunction<A> next) {
+        return () -> next.apply(initial.getAsDouble());
+    }
+
+    public static IntSupplier fuse(DoubleSupplier initial, DoubleToIntFunction next) {
+        return () -> next.applyAsInt(initial.getAsDouble());
+    }
+
+    public static LongSupplier fuse(DoubleSupplier initial, DoubleToLongFunction next) {
+        return () -> next.applyAsLong(initial.getAsDouble());
+    }
+
+    public static BooleanSupplier fuse(DoubleSupplier initial, DoublePredicate next) {
+        return () -> next.test(initial.getAsDouble());
+    }
+
+    public static Operator fuse(DoubleSupplier initial, DoubleConsumer next) {
+        return () -> next.accept(initial.getAsDouble());
+    }
+
+    public static DoubleSupplier fuse(DoubleSupplier initial, DoubleUnaryOperator next) {
+        return () -> next.applyAsDouble(initial.getAsDouble());
+    }
+
+    public static DoubleUnaryOperator fuse(DoubleSupplier initial, DoubleBinaryOperator next) {
+        return (double d) -> next.applyAsDouble(initial.getAsDouble(), d);
+    }
+
+    /* IntSupplier */
+
+    public static <A> Supplier<A> fuse(IntSupplier initial, IntFunction<A> next) {
+        return () -> next.apply(initial.getAsInt());
+    }
+
+    public static DoubleSupplier fuse(IntSupplier initial, IntToDoubleFunction next) {
+        return () -> next.applyAsDouble(initial.getAsInt());
+    }
+
+    public static LongSupplier fuse(IntSupplier initial, IntToLongFunction next) {
+        return () -> next.applyAsLong(initial.getAsInt());
+    }
+
+    public static BooleanSupplier fuse(IntSupplier initial, IntPredicate next) {
+        return () -> next.test(initial.getAsInt());
+    }
+
+    public static Operator fuse(IntSupplier initial, IntConsumer next) {
+        return () -> next.accept(initial.getAsInt());
+    }
+
+    public static IntSupplier fuse(IntSupplier initial, IntUnaryOperator next) {
+        return () -> next.applyAsInt(initial.getAsInt());
+    }
+
+    public static IntUnaryOperator fuse(IntSupplier initial, IntBinaryOperator next) {
+        return (int i) -> next.applyAsInt(initial.getAsInt(), i);
+    }
+
+    /* LongSupplier */
+
+    public static <A> Supplier<A> fuse(LongSupplier initial, LongFunction<A> next) {
+        return () -> next.apply(initial.getAsLong());
+    }
+
+    public static DoubleSupplier fuse(LongSupplier initial, LongToDoubleFunction next) {
+        return () -> next.applyAsDouble(initial.getAsLong());
+    }
+
+    public static DoubleSupplier fuse(LongSupplier initial, LongToIntFunction next) {
+        return () -> next.applyAsInt(initial.getAsLong());
+    }
+
+    public static BooleanSupplier fuse(LongSupplier initial, LongPredicate next) {
+        return () -> next.test(initial.getAsLong());
+    }
+
+    public static Operator fuse(LongSupplier initial, LongConsumer next) {
+        return () -> next.accept(initial.getAsLong());
+    }
+
+    public static LongSupplier fuse(LongSupplier initial, LongUnaryOperator next) {
+        return () -> next.applyAsLong(initial.getAsLong());
+    }
+
+    public static LongUnaryOperator fuse(LongSupplier initial, LongBinaryOperator next) {
+        return (long n) -> next.applyAsLong(initial.getAsLong(), n);
+    }
+
+    /* UnaryOperator [SKIPPED] Overlap with Function<A, B> when A == B */
+
+    /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, B, C> when A == B == C */
+
     /* DoubleUnaryOperator [TODO] */
     /* DoubleBinaryOperator [TODO] */
     /* IntUnaryOperator [TODO] */
