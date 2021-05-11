@@ -1,35 +1,8 @@
 package so.dang.cool.z;
 
-import java.util.List;
 import java.util.function.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
-class Scratch {
-    private static final String URL_RE = "https?://localhost(:\\d+)?(/\\S*)?";
-
-    public static void main(String[] args) {
-        Pattern pattern = Pattern.compile(URL_RE);
-
-        Predicate<CharSequence> validator1 = s -> pattern.matcher(s).matches();
-
-        Predicate<CharSequence> validator2 = Z.fuse(pattern::matcher, Matcher::matches);
-
-        Predicate<CharSequence> validator3 = Z.with(URL_RE)
-            .fusingFn(Pattern::compile)
-            .fusing(Pattern::matcher)
-            .fuse(Matcher::matches);
-
-        List<String> cases = List.of("invalid", "http://invalid/localhost", "http://localhost", "https://localhost:443/");
-
-        Stream.of(validator1, validator2, validator3)
-            .flatMap(v -> cases.stream().filter(v))
-            .forEach(System.out::println);
-    }
-}
-
-class Z {
+public class Z {
     public static <A> SupplierContinuation<A> with(A initial) {
         return SupplierContinuation.of(initial);
     }
