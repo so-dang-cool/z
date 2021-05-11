@@ -44,4 +44,48 @@ public class SupplierContinuation <A> {
     public <B, C> FunctionContinuation<B, C> fusingBiFn(BiFunction<A, B, C> next) {
         return FunctionContinuation.of((B b) -> next.apply(supplier.get(), b));
     }
+    
+    /* BiFunctionContinuationContinuation [TODO] */
+    /* DoubleFunctionContinuation [TODO] */
+    /* DoubleToIntFunctionContinuation [TODO] */
+    /* DoubleToLongFunctionContinuation [TODO] */
+    /* ToDoubleFunctionContinuation [TODO] */
+    /* ToDoubleBiFunctionContinuation [TODO] */
+    /* IntFunctionContinuation [TODO] */
+    /* IntToDoubleFunctionContinuation [TODO] */
+    /* IntToLongFunctionContinuation [TODO] */
+    /* ToIntFunctionContinuation [TODO] */
+    /* ToIntBiFunctionContinuation [TODO] */
+    /* LongFunctionContinuation [TODO] */
+    /* LongToDoubleFunctionContinuation [TODO] */
+    /* LongToIntFunctionContinuation [TODO] */
+    /* ToLongFunctionContinuation [TODO] */
+    /* ToLongBiFunctionContinuation [TODO] */
+    /* PredicateContinuation [TODO] */
+    /* BiPredicateContinuation [TODO] */
+    /* DoublePredicateContinuation [TODO] */
+    /* IntPredicateContinuation [TODO] */
+    /* LongPredicateContinuation [TODO] */
+    /* ConsumerContinuation [TODO] */
+    /* BiConsumerContinuation [TODO] */
+    /* DoubleConsumerContinuation [TODO] */
+    /* ObjDoubleConsumerContinuation [TODO] */
+    /* IntConsumerContinuation [TODO] */
+    /* ObjIntConsumerContinuation [TODO] */
+    /* LongConsumerContinuation [TODO] */
+    /* ObjLongConsumerContinuation [TODO] */
+    /* SupplierContinuation [TODO] */
+    /* BooleanSupplierContinuation [TODO] */
+    /* DoubleSupplierContinuation [TODO] */
+    /* IntSupplierContinuation [TODO] */
+    /* LongSupplierContinuation [TODO] */
+    /* OperatorContinuation [TODO] */
+    /* UnaryOperatorContinuation [TODO] */
+    /* BinaryOperatorContinuation [TODO] */
+    /* DoubleUnaryOperatorContinuation [TODO] */
+    /* DoubleBinaryOperatorContinuation [TODO] */
+    /* IntUnaryOperatorContinuation [TODO] */
+    /* IntBinaryOperatorContinuation [TODO] */
+    /* LongUnaryOperatorContinuation [TODO] */
+    /* LongBinaryOperatorContinuation [TODO] */
 }
