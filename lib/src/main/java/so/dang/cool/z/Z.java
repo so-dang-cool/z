@@ -899,12 +899,185 @@ public class Z {
 
     /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, B, C> when A == B == C */
 
-    /* DoubleUnaryOperator [TODO] */
-    /* DoubleBinaryOperator [TODO] */
-    /* IntUnaryOperator [TODO] */
-    /* IntBinaryOperator [TODO] */
-    /* LongUnaryOperator [TODO] */
-    /* LongBinaryOperator [TODO] */
+    /* DoubleUnaryOperator */
+
+    public static <A> DoubleFunction<A> fuse(DoubleUnaryOperator initial, DoubleFunction<A> next) {
+        return (double d) -> next.apply(initial.applyAsDouble(d));
+    }
+
+    public static DoubleToIntFunction fuse(DoubleUnaryOperator initial, DoubleToIntFunction next) {
+        return (double d) -> next.applyAsInt(initial.applyAsDouble(d));
+    }
+
+    public static DoubleToLongFunction fuse(DoubleUnaryOperator initial, DoubleToLongFunction next) {
+        return (double d) -> next.applyAsLong(initial.applyAsDouble(d));
+    }
+
+    public static DoublePredicate fuse(DoubleUnaryOperator initial, DoublePredicate next) {
+        return (double d) -> next.test(initial.applyAsDouble(d));
+    }
+
+    public static DoubleConsumer fuse(DoubleUnaryOperator initial, DoubleConsumer next) {
+        return (double d) -> next.accept(initial.applyAsDouble(d));
+    }
+
+    public static DoubleUnaryOperator fuse(DoubleUnaryOperator initial, DoubleUnaryOperator next) {
+        return (double d) -> next.applyAsDouble(initial.applyAsDouble(d));
+    }
+
+    public static DoubleFunction<DoubleUnaryOperator> fuse(DoubleUnaryOperator initial, DoubleBinaryOperator next) {
+        return (double d) -> (double d2) -> next.applyAsDouble(initial.applyAsDouble(d), d2);
+    }
+
+    /* DoubleBinaryOperator */
+
+    public static <A> DoubleFunction<DoubleFunction<A>> fuse(DoubleBinaryOperator initial, DoubleFunction<A> next) {
+        return (double d) -> (double d2) -> next.apply(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoubleToIntFunction> fuse(DoubleBinaryOperator initial, DoubleToIntFunction next) {
+        return (double d) -> (double d2) -> next.applyAsInt(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoubleToLongFunction> fuse(DoubleBinaryOperator initial, DoubleToLongFunction next) {
+        return (double d) -> (double d2) -> next.applyAsLong(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoublePredicate> fuse(DoubleBinaryOperator initial, DoublePredicate next) {
+        return (double d) -> (double d2) -> next.test(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoubleConsumer> fuse(DoubleBinaryOperator initial, DoubleConsumer next) {
+        return (double d) -> (double d2) -> next.accept(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoubleUnaryOperator> fuse(DoubleBinaryOperator initial, DoubleUnaryOperator next) {
+        return (double d) -> (double d2) -> next.applyAsDouble(initial.applyAsDouble(d, d2));
+    }
+
+    public static DoubleFunction<DoubleFunction<DoubleUnaryOperator>> fuse(DoubleBinaryOperator initial, DoubleBinaryOperator next) {
+        return (double d) -> (double d2) -> (double d3) -> next.applyAsDouble(initial.applyAsDouble(d, d2), d3);
+    }
+    
+    /* IntUnaryOperator */
+
+    public static <A> IntFunction<A> fuse(IntUnaryOperator initial, IntFunction<A> next) {
+        return (int i) -> next.apply(initial.applyAsInt(i));
+    }
+
+    public static IntToDoubleFunction fuse(IntUnaryOperator initial, IntToDoubleFunction next) {
+        return (int i) -> next.applyAsDouble(initial.applyAsInt(i));
+    }
+
+    public static IntToLongFunction fuse(IntUnaryOperator initial, IntToLongFunction next) {
+        return (int i) -> next.applyAsLong(initial.applyAsInt(i));
+    }
+
+    public static IntPredicate fuse(IntUnaryOperator initial, IntPredicate next) {
+        return (int i) -> next.test(initial.applyAsInt(i));
+    }
+
+    public static IntConsumer fuse(IntUnaryOperator initial, IntConsumer next) {
+        return (int i) -> next.accept(initial.applyAsInt(i));
+    }
+
+    public static IntUnaryOperator fuse(IntUnaryOperator initial, IntUnaryOperator next) {
+        return (int i) -> next.applyAsInt(initial.applyAsInt(i));
+    }
+
+    public static IntFunction<IntUnaryOperator> fuse(IntUnaryOperator initial, IntBinaryOperator next) {
+        return (int i) -> (int i2) -> next.applyAsInt(initial.applyAsInt(i), i2);
+    }
+
+    /* IntBinaryOperator */
+
+    public static <A> IntFunction<IntFunction<A>> fuse(IntBinaryOperator initial, IntFunction<A> next) {
+        return (int i) -> (int i2) -> next.apply(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntToDoubleFunction> fuse(IntBinaryOperator initial, IntToDoubleFunction next) {
+        return (int i) -> (int i2) -> next.applyAsDouble(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntToLongFunction> fuse(IntBinaryOperator initial, IntToLongFunction next) {
+        return (int i) -> (int i2) -> next.applyAsLong(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntPredicate> fuse(IntBinaryOperator initial, IntPredicate next) {
+        return (int i) -> (int i2) -> next.test(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntConsumer> fuse(IntBinaryOperator initial, IntConsumer next) {
+        return (int i) -> (int i2) -> next.accept(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntUnaryOperator> fuse(IntBinaryOperator initial, IntUnaryOperator next) {
+        return (int i) -> (int i2) -> next.applyAsInt(initial.applyAsInt(i, i2));
+    }
+
+    public static IntFunction<IntFunction<IntUnaryOperator>> fuse(IntBinaryOperator initial, IntBinaryOperator next) {
+        return (int i) -> (int i2) -> (int i3) -> next.applyAsInt(initial.applyAsInt(i, i2), i3);
+    }
+
+    /* LongUnaryOperator */
+
+    public static <A> LongFunction<A> fuse(LongUnaryOperator initial, LongFunction<A> next) {
+        return (long n) -> next.apply(initial.applyAsLong(n));
+    }
+
+    public static LongToDoubleFunction fuse(LongUnaryOperator initial, LongToDoubleFunction next) {
+        return (long n) -> next.applyAsDouble(initial.applyAsLong(n));
+    }
+
+    public static LongToIntFunction fuse(LongUnaryOperator initial, LongToIntFunction next) {
+        return (long n) -> next.applyAsInt(initial.applyAsLong(n));
+    }
+
+    public static LongPredicate fuse(LongUnaryOperator initial, LongPredicate next) {
+        return (long n) -> next.test(initial.applyAsLong(n));
+    }
+
+    public static LongConsumer fuse(LongUnaryOperator initial, LongConsumer next) {
+        return (long n) -> next.accept(initial.applyAsLong(n));
+    }
+
+    public static LongUnaryOperator fuse(LongUnaryOperator initial, LongUnaryOperator next) {
+        return (long n) -> next.applyAsLong(initial.applyAsLong(n));
+    }
+
+    public static LongFunction<LongUnaryOperator> fuse(LongUnaryOperator initial, LongBinaryOperator next) {
+        return (long n) -> (long n2) -> next.applyAsLong(initial.applyAsLong(n), n2);
+    }
+
+    /* LongBinaryOperator */
+
+    public static <A> LongFunction<LongFunction<A>> fuse(LongBinaryOperator initial, LongFunction<A> next) {
+        return (long n) -> (long n2) -> next.apply(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongToDoubleFunction> fuse(LongBinaryOperator initial, LongToDoubleFunction next) {
+        return (long n) -> (long n2) -> next.applyAsDouble(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongToIntFunction> fuse(LongBinaryOperator initial, LongToIntFunction next) {
+        return (long n) -> (long n2) -> next.applyAsInt(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongPredicate> fuse(LongBinaryOperator initial, LongPredicate next) {
+        return (long n) -> (long n2) -> next.test(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongConsumer> fuse(LongBinaryOperator initial, LongConsumer next) {
+        return (long n) -> (long n2) -> next.accept(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongUnaryOperator> fuse(LongBinaryOperator initial, LongUnaryOperator next) {
+        return (long n) -> (long n2) -> next.applyAsLong(initial.applyAsLong(n, n2));
+    }
+
+    public static LongFunction<LongFunction<LongUnaryOperator>> fuse(LongBinaryOperator initial, LongBinaryOperator next) {
+        return (long n) -> (long n2) -> (long n3) -> next.applyAsLong(initial.applyAsLong(n, n2), n3);
+    }
 
     /*
         ==================================
