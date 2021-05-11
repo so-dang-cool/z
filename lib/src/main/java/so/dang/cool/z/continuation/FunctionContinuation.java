@@ -4,7 +4,10 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
 import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 import java.util.function.ObjDoubleConsumer;
 import java.util.function.ObjIntConsumer;
 import java.util.function.ObjLongConsumer;
@@ -37,7 +40,7 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C, D> BiFunction<A, C, D> fuse(BiFunction<B, C, D> next) {
+    public <C, D> Function<A, Function<C, D>> fuse(BiFunction<B, C, D> next) {
         return Z.fuse(function, next);
     }
 
@@ -45,7 +48,7 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C> ToDoubleBiFunction<A, C> fuse(ToDoubleBiFunction<B, C> next) {
+    public <C> Function<A, ToDoubleFunction<C>> fuse(ToDoubleBiFunction<B, C> next) {
         return Z.fuse(function, next);
     }
 
@@ -53,7 +56,7 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C> ToIntBiFunction<A, C> fuse(ToIntBiFunction<B, C> next) {
+    public <C> Function<A, ToIntFunction<C>> fuse(ToIntBiFunction<B, C> next) {
         return Z.fuse(function, next);
     }
 
@@ -61,7 +64,7 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C> ToLongBiFunction<A, C> fuse(ToLongBiFunction<B, C> next) {
+    public <C> Function<A, ToLongFunction<C>> fuse(ToLongBiFunction<B, C> next) {
         return Z.fuse(function, next);
     }
 
@@ -69,7 +72,7 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C> BiPredicate<A, C> fuse(BiPredicate<B, C> next) {
+    public <C> Function<A, Predicate<C>> fuse(BiPredicate<B, C> next) {
         return Z.fuse(function, next);
     }
 
@@ -77,19 +80,19 @@ public class FunctionContinuation <A, B> {
         return Z.fuse(function, next);
     }
 
-    public <C> BiConsumer<A, C> fuse(BiConsumer<B, C> next) {
+    public <C> Function<A, Consumer<C>> fuse(BiConsumer<B, C> next) {
         return Z.fuse(function, next);
     }
 
-    public ObjDoubleConsumer<A> fuse(ObjDoubleConsumer<B> next) {
+    public Function<A, DoubleConsumer> fuse(ObjDoubleConsumer<B> next) {
         return Z.fuse(function, next);
     }
 
-    public ObjIntConsumer<A> fuse(ObjIntConsumer<B> next) {
+    public Function<A, IntConsumer> fuse(ObjIntConsumer<B> next) {
         return Z.fuse(function, next);
     }
 
-    public ObjLongConsumer<A> fuse(ObjLongConsumer<B> next) {
+    public Function<A, LongConsumer> fuse(ObjLongConsumer<B> next) {
         return Z.fuse(function, next);
     }
 

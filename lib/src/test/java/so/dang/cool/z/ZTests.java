@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public class ZTests {
     @Test
-    public void regex_pipeline_examples() {
+    public void simple_regex_pipeline_example() {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
 

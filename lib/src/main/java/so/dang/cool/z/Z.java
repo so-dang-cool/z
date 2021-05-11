@@ -60,122 +60,122 @@ public class Z {
         return (A a) -> next.apply(initial.apply(a));
     }
     
-    public static <A, B, C, D> BiFunction<A, C, D> fuse(Function<A, B> initial, BiFunction<B, C, D> next) {
-        return (A a, C c) -> next.apply(initial.apply(a), c);
+    public static <A, B, C, D> Function<A, Function<C, D>> fuse(Function<A, B> initial, BiFunction<B, C, D> next) {
+        return (A a) -> (C c) -> next.apply(initial.apply(a), c);
     }
     
     public static <A, B> ToDoubleFunction<A> fuse(Function<A, B> initial, ToDoubleFunction<B> next) {
         return (A a) -> next.applyAsDouble(initial.apply(a));
     }
     
-    public static <A, B, C> ToDoubleBiFunction<A, C> fuse(Function<A, B> initial, ToDoubleBiFunction<B, C> next) {
-        return (A a, C c) -> next.applyAsDouble(initial.apply(a), c);
+    public static <A, B, C> Function<A, ToDoubleFunction<C>> fuse(Function<A, B> initial, ToDoubleBiFunction<B, C> next) {
+        return (A a) -> (C c) -> next.applyAsDouble(initial.apply(a), c);
     }
     
     public static <A, B> ToIntFunction<A> fuse(Function<A, B> initial, ToIntFunction<B> next) {
         return (A a) -> next.applyAsInt(initial.apply(a));
     }
     
-    public static <A, B, C> ToIntBiFunction<A, C> fuse(Function<A, B> initial, ToIntBiFunction<B, C> next) {
-        return (A a, C c) -> next.applyAsInt(initial.apply(a), c);
+    public static <A, B, C> Function<A, ToIntFunction<C>> fuse(Function<A, B> initial, ToIntBiFunction<B, C> next) {
+        return (A a) -> (C c) -> next.applyAsInt(initial.apply(a), c);
     }
     
     public static <A, B> ToLongFunction<A> fuse(Function<A, B> initial, ToLongFunction<B> next) {
         return (A a) -> next.applyAsLong(initial.apply(a));
     }
     
-    public static <A, B, C> ToLongBiFunction<A, C> fuse(Function<A, B> initial, ToLongBiFunction<B, C> next) {
-        return (A a, C c) -> next.applyAsLong(initial.apply(a), c);
+    public static <A, B, C> Function<A, ToLongFunction<C>> fuse(Function<A, B> initial, ToLongBiFunction<B, C> next) {
+        return (A a) -> (C c) -> next.applyAsLong(initial.apply(a), c);
     }
 
     public static <A, B> Predicate<A> fuse(Function<A, B> initial, Predicate<B> next) {
         return (A a) -> next.test(initial.apply(a));
     }
 
-    public static <A, B, C> BiPredicate<A, C> fuse(Function<A, B> initial, BiPredicate<B, C> next) {
-        return (A a, C c) -> next.test(initial.apply(a), c);
+    public static <A, B, C> Function<A, Predicate<C>> fuse(Function<A, B> initial, BiPredicate<B, C> next) {
+        return (A a) -> (C c) -> next.test(initial.apply(a), c);
     }
 
     public static <A, B> Consumer<A> fuse(Function<A, B> initial, Consumer<B> next) {
         return (A a) -> next.accept(initial.apply(a));
     }
 
-    public static <A, B, C> BiConsumer<A, C> fuse(Function<A, B> initial, BiConsumer<B, C> next) {
-        return (A a, C c) -> next.accept(initial.apply(a), c);
+    public static <A, B, C> Function<A, Consumer<C>> fuse(Function<A, B> initial, BiConsumer<B, C> next) {
+        return (A a) -> (C c) -> next.accept(initial.apply(a), c);
     }
 
-    public static <A, B> ObjDoubleConsumer<A> fuse(Function<A, B> initial, ObjDoubleConsumer<B> next) {
-        return (A a, double d) -> next.accept(initial.apply(a), d);
+    public static <A, B> Function<A, DoubleConsumer> fuse(Function<A, B> initial, ObjDoubleConsumer<B> next) {
+        return (A a) -> (double d) -> next.accept(initial.apply(a), d);
     }
 
-    public static <A, B> ObjIntConsumer<A> fuse(Function<A, B> initial, ObjIntConsumer<B> next) {
-        return (A a, int i) -> next.accept(initial.apply(a), i);
+    public static <A, B> Function<A, IntConsumer> fuse(Function<A, B> initial, ObjIntConsumer<B> next) {
+        return (A a) -> (int i) -> next.accept(initial.apply(a), i);
     }
 
-    public static <A, B> ObjLongConsumer<A> fuse(Function<A, B> initial, ObjLongConsumer<B> next) {
-        return (A a, long n) -> next.accept(initial.apply(a), n);
+    public static <A, B> Function<A, LongConsumer> fuse(Function<A, B> initial, ObjLongConsumer<B> next) {
+        return (A a) -> (long n) -> next.accept(initial.apply(a), n);
     }
 
     /* BiFunction */
 
-    public static <A, B, C, D> BiFunction<A, B, D> fuse(BiFunction<A, B, C> initial, Function<C, D> next) {
-        return (A a, B b) -> next.apply(initial.apply(a, b));
+    public static <A, B, C, D> Function<A, Function<B, D>> fuse(BiFunction<A, B, C> initial, Function<C, D> next) {
+        return (A a) -> (B b) -> next.apply(initial.apply(a, b));
     }
 
-    public static <A, B, C, D, E> BiFunction<A, B, Function<D, E>> fuse(BiFunction<A, B, C> initial, BiFunction<C, D, E> next) {
-        return (A a, B b) -> (D d) -> next.apply(initial.apply(a, b), d);
+    public static <A, B, C, D, E> Function<A, Function<B, Function<D, E>>> fuse(BiFunction<A, B, C> initial, BiFunction<C, D, E> next) {
+        return (A a) -> (B b) -> (D d) -> next.apply(initial.apply(a, b), d);
     }
 
-    public static <A, B, C> ToDoubleBiFunction<A, B> fuse(BiFunction<A, B, C> initial, ToDoubleFunction<C> next) {
-        return (A a, B b) -> next.applyAsDouble(initial.apply(a, b));
+    public static <A, B, C> Function<A, ToDoubleFunction<B>> fuse(BiFunction<A, B, C> initial, ToDoubleFunction<C> next) {
+        return (A a) -> (B b) -> next.applyAsDouble(initial.apply(a, b));
     }
 
-    public static <A, B, C, D> BiFunction<A, B, ToDoubleFunction<D>> fuse(BiFunction<A, B, C> initial, ToDoubleBiFunction<C, D> next) {
-        return (A a, B b) -> (D d) -> next.applyAsDouble(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, ToDoubleFunction<D>>> fuse(BiFunction<A, B, C> initial, ToDoubleBiFunction<C, D> next) {
+        return (A a) -> (B b) -> (D d) -> next.applyAsDouble(initial.apply(a, b), d);
     }
 
-    public static <A, B, C> ToIntBiFunction<A, B> fuse(BiFunction<A, B, C> initial, ToIntFunction<C> next) {
-        return (A a, B b) -> next.applyAsInt(initial.apply(a, b));
+    public static <A, B, C> Function<A, ToIntFunction<B>> fuse(BiFunction<A, B, C> initial, ToIntFunction<C> next) {
+        return (A a) -> (B b) -> next.applyAsInt(initial.apply(a, b));
     }
 
-    public static <A, B, C, D> BiFunction<A, B, ToIntFunction<D>> fuse(BiFunction<A, B, C> initial, ToIntBiFunction<C, D> next) {
-        return (A a, B b) -> (D d) -> next.applyAsInt(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, ToIntFunction<D>>> fuse(BiFunction<A, B, C> initial, ToIntBiFunction<C, D> next) {
+        return (A a) -> (B b) -> (D d) -> next.applyAsInt(initial.apply(a, b), d);
     }
 
-    public static <A, B, C> ToLongBiFunction<A, B> fuse(BiFunction<A, B, C> initial, ToLongFunction<C> next) {
-        return (A a, B b) -> next.applyAsLong(initial.apply(a, b));
+    public static <A, B, C> Function<A, ToLongFunction<B>> fuse(BiFunction<A, B, C> initial, ToLongFunction<C> next) {
+        return (A a) -> (B b) -> next.applyAsLong(initial.apply(a, b));
     }
 
-    public static <A, B, C, D> BiFunction<A, B, ToLongFunction<D>> fuse(BiFunction<A, B, C> initial, ToLongBiFunction<C, D> next) {
-        return (A a, B b) -> (D d) -> next.applyAsLong(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, ToLongFunction<D>>> fuse(BiFunction<A, B, C> initial, ToLongBiFunction<C, D> next) {
+        return (A a) -> (B b) -> (D d) -> next.applyAsLong(initial.apply(a, b), d);
     }
 
-    public static <A, B, C> BiPredicate<A, B> fuse(BiFunction<A, B, C> initial, Predicate<C> next) {
-        return (A a, B b) -> next.test(initial.apply(a, b));
+    public static <A, B, C> Function<A, Predicate<B>> fuse(BiFunction<A, B, C> initial, Predicate<C> next) {
+        return (A a) -> (B b) -> next.test(initial.apply(a, b));
     }
 
-    public static <A, B, C, D> BiFunction<A, B, Predicate<D>> fuse(BiFunction<A, B, C> initial, BiPredicate<C, D> next) {
-        return (A a, B b) -> (D d) -> next.test(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, Predicate<D>>> fuse(BiFunction<A, B, C> initial, BiPredicate<C, D> next) {
+        return (A a) -> (B b) -> (D d) -> next.test(initial.apply(a, b), d);
     }
 
-    public static <A, B, C> BiConsumer<A, B> fuse(BiFunction<A, B, C> initial, Consumer<C> next) {
-        return (A a, B b) -> next.accept(initial.apply(a, b));
+    public static <A, B, C> Function<A, Consumer<B>> fuse(BiFunction<A, B, C> initial, Consumer<C> next) {
+        return (A a) -> (B b) -> next.accept(initial.apply(a, b));
     }
 
-    public static <A, B, C, D> BiFunction<A, B, Consumer<D>> fuse(BiFunction<A, B, C> initial, BiConsumer<C, D> next) {
-        return (A a, B b) -> (D d) -> next.accept(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, Consumer<D>>> fuse(BiFunction<A, B, C> initial, BiConsumer<C, D> next) {
+        return (A a) -> (B b) -> (D d) -> next.accept(initial.apply(a, b), d);
     }
 
-    public static <A, B, C, D> BiFunction<A, B, DoubleConsumer> fuse(BiFunction<A, B, C> initial, ObjDoubleConsumer<C> next) {
-        return (A a, B b) -> (double d) -> next.accept(initial.apply(a, b), d);
+    public static <A, B, C, D> Function<A, Function<B, DoubleConsumer>> fuse(BiFunction<A, B, C> initial, ObjDoubleConsumer<C> next) {
+        return (A a) -> (B b) -> (double d) -> next.accept(initial.apply(a, b), d);
     }
 
-    public static <A, B, C, D> BiFunction<A, B, IntConsumer> fuse(BiFunction<A, B, C> initial, ObjIntConsumer<C> next) {
-        return (A a, B b) -> (int i) -> next.accept(initial.apply(a, b), i);
+    public static <A, B, C, D> Function<A, Function<B, IntConsumer>> fuse(BiFunction<A, B, C> initial, ObjIntConsumer<C> next) {
+        return (A a) -> (B b) -> (int i) -> next.accept(initial.apply(a, b), i);
     }
 
-    public static <A, B, C, D> BiFunction<A, B, LongConsumer> fuse(BiFunction<A, B, C> initial, ObjLongConsumer<C> next) {
-        return (A a, B b) -> (long n) -> next.accept(initial.apply(a, b), n);
+    public static <A, B, C, D> Function<A, Function<B, LongConsumer>> fuse(BiFunction<A, B, C> initial, ObjLongConsumer<C> next) {
+        return (A a) -> (B b) -> (long n) -> next.accept(initial.apply(a, b), n);
     }
 
     /* DoubleFunction */
@@ -324,32 +324,32 @@ public class Z {
 
     /* ToDoubleBiFunction */
 
-    public static <A, B, C> BiFunction<A, B, C> fuse(ToDoubleBiFunction<A, B> initial, DoubleFunction<C> next) {
-        return (A a, B b) -> next.apply(initial.applyAsDouble(a, b));
+    public static <A, B, C> Function<A, Function<B, C>> fuse(ToDoubleBiFunction<A, B> initial, DoubleFunction<C> next) {
+        return (A a) -> (B b) -> next.apply(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> ToIntBiFunction<A, B> fuse(ToDoubleBiFunction<A, B> initial, DoubleToIntFunction next) {
-        return (A a, B b) -> next.applyAsInt(initial.applyAsDouble(a, b));
+    public static <A, B> Function<A, ToIntFunction<B>> fuse(ToDoubleBiFunction<A, B> initial, DoubleToIntFunction next) {
+        return (A a) -> (B b) -> next.applyAsInt(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> ToLongBiFunction<A, B> fuse(ToDoubleBiFunction<A, B> initial, DoubleToLongFunction next) {
-        return (A a, B b) -> next.applyAsLong(initial.applyAsDouble(a, b));
+    public static <A, B> Function<A, ToLongFunction<B>> fuse(ToDoubleBiFunction<A, B> initial, DoubleToLongFunction next) {
+        return (A a) -> (B b) -> next.applyAsLong(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> BiPredicate<A, B> fuse(ToDoubleBiFunction<A, B> initial, DoublePredicate next) {
-        return (A a, B b) -> next.test(initial.applyAsDouble(a, b));
+    public static <A, B> Function<A, Predicate<B>> fuse(ToDoubleBiFunction<A, B> initial, DoublePredicate next) {
+        return (A a) -> (B b) -> next.test(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> BiConsumer<A, B> fuse(ToDoubleBiFunction<A, B> initial, DoubleConsumer next) {
-        return (A a, B b) -> next.accept(initial.applyAsDouble(a, b));
+    public static <A, B> Function<A, Consumer<B>> fuse(ToDoubleBiFunction<A, B> initial, DoubleConsumer next) {
+        return (A a) -> (B b) -> next.accept(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> ToDoubleBiFunction<A, B> fuse(ToDoubleBiFunction<A, B> initial, DoubleUnaryOperator next) {
-        return (A a, B b) -> next.applyAsDouble(initial.applyAsDouble(a, b));
+    public static <A, B> Function<A, ToDoubleFunction<B>> fuse(ToDoubleBiFunction<A, B> initial, DoubleUnaryOperator next) {
+        return (A a) -> (B b) -> next.applyAsDouble(initial.applyAsDouble(a, b));
     }
 
-    public static <A, B> BiFunction<A, B, DoubleUnaryOperator> fuse(ToDoubleBiFunction<A, B> initial, DoubleBinaryOperator next) {
-        return (A a, B b) -> (double d) -> next.applyAsDouble(initial.applyAsDouble(a, b), d);
+    public static <A, B> Function<A, Function<B, DoubleUnaryOperator>> fuse(ToDoubleBiFunction<A, B> initial, DoubleBinaryOperator next) {
+        return (A a) -> (B b) -> (double d) -> next.applyAsDouble(initial.applyAsDouble(a, b), d);
     }
 
     /* IntFunction [TODO] */
@@ -365,28 +365,28 @@ public class Z {
     /* Predicate [TODO] */
     /* BiPredicate [TODO: INCOMPLETE] */
 
-    public static <A, B, C> BiFunction<A, B, C> fuse(BiPredicate<A, B> initial, Function<Boolean, C> next) {
-        return (A a, B b) -> next.apply(initial.test(a, b));
+    public static <A, B, C> Function<A, Function<B, C>> fuse(BiPredicate<A, B> initial, Function<Boolean, C> next) {
+        return (A a) -> (B b) -> next.apply(initial.test(a, b));
     }
 
-    public static <A, B> BiPredicate<A, B> fuse(BiPredicate<A, B> initial, Predicate<Boolean> next) {
-        return (A a, B b) -> next.test(initial.test(a, b));
+    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, Predicate<Boolean> next) {
+        return (A a) -> (B b) -> next.test(initial.test(a, b));
     }
 
-    public static <A, B> BiConsumer<A, B> fuse(BiPredicate<A, B> initial, Consumer<Boolean> next) {
-        return (A a, B b) -> next.accept(initial.test(a, b));
+    public static <A, B> Function<A, Consumer<B>> fuse(BiPredicate<A, B> initial, Consumer<Boolean> next) {
+        return (A a) -> (B b) -> next.accept(initial.test(a, b));
     }
 
-    public static <A, B> ToDoubleBiFunction<A, B> fuse(BiPredicate<A, B> initial, ToDoubleFunction<Boolean> next) {
-        return (A a, B b) -> next.applyAsDouble(initial.test(a, b));
+    public static <A, B> Function<A, ToDoubleFunction<B>> fuse(BiPredicate<A, B> initial, ToDoubleFunction<Boolean> next) {
+        return (A a) -> (B b) -> next.applyAsDouble(initial.test(a, b));
     }
 
-    public static <A, B> ToIntBiFunction<A, B> fuse(BiPredicate<A, B> initial, ToIntFunction<Boolean> next) {
-        return (A a, B b) -> next.applyAsInt(initial.test(a, b));
+    public static <A, B> Function<A, ToIntFunction<B>> fuse(BiPredicate<A, B> initial, ToIntFunction<Boolean> next) {
+        return (A a) -> (B b) -> next.applyAsInt(initial.test(a, b));
     }
 
-    public static <A, B> ToLongBiFunction<A, B> fuse(BiPredicate<A, B> initial, ToLongFunction<Boolean> next) {
-        return (A a, B b) -> next.applyAsLong(initial.test(a, b));
+    public static <A, B> Function<A, ToLongFunction<B>> fuse(BiPredicate<A, B> initial, ToLongFunction<Boolean> next) {
+        return (A a) -> (B b) -> next.applyAsLong(initial.test(a, b));
     }
 
     /* DoublePredicate [TODO] */
@@ -400,6 +400,7 @@ public class Z {
     /* ObjIntConsumer [SKIPPED] */
     /* LongConsumer [SKIPPED] */
     /* ObjLongConsumer [SKIPPED] */
+
     /* Supplier [TODO: INCOMPLETE] */
 
     public static <A, B> Supplier<B> fuse(Supplier<A> initial, Function<A, B> next) {
@@ -419,6 +420,14 @@ public class Z {
     /* DoubleSupplier [TODO] */
     /* IntSupplier [TODO] */
     /* LongSupplier [TODO] */
+    /* UnaryOperator [TODO] */
+    /* BinaryOperator [TODO] */
+    /* DoubleUnaryOperator [TODO] */
+    /* DoubleBinaryOperator [TODO] */
+    /* IntUnaryOperator [TODO] */
+    /* IntBinaryOperator [TODO] */
+    /* LongUnaryOperator [TODO] */
+    /* LongBinaryOperator [TODO] */
 
     /*
         ==================================
