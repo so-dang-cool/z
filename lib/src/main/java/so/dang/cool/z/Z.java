@@ -43,6 +43,7 @@ import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 
 import so.dang.cool.z.continuation.FunctionContinuation;
+import so.dang.cool.z.continuation.MultiFunctionContinuation;
 import so.dang.cool.z.continuation.SupplierContinuation;
 import so.dang.cool.z.function.DecFunction;
 import so.dang.cool.z.function.DodecFunction;
@@ -61,6 +62,12 @@ public final class Z {
 
     public static <A, B> FunctionContinuation<A, B> with(Function<A, B> initial) {
         return FunctionContinuation.of(initial);
+    }
+
+    public static <A, B, C, D> MultiFunctionContinuation<C, D, Function<A, Function<B, D>>> with(BiFunction<A, B, C> initial) {
+        Function<Function<C, D>, Function<A, Function<B, D>>> multiFn =
+            (Function<C, D> next) -> (A a) -> (B b) -> next.apply(initial.apply(a, b));
+        return MultiFunctionContinuation.of(multiFn);
     }
 
     public static <A> SupplierContinuation<A> with(A initial) {
