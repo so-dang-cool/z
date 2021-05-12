@@ -47,7 +47,15 @@ import so.dang.cool.z.continuation.SupplierContinuation;
 import so.dang.cool.z.function.Operator;
 
 public class Z {
+    public static <A, B> FunctionContinuation<A, B> with(Function<A, B> initial) {
+        return FunctionContinuation.of(initial);
+    }
+
     public static <A> SupplierContinuation<A> with(A initial) {
+        return SupplierContinuation.of(initial);
+    }
+
+    public static <A> SupplierContinuation<A> with(Supplier<A> initial) {
         return SupplierContinuation.of(initial);
     }
 
