@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public class UsageExamples {
     @Test
-    public void simple_regex_pipeline_example() {
+    public void simple_regex_example() {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
 
@@ -24,7 +24,7 @@ public class UsageExamples {
     }
 
     @Test
-    public void complex_regex_pipeline_example() {
+    public void complex_regex_example() {
         Predicate<CharSequence> predicate = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
             .fusingFn(Pattern::compile)
             .fusing(Pattern::matcher)

@@ -41,6 +41,7 @@ import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.continuation.FunctionContinuation;
 import so.dang.cool.z.continuation.SupplierContinuation;
@@ -59,6 +60,10 @@ import so.dang.cool.z.function.UndecFunction;
 public final class Z {
     private Z() {}
 
+    public static <A> FunctionContinuation<A, A> with(Class<A> clazz) {
+        return FunctionContinuation.of(Z.id(clazz));
+    }
+
     public static <A, B> FunctionContinuation<A, B> with(Function<A, B> initial) {
         return FunctionContinuation.of(initial);
     }
@@ -69,6 +74,10 @@ public final class Z {
 
     public static <A> SupplierContinuation<A> with(Supplier<A> initial) {
         return SupplierContinuation.of(initial);
+    }
+
+    public static <A> UnaryOperator<A> id(Class<A> clazz) {
+        return (A a) -> a;
     }
 
     /*
@@ -1618,11 +1627,6 @@ public final class Z {
         Function<A, C> function = Z.fuse(initial, next);
         return FunctionContinuation.of(function);
     }
-
-    // public static <A, B, C, D> BiFunctionContinuation<A, C> fusing(Function<A, B> initial, BiFunction<B, C, D> next) {
-    //     Function<A, C> function = Z.fuse(initial, next);
-    //     return FunctionContinuation.of(function);
-    // }
 
     /* BiFunction [TODO] */
     /* DoubleFunction [TODO] */
