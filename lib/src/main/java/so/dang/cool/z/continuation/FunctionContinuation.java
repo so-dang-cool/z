@@ -32,10 +32,6 @@ public class FunctionContinuation <A, B> {
         return new FunctionContinuation<>(function);
     }
 
-    public static <A, B, C> FunctionContinuation<A, C> of(Function<A, B> initial, Function<B, C> next) {
-        return new FunctionContinuation<>(Z.fuse(initial, next));
-    }
-
     public <C> Function<A, C> fuse(Function<B, C> next) {
         return Z.fuse(function, next);
     }

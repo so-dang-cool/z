@@ -895,6 +895,8 @@ public class Z {
         return (long n) -> next.applyAsLong(initial.getAsLong(), n);
     }
 
+    /* Operator [SKIPPED] No output, similar to consumer's role */
+
     /* UnaryOperator [SKIPPED] Overlap with Function<A, B> when A == B */
 
     /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, B, C> when A == B == C */
@@ -1087,55 +1089,66 @@ public class Z {
         ==================================
      */
 
+    /* Function */
+
     public static <A, B, C> FunctionContinuation<A, C> fusing(Function<A, B> initial, Function<B, C> next) {
-        return FunctionContinuation.of(initial, next);
+        Function<A, C> function = Z.fuse(initial, next);
+        return FunctionContinuation.of(function);
     }
 
-    /* BiFunctionContinuationContinuation [TODO] */
-    /* DoubleFunctionContinuation [TODO] */
-    /* DoubleToIntFunctionContinuation [TODO] */
-    /* DoubleToLongFunctionContinuation [TODO] */
-    /* ToDoubleFunctionContinuation [TODO] */
-    /* ToDoubleBiFunctionContinuation [TODO] */
-    /* IntFunctionContinuation [TODO] */
-    /* IntToDoubleFunctionContinuation [TODO] */
-    /* IntToLongFunctionContinuation [TODO] */
-    /* ToIntFunctionContinuation [TODO] */
-    /* ToIntBiFunctionContinuation [TODO] */
-    /* LongFunctionContinuation [TODO] */
-    /* LongToDoubleFunctionContinuation [TODO] */
-    /* LongToIntFunctionContinuation [TODO] */
-    /* ToLongFunctionContinuation [TODO] */
-    /* ToLongBiFunctionContinuation [TODO] */
-    /* PredicateContinuation [TODO] */
-    /* BiPredicateContinuation [TODO] */
-    /* DoublePredicateContinuation [TODO] */
-    /* IntPredicateContinuation [TODO] */
-    /* LongPredicateContinuation [TODO] */
-    /* ConsumerContinuation [TODO] */
-    /* BiConsumerContinuation [TODO] */
-    /* DoubleConsumerContinuation [TODO] */
-    /* ObjDoubleConsumerContinuation [TODO] */
-    /* IntConsumerContinuation [TODO] */
-    /* ObjIntConsumerContinuation [TODO] */
-    /* LongConsumerContinuation [TODO] */
-    /* ObjLongConsumerContinuation [TODO] */
+    /* BiFunction [TODO] */
+    /* DoubleFunction [TODO] */
+    /* DoubleToIntFunction [TODO] */
+    /* DoubleToLongFunction [TODO] */
+    /* ToDoubleFunction [TODO] */
+    /* ToDoubleBiFunction [TODO] */
+    /* IntFunction [TODO] */
+    /* IntToDoubleFunction [TODO] */
+    /* IntToLongFunction [TODO] */
+    /* ToIntFunction [TODO] */
+    /* ToIntBiFunction [TODO] */
+    /* LongFunction [TODO] */
+    /* LongToDoubleFunction [TODO] */
+    /* LongToIntFunction [TODO] */
+    /* ToLongFunction [TODO] */
+    /* ToLongBiFunction [TODO] */
+    /* Predicate [TODO] */
+    /* BiPredicate [TODO] */
+    /* DoublePredicate [TODO] */
+    /* IntPredicate [TODO] */
+    /* LongPredicate [TODO] */
+    /* Consumer [TODO] */
+    /* BiConsumer [TODO] */
+    /* DoubleConsumer [TODO] */
+    /* ObjDoubleConsumer [TODO] */
+    /* IntConsumer [TODO] */
+    /* ObjIntConsumer [TODO] */
+    /* LongConsumer [TODO] */
+    /* ObjLongConsumer [TODO] */
+
+    /* Supplier */
     
     public static <A, B> SupplierContinuation<B> fusing(Supplier<A> initial, Function<A, B> next) {
-        return SupplierContinuation.of(initial, next);
+        Supplier<B> supplier = Z.fuse(initial, next);
+        return SupplierContinuation.of(supplier);
     }
 
-    /* BooleanSupplierContinuation [TODO] */
-    /* DoubleSupplierContinuation [TODO] */
-    /* IntSupplierContinuation [TODO] */
-    /* LongSupplierContinuation [TODO] */
-    /* OperatorContinuation [TODO] */
-    /* UnaryOperatorContinuation [TODO] */
-    /* BinaryOperatorContinuation [TODO] */
-    /* DoubleUnaryOperatorContinuation [TODO] */
-    /* DoubleBinaryOperatorContinuation [TODO] */
-    /* IntUnaryOperatorContinuation [TODO] */
-    /* IntBinaryOperatorContinuation [TODO] */
-    /* LongUnaryOperatorContinuation [TODO] */
-    /* LongBinaryOperatorContinuation [TODO] */
+    public static <A, B, C> FunctionContinuation<B, C> fusing(Supplier<A> initial, BiFunction<A, B, C> next) {
+        Function<B, C> function = Z.fuse(initial, next);
+        return FunctionContinuation.of(function);
+    }
+
+    /* BooleanSupplier [TODO] */
+    /* DoubleSupplier [TODO] */
+    /* IntSupplier [TODO] */
+    /* LongSupplier [TODO] */
+    /* Operator [TODO] */
+    /* UnaryOperator [TODO] */
+    /* BinaryOperator [TODO] */
+    /* DoubleUnaryOperator [TODO] */
+    /* DoubleBinaryOperator [TODO] */
+    /* IntUnaryOperator [TODO] */
+    /* IntBinaryOperator [TODO] */
+    /* LongUnaryOperator [TODO] */
+    /* LongBinaryOperator [TODO] */
 }

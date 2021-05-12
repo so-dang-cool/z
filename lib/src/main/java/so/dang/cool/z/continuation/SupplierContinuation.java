@@ -1,10 +1,31 @@
 package so.dang.cool.z.continuation;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleSupplier;
 import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntSupplier;
+import java.util.function.LongConsumer;
+import java.util.function.LongSupplier;
+import java.util.function.ObjDoubleConsumer;
+import java.util.function.ObjIntConsumer;
+import java.util.function.ObjLongConsumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.ToDoubleBiFunction;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongBiFunction;
+import java.util.function.ToLongFunction;
 
 import so.dang.cool.z.Z;
+import so.dang.cool.z.function.Operator;
 
 public class SupplierContinuation <A> {
     private final Supplier<A> supplier;
@@ -21,11 +42,63 @@ public class SupplierContinuation <A> {
         return new SupplierContinuation<>(initial);
     }
 
-    public static <A, B> SupplierContinuation<B> of(Supplier<A> initial, Function<A, B> next) {
-        return new SupplierContinuation<>(Z.fuse(initial, next));
+    public <B> Supplier<B> fuse(Function<A, B> next) {
+        return Z.fuse(supplier, next);
     }
 
-    public <B> Supplier<B> fuse(Function<A, B> next) {
+    public <B, C> Function<B, C> fuse(BiFunction<A, B, C> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public DoubleSupplier fuse(ToDoubleFunction<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public <B> ToDoubleFunction<B> fuse(ToDoubleBiFunction<A, B> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public IntSupplier fuse(ToIntFunction<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public <B> ToIntFunction<B> fuse(ToIntBiFunction<A, B> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public LongSupplier fuse(ToLongFunction<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public <B> ToLongFunction<B> fuse(ToLongBiFunction<A, B> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public BooleanSupplier fuse(Predicate<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public <B> Predicate<B> fuse(BiPredicate<A, B> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public Operator fuse(Consumer<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public <B> Consumer<B> fuse(BiConsumer<A, B> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public DoubleConsumer fuse(ObjDoubleConsumer<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public IntConsumer fuse(ObjIntConsumer<A> next) {
+        return Z.fuse(supplier, next);
+    }
+
+    public LongConsumer fuse(ObjLongConsumer<A> next) {
         return Z.fuse(supplier, next);
     }
 
@@ -42,7 +115,7 @@ public class SupplierContinuation <A> {
     }
 
     public <B, C> FunctionContinuation<B, C> fusingBiFn(BiFunction<A, B, C> next) {
-        return FunctionContinuation.of((B b) -> next.apply(supplier.get(), b));
+        return Z.fusing(supplier, next);
     }
     
     /* BiFunctionContinuationContinuation [TODO] */
