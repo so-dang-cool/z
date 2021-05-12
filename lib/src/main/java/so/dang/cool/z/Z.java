@@ -731,14 +731,14 @@ public class Z {
     /* IntPredicate [SKIPPED] */
     /* LongPredicate [SKIPPED] */
 
-    /* Consumer [SKIPPED] TODO: For all consumers... What even is fusion with a consumer? */
-    /* BiConsumer [SKIPPED] */
-    /* DoubleConsumer [SKIPPED] */
-    /* ObjDoubleConsumer [SKIPPED] */
-    /* IntConsumer [SKIPPED] */
-    /* ObjIntConsumer [SKIPPED] */
-    /* LongConsumer [SKIPPED] */
-    /* ObjLongConsumer [SKIPPED] */
+    /* Consumer [SKIPPED] Covered in absorption */
+    /* BiConsumer [SKIPPED] Covered in absorption */
+    /* DoubleConsumer [SKIPPED] Covered in absorption */
+    /* ObjDoubleConsumer [SKIPPED] Covered in absorption */
+    /* IntConsumer [SKIPPED] Covered in absorption */
+    /* ObjIntConsumer [SKIPPED] Covered in absorption */
+    /* LongConsumer [SKIPPED] Covered in absorption */
+    /* ObjLongConsumer [SKIPPED] Covered in absorption */
 
     /* Supplier */
 
@@ -895,7 +895,7 @@ public class Z {
         return (long n) -> next.applyAsLong(initial.getAsLong(), n);
     }
 
-    /* Operator [SKIPPED] No output, similar to consumer's role */
+    /* Operator [SKIPPED] Covered in absorption */
 
     /* UnaryOperator [SKIPPED] Overlap with Function<A, B> when A == B */
 
@@ -1082,6 +1082,361 @@ public class Z {
     }
 
     /*
+        ================
+        ┏━┓┏┓ ┏━┓┏━┓┏━┓┏━┓╺┳╸╻┏━┓┏┓╻
+        ┣━┫┣┻┓┗━┓┃ ┃┣┳┛┣━┛ ┃ ┃┃ ┃┃┗┫
+        ╹ ╹┗━┛┗━┛┗━┛╹┗╸╹   ╹ ╹┗━┛╹ ╹
+        ================
+     */
+
+    /* Consumer */
+
+    public static <A, B> Function<A, B> absorb(Consumer<A> initial, Supplier<B> next) {
+        return (A a) -> {
+            initial.accept(a);
+            return next.get();
+        };
+    }
+
+    public static <A> Predicate<A> absorb(Consumer<A> initial, BooleanSupplier next) {
+        return (A a) -> {
+            initial.accept(a);
+            return next.getAsBoolean();
+        };
+    }
+
+    public static <A> ToDoubleFunction<A> absorb(Consumer<A> initial, DoubleSupplier next) {
+        return (A a) -> {
+            initial.accept(a);
+            return next.getAsDouble();
+        };
+    }
+
+    public static <A> ToIntFunction<A> absorb(Consumer<A> initial, IntSupplier next) {
+        return (A a) -> {
+            initial.accept(a);
+            return next.getAsInt();
+        };
+    }
+
+    public static <A> ToLongFunction<A> absorb(Consumer<A> initial, LongSupplier next) {
+        return (A a) -> {
+            initial.accept(a);
+            return next.getAsLong();
+        };
+    }
+
+    public static <A> Consumer<A> absorb(Consumer<A> initial, Operator next) {
+        return (A a) -> {
+            initial.accept(a);
+            next.run();
+        };
+    }
+
+    /* BiConsumer */
+
+    public static <A, B, C> Function<A, Function<B, C>> absorb(BiConsumer<A, B> initial, Supplier<C> next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            return next.get();
+        };
+    }
+
+    public static <A, B> Function<A, Predicate<B>> absorb(BiConsumer<A, B> initial, BooleanSupplier next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            return next.getAsBoolean();
+        };
+    }
+
+    public static <A, B> Function<A, ToDoubleFunction<B>> absorb(BiConsumer<A, B> initial, DoubleSupplier next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            return next.getAsDouble();
+        };
+    }
+
+    public static <A, B> Function<A, ToIntFunction<B>> absorb(BiConsumer<A, B> initial, IntSupplier next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            return next.getAsInt();
+        };
+    }
+
+    public static <A, B> Function<A, ToLongFunction<B>> absorb(BiConsumer<A, B> initial, LongSupplier next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            return next.getAsLong();
+        };
+    }
+
+    public static <A, B> Function<A, Consumer<B>> absorb(BiConsumer<A, B> initial, Operator next) {
+        return (A a) -> (B b) -> {
+            initial.accept(a, b);
+            next.run();
+        };
+    }
+
+    /* DoubleConsumer */
+
+    public static <A> DoubleFunction<A> absorb(DoubleConsumer initial, Supplier<A> next) {
+        return (double d) -> {
+            initial.accept(d);
+            return next.get();
+        };
+    }
+
+    public static DoubleUnaryOperator absorb(DoubleConsumer initial, DoubleSupplier next) {
+        return (double d) -> {
+            initial.accept(d);
+            return next.getAsDouble();
+        };
+    }
+
+    public static DoubleToIntFunction absorb(DoubleConsumer initial, IntSupplier next) {
+        return (double d) -> {
+            initial.accept(d);
+            return next.getAsInt();
+        };
+    }
+
+    public static DoubleToLongFunction absorb(DoubleConsumer initial, LongSupplier next) {
+        return (double d) -> {
+            initial.accept(d);
+            return next.getAsLong();
+        };
+    }
+
+    public static DoubleConsumer absorb(DoubleConsumer initial, Operator next) {
+        return (double d) -> {
+            initial.accept(d);
+            next.run();
+        };
+    }
+
+    /* ObjDoubleConsumer */
+
+    public static <A, B> Function<A, DoubleFunction<B>> absorb(ObjDoubleConsumer<A> initial, Supplier<B> next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            return next.get();
+        };
+    }
+
+    public static <A> Function<A, DoubleUnaryOperator> absorb(ObjDoubleConsumer<A> initial, DoubleSupplier next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            return next.getAsDouble();
+        };
+    }
+
+    public static <A> Function<A, DoubleToIntFunction> absorb(ObjDoubleConsumer<A> initial, IntSupplier next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            return next.getAsInt();
+        };
+    }
+
+    public static <A> Function<A, DoubleToLongFunction> absorb(ObjDoubleConsumer<A> initial, LongSupplier next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            return next.getAsLong();
+        };
+    }
+
+    public static <A> Function<A, DoubleConsumer> absorb(ObjDoubleConsumer<A> initial, Operator next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            next.run();
+        };
+    }
+
+    /* IntConsumer */
+
+    public static <A> IntFunction<A> absorb(IntConsumer initial, Supplier<A> next) {
+        return (int i) -> {
+            initial.accept(i);
+            return next.get();
+        };
+    }
+
+    public static IntToDoubleFunction absorb(IntConsumer initial, DoubleSupplier next) {
+        return (int i) -> {
+            initial.accept(i);
+            return next.getAsDouble();
+        };
+    }
+
+    public static IntUnaryOperator absorb(IntConsumer initial, IntSupplier next) {
+        return (int i) -> {
+            initial.accept(i);
+            return next.getAsInt();
+        };
+    }
+
+    public static IntToLongFunction absorb(IntConsumer initial, LongSupplier next) {
+        return (int i) -> {
+            initial.accept(i);
+            return next.getAsLong();
+        };
+    }
+
+    public static IntConsumer absorb(IntConsumer initial, Operator next) {
+        return (int i) -> {
+            initial.accept(i);
+            next.run();
+        };
+    }
+
+    /* ObjIntConsumer */
+
+    public static <A, B> Function<A, IntFunction<B>> absorb(ObjIntConsumer<A> initial, Supplier<B> next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            return next.get();
+        };
+    }
+
+    public static <A> Function<A, IntToDoubleFunction> absorb(ObjIntConsumer<A> initial, DoubleSupplier next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            return next.getAsDouble();
+        };
+    }
+
+    public static <A> Function<A, IntUnaryOperator> absorb(ObjIntConsumer<A> initial, IntSupplier next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            return next.getAsInt();
+        };
+    }
+
+    public static <A> Function<A, IntToLongFunction> absorb(ObjIntConsumer<A> initial, LongSupplier next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            return next.getAsLong();
+        };
+    }
+
+    public static <A> Function<A, IntConsumer> absorb(ObjIntConsumer<A> initial, Operator next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            next.run();
+        };
+    }
+
+    /* LongConsumer */
+
+    public static <A> LongFunction<A> absorb(LongConsumer initial, Supplier<A> next) {
+        return (long n) -> {
+            initial.accept(n);
+            return next.get();
+        };
+    }
+
+    public static LongToDoubleFunction absorb(LongConsumer initial, DoubleSupplier next) {
+        return (long n) -> {
+            initial.accept(n);
+            return next.getAsDouble();
+        };
+    }
+
+    public static LongToIntFunction absorb(LongConsumer initial, IntSupplier next) {
+        return (long n) -> {
+            initial.accept(n);
+            return next.getAsInt();
+        };
+    }
+
+    public static LongUnaryOperator absorb(LongConsumer initial, LongSupplier next) {
+        return (long n) -> {
+            initial.accept(n);
+            return next.getAsLong();
+        };
+    }
+
+    public static LongConsumer absorb(LongConsumer initial, Operator next) {
+        return (long n) -> {
+            initial.accept(n);
+            next.run();
+        };
+    }
+
+    /* ObjLongConsumer */
+
+    public static <A, B> Function<A, LongFunction<B>> absorb(ObjLongConsumer<A> initial, Supplier<B> next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            return next.get();
+        };
+    }
+
+    public static <A> Function<A, LongToDoubleFunction> absorb(ObjLongConsumer<A> initial, DoubleSupplier next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            return next.getAsDouble();
+        };
+    }
+
+    public static <A> Function<A, LongToIntFunction> absorb(ObjLongConsumer<A> initial, IntSupplier next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            return next.getAsInt();
+        };
+    }
+
+    public static <A> Function<A, LongUnaryOperator> absorb(ObjLongConsumer<A> initial, LongSupplier next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            return next.getAsLong();
+        };
+    }
+
+    public static <A> Function<A, LongConsumer> absorb(ObjLongConsumer<A> initial, Operator next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            next.run();
+        };
+    }
+
+    /* Operator */
+
+    public static <A> Supplier<A> absorb(Operator initial, Supplier<A> next) {
+        return () -> {
+            initial.run();
+            return next.get();
+        };
+    }
+
+    public static DoubleSupplier absorb(Operator initial, DoubleSupplier next) {
+        return () -> {
+            initial.run();
+            return next.getAsDouble();
+        };
+    }
+
+    public static IntSupplier absorb(Operator initial, IntSupplier next) {
+        return () -> {
+            initial.run();
+            return next.getAsInt();
+        };
+    }
+
+    public static LongSupplier absorb(Operator initial, LongSupplier next) {
+        return () -> {
+            initial.run();
+            return next.getAsLong();
+        };
+    }
+
+    public static Operator absorb(Operator initial, Operator next) {
+        return () -> {
+            initial.run();
+            next.run();
+        };
+    }
+
+    /*
         ==================================
         ┏━┓╻ ╻┏━┓┏━╸┏━┓   ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻
         ┗━┓┃ ┃┣━┛┣╸ ┣┳┛   ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫
@@ -1095,6 +1450,11 @@ public class Z {
         Function<A, C> function = Z.fuse(initial, next);
         return FunctionContinuation.of(function);
     }
+
+    // public static <A, B, C, D> BiFunctionContinuation<A, C> fusing(Function<A, B> initial, BiFunction<B, C, D> next) {
+    //     Function<A, C> function = Z.fuse(initial, next);
+    //     return FunctionContinuation.of(function);
+    // }
 
     /* BiFunction [TODO] */
     /* DoubleFunction [TODO] */
