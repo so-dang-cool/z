@@ -7,8 +7,6 @@ import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
 
-import so.dang.cool.z.Z;
-
 public class ContinuationExploration {
     @Test
     public void try_continuing() {
@@ -69,7 +67,7 @@ abstract class Continue<A, Fn, Prev> {
 
         @Override
         public Function<A, C> resolve() {
-            return Z.fuse(continuation.resolve(), function);
+            return (A a) -> function.apply(continuation.resolve().apply(a));
         }
     }
 
@@ -104,7 +102,7 @@ abstract class Continue<A, Fn, Prev> {
 
         @Override
         public Supplier<B> resolve() {
-            return Z.fuse(continuation.resolve(), function);
+            return () -> function.apply(continuation.resolve().get());
         }
     }
 }
