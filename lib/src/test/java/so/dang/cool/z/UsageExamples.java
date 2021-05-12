@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-public class ZTests {
+public class UsageExamples {
     @Test
     public void simple_regex_pipeline_example() {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
@@ -56,11 +55,12 @@ public class ZTests {
 
         // BiFunction<String, String, String> append = (String base, String suffix) -> base.concat(suffix);
 
-        // var fourPartStringBuilder = Z.with(append)
+        // var fourPartStringBuilder = Z.with(String.class)
+        //     .fusing(append)
         //     .fusing(append)
         //     .fusing(append)
         //     .fuse(append);
 
-        // assertEquals("hello world!", fourPartStringBuilder.apply("hello").apply(" ").apply("world").apply("!"));
+        // assertEquals("hello world!", fourPartStringBuilder.accept("hello").apply(" ").apply("world").apply("!"));
     }
 }
