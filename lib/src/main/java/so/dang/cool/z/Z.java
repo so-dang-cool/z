@@ -44,9 +44,21 @@ import java.util.function.ToLongFunction;
 
 import so.dang.cool.z.continuation.FunctionContinuation;
 import so.dang.cool.z.continuation.SupplierContinuation;
+import so.dang.cool.z.function.DecFunction;
+import so.dang.cool.z.function.DodecFunction;
+import so.dang.cool.z.function.NonFunction;
+import so.dang.cool.z.function.OctFunction;
 import so.dang.cool.z.function.Operator;
+import so.dang.cool.z.function.QuadFunction;
+import so.dang.cool.z.function.QuinFunction;
+import so.dang.cool.z.function.SeptFunction;
+import so.dang.cool.z.function.SexFunction;
+import so.dang.cool.z.function.TriFunction;
+import so.dang.cool.z.function.UndecFunction;
 
-public class Z {
+public final class Z {
+    private Z() {}
+
     public static <A, B> FunctionContinuation<A, B> with(Function<A, B> initial) {
         return FunctionContinuation.of(initial);
     }
@@ -57,6 +69,154 @@ public class Z {
 
     public static <A> SupplierContinuation<A> with(Supplier<A> initial) {
         return SupplierContinuation.of(initial);
+    }
+
+    /*
+        ================
+        ┏━╸╻┏━┓┏━┓╻┏━┓┏┓╻
+        ┣╸ ┃┗━┓┗━┓┃┃ ┃┃┗┫
+        ╹  ╹┗━┛┗━┛╹┗━┛╹ ╹
+        ================
+     */
+
+     public static <A, B, C> Function<A, Function<B, C>> split(BiFunction<A, B, C> initial) {
+        return (A a) -> (B b) -> initial.apply(a, b);
+    }
+
+    public static <A, B, C, D> Function<A, Function<B, Function<C, D>>> split(TriFunction<A, B, C, D> initial) {
+        return (A a) -> (B b) -> (C c) -> initial.apply(a, b, c);
+    }
+
+    public static <A, B, C, D, E> Function<A, Function<B, Function<C, Function<D, E>>>> split(QuadFunction<A, B, C, D, E> initial) {
+        return (A a) -> (B b) -> (C c) -> (D d) -> initial.apply(a, b, c, d);
+    }
+
+    public static <A, B, C, D, E, F> Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>> split(QuinFunction<A, B, C, D, E, F> initial) {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> initial.apply(a, b, c, d, e);
+    }
+
+    public static <A, B, C, D, E, F, G>
+        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, G>>>>>>
+        split(SexFunction<A, B, C, D, E, F, G> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
+            initial.apply(a, b, c, d, e, f);
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, H>>>>>>>
+        split(SeptFunction<A, B, C, D, E, F, G, H> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) ->
+            initial.apply(a, b, c, d, e, f, g);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, Function<H, I>>>>>>>>
+        split(OctFunction<A, B, C, D, E, F, G, H, I> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) ->
+                initial.apply(a, b, c, d, e, f, g, h);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I, J>>>>>>>>>
+        split(NonFunction<A, B, C, D, E, F, G, H, I, J> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) ->
+                initial.apply(a, b, c, d, e, f, g, h, i);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J, K>>>>>>>>>>
+        split(DecFunction<A, B, C, D, E, F, G, H, I, J, K> initial)
+    {
+        return (A a) ->
+         (B b) ->
+          (C c) ->
+           (D d) ->
+            (E e) ->
+             (F f) ->
+              (G g) ->
+               (H h) ->
+                (I i) ->
+                 (J j) ->
+                  initial.apply(a, b, c, d, e, f, g, h, i, j);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K, L>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J,
+                  Function<K, L>>>>>>>>>>>
+        split(UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L> initial)
+    {
+        return (A a) ->
+         (B b) ->
+          (C c) ->
+           (D d) ->
+            (E e) ->
+             (F f) ->
+              (G g) ->
+               (H h) ->
+                (I i) ->
+                 (J j) ->
+                  (K k) ->
+                   initial.apply(a, b, c, d, e, f, g, h, i, j, k);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K, L, M>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J,
+                  Function<K,
+                   Function<L, M>>>>>>>>>>>>
+        split(DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M> initial)
+    {
+        return (A a) ->
+         (B b) ->
+          (C c) ->
+           (D d) ->
+            (E e) ->
+             (F f) ->
+              (G g) ->
+               (H h) ->
+                (I i) ->
+                 (J j) ->
+                  (K k) ->
+                   (L l) ->
+                    initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
     }
 
     /*

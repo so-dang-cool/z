@@ -32,6 +32,14 @@ public class FunctionContinuation <A, B> {
         return new FunctionContinuation<>(function);
     }
 
+    /*
+        ================
+        ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻
+        ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫
+        ╹  ┗━┛┗━┛╹┗━┛╹ ╹
+        ================
+     */
+
     public <C> Function<A, C> fuse(Function<B, C> next) {
         return Z.fuse(function, next);
     }
@@ -91,6 +99,14 @@ public class FunctionContinuation <A, B> {
     public Function<A, LongConsumer> fuse(ObjLongConsumer<B> next) {
         return Z.fuse(function, next);
     }
+
+    /*
+        ==================================
+        ┏━┓╻ ╻┏━┓┏━╸┏━┓   ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻
+        ┗━┓┃ ┃┣━┛┣╸ ┣┳┛   ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫
+        ┗━┛┗━┛╹  ┗━╸╹┗╸   ╹  ┗━┛┗━┛╹┗━┛╹ ╹
+        ==================================
+     */
 
     public <C> FunctionContinuation<A, C> fusing(Function<B, C> next) {
         return Z.fusing(function, next);
