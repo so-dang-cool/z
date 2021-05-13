@@ -68,6 +68,84 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
+    /*
+        BiFunction<A, B, C> -> BiFunction<C, D, E>
+        = Function<A, Function<B, Function<D, E>>>
+
+        Function<A, B> -> BiFunction<B, C, D>
+        = Function<A, Function<C, D>>
+    */
+
+    public static final class WithBifn<A, B, C> extends Continue<C, Function<A, Function<B, C>>, Void> {
+        private final BiFunction<A, B, C> initial;
+        private WithBifn(BiFunction<A, B, C> initial) {
+            this.initial = initial;
+        }
+
+        public static <A, B, C> WithBifn<A, B, C> of(BiFunction<A, B, C> initial) {
+            return new WithBifn<>(initial);
+        }
+
+        public static <A, B, C> WithBifn<A, B, C> of(Function<A, Function<B, C>> initial) {
+            return new WithBifn<>((A a, B b) -> initial.apply(a).apply(b));
+        }
+
+        @Override
+        public Function<A, Function<B, C>> resolve() {
+            return Z.split(initial);
+        }
+
+        /* BiFunction<A, B, C> -> Function<C, D> */
+
+        public <D> Function<A, Function<B, D>> fuseFn(Function<C, D> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <D> Function<A, Function<B, D>> fuse(Function<C, D> next) {
+            return fuseFn(next);
+        }
+
+        public <D> WithBifn<A, B, D> fusing(Function<C, D> next) {
+            return WithBifn.of(fuseFn(next));
+        }
+    }
+
+    /* Predicate -> ... [TODO: Incomplete] */
+
+    public static final class WithPred<A> extends Continue<A, Predicate<A>, Void> {
+        private final Predicate<A> initial;
+        private WithPred(Predicate<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithPred<A> of(Predicate<A> initial) {
+            return new WithPred<>(initial);
+        }
+
+        @Override
+        public Predicate<A> resolve() {
+            return initial;
+        }
+
+        /* Predicate<A> -> Function<Boolean, B> */
+
+        public <B> Function<A, B> fuseFn(Function<Boolean, B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> Function<A, B> fuse(Function<Boolean, B> next) {
+            return fuseFn(next);
+        }
+
+        public <B> WithFn<A, B> fusingFn(Function<Boolean, B> next) {
+            return WithFn.of(fuseFn(next));
+        }
+
+        public <B> WithFn<A, B> fusing(Function<Boolean, B> next) {
+            return fusingFn(next);
+        }
+    }
+
     /* Supplier -> ... [TODO: Incomplete]  */
 
     public static final class WithSup<A> extends Continue<A, Supplier<A>, Void> {

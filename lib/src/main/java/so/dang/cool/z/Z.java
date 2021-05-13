@@ -84,20 +84,52 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-    public static <A> Continue.WithFn<A, A> with(Class<A> clazz) {
+    public static <A> Continue.WithFn<A, A> withClass(Class<A> clazz) {
         return Continue.WithFn.of(Z.id(clazz));
     }
 
-    public static <A, B> Continue.WithFn<A, B> with(Function<A, B> initial) {
-        return Continue.WithFn.of(initial);
+    public static <A> Continue.WithFn<A, A> with(Class<A> clazz) {
+        return withClass(clazz);
     }
 
-    public static <A> Continue.WithSup<A> with(A initial) {
+    public static <A> Continue.WithSup<A> withObj(A initial) {
         return Continue.WithSup.of(() -> initial);
     }
 
-    public static <A> Continue.WithSup<A> with(Supplier<A> initial) {
+    public static <A> Continue.WithSup<A> with(A initial) {
+        return withObj(initial);
+    }
+
+    public static <A, B> Continue.WithFn<A, B> withFn(Function<A, B> initial) {
+        return Continue.WithFn.of(initial);
+    }
+
+    public static <A, B> Continue.WithFn<A, B> with(Function<A, B> initial) {
+        return withFn(initial);
+    }
+
+    public static <A, B, C> Continue.WithBifn<A, B, C> withBifn(BiFunction<A, B, C> initial) {
+        return Continue.WithBifn.of(initial);
+    }
+
+    public static <A, B, C> Continue.WithBifn<A, B, C> with(BiFunction<A, B, C> initial) {
+        return withBifn(initial);
+    }
+
+    public static <A> Continue.WithPred<A> withPred(Predicate<A> initial) {
+        return Continue.WithPred.of(initial);
+    }
+
+    public static <A> Continue.WithPred<A> with(Predicate<A> initial) {
+        return withPred(initial);
+    }
+
+    public static <A> Continue.WithSup<A> withSup(Supplier<A> initial) {
         return Continue.WithSup.of(initial);
+    }
+
+    public static <A> Continue.WithSup<A> with(Supplier<A> initial) {
+        return withSup(initial);
     }
 
     /*
@@ -1114,11 +1146,16 @@ public final class Z {
         return (A a) -> (B b) -> (long n) -> next.applyAsLong(initial.applyAsLong(a, b), n);
     }
 
-    /* Predicate [SKIPPED] Because Function<A, Boolean> also matches <Predicate<A>. Similar for other predicates. */
-    /* BiPredicate [SKIPPED] */
-    /* DoublePredicate [SKIPPED] */
-    /* IntPredicate [SKIPPED] */
-    /* LongPredicate [SKIPPED] */
+    /* Predicate [TODO: Incomplete] */
+
+    public static <A, B> Function<A, B> fuse(Predicate<A> initial, Function<Boolean, B> next) {
+        return (A a) -> next.apply(initial.test(a));
+    }
+
+    /* BiPredicate [TODO] */
+    /* DoublePredicate [TODO] */
+    /* IntPredicate [TODO] */
+    /* LongPredicate [TODO] */
 
     /* Consumer [SKIPPED] Covered in absorption */
     /* BiConsumer [SKIPPED] Covered in absorption */
