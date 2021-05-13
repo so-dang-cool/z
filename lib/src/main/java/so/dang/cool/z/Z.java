@@ -43,8 +43,7 @@ import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
-import so.dang.cool.z.continuation.FunctionContinuation;
-import so.dang.cool.z.continuation.SupplierContinuation;
+import so.dang.cool.z.continuation.Continue;
 import so.dang.cool.z.function.DecFunction;
 import so.dang.cool.z.function.DodecFunction;
 import so.dang.cool.z.function.NonFunction;
@@ -60,24 +59,44 @@ import so.dang.cool.z.function.UndecFunction;
 public final class Z {
     private Z() {}
 
-    public static <A> FunctionContinuation<A, A> with(Class<A> clazz) {
-        return FunctionContinuation.of(Z.id(clazz));
-    }
-
-    public static <A, B> FunctionContinuation<A, B> with(Function<A, B> initial) {
-        return FunctionContinuation.of(initial);
-    }
-
-    public static <A> SupplierContinuation<A> with(A initial) {
-        return SupplierContinuation.of(initial);
-    }
-
-    public static <A> SupplierContinuation<A> with(Supplier<A> initial) {
-        return SupplierContinuation.of(initial);
-    }
-
     public static <A> UnaryOperator<A> id(Class<A> clazz) {
         return (A a) -> a;
+    }
+
+    /*
+        ┏┓
+        ┏━━━━┓
+        ┏━━━━━━━━┓
+        ┏━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┃                                          ┃
+        ┃    ┏━┓╻ ╻┏━┓┏━╸┏━┓   ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻    ┃
+        ┃    ┗━┓┃ ┃┣━┛┣╸ ┣┳┛   ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫    ┃
+        ┃    ┗━┛┗━┛╹  ┗━╸╹┗╸   ╹  ┗━┛┗━┛╹┗━┛╹ ╹    ┃
+        ┃                                          ┃
+        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+    */
+
+    public static <A> Continue.WithFn<A, A> with(Class<A> clazz) {
+        return Continue.WithFn.of(Z.id(clazz));
+    }
+
+    public static <A, B> Continue.WithFn<A, B> with(Function<A, B> initial) {
+        return Continue.WithFn.of(initial);
+    }
+
+    public static <A> Continue.WithSup<A> with(A initial) {
+        return Continue.WithSup.of(() -> initial);
+    }
+
+    public static <A> Continue.WithSup<A> with(Supplier<A> initial) {
+        return Continue.WithSup.of(initial);
     }
 
     /*
@@ -1639,87 +1658,4 @@ public final class Z {
             next.run();
         };
     }
-
-    /*
-        ┏┓
-        ┏━━━━┓
-        ┏━━━━━━━━┓
-        ┏━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┃                                          ┃
-        ┃    ┏━┓╻ ╻┏━┓┏━╸┏━┓   ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻    ┃
-        ┃    ┗━┓┃ ┃┣━┛┣╸ ┣┳┛   ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫    ┃
-        ┃    ┗━┛┗━┛╹  ┗━╸╹┗╸   ╹  ┗━┛┗━┛╹┗━┛╹ ╹    ┃
-        ┃                                          ┃
-        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-    */
-
-    /* Function */
-
-    public static <A, B, C> FunctionContinuation<A, C> fusing(Function<A, B> initial, Function<B, C> next) {
-        Function<A, C> function = Z.fuse(initial, next);
-        return FunctionContinuation.of(function);
-    }
-
-    /* BiFunction [TODO] */
-    /* DoubleFunction [TODO] */
-    /* DoubleToIntFunction [TODO] */
-    /* DoubleToLongFunction [TODO] */
-    /* ToDoubleFunction [TODO] */
-    /* ToDoubleBiFunction [TODO] */
-    /* IntFunction [TODO] */
-    /* IntToDoubleFunction [TODO] */
-    /* IntToLongFunction [TODO] */
-    /* ToIntFunction [TODO] */
-    /* ToIntBiFunction [TODO] */
-    /* LongFunction [TODO] */
-    /* LongToDoubleFunction [TODO] */
-    /* LongToIntFunction [TODO] */
-    /* ToLongFunction [TODO] */
-    /* ToLongBiFunction [TODO] */
-    /* Predicate [TODO] */
-    /* BiPredicate [TODO] */
-    /* DoublePredicate [TODO] */
-    /* IntPredicate [TODO] */
-    /* LongPredicate [TODO] */
-    /* Consumer [TODO] */
-    /* BiConsumer [TODO] */
-    /* DoubleConsumer [TODO] */
-    /* ObjDoubleConsumer [TODO] */
-    /* IntConsumer [TODO] */
-    /* ObjIntConsumer [TODO] */
-    /* LongConsumer [TODO] */
-    /* ObjLongConsumer [TODO] */
-
-    /* Supplier */
-    
-    public static <A, B> SupplierContinuation<B> fusing(Supplier<A> initial, Function<A, B> next) {
-        Supplier<B> supplier = Z.fuse(initial, next);
-        return SupplierContinuation.of(supplier);
-    }
-
-    public static <A, B, C> FunctionContinuation<B, C> fusing(Supplier<A> initial, BiFunction<A, B, C> next) {
-        Function<B, C> function = Z.fuse(initial, next);
-        return FunctionContinuation.of(function);
-    }
-
-    /* BooleanSupplier [TODO] */
-    /* DoubleSupplier [TODO] */
-    /* IntSupplier [TODO] */
-    /* LongSupplier [TODO] */
-    /* Operator [TODO] */
-    /* UnaryOperator [TODO] */
-    /* BinaryOperator [TODO] */
-    /* DoubleUnaryOperator [TODO] */
-    /* DoubleBinaryOperator [TODO] */
-    /* IntUnaryOperator [TODO] */
-    /* IntBinaryOperator [TODO] */
-    /* LongUnaryOperator [TODO] */
-    /* LongBinaryOperator [TODO] */
 }

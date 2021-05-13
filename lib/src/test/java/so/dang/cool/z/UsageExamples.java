@@ -26,7 +26,7 @@ public class UsageExamples {
     @Test
     public void complex_regex_example() {
         Predicate<CharSequence> predicate = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
-            .fusingFn(Pattern::compile)
+            .fusing(Pattern::compile)
             .fusing(Pattern::matcher)
             .fuse(Matcher::matches);
 
