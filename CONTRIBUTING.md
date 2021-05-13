@@ -1,3 +1,23 @@
+## Evil
+
+Any evil should be marked with `@Evil`.
+
+This is a neutral combination:
+
+```
+Function<A, B> + Function <B, C> = Function<A, C>
+```
+
+It has a clear flow and nothing is hidden.
+
+This, on the other hand, is evil:
+
+```
+Consumer<A> + Supplier<B> = Function<A, B>
+```
+
+There is no direct relation between the void return of the Consumer and the no-args invocation of the Supplier.
+
 ## Ordering
 
 Because alphabetic ordering may be difficult to grok, the project follows the
