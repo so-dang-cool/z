@@ -112,7 +112,7 @@ public class FunctionContinuation <A, B> {
         return Z.fusing(function, next);
     }
 
-    /* BiFunctionContinuationContinuation [TODO] */
+    /* BiFunctionContinuation [TODO] */
     /* DoubleFunctionContinuation [TODO] */
     /* DoubleToIntFunctionContinuation [TODO] */
     /* DoubleToLongFunctionContinuation [TODO] */
