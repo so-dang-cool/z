@@ -12,15 +12,6 @@ public abstract class Continue<A, Fn, Prev> {
 
     public abstract Fn resolve();
 
-    public static final class WithCurried<A, Fn, Prev> extends Continue<A, Fn, Prev> {
-
-        @Override
-        public Fn resolve() {
-            return null;
-        }
-
-    }
-
     /* Function -> ... [TODO: Incomplete] */
 
     public static final class WithFn<A, B> extends Continue<B, Function<A, B>, Void> {

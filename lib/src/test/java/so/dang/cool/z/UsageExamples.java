@@ -9,12 +9,19 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
+
+import so.dang.cool.z.annotation.Evil;
+import so.dang.cool.z.function.Operator;
 
 public class UsageExamples {
     @Test
@@ -95,6 +102,7 @@ public class UsageExamples {
         );
     }
 
+    @Evil
     @Test
     public void splitting_int_to_string_TOO_MUCH_Z_FUSE() {
         // The level of fusion in this test case is probably not a good idea.
@@ -184,6 +192,28 @@ public class UsageExamples {
             + "14, 1110, 112, 32, 24, 22, 20, 16, 15, 14, 13, 12, 11, 10, e",
             res
         );
+    }
+
+    @Evil
+    @Test
+    public void phrase_builder_HIDDEN_SIDE_EFFECTS() {
+        List<String> words = new ArrayList<>();
+
+        Supplier<String> getPhrase = () -> words.stream().collect(Collectors.joining(" "));
+
+        Operator no = () -> words.add("no");
+        Operator nono = Z.absorb(no, no);
+
+        Consumer<String> starter = Z.absorb((String prefix) -> words.add(prefix), nono);
+
+        // End result like an innocent String -> String function...
+        Function<String, String> creator = Z.absorb(
+            starter,
+            getPhrase
+        );
+
+        assertEquals("Oh, no no", creator.apply("Oh,"));
+        assertEquals("Oh, no no ... Oh... no no no no", creator.apply("... Oh... no no"));
     }
 
     @Test

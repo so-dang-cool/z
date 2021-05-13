@@ -43,6 +43,7 @@ import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
+import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.continuation.Continue;
 import so.dang.cool.z.function.DecFunction;
 import so.dang.cool.z.function.DodecFunction;
@@ -115,19 +116,31 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-     public static <A, B, C> Function<A, Function<B, C>> split(BiFunction<A, B, C> initial) {
+    public static <A, B, C>
+        Function<A, Function<B, C>>
+        split(BiFunction<A, B, C> initial)
+    {
         return (A a) -> (B b) -> initial.apply(a, b);
     }
 
-    public static <A, B, C, D> Function<A, Function<B, Function<C, D>>> split(TriFunction<A, B, C, D> initial) {
+    public static <A, B, C, D>
+        Function<A, Function<B, Function<C, D>>>
+        split(TriFunction<A, B, C, D> initial)
+    {
         return (A a) -> (B b) -> (C c) -> initial.apply(a, b, c);
     }
 
-    public static <A, B, C, D, E> Function<A, Function<B, Function<C, Function<D, E>>>> split(QuadFunction<A, B, C, D, E> initial) {
+    public static <A, B, C, D, E>
+        Function<A, Function<B, Function<C, Function<D, E>>>>
+        split(QuadFunction<A, B, C, D, E> initial)
+    {
         return (A a) -> (B b) -> (C c) -> (D d) -> initial.apply(a, b, c, d);
     }
 
-    public static <A, B, C, D, E, F> Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>> split(QuinFunction<A, B, C, D, E, F> initial) {
+    public static <A, B, C, D, E, F>
+        Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>>
+        split(QuinFunction<A, B, C, D, E, F> initial)
+    {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> initial.apply(a, b, c, d, e);
     }
 
@@ -253,6 +266,170 @@ public final class Z {
                   (K k) ->
                    (L l) ->
                     initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
+    }
+
+    /*
+        ┏┓
+        ┏━━━━┓
+        ┏━━━━━━━━┓
+        ┏━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┃                                      ┃
+        ┃    ┏━┓┏━┓┏━┓╻┏┳┓╻╻  ┏━┓╺┳╸╻┏━┓┏┓╻    ┃
+        ┃    ┣━┫┗━┓┗━┓┃┃┃┃┃┃  ┣━┫ ┃ ┃┃ ┃┃┗┫    ┃
+        ┃    ╹ ╹┗━┛┗━┛╹╹ ╹╹┗━╸╹ ╹ ╹ ╹┗━┛╹ ╹    ┃
+        ┃                                      ┃
+        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+    */
+
+    /* Multifunctions */
+
+    @Evil
+    public static <A, B, C>
+        BiFunction<A, B, C>
+        assimilate2(Function<A, Function<B, C>> curried)
+    {
+        return (A a, B b) -> curried.apply(a).apply(b); 
+    }
+
+    @Evil
+    public static <A, B, C, D>
+        TriFunction<A, B, C, D>
+        assimilate3(Function<A, Function<B, Function<C, D>>> curried)
+    {
+        return (A a, B b, C c) -> curried.apply(a).apply(b).apply(c); 
+    }
+
+    @Evil
+    public static <A, B, C, D, E>
+        QuadFunction<A, B, C, D, E>
+        assimilate4(Function<A, Function<B, Function<C, Function<D, E>>>> curried)
+    {
+        return (A a, B b, C c, D d) -> curried.apply(a).apply(b).apply(c).apply(d); 
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F>
+        QuinFunction<A, B, C, D, E, F>
+        assimilate5(Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G>
+        SexFunction<A, B, C, D, E, F, G>
+        assimilate6(Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, G>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H>
+        SeptFunction<A, B, C, D, E, F, G, H>
+        assimilate7(Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, H>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H, I>
+        OctFunction<A, B, C, D, E, F, G, H, I>
+        assimilate8(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G,
+                   Function<H, I>>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g, H h) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H, I, J>
+        NonFunction<A, B, C, D, E, F, G, H, I, J>
+        assimilate9(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G,
+                   Function<H,
+                    Function<I, J>>>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g, H h, I i) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+        DecFunction<A, B, C, D, E, F, G, H, I, J, K>
+        assimilate10(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G,
+                   Function<H,
+                    Function<I,
+                     Function<J, K>>>>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H, I, J, K, L>
+        UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L>
+        assimilate11(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G,
+                   Function<H,
+                    Function<I,
+                     Function<J,
+                      Function<K, L>>>>>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j).apply(k);
+    }
+
+    @Evil
+    public static <A, B, C, D, E, F, G, H, I, J, K, L, M>
+        DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M>
+        assimilate12(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G,
+                   Function<H,
+                    Function<I,
+                     Function<J,
+                      Function<K,
+                       Function<L, M>>>>>>>>>>>> curried)
+    {
+        return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k, L l) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j).apply(k).apply(l);
     }
 
     /*
@@ -1314,6 +1491,7 @@ public final class Z {
 
     /* Consumer */
 
+    @Evil
     public static <A, B> Function<A, B> absorb(Consumer<A> initial, Supplier<B> next) {
         return (A a) -> {
             initial.accept(a);
@@ -1321,6 +1499,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Predicate<A> absorb(Consumer<A> initial, BooleanSupplier next) {
         return (A a) -> {
             initial.accept(a);
@@ -1328,6 +1507,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> ToDoubleFunction<A> absorb(Consumer<A> initial, DoubleSupplier next) {
         return (A a) -> {
             initial.accept(a);
@@ -1335,6 +1515,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> ToIntFunction<A> absorb(Consumer<A> initial, IntSupplier next) {
         return (A a) -> {
             initial.accept(a);
@@ -1342,6 +1523,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> ToLongFunction<A> absorb(Consumer<A> initial, LongSupplier next) {
         return (A a) -> {
             initial.accept(a);
@@ -1349,6 +1531,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Consumer<A> absorb(Consumer<A> initial, Operator next) {
         return (A a) -> {
             initial.accept(a);
@@ -1358,6 +1541,7 @@ public final class Z {
 
     /* BiConsumer */
 
+    @Evil
     public static <A, B, C> Function<A, Function<B, C>> absorb(BiConsumer<A, B> initial, Supplier<C> next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1365,6 +1549,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A, B> Function<A, Predicate<B>> absorb(BiConsumer<A, B> initial, BooleanSupplier next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1372,6 +1557,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A, B> Function<A, ToDoubleFunction<B>> absorb(BiConsumer<A, B> initial, DoubleSupplier next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1379,6 +1565,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A, B> Function<A, ToIntFunction<B>> absorb(BiConsumer<A, B> initial, IntSupplier next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1386,6 +1573,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A, B> Function<A, ToLongFunction<B>> absorb(BiConsumer<A, B> initial, LongSupplier next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1393,6 +1581,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A, B> Function<A, Consumer<B>> absorb(BiConsumer<A, B> initial, Operator next) {
         return (A a) -> (B b) -> {
             initial.accept(a, b);
@@ -1402,6 +1591,7 @@ public final class Z {
 
     /* DoubleConsumer */
 
+    @Evil
     public static <A> DoubleFunction<A> absorb(DoubleConsumer initial, Supplier<A> next) {
         return (double d) -> {
             initial.accept(d);
@@ -1409,6 +1599,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static DoubleUnaryOperator absorb(DoubleConsumer initial, DoubleSupplier next) {
         return (double d) -> {
             initial.accept(d);
@@ -1416,6 +1607,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static DoubleToIntFunction absorb(DoubleConsumer initial, IntSupplier next) {
         return (double d) -> {
             initial.accept(d);
@@ -1423,6 +1615,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static DoubleToLongFunction absorb(DoubleConsumer initial, LongSupplier next) {
         return (double d) -> {
             initial.accept(d);
@@ -1430,6 +1623,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static DoubleConsumer absorb(DoubleConsumer initial, Operator next) {
         return (double d) -> {
             initial.accept(d);
@@ -1439,6 +1633,7 @@ public final class Z {
 
     /* ObjDoubleConsumer */
 
+    @Evil
     public static <A, B> Function<A, DoubleFunction<B>> absorb(ObjDoubleConsumer<A> initial, Supplier<B> next) {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
@@ -1446,6 +1641,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, DoubleUnaryOperator> absorb(ObjDoubleConsumer<A> initial, DoubleSupplier next) {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
@@ -1453,6 +1649,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, DoubleToIntFunction> absorb(ObjDoubleConsumer<A> initial, IntSupplier next) {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
@@ -1460,6 +1657,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, DoubleToLongFunction> absorb(ObjDoubleConsumer<A> initial, LongSupplier next) {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
@@ -1467,6 +1665,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, DoubleConsumer> absorb(ObjDoubleConsumer<A> initial, Operator next) {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
@@ -1476,6 +1675,7 @@ public final class Z {
 
     /* IntConsumer */
 
+    @Evil
     public static <A> IntFunction<A> absorb(IntConsumer initial, Supplier<A> next) {
         return (int i) -> {
             initial.accept(i);
@@ -1483,6 +1683,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static IntToDoubleFunction absorb(IntConsumer initial, DoubleSupplier next) {
         return (int i) -> {
             initial.accept(i);
@@ -1490,6 +1691,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static IntUnaryOperator absorb(IntConsumer initial, IntSupplier next) {
         return (int i) -> {
             initial.accept(i);
@@ -1497,6 +1699,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static IntToLongFunction absorb(IntConsumer initial, LongSupplier next) {
         return (int i) -> {
             initial.accept(i);
@@ -1504,6 +1707,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static IntConsumer absorb(IntConsumer initial, Operator next) {
         return (int i) -> {
             initial.accept(i);
@@ -1513,6 +1717,7 @@ public final class Z {
 
     /* ObjIntConsumer */
 
+    @Evil
     public static <A, B> Function<A, IntFunction<B>> absorb(ObjIntConsumer<A> initial, Supplier<B> next) {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
@@ -1520,6 +1725,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, IntToDoubleFunction> absorb(ObjIntConsumer<A> initial, DoubleSupplier next) {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
@@ -1527,6 +1733,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, IntUnaryOperator> absorb(ObjIntConsumer<A> initial, IntSupplier next) {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
@@ -1534,6 +1741,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, IntToLongFunction> absorb(ObjIntConsumer<A> initial, LongSupplier next) {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
@@ -1541,6 +1749,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, IntConsumer> absorb(ObjIntConsumer<A> initial, Operator next) {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
@@ -1550,6 +1759,7 @@ public final class Z {
 
     /* LongConsumer */
 
+    @Evil
     public static <A> LongFunction<A> absorb(LongConsumer initial, Supplier<A> next) {
         return (long n) -> {
             initial.accept(n);
@@ -1557,6 +1767,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static LongToDoubleFunction absorb(LongConsumer initial, DoubleSupplier next) {
         return (long n) -> {
             initial.accept(n);
@@ -1564,6 +1775,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static LongToIntFunction absorb(LongConsumer initial, IntSupplier next) {
         return (long n) -> {
             initial.accept(n);
@@ -1571,6 +1783,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static LongUnaryOperator absorb(LongConsumer initial, LongSupplier next) {
         return (long n) -> {
             initial.accept(n);
@@ -1578,6 +1791,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static LongConsumer absorb(LongConsumer initial, Operator next) {
         return (long n) -> {
             initial.accept(n);
@@ -1587,6 +1801,7 @@ public final class Z {
 
     /* ObjLongConsumer */
 
+    @Evil
     public static <A, B> Function<A, LongFunction<B>> absorb(ObjLongConsumer<A> initial, Supplier<B> next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -1594,6 +1809,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, LongToDoubleFunction> absorb(ObjLongConsumer<A> initial, DoubleSupplier next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -1601,6 +1817,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, LongToIntFunction> absorb(ObjLongConsumer<A> initial, IntSupplier next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -1608,6 +1825,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, LongUnaryOperator> absorb(ObjLongConsumer<A> initial, LongSupplier next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -1615,6 +1833,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static <A> Function<A, LongConsumer> absorb(ObjLongConsumer<A> initial, Operator next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -1624,6 +1843,7 @@ public final class Z {
 
     /* Operator */
 
+    @Evil
     public static <A> Supplier<A> absorb(Operator initial, Supplier<A> next) {
         return () -> {
             initial.run();
@@ -1631,6 +1851,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static DoubleSupplier absorb(Operator initial, DoubleSupplier next) {
         return () -> {
             initial.run();
@@ -1638,6 +1859,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static IntSupplier absorb(Operator initial, IntSupplier next) {
         return () -> {
             initial.run();
@@ -1645,6 +1867,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static LongSupplier absorb(Operator initial, LongSupplier next) {
         return () -> {
             initial.run();
@@ -1652,6 +1875,7 @@ public final class Z {
         };
     }
 
+    @Evil
     public static Operator absorb(Operator initial, Operator next) {
         return () -> {
             initial.run();
