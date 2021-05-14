@@ -1198,35 +1198,54 @@ public final class Z {
     */
 
     public static <A, B, C>
-        Function<A, Function<B, C>>
+        Function<A,
+         Function<B, C>>
         split(BiFunction<A, B, C> initial)
     {
-        return (A a) -> (B b) -> initial.apply(a, b);
+        return (A a) -> (B b) ->
+            initial.apply(a, b);
     }
 
     public static <A, B, C, D>
-        Function<A, Function<B, Function<C, D>>>
+        Function<A,
+         Function<B,
+          Function<C, D>>>
         split(TriFunction<A, B, C, D> initial)
     {
-        return (A a) -> (B b) -> (C c) -> initial.apply(a, b, c);
+        return (A a) -> (B b) -> (C c) ->
+            initial.apply(a, b, c);
     }
 
     public static <A, B, C, D, E>
-        Function<A, Function<B, Function<C, Function<D, E>>>>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D, E>>>>
         split(QuadFunction<A, B, C, D, E> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> initial.apply(a, b, c, d);
+        return (A a) -> (B b) -> (C c) -> (D d) ->
+            initial.apply(a, b, c, d);
     }
 
     public static <A, B, C, D, E, F>
-        Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E, F>>>>>
         split(QuinFunction<A, B, C, D, E, F> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> initial.apply(a, b, c, d, e);
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) ->
+            initial.apply(a, b, c, d, e);
     }
 
     public static <A, B, C, D, E, F, G>
-        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, G>>>>>>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F, G>>>>>>
         split(SexFunction<A, B, C, D, E, F, G> initial)
     {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
@@ -1234,7 +1253,13 @@ public final class Z {
     }
 
     public static <A, B, C, D, E, F, G, H>
-        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, H>>>>>>>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G, H>>>>>>>
         split(SeptFunction<A, B, C, D, E, F, G, H> initial)
     {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) ->
@@ -1242,11 +1267,18 @@ public final class Z {
     }
 
     public static <A, B, C, D, E, F, G, H, I>
-        Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, Function<H, I>>>>>>>>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H, I>>>>>>>>
         split(OctFunction<A, B, C, D, E, F, G, H, I> initial)
     {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) ->
-                initial.apply(a, b, c, d, e, f, g, h);
+            initial.apply(a, b, c, d, e, f, g, h);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J>
@@ -1262,7 +1294,7 @@ public final class Z {
         split(NonFunction<A, B, C, D, E, F, G, H, I, J> initial)
     {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) ->
-                initial.apply(a, b, c, d, e, f, g, h, i);
+            initial.apply(a, b, c, d, e, f, g, h, i);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K>
@@ -1278,17 +1310,8 @@ public final class Z {
                  Function<J, K>>>>>>>>>>
         split(DecFunction<A, B, C, D, E, F, G, H, I, J, K> initial)
     {
-        return (A a) ->
-         (B b) ->
-          (C c) ->
-           (D d) ->
-            (E e) ->
-             (F f) ->
-              (G g) ->
-               (H h) ->
-                (I i) ->
-                 (J j) ->
-                  initial.apply(a, b, c, d, e, f, g, h, i, j);
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) -> (J j) ->
+            initial.apply(a, b, c, d, e, f, g, h, i, j);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K, L>
@@ -1305,18 +1328,9 @@ public final class Z {
                   Function<K, L>>>>>>>>>>>
         split(UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L> initial)
     {
-        return (A a) ->
-         (B b) ->
-          (C c) ->
-           (D d) ->
-            (E e) ->
-             (F f) ->
-              (G g) ->
-               (H h) ->
-                (I i) ->
-                 (J j) ->
-                  (K k) ->
-                   initial.apply(a, b, c, d, e, f, g, h, i, j, k);
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
+                (G g) -> (H h) -> (I i) -> (J j) -> (K k) ->
+                 initial.apply(a, b, c, d, e, f, g, h, i, j, k);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K, L, M>
@@ -1334,19 +1348,9 @@ public final class Z {
                    Function<L, M>>>>>>>>>>>>
         split(DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M> initial)
     {
-        return (A a) ->
-         (B b) ->
-          (C c) ->
-           (D d) ->
-            (E e) ->
-             (F f) ->
-              (G g) ->
-               (H h) ->
-                (I i) ->
-                 (J j) ->
-                  (K k) ->
-                   (L l) ->
-                    initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
+                (G g) -> (H h) -> (I i) -> (J j) -> (K k) -> (L l) ->
+                 initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
     }
 
     /*
@@ -1373,49 +1377,82 @@ public final class Z {
     @Evil
     public static <A, B, C>
         BiFunction<A, B, C>
-        assimilate2(Function<A, Function<B, C>> curried)
+        assimilate2(
+            Function<A,
+             Function<B, C>> curried)
     {
-        return (A a, B b) -> curried.apply(a).apply(b); 
+        return (A a, B b) ->
+            curried.apply(a).apply(b); 
     }
 
     @Evil
     public static <A, B, C, D>
         TriFunction<A, B, C, D>
-        assimilate3(Function<A, Function<B, Function<C, D>>> curried)
+        assimilate3(
+            Function<A,
+             Function<B,
+              Function<C, D>>> curried)
     {
-        return (A a, B b, C c) -> curried.apply(a).apply(b).apply(c); 
+        return (A a, B b, C c) ->
+            curried.apply(a).apply(b).apply(c); 
     }
 
     @Evil
     public static <A, B, C, D, E>
         QuadFunction<A, B, C, D, E>
-        assimilate4(Function<A, Function<B, Function<C, Function<D, E>>>> curried)
+        assimilate4(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D, E>>>> curried)
     {
-        return (A a, B b, C c, D d) -> curried.apply(a).apply(b).apply(c).apply(d); 
+        return (A a, B b, C c, D d) ->
+            curried.apply(a).apply(b).apply(c).apply(d); 
     }
 
     @Evil
     public static <A, B, C, D, E, F>
         QuinFunction<A, B, C, D, E, F>
-        assimilate5(Function<A, Function<B, Function<C, Function<D, Function<E, F>>>>> curried)
+        assimilate5(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E, F>>>>> curried)
     {
-        return (A a, B b, C c, D d, E e) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e);
+        return (A a, B b, C c, D d, E e) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e);
     }
 
     @Evil
     public static <A, B, C, D, E, F, G>
         SexFunction<A, B, C, D, E, F, G>
-        assimilate6(Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, G>>>>>> curried)
+        assimilate6(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F, G>>>>>> curried)
     {
-        return (A a, B b, C c, D d, E e, F f) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f);
+        return (A a, B b, C c, D d, E e, F f) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f);
     }
 
     @Evil
     public static <A, B, C, D, E, F, G, H>
         SeptFunction<A, B, C, D, E, F, G, H>
-        assimilate7(Function<A, Function<B, Function<C, Function<D, Function<E, Function<F, Function<G, H>>>>>>> curried)
+        assimilate7(
+            Function<A,
+             Function<B,
+              Function<C,
+               Function<D,
+                Function<E,
+                 Function<F,
+                  Function<G, H>>>>>>> curried)
     {
-        return (A a, B b, C c, D d, E e, F f, G g) -> curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g);
+        return (A a, B b, C c, D d, E e, F f, G g) ->
+            curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g);
     }
 
     @Evil
