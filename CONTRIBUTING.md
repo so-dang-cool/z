@@ -1,22 +1,33 @@
+# Contributing
+
+Pull requests welcomed!
+
+Please run any nontrivial contribution ideas by the project maintainer, [hiljusti](mailto:hiljusti@pm.me), before sending a PR.
+
 ## Evil
 
-Any evil should be marked with `@Evil`.
+Some code may need to be evil, and if so, should be marked with `@Evil`.
 
-This is a neutral combination:
+This is an example of a neutral combination:
 
 ```
 Function<A, B> + Function <B, C> = Function<A, C>
 ```
 
-It has a clear flow and nothing is hidden.
+Assuming both functions are pure, it has a clear flow and nothing is hidden.
 
-This, on the other hand, is evil:
+This, on the other hand, is an example of an _**evil**_ combination:
 
 ```
 Consumer<A> + Supplier<B> = Function<A, B>
 ```
 
-There is no direct relation between the void return of the Consumer and the no-args invocation of the Supplier.
+There is no direct relation between the void return of the Consumer and the no-args invocation of the Supplier. This can usually be understood as a code smell. Something is being done in that Consumer (a network call, something in a thread, a mutating action) that may now be hidden from the end caller.
+
+Evil functions or collections of functions can be a sign of either
+
+1. Evil code is being written, or
+1. Code is interacting with something evil
 
 ## Ordering
 
