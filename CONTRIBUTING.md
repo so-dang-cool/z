@@ -63,7 +63,7 @@ different class also matches, and there's no benefit to specificity.
 1. IntPredicate
 1. LongPredicate
 
-# Consumer family
+### Consumer family
 
 1. Consumer
 1. BiConsumer
@@ -74,7 +74,7 @@ different class also matches, and there's no benefit to specificity.
 1. LongConsumer
 1. ObjLongConsumer
 
-# Supplier Family
+### Supplier Family
 
 1. Supplier
 1. BooleanSupplier
@@ -82,7 +82,7 @@ different class also matches, and there's no benefit to specificity.
 1. IntSupplier
 1. LongSupplier
 
-# Operator Family
+### Operator Family
 
 1. Operator (Z only)
 1. UnaryOperator
@@ -93,3 +93,11 @@ different class also matches, and there's no benefit to specificity.
 1. IntBinaryOperator
 1. LongUnaryOperator
 1. LongBinaryOperator
+
+# Testing
+
+Examples in tests are encouraged.
+
+Because of the complexity of generics and function signatures, and the simplicity of function implementations (many only a single line) compilation itself is often enough testing for me to be happy with the validity of code.
+
+All PRs must continue to compile.
