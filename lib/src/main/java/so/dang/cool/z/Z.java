@@ -3,6 +3,7 @@ package so.dang.cool.z;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.BinaryOperator;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
@@ -148,7 +149,17 @@ public final class Z {
 
     public static <A, B> Function<A, LongConsumer> fuse(Function<A, B> initial, ObjLongConsumer<B> next) {
         return (A a) -> (long n) -> next.accept(initial.apply(a), n);
-    }    /* BiFunction */
+    }
+
+    public static <A, B> Function<A, B> fuse(Function<A, B> initial, UnaryOperator<B> next) {
+        return (A a) -> next.apply(initial.apply(a));
+    }
+
+    public static <A, B> Function<A, UnaryOperator<B>> fuse(Function<A, B> initial, BinaryOperator<B> next) {
+        return (A a) -> (B b) -> next.apply(initial.apply(a), b);
+    }
+    
+    /* BiFunction */
 
     public static <A, B, C, D> Function<A, Function<B, D>> fuse(BiFunction<A, B, C> initial, Function<C, D> next) {
         return (A a) -> (B b) -> next.apply(initial.apply(a, b));
@@ -1133,52 +1144,104 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-    public static <A> Continue.WithFn<A, A> withClass(Class<A> clazz) {
-        return Continue.WithFn.of(Z.id(clazz));
+    public static <A> Continue.WithFunction<A, A> withClass(Class<A> clazz) {
+        return Continue.WithFunction.of(Z.id(clazz));
     }
 
-    public static <A> Continue.WithFn<A, A> with(Class<A> clazz) {
-        return withClass(clazz);
+    public static <A> Continue.WithFunction<A, A> with(Class<A> clazz) {
+        return Continue.WithFunction.of(Z.id(clazz));
     }
 
-    public static <A> Continue.WithSup<A> withObj(A initial) {
-        return Continue.WithSup.of(() -> initial);
+    public static <A> Continue.WithSupplier<A> withObject(A initial) {
+        return Continue.WithSupplier.of(() -> initial);
     }
 
-    public static <A> Continue.WithSup<A> with(A initial) {
-        return withObj(initial);
+    public static <A> Continue.WithSupplier<A> with(A initial) {
+        return Continue.WithSupplier.of(() -> initial);
     }
 
-    public static <A, B> Continue.WithFn<A, B> withFn(Function<A, B> initial) {
-        return Continue.WithFn.of(initial);
+    public static <A, B> Continue.WithFunction<A, B> withFunction(Function<A, B> initial) {
+        return Continue.WithFunction.of(initial);
     }
 
-    public static <A, B> Continue.WithFn<A, B> with(Function<A, B> initial) {
-        return withFn(initial);
+    public static <A, B> Continue.WithFunction<A, B> with(Function<A, B> initial) {
+        return Continue.WithFunction.of(initial);
     }
 
-    public static <A, B, C> Continue.WithBifn<A, B, C> withBifn(BiFunction<A, B, C> initial) {
-        return Continue.WithBifn.of(initial);
+    public static <A, B, C> Continue.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
+        return Continue.WithBiFunction.of(initial);
     }
 
-    public static <A, B, C> Continue.WithBifn<A, B, C> with(BiFunction<A, B, C> initial) {
-        return withBifn(initial);
+    public static <A, B, C> Continue.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
+        return Continue.WithBiFunction.of(initial);
     }
 
-    public static <A> Continue.WithPred<A> withPred(Predicate<A> initial) {
-        return Continue.WithPred.of(initial);
+    public static <A> Continue.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
+        return Continue.WithToDoubleFunction.of(initial);
     }
 
-    public static <A> Continue.WithPred<A> with(Predicate<A> initial) {
-        return withPred(initial);
+    public static <A> Continue.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
+        return Continue.WithToDoubleFunction.of(initial);
     }
 
-    public static <A> Continue.WithSup<A> withSup(Supplier<A> initial) {
-        return Continue.WithSup.of(initial);
+    public static <A> Continue.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
+        return Continue.WithToIntFunction.of(initial);
     }
 
-    public static <A> Continue.WithSup<A> with(Supplier<A> initial) {
-        return withSup(initial);
+    public static <A> Continue.WithToIntFunction<A> with(ToIntFunction<A> initial) {
+        return Continue.WithToIntFunction.of(initial);
+    }
+
+    public static <A> Continue.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
+        return Continue.WithToLongFunction.of(initial);
+    }
+
+    public static <A> Continue.WithToLongFunction<A> with(ToLongFunction<A> initial) {
+        return Continue.WithToLongFunction.of(initial);
+    }
+
+    public static <A> Continue.WithPredicate<A> withPredicate(Predicate<A> initial) {
+        return Continue.WithPredicate.of(initial);
+    }
+
+    public static <A> Continue.WithPredicate<A> with(Predicate<A> initial) {
+        return Continue.WithPredicate.of(initial);
+    }
+
+    public static <A, B> Continue.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
+        return Continue.WithBiPredicate.of(initial);
+    }
+
+    public static <A, B> Continue.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
+        return Continue.WithBiPredicate.of(initial);
+    }
+
+    @Evil
+    public static <A> Continue.WithConsumer<A> withConsumer(Consumer<A> initial) {
+        return Continue.WithConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A> Continue.WithConsumer<A> with(Consumer<A> initial) {
+        return Continue.WithConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A, B> Continue.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
+        return Continue.WithBiConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A, B> Continue.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
+        return Continue.WithBiConsumer.of(initial);
+    }
+
+    public static <A> Continue.WithSupplier<A> withSupplier(Supplier<A> initial) {
+        return Continue.WithSupplier.of(initial);
+    }
+
+    public static <A> Continue.WithSupplier<A> with(Supplier<A> initial) {
+        return Continue.WithSupplier.of(initial);
     }
 
     /* TODO: More continuations! */
