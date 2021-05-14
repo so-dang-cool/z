@@ -29,10 +29,22 @@ public class UsageExamples {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
 
-        Predicate<CharSequence> predicate = Z.fuse(pattern::matcher, Matcher::matches);
+        Predicate<CharSequence> isLocalHost = Z.fuse(pattern::matcher, Matcher::matches);
 
-        assertFalse(predicate.test("invalid"));
-        assertTrue(predicate.test("https://localhost:443"));
+        assertFalse(isLocalHost.test("invalid"));
+        assertTrue(isLocalHost.test("https://localhost:443"));
+    }
+
+    @Test
+    public void less_simple_regex_example() {
+        final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
+
+        Function<String, Pattern> patternOf = Pattern::compile;
+        Function<String, Function<CharSequence, Matcher>> matcherOf = Z.fuse(patternOf, Pattern::matcher);
+        Predicate<CharSequence> isLocalHost = Z.fuse(matcherOf.apply(urlRegex), Matcher::matches);
+
+        assertFalse(isLocalHost.test("invalid"));
+        assertTrue(isLocalHost.test("https://localhost:443"));
     }
 
     @Test
