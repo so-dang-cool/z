@@ -117,7 +117,8 @@ public class UsageExamples {
     @Evil
     @Test
     public void splitting_int_to_string_TOO_MUCH_Z_FUSE() {
-        // The level of fusion in this test case is probably not a good idea.
+        // The level of fusion in this test case is evil.
+        // Complexity control is attempted with an object.
 
         var iToS = Z.split(
             (BiFunction<Integer, Integer, String>) Integer::toString
@@ -209,28 +210,28 @@ public class UsageExamples {
     @Evil
     @Test
     public void phrase_builder_HIDDEN_SIDE_EFFECTS() {
-        List<String> words = new ArrayList<>();
+        List<String> regrets = new ArrayList<>();
 
-        Supplier<String> getPhrase = () -> words.stream().collect(Collectors.joining(" "));
+        Supplier<String> getPhrase = () -> regrets.stream().collect(Collectors.joining(" "));
 
-        Operator no = () -> words.add("no");
+        Operator no = () -> regrets.add("no");
         Operator nono = Z.absorb(no, no);
 
-        Consumer<String> starter = Z.absorb((String prefix) -> words.add(prefix), nono);
+        Consumer<String> starter = Z.absorb((String prefix) -> regrets.add(prefix), nono);
 
         // End result like an innocent String -> String function...
-        Function<String, String> creator = Z.absorb(
+        Function<String, String> regretCreator = Z.absorb(
             starter,
             getPhrase
         );
 
-        assertEquals("Oh, no no", creator.apply("Oh,"));
-        assertEquals("Oh, no no ... Oh... no no no no", creator.apply("... Oh... no no"));
+        assertEquals("Oh, no no", regretCreator.apply("Oh,"));
+        assertEquals("Oh, no no ... Oh... no no no no", regretCreator.apply("... Oh... no no"));
     }
 
     @Test
     public void string_builder_example() {
-        // TODO: Figure out how to make this work
+        // TODO: Make this work. P.S. is this evil?
 
         // BiFunction<String, String, String> append = (String base, String suffix) -> base.concat(suffix);
 
