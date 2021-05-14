@@ -84,7 +84,7 @@ different class also matches, and there's no benefit to specificity.
 
 ### Operator Family
 
-1. Operator (Z only)
+1. Operator (Z)
 1. UnaryOperator
 1. BinaryOperator
 1. DoubleUnaryOperator
@@ -93,6 +93,19 @@ different class also matches, and there's no benefit to specificity.
 1. IntBinaryOperator
 1. LongUnaryOperator
 1. LongBinaryOperator
+
+### Z Multifunction Family
+
+1. TriFunction
+1. QuadFunction
+1. QuinFunction
+1. SexFunction
+1. SeptFunction
+1. OctFunction
+1. NonFunction
+1. DecFunction
+1. UndecFunction
+1. DodecFunction
 
 # Testing
 
