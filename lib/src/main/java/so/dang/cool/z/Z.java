@@ -61,50 +61,9 @@ import so.dang.cool.z.function.UndecFunction;
 /**
  * Z manipulates Java functional interfaces.
  * 
- * <h1>Fusion</h1>
+ * The Z class is the entry point for Z usage.
  * 
- * Fusion is at the heart and soul of Z's various techniques.
- * 
- * Access through `Z.fuse(initial, next)` where both `initial` and `next` are
- * functional interfaces.
- * 
- * The technique used is like the `compose` and `andThen` static functions
- * available from Java's `java.util.function` package, but generalizes to
- * support arbitrary combinations.
- * 
- * Fusion supports the combination of any result-providing function with any
- * argument-accepting function.
- * 
- * For example, you can combine a Function<A, B> with a Function<B, C> to get a
- * Function<A, C>.
- * 
- * <pre>
- * // === Plain Java ===
- * 
- * // Capturing as a functional interface is necessary to expose composition methods.
- * Function<String, IntStream> chars = String::chars;
- * Function<IntStream, Integer> sum = IntStream::sum;
- * 
- * // Composition supports only Functions. E.g. it's not possible to optimize here as
- * // a composition over ToIntFunction<String>. Lambda indirection could fake it, but
- * // autoboxing/unboxing would still occur.
- * Function<String, Integer> asciiSum = sum.compose(chars);
- * 
- * // === Z ===
- * 
- * // Z handles composition a little more succinctly.
- * ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
- * </pre>
- * 
- * Usage with overloaded methods may still require more specification or lambdas.
- * 
- * <h1>More complex combinations</h1>
- * 
- * If you want to fuse more than two functional interfaces, you may be interested in
- * SuperFusion continuations.
- * 
- * If you want to make more evil combinations, (E.g. Consumer<A> + Supplier<B>)
- * you may be interested in Absorption combinations or evil SuperFusion continuations.
+ * For more general guidance, see the notes on the package itself.
  */
 public final class Z {
     private Z() {}
