@@ -74,6 +74,19 @@ public class UsageExamples {
     }
 
     @Test
+    public void uhawwwwwww_example_reducing() {
+        Function<String, String> addW = (String s) -> s.concat("ｗ");
+
+        Function<String, String> addSevenWs =
+            IntStream.range(0, 7)
+                .mapToObj(ignored -> addW)
+                .reduce(Z::fuse)
+                .get();
+
+        assertEquals("うはｗｗｗｗｗｗｗ", addSevenWs.apply("うは"));
+    }
+
+    @Test
     public void splitting_int_to_string() {
         // This doesn't work...
         // Bifunction<Integer, Integer, String> iToS = Integer::toString;

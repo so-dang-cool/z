@@ -1181,6 +1181,14 @@ public final class Z {
         return withSup(initial);
     }
 
+    /* TODO: More continuations! */
+
+    /* TODO: Do we need to deeply expose continuations for functional reductions? For example:
+        public static <A, B> Continue.WithSup<B> fusing(Continue.WithSup<A> partial, Function<A, B> next) { ... }
+
+        Otherwise, need to check if Continue.WithSup::fusing (and etc) are visible enough to use
+     */
+
     /*
         ┏┓
         ┏━━━━┓
