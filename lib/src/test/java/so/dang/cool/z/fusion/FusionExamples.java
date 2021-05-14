@@ -1,4 +1,4 @@
-package so.dang.cool.z.experiments;
+package so.dang.cool.z.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
