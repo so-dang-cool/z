@@ -229,17 +229,17 @@ public class UsageExamples {
 
         Operator no = () -> regrets.add("no");
         Operator nono = Z.absorb(no, no);
+        Consumer<String> regret = regrets::add;
+        Consumer<String> starter = Z.absorb(regret, nono);
 
-        Consumer<String> starter = Z.absorb((String prefix) -> regrets.add(prefix), nono);
+        // End result looks like an innocent String -> String function...
+        Function<String, String> regretCreator = Z.absorb(starter, getPhrase);
 
-        // End result like an innocent String -> String function...
-        Function<String, String> regretCreator = Z.absorb(
-            starter,
-            getPhrase
-        );
+        String result1 = regretCreator.apply("Oh,");
+        String result2 = regretCreator.apply("... Oh... no no");
 
-        assertEquals("Oh, no no", regretCreator.apply("Oh,"));
-        assertEquals("Oh, no no ... Oh... no no no no", regretCreator.apply("... Oh... no no"));
+        assertEquals("Oh, no no", result1);
+        assertEquals("Oh, no no ... Oh... no no no no", result2);
     }
 
     @Test
