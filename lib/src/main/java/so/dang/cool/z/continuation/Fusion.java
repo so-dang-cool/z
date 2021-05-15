@@ -18,15 +18,14 @@ import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.Z;
 
-public abstract class Continue<A, Fn, Prev> {
-    private Continue() {
-    }
+public abstract class Fusion<A, Fn> {
+    private Fusion() {}
 
     public abstract Fn resolve();
 
     /* Function -> ... [TODO: Incomplete] */
 
-    public static final class WithFunction<A, B> extends Continue<B, Function<A, B>, Void> {
+    public static final class WithFunction<A, B> extends Fusion<B, Function<A, B>> {
         private final Function<A, B> initial;
 
         private WithFunction(Function<A, B> initial) {
@@ -235,7 +234,7 @@ public abstract class Continue<A, Fn, Prev> {
         = Function<A, Function<C, D>>
     */
 
-    public static final class WithBiFunction<A, B, C> extends Continue<C, Function<A, Function<B, C>>, Void> {
+    public static final class WithBiFunction<A, B, C> extends Fusion<C, Function<A, Function<B, C>>> {
         private final BiFunction<A, B, C> initial;
 
         private WithBiFunction(BiFunction<A, B, C> initial) {
@@ -270,7 +269,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToDoubleFunction<A> extends Continue<Double, ToDoubleFunction<A>, Void> {
+    public static final class WithToDoubleFunction<A> extends Fusion<Double, ToDoubleFunction<A>> {
         private final ToDoubleFunction<A> initial;
 
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
@@ -287,7 +286,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToDoubleBiFunction<A, B> extends Continue<Double, ToDoubleBiFunction<A, B>, Void> {
+    public static final class WithToDoubleBiFunction<A, B> extends Fusion<Double, ToDoubleBiFunction<A, B>> {
         private final ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
@@ -304,7 +303,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToIntFunction<A> extends Continue<Integer, ToIntFunction<A>, Void> {
+    public static final class WithToIntFunction<A> extends Fusion<Integer, ToIntFunction<A>> {
         private final ToIntFunction<A> initial;
 
         private WithToIntFunction(ToIntFunction<A> initial) {
@@ -321,7 +320,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToIntBiFunction<A, B> extends Continue<Integer, ToIntBiFunction<A, B>, Void> {
+    public static final class WithToIntBiFunction<A, B> extends Fusion<Integer, ToIntBiFunction<A, B>> {
         private final ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
@@ -338,7 +337,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToLongFunction<A> extends Continue<Long, ToLongFunction<A>, Void> {
+    public static final class WithToLongFunction<A> extends Fusion<Long, ToLongFunction<A>> {
         private final ToLongFunction<A> initial;
 
         private WithToLongFunction(ToLongFunction<A> initial) {
@@ -355,7 +354,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithToLongBiFunction<A, B> extends Continue<Long, ToLongBiFunction<A, B>, Void> {
+    public static final class WithToLongBiFunction<A, B> extends Fusion<Long, ToLongBiFunction<A, B>> {
         private final ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
@@ -372,7 +371,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithConsumer<A> extends Continue<Void, Consumer<A>, Void> {
+    public static final class WithConsumer<A> extends Fusion<Void, Consumer<A>> {
         private final Consumer<A> initial;
 
         private WithConsumer(Consumer<A> initial) {
@@ -389,7 +388,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithBiConsumer<A, B> extends Continue<Void, BiConsumer<A, B>, Void> {
+    public static final class WithBiConsumer<A, B> extends Fusion<Void, BiConsumer<A, B>> {
         private final BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
@@ -408,7 +407,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     /* Predicate -> ... [TODO: Incomplete] */
 
-    public static final class WithPredicate<A> extends Continue<Boolean, Predicate<A>, Void> {
+    public static final class WithPredicate<A> extends Fusion<Boolean, Predicate<A>> {
         private final Predicate<A> initial;
 
         private WithPredicate(Predicate<A> initial) {
@@ -443,7 +442,7 @@ public abstract class Continue<A, Fn, Prev> {
         }
     }
 
-    public static final class WithBiPredicate<A, B> extends Continue<Boolean, BiPredicate<A, B>, Void> {
+    public static final class WithBiPredicate<A, B> extends Fusion<Boolean, BiPredicate<A, B>> {
         private final BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
@@ -464,7 +463,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     /* Supplier -> ... [TODO: Incomplete]  */
 
-    public static final class WithSupplier<A> extends Continue<A, Supplier<A>, Void> {
+    public static final class WithSupplier<A> extends Fusion<A, Supplier<A>> {
         private final Supplier<A> initial;
 
         private WithSupplier(Supplier<A> initial) {
