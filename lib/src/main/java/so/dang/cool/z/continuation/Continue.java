@@ -5,7 +5,6 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
-import java.util.function.DoubleFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -20,7 +19,8 @@ import java.util.function.UnaryOperator;
 import so.dang.cool.z.Z;
 
 public abstract class Continue<A, Fn, Prev> {
-    private Continue() {}
+    private Continue() {
+    }
 
     public abstract Fn resolve();
 
@@ -28,6 +28,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithFunction<A, B> extends Continue<B, Function<A, B>, Void> {
         private final Function<A, B> initial;
+
         private WithFunction(Function<A, B> initial) {
             this.initial = initial;
         }
@@ -204,20 +205,20 @@ public abstract class Continue<A, Fn, Prev> {
         }
 
         /* Function<A, B> -> BinaryOperator<B> */
-        
+
         public Function<A, UnaryOperator<B>> fuseBinaryOperator(BinaryOperator<B> next) {
             return Z.fuse(initial, next);
         }
-        
+
         public Function<A, UnaryOperator<B>> fuse(BinaryOperator<B> next) {
             return Z.fuse(initial, next);
         }
-        
+
         public WithBiFunction<A, B, B> fusingBinaryOperator(BinaryOperator<B> next) {
             // TODO: simplify with currying
             return WithBiFunction.of((A a, B b) -> next.apply(initial.apply(a), b));
         }
-        
+
         public WithBiFunction<A, B, B> fusing(BinaryOperator<B> next) {
             // TODO: simplify with currying
             return WithBiFunction.of((A a, B b) -> next.apply(initial.apply(a), b));
@@ -236,6 +237,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithBiFunction<A, B, C> extends Continue<C, Function<A, Function<B, C>>, Void> {
         private final BiFunction<A, B, C> initial;
+
         private WithBiFunction(BiFunction<A, B, C> initial) {
             this.initial = initial;
         }
@@ -270,6 +272,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToDoubleFunction<A> extends Continue<Double, ToDoubleFunction<A>, Void> {
         private final ToDoubleFunction<A> initial;
+
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
             this.initial = initial;
         }
@@ -286,6 +289,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToDoubleBiFunction<A, B> extends Continue<Double, ToDoubleBiFunction<A, B>, Void> {
         private final ToDoubleBiFunction<A, B> initial;
+
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
             this.initial = initial;
         }
@@ -302,6 +306,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToIntFunction<A> extends Continue<Integer, ToIntFunction<A>, Void> {
         private final ToIntFunction<A> initial;
+
         private WithToIntFunction(ToIntFunction<A> initial) {
             this.initial = initial;
         }
@@ -318,6 +323,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToIntBiFunction<A, B> extends Continue<Integer, ToIntBiFunction<A, B>, Void> {
         private final ToIntBiFunction<A, B> initial;
+
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
             this.initial = initial;
         }
@@ -334,6 +340,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToLongFunction<A> extends Continue<Long, ToLongFunction<A>, Void> {
         private final ToLongFunction<A> initial;
+
         private WithToLongFunction(ToLongFunction<A> initial) {
             this.initial = initial;
         }
@@ -350,6 +357,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithToLongBiFunction<A, B> extends Continue<Long, ToLongBiFunction<A, B>, Void> {
         private final ToLongBiFunction<A, B> initial;
+
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
             this.initial = initial;
         }
@@ -366,6 +374,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithConsumer<A> extends Continue<Void, Consumer<A>, Void> {
         private final Consumer<A> initial;
+
         private WithConsumer(Consumer<A> initial) {
             this.initial = initial;
         }
@@ -382,6 +391,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithBiConsumer<A, B> extends Continue<Void, BiConsumer<A, B>, Void> {
         private final BiConsumer<A, B> initial;
+
         private WithBiConsumer(BiConsumer<A, B> initial) {
             this.initial = initial;
         }
@@ -400,6 +410,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithPredicate<A> extends Continue<Boolean, Predicate<A>, Void> {
         private final Predicate<A> initial;
+
         private WithPredicate(Predicate<A> initial) {
             this.initial = initial;
         }
@@ -434,6 +445,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithBiPredicate<A, B> extends Continue<Boolean, BiPredicate<A, B>, Void> {
         private final BiPredicate<A, B> initial;
+
         private WithBiPredicate(BiPredicate<A, B> initial) {
             this.initial = initial;
         }
@@ -454,6 +466,7 @@ public abstract class Continue<A, Fn, Prev> {
 
     public static final class WithSupplier<A> extends Continue<A, Supplier<A>, Void> {
         private final Supplier<A> initial;
+
         private WithSupplier(Supplier<A> initial) {
             this.initial = initial;
         }
