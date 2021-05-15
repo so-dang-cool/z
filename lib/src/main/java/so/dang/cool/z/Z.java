@@ -45,18 +45,18 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.annotation.Evil;
-import so.dang.cool.z.continuation.Continue;
-import so.dang.cool.z.function.DecFunction;
-import so.dang.cool.z.function.DodecFunction;
-import so.dang.cool.z.function.NonFunction;
-import so.dang.cool.z.function.OctFunction;
-import so.dang.cool.z.function.Operator;
-import so.dang.cool.z.function.QuadFunction;
-import so.dang.cool.z.function.QuinFunction;
-import so.dang.cool.z.function.SeptFunction;
-import so.dang.cool.z.function.SexFunction;
-import so.dang.cool.z.function.TriFunction;
-import so.dang.cool.z.function.UndecFunction;
+import so.dang.cool.z.internal.combination.Fusion;
+import so.dang.cool.z.internal.function.DecFunction;
+import so.dang.cool.z.internal.function.DodecFunction;
+import so.dang.cool.z.internal.function.NonFunction;
+import so.dang.cool.z.internal.function.OctFunction;
+import so.dang.cool.z.internal.function.Operator;
+import so.dang.cool.z.internal.function.QuadFunction;
+import so.dang.cool.z.internal.function.QuinFunction;
+import so.dang.cool.z.internal.function.SeptFunction;
+import so.dang.cool.z.internal.function.SexFunction;
+import so.dang.cool.z.internal.function.TriFunction;
+import so.dang.cool.z.internal.function.UndecFunction;
 
 
 /**
@@ -1144,109 +1144,109 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-    public static <A> Continue.WithFunction<A, A> withClass(Class<A> clazz) {
-        return Continue.WithFunction.of(Z.id(clazz));
+    public static <A> Fusion.WithFunction<A, A> withClass(Class<A> clazz) {
+        return Fusion.WithFunction.of(Z.id(clazz));
     }
 
-    public static <A> Continue.WithFunction<A, A> with(Class<A> clazz) {
-        return Continue.WithFunction.of(Z.id(clazz));
+    public static <A> Fusion.WithFunction<A, A> with(Class<A> clazz) {
+        return Fusion.WithFunction.of(Z.id(clazz));
     }
 
-    public static <A> Continue.WithSupplier<A> withObject(A initial) {
-        return Continue.WithSupplier.of(() -> initial);
+    public static <A> Fusion.WithSupplier<A> withObject(A initial) {
+        return Fusion.WithSupplier.of(() -> initial);
     }
 
-    public static <A> Continue.WithSupplier<A> with(A initial) {
-        return Continue.WithSupplier.of(() -> initial);
+    public static <A> Fusion.WithSupplier<A> with(A initial) {
+        return Fusion.WithSupplier.of(() -> initial);
     }
 
-    public static <A, B> Continue.WithFunction<A, B> withFunction(Function<A, B> initial) {
-        return Continue.WithFunction.of(initial);
+    public static <A, B> Fusion.WithFunction<A, B> withFunction(Function<A, B> initial) {
+        return Fusion.WithFunction.of(initial);
     }
 
-    public static <A, B> Continue.WithFunction<A, B> with(Function<A, B> initial) {
-        return Continue.WithFunction.of(initial);
+    public static <A, B> Fusion.WithFunction<A, B> with(Function<A, B> initial) {
+        return Fusion.WithFunction.of(initial);
     }
 
-    public static <A, B, C> Continue.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
-        return Continue.WithBiFunction.of(initial);
+    public static <A, B, C> Fusion.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
+        return Fusion.WithBiFunction.of(initial);
     }
 
-    public static <A, B, C> Continue.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
-        return Continue.WithBiFunction.of(initial);
+    public static <A, B, C> Fusion.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
+        return Fusion.WithBiFunction.of(initial);
     }
 
-    public static <A> Continue.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
-        return Continue.WithToDoubleFunction.of(initial);
+    public static <A> Fusion.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
+        return Fusion.WithToDoubleFunction.of(initial);
     }
 
-    public static <A> Continue.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
-        return Continue.WithToDoubleFunction.of(initial);
+    public static <A> Fusion.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
+        return Fusion.WithToDoubleFunction.of(initial);
     }
 
-    public static <A> Continue.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
-        return Continue.WithToIntFunction.of(initial);
+    public static <A> Fusion.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
+        return Fusion.WithToIntFunction.of(initial);
     }
 
-    public static <A> Continue.WithToIntFunction<A> with(ToIntFunction<A> initial) {
-        return Continue.WithToIntFunction.of(initial);
+    public static <A> Fusion.WithToIntFunction<A> with(ToIntFunction<A> initial) {
+        return Fusion.WithToIntFunction.of(initial);
     }
 
-    public static <A> Continue.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
-        return Continue.WithToLongFunction.of(initial);
+    public static <A> Fusion.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
+        return Fusion.WithToLongFunction.of(initial);
     }
 
-    public static <A> Continue.WithToLongFunction<A> with(ToLongFunction<A> initial) {
-        return Continue.WithToLongFunction.of(initial);
+    public static <A> Fusion.WithToLongFunction<A> with(ToLongFunction<A> initial) {
+        return Fusion.WithToLongFunction.of(initial);
     }
 
-    public static <A> Continue.WithPredicate<A> withPredicate(Predicate<A> initial) {
-        return Continue.WithPredicate.of(initial);
+    public static <A> Fusion.WithPredicate<A> withPredicate(Predicate<A> initial) {
+        return Fusion.WithPredicate.of(initial);
     }
 
-    public static <A> Continue.WithPredicate<A> with(Predicate<A> initial) {
-        return Continue.WithPredicate.of(initial);
+    public static <A> Fusion.WithPredicate<A> with(Predicate<A> initial) {
+        return Fusion.WithPredicate.of(initial);
     }
 
-    public static <A, B> Continue.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
-        return Continue.WithBiPredicate.of(initial);
+    public static <A, B> Fusion.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
+        return Fusion.WithBiPredicate.of(initial);
     }
 
-    public static <A, B> Continue.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
-        return Continue.WithBiPredicate.of(initial);
-    }
-
-    @Evil
-    public static <A> Continue.WithConsumer<A> withConsumer(Consumer<A> initial) {
-        return Continue.WithConsumer.of(initial);
+    public static <A, B> Fusion.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
+        return Fusion.WithBiPredicate.of(initial);
     }
 
     @Evil
-    public static <A> Continue.WithConsumer<A> with(Consumer<A> initial) {
-        return Continue.WithConsumer.of(initial);
+    public static <A> Fusion.WithConsumer<A> withConsumer(Consumer<A> initial) {
+        return Fusion.WithConsumer.of(initial);
     }
 
     @Evil
-    public static <A, B> Continue.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
-        return Continue.WithBiConsumer.of(initial);
+    public static <A> Fusion.WithConsumer<A> with(Consumer<A> initial) {
+        return Fusion.WithConsumer.of(initial);
     }
 
     @Evil
-    public static <A, B> Continue.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
-        return Continue.WithBiConsumer.of(initial);
+    public static <A, B> Fusion.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
+        return Fusion.WithBiConsumer.of(initial);
     }
 
-    public static <A> Continue.WithSupplier<A> withSupplier(Supplier<A> initial) {
-        return Continue.WithSupplier.of(initial);
+    @Evil
+    public static <A, B> Fusion.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
+        return Fusion.WithBiConsumer.of(initial);
     }
 
-    public static <A> Continue.WithSupplier<A> with(Supplier<A> initial) {
-        return Continue.WithSupplier.of(initial);
+    public static <A> Fusion.WithSupplier<A> withSupplier(Supplier<A> initial) {
+        return Fusion.WithSupplier.of(initial);
     }
 
-    /* TODO: More continuations! */
+    public static <A> Fusion.WithSupplier<A> with(Supplier<A> initial) {
+        return Fusion.WithSupplier.of(initial);
+    }
 
-    /* TODO: Do we need to deeply expose continuations for functional reductions? For example:
+    /* TODO: More combinators! */
+
+    /* TODO: Do we need to deeply expose combinators for functional reductions? For example:
         public static <A, B> Continue.WithSup<B> fusing(Continue.WithSup<A> partial, Function<A, B> next) { ... }
 
         Otherwise, need to check if Continue.WithSup::fusing (and etc) are visible enough to use

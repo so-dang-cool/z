@@ -1,4 +1,4 @@
-package so.dang.cool.z.continuation;
+package so.dang.cool.z.internal.combination;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -70,12 +70,12 @@ public abstract class Fusion<A, Fn> {
         }
 
         public <C, D> WithBiFunction<A, C, D> fusingBiFunction(BiFunction<B, C, D> next) {
-            // TODO: Need a currying continuation?
+            // TODO: Need a currying combinator?
             return WithBiFunction.of(Z.assimilate2(Z.fuse(initial, next)));
         }
 
         public <C, D> WithBiFunction<A, C, D> fusing(BiFunction<B, C, D> next) {
-            // TODO: Need a currying continuation?
+            // TODO: Need a currying combinator?
             return WithBiFunction.of(Z.assimilate2(Z.fuse(initial, next)));
         }
 

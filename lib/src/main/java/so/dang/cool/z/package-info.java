@@ -41,10 +41,10 @@
  * <h1>More complex combinations</h1>
  *
  * If you want to fuse more than two functional interfaces, you may be interested in
- * SuperFusion continuations.
+ * SuperFusion combinators.
  *
  * If you want to make more evil combinations, (E.g. Consumer<A> + Supplier<B>)
- * you may be interested in Absorption combinations or evil SuperFusion continuations.
+ * you may be interested in Absorption combinations or evil SuperFusion combinators.
  *
  * <h1>Super Fusion</h1>
  *

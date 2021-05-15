@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 
 import so.dang.cool.z.annotation.Evil;
-import so.dang.cool.z.function.Operator;
+import so.dang.cool.z.internal.function.Operator;
 
 public class UsageExamples {
     @Test
