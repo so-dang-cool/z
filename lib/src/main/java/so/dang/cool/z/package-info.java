@@ -3,22 +3,23 @@
  *
  * <h1>Fusion</h1>
  *
- * Fusion combines two functional interfaces into one. It is the heart and soul of Z techniques.
+ * Fusion combines two functional interfaces into one. It is the heart and soul of
+ * Z techniques.
  *
- * Access through `Z.fuse(initial, next)` where both `initial` and `next` are
- * functional interfaces.
+ * Access through {@code Z.fuse(initial, next)} where both {@code initial} and
+ * {@code next} are functional interfaces.
  *
- * The technique used is like the `compose` and `andThen` static functions
- * available from Java's `java.util.function` package, but generalizes to
+ * The technique used is like the {@code compose} and {@code andThen} static functions
+ * available from Java's {@code java.util.function} package, but generalizes to
  * support arbitrary combinations.
  *
  * Fusion supports the combination of any result-providing function with any
  * argument-accepting function.
  *
- * For example, you can combine a Function<A, B> with a Function<B, C> to get a
- * Function<A, C>.
+ * For example, you can combine a {@code Function<A, B>} with a {@code Function<B, C>}
+ * to get a {@code Function<A, C>}.
  *
- * <pre>
+ * {@code
  * // === Plain Java ===
  *
  * // Capturing as a functional interface is necessary to expose composition methods.
@@ -34,7 +35,7 @@
  *
  * // Z handles composition a little more succinctly.
  * ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
- * </pre>
+ * }
  *
  * Usage with overloaded methods may still require more specification or lambdas.
  *
@@ -43,8 +44,9 @@
  * If you want to fuse more than two functional interfaces, you may be interested in
  * SuperFusion combinators.
  *
- * If you want to make more evil combinations, (E.g. Consumer<A> + Supplier<B>)
- * you may be interested in Absorption combinations or evil SuperFusion combinators.
+ * If you want to make more evil combinations, (E.g. combining a {@code Consumer<A>}
+ * and a {@code Supplier<B>} into a {@code Function<A, B>}) you may be interested in
+ * Absorption combinators or evil SuperFusion combinators.
  *
  * <h1>Super Fusion</h1>
  *
