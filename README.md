@@ -34,9 +34,10 @@ Predicate<CharSequence> predicate = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
     .fusing(Pattern::matcher)
     .fuse(Matcher::matches);
 
-assertFalse(predicate.test("invalid"));
-assertTrue(predicate.test("https://localhost:443"));
+predicate.test("https://localhost:443");
 ```
+
+The above examples and more can be found in [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java)
 
 ## Z is small
 
