@@ -2,7 +2,7 @@
 
 Pull requests welcomed!
 
-Please run any nontrivial contribution ideas by the project maintainer, [hiljusti](mailto:hiljusti@pm.me), before sending a PR.
+Please run any nontrivial contribution ideas by the project maintainer, [hiljusti](https://github.com/hiljusti), before sending a PR.
 
 ## Evil
 
@@ -113,4 +113,12 @@ Examples in tests are encouraged.
 
 Because of the complexity of generics and function signatures, and the simplicity of function implementations (many only a single line) compilation itself is often enough testing for me to be happy with the validity of code.
 
+More rigorous tests will be added later.
+
 All PRs must continue to compile.
+
+# Publishing
+
+Publishing to Maven Central is currently handled by [hiljusti](https://github.com/hiljusti).
+
+The staging repository (prior to release to maven central) is at: https://s01.oss.sonatype.org
