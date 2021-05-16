@@ -59,6 +59,14 @@ publishing {
                         id = 'hiljusti'
                         name = 'J.R. Hill'
                         email = 'hiljusti@pm.me'
+                        url = 'https://so.dang.cool'
+                    }
+                }
+
+                contributors {
+                    contributor {
+                        name = 'Michael Ross'
+                        url = 'https://github.com/madmikeross'
                     }
                 }
 
