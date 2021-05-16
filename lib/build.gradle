@@ -1,6 +1,9 @@
 plugins {
     id 'java-library'
     id 'jacoco'
+
+    id 'maven-publish'
+    id 'signing'
 }
 
 repositories {
@@ -19,4 +22,66 @@ tasks.named('jacocoTestReport') {
 tasks.named('test') {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'so.dang.cool'
+            artifactId = 'z'
+            version = '0.0.0'
+
+            from components.java
+
+            pom {
+                name = 'Z'
+                description = 'Function combinators'
+                url = 'https://github.com/hiljusti/z'
+                
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/hiljusti/z/blob/HEAD/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'hiljusti'
+                        name = 'J.R. Hill'
+                        email = 'hiljusti@pm.me'
+                    }
+                }
+
+                scm {
+                    url = 'https://github.com/hiljusti/z'
+                    connection = 'scm:git:git://github.com/hiljusti/z.git'
+                    developerConnection = 'scm:git:git://github.com/hiljusti/z.git'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('repo')
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.maven
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
 }
