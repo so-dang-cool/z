@@ -1,0 +1,91 @@
+plugins {
+    id 'java-library'
+    id 'jacoco'
+
+    id 'maven-publish'
+    id 'signing'
+    id('io.github.gradle-nexus.publish-plugin') version '1.1.0'
+}
+
+group = 'so.dang.cool'
+version = '0.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.named('jacocoTestReport') {
+    dependsOn test
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = 'z'
+            version = version
+
+            from components.java
+
+            pom {
+                name = 'Z'
+                description = 'Function combinators'
+                url = 'https://github.com/hiljusti/z'
+                
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/hiljusti/z/blob/HEAD/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'hiljusti'
+                        name = 'J.R. Hill'
+                        email = 'hiljusti@pm.me'
+                    }
+                }
+
+                scm {
+                    url = 'https://github.com/hiljusti/z'
+                    connection = 'scm:git:git://github.com/hiljusti/z.git'
+                    developerConnection = 'scm:git:git://github.com/hiljusti/z.git'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('repo')
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.maven
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
+}
