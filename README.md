@@ -48,7 +48,7 @@ worth checking out. Z is not related to the Vavr project.
 
 ## Details
 
-- [Get Z from Maven Central](https://search.maven.org/artifact/so.dang.cool/z/0.0.0/jar)
+- [Get Z from Maven Central](https://search.maven.org/artifact/so.dang.cool/z/)
 - [Read Docs](https://www.javadoc.io/doc/so.dang.cool/z/latest/so/dang/cool/z/package-summary.html)
 
 Have fun!
