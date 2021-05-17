@@ -2,12 +2,14 @@
 
 Z is a Java library providing accessible, consistent function combinators.
 
-## Z compared to `java.util.function`
+## Succinct function combination
 
 Z
 
 ```java
 ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
+
+int sum = asciiSum.applyAsInt("abc");
 ```
 
 Plain Java
@@ -21,9 +23,12 @@ Function<IntStream, Integer> sum = IntStream::sum;
 // a composition over ToIntFunction<String>. Lambda indirection could fake it, but
 // autoboxing/unboxing would still occur.
 Function<String, Integer> asciiSum = sum.compose(chars);
+
+// Autoboxes from Integer
+int sum = asciiSum.applyAsInt("abc");
 ```
 
-## A more complex example
+## Complex function combination
 
 Z can perform sophisticated combinations that include static functions, instance
 methods, selecting among (some kinds of) overloaded functions, and more.
