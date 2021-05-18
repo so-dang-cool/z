@@ -28,24 +28,26 @@ import so.dang.cool.z.internal.function.Operator;
 public class UsageExamples {
     @Test
     public void ascii_sum_plain_java() {
-        // Capturing as a functional interface is necessary to expose composition methods.
-        Function<String, IntStream> chars = String::chars;
-        Function<IntStream, Integer> sum = IntStream::sum;
+        var asciiSum = ((Function<IntStream, Integer>) IntStream::sum).compose(String::chars);
 
-        // Composition supports only Functions. E.g. it's not possible to optimize here as
-        // a composition over ToIntFunction<String>. Lambda indirection could fake it, but
-        // autoboxing/unboxing would still occur.
-        Function<String, Integer> asciiSum = sum.compose(chars);
-        
         assertEquals(294, asciiSum.apply("abc"));
         assertEquals(775, asciiSum.apply("burrito"));
         assertEquals(1196, asciiSum.apply("albuquerque"));
     }
 
     @Test
+    public void ascii_sum_plain_java_lambda() {
+        ToIntFunction<String> asciiSum = s -> s.chars().sum();
+        
+        assertEquals(294, asciiSum.applyAsInt("abc"));
+        assertEquals(775, asciiSum.applyAsInt("burrito"));
+        assertEquals(1196, asciiSum.applyAsInt("albuquerque"));
+    }
+
+    @Test
     public void ascii_sum_z() {
         // Z handles composition a little more succinctly.
-        ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
+        var asciiSum = Z.fuse(String::chars, IntStream::sum);
         
         assertEquals(294, asciiSum.applyAsInt("abc"));
         assertEquals(775, asciiSum.applyAsInt("burrito"));
@@ -103,6 +105,17 @@ public class UsageExamples {
     }
 
     @Test
+    public void regex_plain_java() {
+        Predicate<String> isLocalHost = (String s) ->
+            Pattern.compile("https?://localhost(:\\d+)?(/\\S*)?")
+                .matcher(s)
+                .matches();
+
+        assertFalse(isLocalHost.test("invalid"));
+        assertTrue(isLocalHost.test("https://localhost:443"));
+    }
+
+    @Test
     public void simple_regex_example() {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
@@ -127,13 +140,13 @@ public class UsageExamples {
 
     @Test
     public void complex_regex_example() {
-        Predicate<CharSequence> predicate = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
+        var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
             .fusingFn(Pattern::compile)
             .fusing(Pattern::matcher)
             .fuse(Matcher::matches);
 
-        assertFalse(predicate.test("invalid"));
-        assertTrue(predicate.test("https://localhost:443"));
+        assertFalse(isLocalHost.test("invalid"));
+        assertTrue(isLocalHost.test("https://localhost:443"));
     }
 
     @Test

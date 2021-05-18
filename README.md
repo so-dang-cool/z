@@ -1,60 +1,101 @@
 # Z
 
-Z is a Java library providing accessible, consistent function combinators.
+Z is a Java library with con function combinators.
 
-## Succinct function combination
+Z contains a variety of "techniques" for combining functions:
+
+1. Fusion: `Z.fuse(fn1, fn2)` Combine two functions.
+1. Super Fusion - `Z.with(fn1).fusing(fn2).[...].fuse(fnN)` Combine _N_
+    functions.
+1. Fission - `Z.split(fn)` Split a multiargs function into a curried form.
+1. Assimilation - `Z.assimilate2(curriedFn)` Flatten a curried function into a
+    multiargs function.
+1. Absorption - `Z.absorb(fn1, fn2)` Unnaturally combine two functions.
+
+## Links
+
+- [Read the Docs](https://www.javadoc.io/doc/so.dang.cool/z/latest/so/dang/cool/z/package-summary.html)
+- [Get Z from Maven Central](https://search.maven.org/artifact/so.dang.cool/z/)
+
+## Z is lean and principled
+
+1. Z only provides function combinators
+1. Z will never need other dependencies
+1. Z will never rely on reflection or code generation
+1. Techniques with the potential to cause problems are annotated as `@Evil`;
+    choose your path wisely...
+
+## Z gives succinct, precise function combination
+
+Z fusion
+
+```java
+var asciiSum = Z.fuse(String::chars, IntStream::sum);
+
+int sum = asciiSum.applyAsInt("abc");
+```
+
+Function composition with `compose`
+
+```java
+Function<IntStream, Integer> sumInts = IntStream::sum;
+var asciiSum = sumInts.compose(String::chars);
+
+// Captures as a Function<String, Integer> (autoboxing/unboxing occurs)
+int sum = asciiSum.apply("abc");
+```
+
+Function composition with a lambda
+
+```java
+ToIntFunction<String> asciiSum = s -> s.chars().sum();
+
+// Capturing with var is not possible
+int sum = asciiSum.applyAsInt("abc");
+```
+
+Some advantages of Z here:
+
+1. **Tacit yet explicit** - Z allows for [point-free function combination](https://en.wikipedia.org/wiki/Tacit_programming).
+    The logic is stated as a fact, rather than implemented as instructions. (Of
+    course, Z can still accept lambdas, and sometimes that's appropriate)
+1. **Explicit ordering** - Z lets you consistently define actions in the order
+    they will execute.
+1. **"Just works" inference** - Z techniques are optimized for a wider variety
+    of functional interfaces. It's not necessary to define (or cast) things to
+    a `Function<A, B>` in order just to expose `Function::compose`.
+1. **Idiomatic functions** - Z doesn't reimplement functional interfaces or
+    conventions that already exist. A `Predicate` will have a `test` method, a
+    `Consumer` will have an `accept` method, etc.
+
+## Z can handle complex combinations
 
 Z
 
-```java
-ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
-
-int sum = asciiSum.applyAsInt("abc");
 ```
-
-Plain Java
-
-```java
-// Capturing as a functional interface is necessary to expose composition methods.
-Function<String, IntStream> chars = String::chars;
-Function<IntStream, Integer> sum = IntStream::sum;
-
-// Composition supports only Functions. E.g. it's not possible to optimize here as
-// a composition over ToIntFunction<String>. Lambda indirection could fake it, but
-// autoboxing/unboxing would still occur.
-Function<String, Integer> asciiSum = sum.compose(chars);
-
-// Autoboxes from Integer
-int sum = asciiSum.applyAsInt("abc");
-```
-
-## Complex function combination
-
-Z can perform sophisticated combinations that include static functions, instance
-methods, selecting among (some kinds of) overloaded functions, and more.
-
-```
-Predicate<CharSequence> predicate = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
+var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
     .fusingFn(Pattern::compile)
     .fusing(Pattern::matcher)
     .fuse(Matcher::matches);
 
-predicate.test("https://localhost:443");
+isLocalHost.test("https://localhost:443");
 ```
 
+Plain Java
+
+```
+Predicate<String> isLocalHost = (String s) ->
+    Pattern.compile("https?://localhost(:\\d+)?(/\\S*)?")
+        .matcher(s)
+        .matches();
+
+isLocalHost.test("https://localhost:443");
+```
+
+Z can perform sophisticated combinations with:
+
+* Static functions
+* Instance methods
+* Selection among many kinds of overloaded functions overloaded functions
+
 The above examples and more can be found in [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java)
-
-## Z is small
-
-Z only focuses on function manipulation. Z brings in zero other dependencies.
-
-If you're looking for something with more functional-programming features, like
-persistent collections, tuples, and monads, [Vavr](https://www.vavr.io/) may be
-worth checking out. Z is not related to the Vavr project.
-
-## Details
-
-- [Get Z from Maven Central](https://search.maven.org/artifact/so.dang.cool/z/)
-- [Read Docs](https://www.javadoc.io/doc/so.dang.cool/z/latest/so/dang/cool/z/package-summary.html)
-
-Have fun!
