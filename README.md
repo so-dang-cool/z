@@ -35,7 +35,7 @@ var asciiSum = Z.fuse(String::chars, IntStream::sum);
 int sum = asciiSum.applyAsInt("abc");
 ```
 
-Function composition with `compose`
+Function combination using `Function::compose`
 
 ```java
 Function<IntStream, Integer> sumInts = IntStream::sum;
@@ -45,7 +45,7 @@ var asciiSum = sumInts.compose(String::chars);
 int sum = asciiSum.apply("abc");
 ```
 
-Function composition with a lambda
+Function combination using a lambda
 
 ```java
 ToIntFunction<String> asciiSum = s -> s.chars().sum();
@@ -56,9 +56,9 @@ int sum = asciiSum.applyAsInt("abc");
 
 Some advantages of Z here:
 
-1. **Tacit yet explicit** - Z allows for [point-free function combination](https://en.wikipedia.org/wiki/Tacit_programming).
-    State your logic as a fact, rather than implemented as instructions. (Of
-    course, Z can still accept lambdas)
+1. **Tacit yet explicit** - Z allows for [point-free](https://en.wikipedia.org/wiki/Tacit_programming)
+    function combination. State your logic as a fact, rather than implemented
+    as instructions. (Of course, Z can still accept lambdas)
 1. **Explicit ordering** - Z lets you consistently define actions in the order
     they will execute.
 1. **"Just works" inference** - Z techniques are optimized for a wider variety
