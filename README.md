@@ -48,9 +48,9 @@ int sum = asciiSum.apply("abc");
 Function combination using a lambda
 
 ```java
+// Inference (e.g. with var) is not possible
 ToIntFunction<String> asciiSum = s -> s.chars().sum();
 
-// Capturing with var is not possible
 int sum = asciiSum.applyAsInt("abc");
 ```
 
