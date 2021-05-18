@@ -19,8 +19,23 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
-tasks.named('jacocoTestReport') {
+tasks.named('jacocoTestCoverageVerification') {
     dependsOn test
+}
+
+tasks.named('build') {
+    dependsOn jacocoTestCoverageVerification
+}
+
+tasks.named('jacocoTestCoverageVerification') {
+    violationRules {
+        rule {
+            limit {
+                // TODO: This is pathetic. Come on hiljusti, let's get serious
+                minimum = 0.04
+            }
+        }
+    }
 }
 
 tasks.named('test') {
