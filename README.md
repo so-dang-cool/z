@@ -1,8 +1,8 @@
 # Z
 
-Z is a Java library with con function combinators.
+**Z is a Java library for bold, exciting, and fearless function combination.**
 
-Z contains a variety of "techniques" for combining functions:
+Unlock your functional programming potential with these combination techniques:
 
 1. Fusion: `Z.fuse(fn1, fn2)` Combine two functions.
 1. Super Fusion - `Z.with(fn1).fusing(fn2).[...].fuse(fnN)` Combine _N_
@@ -57,8 +57,8 @@ int sum = asciiSum.applyAsInt("abc");
 Some advantages of Z here:
 
 1. **Tacit yet explicit** - Z allows for [point-free function combination](https://en.wikipedia.org/wiki/Tacit_programming).
-    The logic is stated as a fact, rather than implemented as instructions. (Of
-    course, Z can still accept lambdas, and sometimes that's appropriate)
+    State your logic as a fact, rather than implemented as instructions. (Of
+    course, Z can still accept lambdas)
 1. **Explicit ordering** - Z lets you consistently define actions in the order
     they will execute.
 1. **"Just works" inference** - Z techniques are optimized for a wider variety
@@ -92,10 +92,11 @@ Predicate<String> isLocalHost = (String s) ->
 isLocalHost.test("https://localhost:443");
 ```
 
-Z can perform sophisticated combinations with:
+Z lets you perform sophisticated combinations with:
 
 * Static functions
 * Instance methods
-* Selection among many kinds of overloaded functions overloaded functions
+* Selection among many kinds of overloaded functions
+* Almost any function you can throw at it
 
 The above examples and more can be found in [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java)
