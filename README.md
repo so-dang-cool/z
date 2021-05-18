@@ -57,10 +57,11 @@ int sum = asciiSum.applyAsInt("abc");
 Some advantages of Z here:
 
 1. **Tacit yet explicit** - Z allows for [point-free](https://en.wikipedia.org/wiki/Tacit_programming)
-    function combination. State your logic as a fact, rather than implemented
-    as instructions. (Of course, Z can still accept lambdas)
-1. **Explicit ordering** - Z lets you consistently define actions in the order
-    they will execute.
+    function combination. This means you state your logic as a fact, and don't
+    worry as much about the exact syntax for instructions. (Of course, Z can
+    accept lambdas!)
+1. **Explicit ordering of actions** - Z lets you consistently define actions in
+    the order they'll execute.
 1. **"Just works" inference** - Z techniques are optimized for a wider variety
     of functional interfaces. It's not necessary to define (or cast) things to
     a `Function<A, B>` in order just to expose `Function::compose`.
