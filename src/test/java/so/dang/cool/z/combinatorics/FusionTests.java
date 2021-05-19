@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import so.dang.cool.z.Z;
 
-public class FuseTests {
+public class FusionTests {
     @Test
     void fn_to_fn() {
         assertEquals("hello", Z.fuse(trim, toLower).apply(" HeLlO "));
