@@ -32,7 +32,7 @@ tasks.named('jacocoTestCoverageVerification') {
         rule {
             limit {
                 // TODO: You can do it. Come on hiljusti, push your limits!
-                minimum = 0.57
+                minimum = 0.63
             }
         }
     }

@@ -996,10 +996,171 @@ public class FusionTests {
         assertEquals("same-ish", Z.fuse(longToString, relation).apply(789L).apply("789"));
     }
 
-    // TODO: LongToDoubleFunction
-    // TODO: LongToIntFunction
-    // TODO: ToLongFunction
-    // TODO: ToLongBiFunction
+    @Test
+    void longToDbl_to_dblFn() {
+        assertEquals("1.0", Z.fuse(longToDouble, doubleToString).apply(1L));
+    }
+
+    @Test
+    void longToDbl_to_dblToInt() {
+        assertEquals(2, Z.fuse(longToDouble, doubleToInt).applyAsInt(2L));
+    }
+
+    @Test
+    void longToDbl_to_dblToLong() {
+        assertEquals(3L, Z.fuse(longToDouble, doubleToLong).applyAsLong(3L));
+    }
+
+    @Test
+    void longToDbl_to_dblPred() {
+        assertTrue(Z.fuse(longToDouble, isDoubleOne).test(1L));
+    }
+
+    @Evil
+    @Test
+    void longToDbl_to_dblCns() {
+        synchronized(consumedDoubleA) {
+            consumedDoubleA = 0.0;
+
+            Z.fuse(longToDouble, saveDoubleA).accept(1L);
+
+            assertEquals(1.0, consumedDoubleA);
+        }
+    }
+
+    @Test
+    void longToDbl_to_dblUnop() {
+        assertEquals(2.0, Z.fuse(longToDouble, addOneToDouble).applyAsDouble(1L));
+    }
+
+    @Test
+    void longToDbl_to_dblBiop() {
+        assertEquals(1.5, Z.fuse(longToDouble, addDoubles).apply(1L).applyAsDouble(0.5));
+    }
+    
+    @Test
+    void longToInt_to_intFn() {
+        assertEquals("1", Z.fuse(longToInt, intToString).apply(1L));
+    }
+
+    @Test
+    void longToInt_to_intToDbl() {
+        assertEquals(1.0, Z.fuse(longToInt, intToDouble).applyAsDouble(1L));
+    }
+
+    @Test
+    void longToInt_to_intToInt() {
+        assertEquals(1, Z.fuse(longToInt, intToLong).applyAsLong(1L));
+    }
+
+    @Test
+    void longToInt_to_intPred() {
+        assertTrue(Z.fuse(longToInt, isIntTwo).test(2L));
+    }
+
+    @Test
+    void  longToInt_to_intCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+            
+            Z.fuse(longToInt, saveIntA).accept(3L);
+
+            assertEquals(3, consumedIntA);
+        }
+    }
+
+    @Test
+    void  longToInt_to_intUnop() {
+        assertEquals(3, Z.fuse(longToInt, addTwoToInt).applyAsInt(1L));
+    }
+
+    @Test
+    void  longToInt_to_intBiop() {
+        assertEquals(4, Z.fuse(longToInt, addInts).apply(1L).applyAsInt(3));
+    }
+
+    @Test
+    void toLongFn_to_longFn() {
+        assertEquals("1", Z.fuse(stringToLong, longToString).apply("1"));
+    }
+
+    @Test
+    void toLongFn_to_longToDbl() {
+        assertEquals(1.0, Z.fuse(stringToLong, longToDouble).applyAsDouble("1"));
+    }
+
+    @Test
+    void toLongFn_to_longToInt() {
+        assertEquals(1L, Z.fuse(stringToLong, longToInt).applyAsInt("1"));
+    }
+
+    @Test
+    void toLongFn_to_longPred() {
+        assertTrue(Z.fuse(stringToLong, isLongThree).test("3"));
+    }
+
+    @Test
+    void toLongFn_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+
+            Z.fuse(stringToLong, saveLongA).accept("5");
+
+            assertEquals(5L, consumedLongA);
+        }
+    }
+
+    @Test
+    void toLongFn_to_longUnop() {
+        assertEquals(9L, Z.fuse(stringToLong, addThreeToLong).applyAsLong("6"));
+    }
+
+    @Test
+    void toLongFn_to_longBiop() {
+        assertEquals(3L, Z.fuse(stringToLong, addLongs).apply("1").applyAsLong(2L));
+    }
+
+    @Test
+    void toLongBifn_to_longFn() {
+        assertEquals("3", Z.fuse(addStringsAsLong, longToString).apply("1").apply("2"));
+    }
+
+    @Test
+    void toLongBifn_to_longToDbl() {
+        assertEquals(3.0, Z.fuse(addStringsAsLong, longToDouble).apply("1").applyAsDouble("2"));
+    }
+
+    @Test
+    void toLongBifn_to_longToInt() {
+        assertEquals(9, Z.fuse(addStringsAsLong, longToInt).apply("4").applyAsInt("5"));
+    }
+
+    @Test
+    void toLongBifn_to_longPred() {
+        assertTrue(Z.fuse(addStringsAsLong, isLongThree).apply("-1").test("4"));
+    }
+
+    @Test
+    void toLongBifn_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+
+            Z.fuse(addStringsAsLong, saveLongA).apply("2").accept("3");
+
+            assertEquals(5L, consumedLongA);
+        }
+    }
+    
+    @Test
+    void toLongBifn_to_longUnop() {
+        assertEquals(6L, Z.fuse(addStringsAsLong, addThreeToLong).apply("1").applyAsLong("2"));
+    }
+
+    @Test
+    void toLongBifn_to_longBiop() {
+        assertEquals(6L, Z.fuse(addStringsAsLong, addLongs).apply("1").apply("2").applyAsLong(3L));
+    }
+
     // TODO: Predicate
     // TODO: BiPredicate
     // TODO: DoublePredicate
