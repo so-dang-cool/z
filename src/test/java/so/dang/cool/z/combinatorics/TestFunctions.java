@@ -123,7 +123,7 @@ public final class TestFunctions {
     static DoubleSupplier getDouble = () -> suppliedDouble;
     static IntSupplier getInt = () -> suppliedInt;
     static LongSupplier getLong = () -> suppliedLong;
-    static Operator doNothing = () -> {};
+    static Operator doOperation = () -> wasOperated = true;
     static UnaryOperator<String> addQuestionMark = s -> s.concat("?");
     static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
     static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
