@@ -1755,6 +1755,14 @@ public final class Z {
     }
 
     @Evil
+    public static DoublePredicate absorb(DoubleConsumer initial, BooleanSupplier next) {
+        return (double d) -> {
+            initial.accept(d);
+            return next.getAsBoolean();
+        };
+    }
+
+    @Evil
     public static DoubleUnaryOperator absorb(DoubleConsumer initial, DoubleSupplier next) {
         return (double d) -> {
             initial.accept(d);
@@ -1793,6 +1801,14 @@ public final class Z {
         return (A a) -> (double d) -> {
             initial.accept(a, d);
             return next.get();
+        };
+    }
+
+    @Evil
+    public static <A> Function<A, DoublePredicate> absorb(ObjDoubleConsumer<A> initial, BooleanSupplier next) {
+        return (A a) -> (double d) -> {
+            initial.accept(a, d);
+            return next.getAsBoolean();
         };
     }
 
@@ -1839,6 +1855,14 @@ public final class Z {
     }
 
     @Evil
+    public static IntPredicate absorb(IntConsumer initial, BooleanSupplier next) {
+        return (int i) -> {
+            initial.accept(i);
+            return next.getAsBoolean();
+        };
+    }
+
+    @Evil
     public static IntToDoubleFunction absorb(IntConsumer initial, DoubleSupplier next) {
         return (int i) -> {
             initial.accept(i);
@@ -1877,6 +1901,14 @@ public final class Z {
         return (A a) -> (int i) -> {
             initial.accept(a, i);
             return next.get();
+        };
+    }
+
+    @Evil
+    public static <A> Function<A, IntPredicate> absorb(ObjIntConsumer<A> initial, BooleanSupplier next) {
+        return (A a) -> (int i) -> {
+            initial.accept(a, i);
+            return next.getAsBoolean();
         };
     }
 
@@ -1923,6 +1955,14 @@ public final class Z {
     }
 
     @Evil
+    public static LongPredicate absorb(LongConsumer initial, BooleanSupplier next) {
+        return (long n) -> {
+            initial.accept(n);
+            return next.getAsBoolean();
+        };
+    }
+
+    @Evil
     public static LongToDoubleFunction absorb(LongConsumer initial, DoubleSupplier next) {
         return (long n) -> {
             initial.accept(n);
@@ -1965,6 +2005,14 @@ public final class Z {
     }
 
     @Evil
+    public static <A> Function<A, LongPredicate> absorb(ObjLongConsumer<A> initial, BooleanSupplier next) {
+        return (A a) -> (long n) -> {
+            initial.accept(a, n);
+            return next.getAsBoolean();
+        };
+    }
+
+    @Evil
     public static <A> Function<A, LongToDoubleFunction> absorb(ObjLongConsumer<A> initial, DoubleSupplier next) {
         return (A a) -> (long n) -> {
             initial.accept(a, n);
@@ -2003,6 +2051,14 @@ public final class Z {
         return () -> {
             initial.run();
             return next.get();
+        };
+    }
+
+    @Evil
+    public static BooleanSupplier absorb(Operator initial, BooleanSupplier next) {
+        return () -> {
+            initial.run();
+            return next.getAsBoolean();
         };
     }
 

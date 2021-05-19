@@ -1185,7 +1185,7 @@ public class FusionTests {
             assertEquals(5L, consumedLongA);
         }
     }
-    
+
     @Test
     void toLongBifn_to_longUnop() {
         assertEquals(6L, Z.fuse(addStringsAsLong, addThreeToLong).apply("1").applyAsLong("2"));
