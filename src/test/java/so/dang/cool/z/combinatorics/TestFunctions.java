@@ -89,12 +89,16 @@ public final class TestFunctions {
     static Function<String, String> toLower = String::toLowerCase;
     static Function<String, String> trim = String::trim;
     static Function<String, String> addExclamationMark = s -> s.concat("!");
+    static Function<Boolean, String> booleanToString = String::valueOf;
     static BiFunction<String, String, String> concat = String::concat;
+    static BiFunction<Boolean, String, String> sameCase = (b, s) -> b ? s.toUpperCase() : s.toLowerCase();
     static DoubleFunction<String> doubleToString = String::valueOf;
     static DoubleToIntFunction doubleToInt = d -> (int) d;
     static DoubleToLongFunction doubleToLong = d -> (long) d;
     static ToDoubleFunction<String> stringToDouble = Double::parseDouble;
+    static ToDoubleFunction<Boolean> doubleIsZero = b -> b ? 1.0 : 0.0;
     static ToDoubleBiFunction<String, String> addStringsAsDouble = (a, b) -> Double.parseDouble(a) + Double.parseDouble(b);
+    static ToDoubleBiFunction<Boolean, String> maybeAddOneToStringDouble = (b, s) -> Double.parseDouble(s) + (b ? 1.0 : 0.0);
     static IntFunction<String> intToString = String::valueOf;
     static IntToDoubleFunction intToDouble = i -> (double) i;
     static IntToLongFunction intToLong = i -> (long) i;

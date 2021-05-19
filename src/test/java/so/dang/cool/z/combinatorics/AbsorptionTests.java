@@ -1,6 +1,7 @@
 package so.dang.cool.z.combinatorics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combinatorics.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
+@Evil
 public class AbsorptionTests {
     @Evil
     @Test
@@ -75,6 +77,7 @@ public class AbsorptionTests {
                 Z.absorb(saveStringA, doOperation).accept("merhaba");
 
                 assertEquals("merhaba", consumedStringA);
+                assertTrue(wasOperated);
             }
         }
     }
@@ -112,48 +115,72 @@ public class AbsorptionTests {
     @Evil
     @Test
     void bicns_to_dblSup() {
-        synchronized(consumedStringA) {
-            consumedStringA = "";
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
 
-            assertEquals(suppliedDouble, Z.absorb(saveStringA, getDouble).applyAsDouble("hola"));
-            assertEquals("hola", consumedStringA);
+                assertEquals(suppliedDouble, Z.absorb(saveStringsBandC, getDouble).apply("buenas").applyAsDouble("dias"));
+                assertEquals("buenas", consumedStringB);
+                assertEquals("dias", consumedStringC);
+            }
         }
     }
 
     @Evil
     @Test
     void bicns_to_intSup() {
-        synchronized(consumedStringA) {
-            consumedStringA = "";
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
 
-            assertEquals(suppliedInt, Z.absorb(saveStringA, getInt).applyAsInt("안녕하세요"));
-            assertEquals("안녕하세요", consumedStringA);
+                assertEquals(suppliedInt, Z.absorb(saveStringsBandC, getInt).apply("안녕").applyAsInt("하세요"));
+                assertEquals("안녕", consumedStringB);
+                assertEquals("하세요", consumedStringC);
+            }
         }
     }
 
     @Evil
     @Test
     void bicns_to_longSup() {
-        synchronized(consumedStringA) {
-            consumedStringA = "";
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
 
-            assertEquals(suppliedLong, Z.absorb(saveStringA, getLong).applyAsLong("kamusta"));
-            assertEquals("kamusta", consumedStringA);
+                assertEquals(suppliedLong, Z.absorb(saveStringsBandC, getLong).apply("ça").applyAsLong("va"));
+                assertEquals("ça", consumedStringB);
+                assertEquals("va", consumedStringC);
+            }
         }
     }
 
     @Evil
     @Test
     void bicns_to_op() {
-        synchronized(consumedStringA) {
-            synchronized(wasOperated) {
-                consumedStringA = "";
-                wasOperated = false;
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                synchronized(wasOperated) {
+                    consumedStringB = "";
+                    consumedStringC = "";
+                    wasOperated = false;
 
-                Z.absorb(saveStringA, doOperation).accept("merhaba");
+                    Z.absorb(saveStringsBandC, doOperation).apply("...").accept("!!!");
 
-                assertEquals("merhaba", consumedStringA);
+                    assertEquals("...", consumedStringB);
+                    assertEquals("!!!", consumedStringC);
+                    assertTrue(wasOperated);
+                }
             }
         }
     }
+
+    // TODO: DoubleConsumer
+    // TODO: ObjDoubleConsumer
+    // TODO: IntConsumer
+    // TODO: ObjIntConsumer
+    // TODO: LongConsumer
+    // TODO: ObjLongConsumer
 }
