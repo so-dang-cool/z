@@ -1,6 +1,8 @@
 package so.dang.cool.z.combinatorics;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -44,6 +46,7 @@ import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 import so.dang.cool.z.internal.function.DecFunction;
 import so.dang.cool.z.internal.function.DodecFunction;
@@ -132,64 +135,142 @@ public final class TestFunctions {
     static IntBinaryOperator addInts = (i1, i2) -> i1 + i2;
     static LongUnaryOperator addThreeToLong = n -> n + 3L;
     static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
+    static BiFunction<String, String, String>
+        concat2 = (a, b) ->
+            concatVariableStrings(a, b);
     static TriFunction<String, String, String, String>
         concat3 = (a, b, c) ->
-            Arrays.asList(a, b, c)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c);
     static QuadFunction<String, String, String, String, String>
         concat4 = (a, b, c, d) ->
-            Arrays.asList(a, b, c, d)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d);
     static QuinFunction<String, String, String, String, String, String>
         concat5 = (a, b, c, d, e) ->
-            Arrays.asList(a, b, c, d, e)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e);
     static SexFunction<String, String, String, String, String, String, String>
         concat6 = (a, b, c, d, e, f) ->
-            Arrays.asList(a, b, c, d, e, f)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f);
     static SeptFunction<String, String, String, String, String, String, String, String>
         concat7 = (a, b, c, d, e, f, g) ->
-            Arrays.asList(a, b, c, d, e, f, g)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g);
     static OctFunction<String, String, String, String, String, String, String, String, String>
         concat8 = (a, b, c, d, e, f, g, h) ->
-            Arrays.asList(a, b, c, d, e, f, g, h)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g, h);
     static NonFunction<String, String, String, String, String, String, String, String, String, String>
         concat9 = (a, b, c, d, e, f, g, h, i) ->
-            Arrays.asList(a, b, c, d, e, f, g, h, i)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g, h, i);
     static DecFunction<String, String, String, String, String, String, String, String, String, String, String>
         concat10 = (a, b, c, d, e, f, g, h, i, j) ->
-            Arrays.asList(a, b, c, d, e, f, g, h, i, j)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
     static UndecFunction<String, String, String, String, String, String, String, String, String, String, String, String>
         concat11 = (a, b, c, d, e, f, g, h, i, j, k) ->
-            Arrays.asList(a, b, c, d, e, f, g, h, i, j, k)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
     static DodecFunction<String, String, String, String, String, String, String, String, String, String, String, String, String>
         concat12 = (a, b, c, d, e, f, g, h, i, j, k, l) ->
-            Arrays.asList(a, b, c, d, e, f, g, h, i, j, k, l)
-                .stream()
-                .reduce(String::concat)
-                .get();
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
+    static Function<String,
+            Function<String, String>>
+        curriedConcat2 = a -> b ->
+            concatVariableStrings(a, b);
+    static Function<String,
+            Function<String,
+             Function<String, String>>>
+        curriedConcat3 = a -> b -> c ->
+            concatVariableStrings(a, b, c);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String, String>>>>
+        curriedConcat4 = a -> b -> c -> d ->
+            concatVariableStrings(a, b, c, d);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String, String>>>>>
+        curriedConcat5 = a -> b -> c -> d -> e ->
+            concatVariableStrings(a, b, c, d, e);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String, String>>>>>>
+        curriedConcat6 = a -> b -> c -> d -> e -> f ->
+            concatVariableStrings(a, b, c, d, e, f);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String, String>>>>>>>
+        curriedConcat7 = a -> b -> c -> d -> e -> f -> g ->
+            concatVariableStrings(a, b, c, d, e, f, g);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String,
+                  Function<String, String>>>>>>>>
+        curriedConcat8 = a -> b -> c -> d -> e -> f -> g -> h ->
+            concatVariableStrings(a, b, c, d, e, f, g, h);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String,
+                  Function<String,
+                   Function<String, String>>>>>>>>>
+        curriedConcat9 = a -> b -> c -> d -> e -> f -> g -> h -> i ->
+            concatVariableStrings(a, b, c, d, e, f, g, h, i);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String,
+                  Function<String,
+                   Function<String,
+                    Function<String, String>>>>>>>>>>
+        curriedConcat10 = a -> b -> c -> d -> e -> f -> g -> h -> i -> j ->
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String,
+                  Function<String,
+                   Function<String,
+                    Function<String,
+                     Function<String, String>>>>>>>>>>>
+        curriedConcat11 = a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k ->
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
+    static Function<String,
+            Function<String,
+             Function<String,
+              Function<String,
+               Function<String,
+                Function<String,
+                 Function<String,
+                  Function<String,
+                   Function<String,
+                    Function<String,
+                     Function<String,
+                      Function<String, String>>>>>>>>>>>>
+        curriedConcat12 = a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l ->
+            concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
+
+    private static String concatVariableStrings(String ...strings) {
+        return Stream.of(strings)
+            .reduce(String::concat)
+            .get();
+    }
 }
