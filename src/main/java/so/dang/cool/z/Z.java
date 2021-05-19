@@ -907,7 +907,76 @@ public final class Z {
         return (A a) -> (B b) -> (Boolean bool) -> next.apply(initial.test(a, b), bool);
     }
 
-    /* DoublePredicate [TODO] */
+    /* <DoublePredicate> */
+
+    public static <A> DoubleFunction<A> fuse(DoublePredicate initial, Function<Boolean, A> next) {
+        return (double d) -> next.apply(initial.test(d));
+    }
+
+    public static <A, B> DoubleFunction<Function<A, B>> fuse(DoublePredicate initial, BiFunction<Boolean, A, B> next) {
+        return (double d) -> (A a) -> next.apply(initial.test(d), a);
+    }
+
+    public static DoubleUnaryOperator fuse(DoublePredicate initial, ToDoubleFunction<Boolean> next) {
+        return (double d) -> next.applyAsDouble(initial.test(d));
+    }
+
+    public static <A> DoubleFunction<ToDoubleFunction<A>> fuse(DoublePredicate initial, ToDoubleBiFunction<Boolean, A> next) {
+        return (double d) -> (A a) -> next.applyAsDouble(initial.test(d), a);
+    }
+
+    public static DoubleToIntFunction fuse(DoublePredicate initial, ToIntFunction<Boolean> next) {
+        return (double d) -> next.applyAsInt(initial.test(d));
+    }
+
+    public static <A> DoubleFunction<ToIntFunction<A>> fuse(DoublePredicate initial, ToIntBiFunction<Boolean, A> next) {
+        return (double d) -> (A a) -> next.applyAsInt(initial.test(d), a);
+    }
+
+    public static DoubleToLongFunction fuse(DoublePredicate initial, ToLongFunction<Boolean> next) {
+        return (double d) -> next.applyAsLong(initial.test(d));
+    }
+
+    public static <A> DoubleFunction<ToLongFunction<A>> fuse(DoublePredicate initial, ToLongBiFunction<Boolean, A> next) {
+        return (double d) -> (A a) -> next.applyAsLong(initial.test(d), a);
+    }
+
+    public static DoublePredicate fuse(DoublePredicate initial, Predicate<Boolean> next) {
+        return (double d) -> next.test(initial.test(d));
+    }
+
+    public static <A> DoubleFunction<Predicate<A>> fuse(DoublePredicate initial, BiPredicate<Boolean, A> next) {
+        return (double d) -> (A a) -> next.test(initial.test(d), a);
+    }
+
+    public static DoubleConsumer fuse(DoublePredicate initial, Consumer<Boolean> next) {
+        return (double d) -> next.accept(initial.test(d));
+    }
+
+    public static <A> DoubleFunction<Consumer<A>> fuse(DoublePredicate initial, BiConsumer<Boolean, A> next) {
+        return (double d) -> (A a) -> next.accept(initial.test(d), a);
+    }
+
+    public static DoubleFunction<DoubleConsumer> fuse(DoublePredicate initial, ObjDoubleConsumer<Boolean> next) {
+        return (double d1) -> (double d2) -> next.accept(initial.test(d1), d2);
+    }
+
+    public static DoubleFunction<IntConsumer> fuse(DoublePredicate initial, ObjIntConsumer<Boolean> next) {
+        return (double d) -> (int i) -> next.accept(initial.test(d), i);
+    }
+
+    public static DoubleFunction<LongConsumer> fuse(DoublePredicate initial, ObjLongConsumer<Boolean> next) {
+        return (double d) -> (long n) -> next.accept(initial.test(d), n);
+    }
+
+    public static DoublePredicate fuse(DoublePredicate initial, UnaryOperator<Boolean> next) {
+        return (double d) -> next.apply(initial.test(d));
+    }
+
+    public static DoubleFunction<Predicate<Boolean>> fuse(DoublePredicate initial, BinaryOperator<Boolean> next) {
+        return (double d) -> (Boolean b) -> next.apply(initial.test(d), b);
+    }
+
     /* IntPredicate [TODO] */
     /* LongPredicate [TODO] */
 
