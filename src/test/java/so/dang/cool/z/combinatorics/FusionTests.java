@@ -62,6 +62,7 @@ public class FusionTests {
         assertTrue(Z.fuse(trim, startsWith).apply(" hello ").test("hell"));
     }
 
+    @Evil
     @Test
     void fn_to_cns() {
         synchronized(consumedStringA) {
@@ -73,8 +74,9 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
-    void fn_to_Bicns() {
+    void fn_to_bicns() {
         synchronized(consumedStringB) {
             synchronized(consumedStringC) {
                 consumedStringB = "";
@@ -88,6 +90,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void fn_to_objDblCns() {
         synchronized(consumedStringD) {
@@ -103,6 +106,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void fn_to_objIntCns() {
         synchronized(consumedStringE) {
@@ -118,6 +122,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void fn_to_objLongFn() {
         synchronized(consumedStringF) {
@@ -184,15 +189,16 @@ public class FusionTests {
     }
 
     @Test
-    void bifn_to_toPred() {
+    void bifn_to_pred() {
         assertTrue(Z.fuse(concat, isEmpty).apply("").test(""));
     }
 
     @Test
-    void bifn_to_toBipred() {
+    void bifn_to_bipred() {
         assertTrue(Z.fuse(concat, startsWith).apply("ba").apply("nana").test("ban"));
     }
 
+    @Evil
     @Test
     void bifn_to_cns() {
         synchronized(consumedStringA) {
@@ -204,6 +210,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void bifn_to_bicns() {
         synchronized(consumedStringB) {
@@ -219,6 +226,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void bifn_to_objDblCns() {
         synchronized(consumedStringD) {
@@ -234,6 +242,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void bifn_to_objIntCns() {
         synchronized(consumedStringE) {
@@ -249,6 +258,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void bifn_to_objLongFn() {
         synchronized(consumedStringF) {
@@ -265,12 +275,12 @@ public class FusionTests {
     }
 
     @Test
-    void bifn_to_toUnop() {
+    void bifn_to_unop() {
         assertEquals("goodbye?", Z.fuse(concat, addQuestionMark).apply("good").apply("bye"));
     }
 
     @Test
-    void bifn_to_toBiop() {
+    void bifn_to_biop() {
         assertEquals("same-ish", Z.fuse(concat, relation).apply("yo").apply(" mama").apply("YO MAMA"));
     }
 
@@ -324,6 +334,7 @@ public class FusionTests {
         assertTrue(Z.fuse(doubleToString, startsWith).apply(1.0).test("1"));
     }
 
+    @Evil
     @Test
     void dblFn_to_cns() {
         synchronized(consumedStringA) {
@@ -335,6 +346,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void dblFn_to_bicns() {
         synchronized(consumedStringB) {
@@ -350,6 +362,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void dblFn_to_objDblCns() {
         synchronized(consumedStringD) {
@@ -365,6 +378,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void dblFn_to_objIntCns() {
         synchronized(consumedStringE) {
@@ -380,6 +394,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void dblFn_to_objLongCns() {
         synchronized(consumedStringF) {
@@ -396,12 +411,12 @@ public class FusionTests {
     }
 
     @Test
-    void dblFn_to_toUnop() {
+    void dblFn_to_unop() {
         assertEquals("9.5?", Z.fuse(doubleToString, addQuestionMark).apply(9.5));
     }
 
     @Test
-    void dblFn_to_toBiop() {
+    void dblFn_to_biop() {
         assertEquals("same-ish", Z.fuse(doubleToString, relation).apply(10.5).apply("10.5"));
     }
 
@@ -425,6 +440,7 @@ public class FusionTests {
         assertTrue(Z.fuse(doubleToInt, isIntTwo).test(2.1));
     }
 
+    @Evil
     @Test
     void dblToInt_to_intCns() {
         synchronized(consumedIntA) {
@@ -466,6 +482,7 @@ public class FusionTests {
         assertTrue(Z.fuse(doubleToLong, isLongThree).test(3.1));
     }
 
+    @Evil
     @Test
     void dblToLong_to_longCns() {
         synchronized(consumedLongA) {
@@ -507,6 +524,7 @@ public class FusionTests {
         assertTrue(Z.fuse(stringToDouble, isDoubleOne).test("1.0"));
     }
 
+    @Evil
     @Test
     void toDblFn_to_dblCns() {
         synchronized(consumedDoubleA) {
@@ -548,6 +566,7 @@ public class FusionTests {
         assertTrue(Z.fuse(addStringsAsDouble, isDoubleOne).apply("0.5").test("0.5"));
     }
 
+    @Evil
     @Test
     void toDblBifn_to_dblCns() {
         synchronized(consumedDoubleA) {
@@ -619,6 +638,7 @@ public class FusionTests {
         assertTrue(Z.fuse(intToString, startsWith).apply(11).test("1"));
     }
 
+    @Evil
     @Test
     void intFn_to_cns() {
         synchronized(consumedStringA) {
@@ -630,6 +650,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void intFn_to_bicns() {
         synchronized(consumedStringB) {
@@ -645,6 +666,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void intFn_to_objDblCns() {
         synchronized(consumedStringD) {
@@ -660,6 +682,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void intFn_to_objIntCns() {
         synchronized(consumedStringE) {
@@ -675,6 +698,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void intFn_to_objLongCns() {
         synchronized(consumedStringF) {
@@ -691,12 +715,12 @@ public class FusionTests {
     }
 
     @Test
-    void intFn_to_toUnop() {
+    void intFn_to_unop() {
         assertEquals("10?", Z.fuse(intToString, addQuestionMark).apply(10));
     }
 
     @Test
-    void intFn_to_toBiop() {
+    void intFn_to_biop() {
         assertEquals("same-ish", Z.fuse(intToString, relation).apply(234).apply("234"));
     }
 
@@ -762,6 +786,7 @@ public class FusionTests {
         assertTrue(Z.fuse(intToLong, isLongThree).test(3));
     }
 
+    @Evil
     @Test
     void  intToLong_to_longCns() {
         synchronized(consumedLongA) {
@@ -784,27 +809,28 @@ public class FusionTests {
     }
 
     @Test
-    void toIntFn_to_dblFn() {
+    void toIntFn_to_intFn() {
         assertEquals("1", Z.fuse(stringToInt, intToString).apply("1"));
     }
 
     @Test
-    void toIntFn_to_dblToInt() {
+    void toIntFn_to_intToDbl() {
         assertEquals(1.0, Z.fuse(stringToInt, intToDouble).applyAsDouble("1"));
     }
 
     @Test
-    void toIntFn_to_dblToLong() {
+    void toIntFn_to_intToLong() {
         assertEquals(1L, Z.fuse(stringToInt, intToLong).applyAsLong("1"));
     }
 
     @Test
-    void toIntFn_to_dblPred() {
+    void toIntFn_to_intPred() {
         assertTrue(Z.fuse(stringToInt, isIntTwo).test("2"));
     }
 
+    @Evil
     @Test
-    void toIntFn_to_dblCns() {
+    void toIntFn_to_intCns() {
         synchronized(consumedIntA) {
             consumedIntA = 0;
 
@@ -825,12 +851,12 @@ public class FusionTests {
     }
 
     @Test
-    void toIntBifn_to_dblFn() {
+    void toIntBifn_to_intFn() {
         assertEquals("3", Z.fuse(addStringsAsInt, intToString).apply("1").apply("2"));
     }
 
     @Test
-    void toIntBifn_to_dblToInt() {
+    void toIntBifn_to_intToDbl() {
         assertEquals(3.0, Z.fuse(addStringsAsInt, intToDouble).apply("1").applyAsDouble("2"));
     }
 
@@ -840,12 +866,13 @@ public class FusionTests {
     }
 
     @Test
-    void toIntBifn_to_dblPred() {
+    void toIntBifn_to_intPred() {
         assertTrue(Z.fuse(addStringsAsInt, isIntTwo).apply("-1").test("3"));
     }
 
+    @Evil
     @Test
-    void toIntBifn_to_dblCns() {
+    void toIntBifn_to_intCns() {
         synchronized(consumedIntA) {
             consumedIntA = 0;
 
@@ -915,6 +942,7 @@ public class FusionTests {
         assertTrue(Z.fuse(longToString, startsWith).apply(11L).test("1"));
     }
 
+    @Evil
     @Test
     void longFn_to_cns() {
         synchronized(consumedStringA) {
@@ -926,6 +954,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void longFn_to_bicns() {
         synchronized(consumedStringB) {
@@ -941,6 +970,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void longFn_to_objDblCns() {
         synchronized(consumedStringD) {
@@ -956,6 +986,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void longFn_to_objIntCns() {
         synchronized(consumedStringE) {
@@ -971,6 +1002,7 @@ public class FusionTests {
         }
     }
 
+    @Evil
     @Test
     void longFn_to_objLongCns() {
         synchronized(consumedStringF) {
@@ -987,12 +1019,12 @@ public class FusionTests {
     }
 
     @Test
-    void longFn_to_toUnop() {
+    void longFn_to_unop() {
         assertEquals("100?", Z.fuse(longToString, addQuestionMark).apply(100L));
     }
 
     @Test
-    void longFn_to_toBiop() {
+    void longFn_to_biop() {
         assertEquals("same-ish", Z.fuse(longToString, relation).apply(789L).apply("789"));
     }
 
@@ -1049,7 +1081,7 @@ public class FusionTests {
     }
 
     @Test
-    void longToInt_to_intToInt() {
+    void longToInt_to_intToLong() {
         assertEquals(1, Z.fuse(longToInt, intToLong).applyAsLong(1L));
     }
 
@@ -1058,6 +1090,7 @@ public class FusionTests {
         assertTrue(Z.fuse(longToInt, isIntTwo).test(2L));
     }
 
+    @Evil
     @Test
     void  longToInt_to_intCns() {
         synchronized(consumedIntA) {
@@ -1099,6 +1132,7 @@ public class FusionTests {
         assertTrue(Z.fuse(stringToLong, isLongThree).test("3"));
     }
 
+    @Evil
     @Test
     void toLongFn_to_longCns() {
         synchronized(consumedLongA) {
@@ -1140,6 +1174,7 @@ public class FusionTests {
         assertTrue(Z.fuse(addStringsAsLong, isLongThree).apply("-1").test("4"));
     }
 
+    @Evil
     @Test
     void toLongBifn_to_longCns() {
         synchronized(consumedLongA) {
