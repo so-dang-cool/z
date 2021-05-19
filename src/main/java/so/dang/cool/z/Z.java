@@ -323,7 +323,7 @@ public final class Z {
         return (double d) -> next.applyAsDouble(initial.applyAsLong(d));
     }
 
-    public static DoubleToLongFunction fuse(DoubleToLongFunction initial, LongToIntFunction next) {
+    public static DoubleToIntFunction fuse(DoubleToLongFunction initial, LongToIntFunction next) {
         return (double d) -> next.applyAsInt(initial.applyAsLong(d));
     }
 

@@ -445,8 +445,88 @@ public class FusionTests {
         assertEquals(5, Z.fuse(doubleToInt, addInts).apply(2.4).applyAsInt(3));
     }
 
-    // TODO: DoubleToLongFunction
-    // TODO: ToDoubleFunction
+    @Test
+    void dblToLong_to_longFn() {
+        assertEquals("1", Z.fuse(doubleToLong, longToString).apply(1.6));
+    }
+
+    @Test
+    void dblToLong_to_longToDbl() {
+        assertEquals(1.0, Z.fuse(doubleToLong, longToDouble).applyAsDouble(1.7));
+    }
+
+    @Test
+    void dblToLong_to_longToInt() {
+        assertEquals(1, Z.fuse(doubleToLong, longToInt).applyAsInt(1.8));
+    }
+
+    @Test
+    void dblToLong_to_longPred() {
+        assertTrue(Z.fuse(doubleToLong, isLongThree).test(3.1));
+    }
+
+    @Test
+    void dblToLong_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+            
+            Z.fuse(doubleToLong, saveLongA).accept(3.2);
+
+            assertEquals(3L, consumedLongA);
+        }
+    }
+
+    @Test
+    void dblToLong_to_longUnop() {
+        assertEquals(4L, Z.fuse(doubleToLong, addThreeToLong).applyAsLong(1.2));
+    }
+
+    @Test
+    void dblToLong_to_longBiop() {
+        assertEquals(4L, Z.fuse(doubleToLong, addLongs).apply(1.2).applyAsLong(3L));
+    }
+
+    @Test
+    void toDbl_to_dblFn() {
+        assertEquals("4.5", Z.fuse(stringToDouble, doubleToString).apply("4.5"));
+    }
+
+    @Test
+    void toDbl_to_dblToInt() {
+        assertEquals(4, Z.fuse(stringToDouble, doubleToInt).applyAsInt("4.6"));
+    }
+
+    @Test
+    void toDbl_to_dblToLong() {
+        assertEquals(4L, Z.fuse(stringToDouble, doubleToLong).applyAsLong("4.7"));
+    }
+
+    @Test
+    void toDbl_to_dblPred() {
+        assertTrue(Z.fuse(stringToDouble, isDoubleOne).test("1.0"));
+    }
+
+    @Test
+    void toDbl_to_dblCns() {
+        synchronized(consumedDoubleA) {
+            consumedDoubleA = 0.0;
+
+            Z.fuse(stringToDouble, saveDoubleA).accept("5.5");
+
+            assertEquals(5.5, consumedDoubleA);
+        }
+    }
+
+    @Test
+    void toDbl_to_dblUnop() {
+        assertEquals(7.5, Z.fuse(stringToDouble, addOneToDouble).applyAsDouble("6.5"));
+    }
+
+    @Test
+    void toDbl_to_dblBiop() {
+        assertEquals(3.0, Z.fuse(stringToDouble, addDoubles).apply("1.0").applyAsDouble(2.0));
+    }
+    
     // TODO: ToDoubleBiFunction
 
     @Test
