@@ -405,6 +405,51 @@ public class CombinationTests {
     }
 
     @Test
+    void dblToInt_to_intFn() {
+        assertEquals("1", Z.fuse(doubleToInt, intToString).apply(1.1));
+    }
+
+    @Test
+    void dblToInt_to_intToDbl() {
+        assertEquals(1.0, Z.fuse(doubleToInt, intToDouble).applyAsDouble(1.2));
+    }
+
+    @Test
+    void dblToInt_to_intToLong() {
+        assertEquals(1L, Z.fuse(doubleToInt, intToLong).applyAsLong(1.3));
+    }
+
+    @Test
+    void dblToInt_to_intPred() {
+        assertTrue(Z.fuse(doubleToInt, isIntTwo).test(2.1));
+    }
+
+    @Test
+    void dblToInt_to_intCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+
+            Z.fuse(doubleToInt, saveIntegerA).accept(2.2);
+
+            assertEquals(2, consumedIntA);
+        }
+    }
+
+    @Test
+    void dblToInt_to_intUnop() {
+        assertEquals(4, Z.fuse(doubleToInt, addTwoToInt).applyAsInt(2.3));
+    }
+
+    @Test
+    void dblToInt_to_intBiop() {
+        assertEquals(5, Z.fuse(doubleToInt, addInts).apply(2.4).applyAsInt(3));
+    }
+
+    // TODO: DoubleToLongFunction
+    // TODO: ToDoubleFunction
+    // TODO: ToDoubleBiFunction
+
+    @Test
     void intFn_to_fn() {
         assertEquals("1!", Z.fuse(intToString, addExclamationMark).apply(1));
     }
@@ -534,6 +579,11 @@ public class CombinationTests {
     void intFn_to_toBiop() {
         assertEquals("same-ish", Z.fuse(intToString, relation).apply(234).apply("234"));
     }
+
+    // TODO: IntToDoubleFunction
+    // TODO: IntToLongFunction
+    // TODO: ToIntFunction
+    // TODO: ToIntBiFunction
 
     @Test
     void longFn_to_fn() {
@@ -665,4 +715,35 @@ public class CombinationTests {
     void longFn_to_toBiop() {
         assertEquals("same-ish", Z.fuse(longToString, relation).apply(789L).apply("789"));
     }
+
+    // TODO: LongToDoubleFunction
+    // TODO: LongToIntFunction
+    // TODO: ToLongFunction
+    // TODO: ToLongBiFunction
+    // TODO: Predicate
+    // TODO: BiPredicate
+    // TODO: DoublePredicate
+    // TODO: IntPredicate
+    // TODO: LongPredicate
+    // TODO: Consumer
+    // TODO: BiConsumer
+    // TODO: DoubleConsumer
+    // TODO: ObjDoubleConsumer
+    // TODO: IntConsumer
+    // TODO: ObjIntConsumer
+    // TODO: LongConsumer
+    // TODO: ObjLongConsumer
+    // TODO: Supplier
+    // TODO: BooleanSupplier
+    // TODO: DoubleSupplier
+    // TODO: IntSupplier
+    // TODO: LongSupplier
+    // TODO: UnaryOperator
+    // TODO: BinaryOperator
+    // TODO: DoubleUnaryOperator
+    // TODO: DoubleBinaryOperator
+    // TODO: IntUnaryOperator
+    // TODO: IntBinaryOperator
+    // TODO: LongUnaryOperator
+    // TODO: LongBinaryOperator
 }

@@ -285,6 +285,10 @@ public final class Z {
 
     /* DoubleToIntFunction */
 
+    public static <A> DoubleFunction<A> fuse(DoubleToIntFunction initial, IntFunction<A> next) {
+        return (double d) -> next.apply(initial.applyAsInt(d));
+    }
+
     public static DoubleUnaryOperator fuse(DoubleToIntFunction initial, IntToDoubleFunction next) {
         return (double d) -> next.applyAsDouble(initial.applyAsInt(d));
     }
