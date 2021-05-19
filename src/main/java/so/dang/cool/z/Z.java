@@ -977,8 +977,145 @@ public final class Z {
         return (double d) -> (Boolean b) -> next.apply(initial.test(d), b);
     }
 
-    /* IntPredicate [TODO] */
-    /* LongPredicate [TODO] */
+    /* IntPredicate */
+
+    public static <A> IntFunction<A> fuse(IntPredicate initial, Function<Boolean, A> next) {
+        return (int i) -> next.apply(initial.test(i));
+    }
+
+    public static <A, B> IntFunction<Function<A, B>> fuse(IntPredicate initial, BiFunction<Boolean, A, B> next) {
+        return (int i) -> (A a) -> next.apply(initial.test(i), a);
+    }
+
+    public static IntToDoubleFunction fuse(IntPredicate initial, ToDoubleFunction<Boolean> next) {
+        return (int i) -> next.applyAsDouble(initial.test(i));
+    }
+
+    public static <A> IntFunction<ToDoubleFunction<A>> fuse(IntPredicate initial, ToDoubleBiFunction<Boolean, A> next) {
+        return (int i) -> (A a) -> next.applyAsDouble(initial.test(i), a);
+    }
+
+    public static IntUnaryOperator fuse(IntPredicate initial, ToIntFunction<Boolean> next) {
+        return (int i) -> next.applyAsInt(initial.test(i));
+    }
+
+    public static <A> IntFunction<ToIntFunction<A>> fuse(IntPredicate initial, ToIntBiFunction<Boolean, A> next) {
+        return (int i) -> (A a) -> next.applyAsInt(initial.test(i), a);
+    }
+
+    public static IntToLongFunction fuse(IntPredicate initial, ToLongFunction<Boolean> next) {
+        return (int i) -> next.applyAsLong(initial.test(i));
+    }
+
+    public static <A> IntFunction<ToLongFunction<A>> fuse(IntPredicate initial, ToLongBiFunction<Boolean, A> next) {
+        return (int i) -> (A a) -> next.applyAsLong(initial.test(i), a);
+    }
+
+    public static IntPredicate fuse(IntPredicate initial, Predicate<Boolean> next) {
+        return (int i) -> next.test(initial.test(i));
+    }
+
+    public static <A> IntFunction<Predicate<A>> fuse(IntPredicate initial, BiPredicate<Boolean, A> next) {
+        return (int i) -> (A a) -> next.test(initial.test(i), a);
+    }
+
+    public static IntConsumer fuse(IntPredicate initial, Consumer<Boolean> next) {
+        return (int i) -> next.accept(initial.test(i));
+    }
+
+    public static <A> IntFunction<Consumer<A>> fuse(IntPredicate initial, BiConsumer<Boolean, A> next) {
+        return (int i) -> (A a) -> next.accept(initial.test(i), a);
+    }
+
+    public static IntFunction<DoubleConsumer> fuse(IntPredicate initial, ObjDoubleConsumer<Boolean> next) {
+        return (int i) -> (double d) -> next.accept(initial.test(i), d);
+    }
+
+    public static IntFunction<IntConsumer> fuse(IntPredicate initial, ObjIntConsumer<Boolean> next) {
+        return (int i1) -> (int i2) -> next.accept(initial.test(i1), i2);
+    }
+
+    public static IntFunction<LongConsumer> fuse(IntPredicate initial, ObjLongConsumer<Boolean> next) {
+        return (int i) -> (long n) -> next.accept(initial.test(i), n);
+    }
+
+    public static IntPredicate fuse(IntPredicate initial, UnaryOperator<Boolean> next) {
+        return (int i) -> next.apply(initial.test(i));
+    }
+
+    public static IntFunction<Predicate<Boolean>> fuse(IntPredicate initial, BinaryOperator<Boolean> next) {
+        return (int i) -> (Boolean b) -> next.apply(initial.test(i), b);
+    }
+
+    /* LongPredicate */
+
+    public static <A> LongFunction<A> fuse(LongPredicate initial, Function<Boolean, A> next) {
+        return (long n) -> next.apply(initial.test(n));
+    }
+
+    public static <A, B> LongFunction<Function<A, B>> fuse(LongPredicate initial, BiFunction<Boolean, A, B> next) {
+        return (long n) -> (A a) -> next.apply(initial.test(n), a);
+    }
+
+    public static LongToDoubleFunction fuse(LongPredicate initial, ToDoubleFunction<Boolean> next) {
+        return (long n) -> next.applyAsDouble(initial.test(n));
+    }
+
+    public static <A> LongFunction<ToDoubleFunction<A>> fuse(LongPredicate initial, ToDoubleBiFunction<Boolean, A> next) {
+        return (long n) -> (A a) -> next.applyAsDouble(initial.test(n), a);
+    }
+
+    public static LongToIntFunction fuse(LongPredicate initial, ToIntFunction<Boolean> next) {
+        return (long n) -> next.applyAsInt(initial.test(n));
+    }
+
+    public static <A> LongFunction<ToIntFunction<A>> fuse(LongPredicate initial, ToIntBiFunction<Boolean, A> next) {
+        return (long n) -> (A a) -> next.applyAsInt(initial.test(n), a);
+    }
+
+    public static LongUnaryOperator fuse(LongPredicate initial, ToLongFunction<Boolean> next) {
+        return (long n) -> next.applyAsLong(initial.test(n));
+    }
+
+    public static <A> LongFunction<ToLongFunction<A>> fuse(LongPredicate initial, ToLongBiFunction<Boolean, A> next) {
+        return (long n) -> (A a) -> next.applyAsLong(initial.test(n), a);
+    }
+
+    public static LongPredicate fuse(LongPredicate initial, Predicate<Boolean> next) {
+        return (long n) -> next.test(initial.test(n));
+    }
+
+    public static <A> LongFunction<Predicate<A>> fuse(LongPredicate initial, BiPredicate<Boolean, A> next) {
+        return (long n) -> (A a) -> next.test(initial.test(n), a);
+    }
+
+    public static LongConsumer fuse(LongPredicate initial, Consumer<Boolean> next) {
+        return (long n) -> next.accept(initial.test(n));
+    }
+
+    public static <A> LongFunction<Consumer<A>> fuse(LongPredicate initial, BiConsumer<Boolean, A> next) {
+        return (long n) -> (A a) -> next.accept(initial.test(n), a);
+    }
+
+    public static LongFunction<DoubleConsumer> fuse(LongPredicate initial, ObjDoubleConsumer<Boolean> next) {
+        return (long n) -> (double d) -> next.accept(initial.test(n), d);
+    }
+
+    public static LongFunction<IntConsumer> fuse(LongPredicate initial, ObjIntConsumer<Boolean> next) {
+        return (long n) -> (int i) -> next.accept(initial.test(n), i);
+    }
+
+    public static LongFunction<LongConsumer> fuse(LongPredicate initial, ObjLongConsumer<Boolean> next) {
+        return (long n1) -> (long n2) -> next.accept(initial.test(n1), n2);
+    }
+
+    public static LongPredicate fuse(LongPredicate initial, UnaryOperator<Boolean> next) {
+        return (long n) -> next.apply(initial.test(n));
+    }
+
+    public static LongFunction<Predicate<Boolean>> fuse(LongPredicate initial, BinaryOperator<Boolean> next) {
+        return (long n) -> (Boolean b) -> next.apply(initial.test(n), b);
+    }
 
     /* Consumer [SKIPPED] Covered in absorption */
     /* BiConsumer [SKIPPED] Covered in absorption */

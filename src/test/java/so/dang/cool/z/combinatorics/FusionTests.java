@@ -1604,8 +1604,278 @@ public class FusionTests {
         assertTrue(Z.fuse(isDoubleOne, maybeNot).apply(1.0).test(false));
     }
 
-    // TODO: IntPredicate
-    // TODO: LongPredicate
+    @Test
+    void intPred_to_fn() {
+        assertEquals("true", Z.fuse(isIntTwo, booleanToString).apply(2));
+    }
+
+    @Test
+    void intPred_to_bifn() {
+        assertEquals("HI", Z.fuse(isIntTwo, maybeToUpper).apply(2).apply("hi"));
+    }
+
+    @Test
+    void intPred_to_toDblFn() {
+        assertEquals(1.0, Z.fuse(isIntTwo, maybeOneAsDouble).applyAsDouble(2));
+    }
+
+    @Test
+    void intPred_to_toDblBifn() {
+        assertEquals(2.0, Z.fuse(isIntTwo, maybeAddOneToStringAsDouble).apply(2).applyAsDouble("1.0"));
+    }
+
+    @Test
+    void intPred_to_toIntFn() {
+        assertEquals(2, Z.fuse(isIntTwo, maybeTwoAsInt).applyAsInt(2));
+    }
+
+    @Test
+    void intPred_to_toIntBifn() {
+        assertEquals(3, Z.fuse(isIntTwo, maybeAddTwoToStringAsInt).apply(2).applyAsInt("1"));
+    }
+
+    @Test
+    void intPred_to_toLongFn() {
+        assertEquals(3L, Z.fuse(isIntTwo, maybeThreeAsLong).applyAsLong(2));
+    }
+
+    @Test
+    void intPred_to_toLongBifn() {
+        assertEquals(4L, Z.fuse(isIntTwo, maybeAddThreeToStringAsLong).apply(2).applyAsLong("1"));
+    }
+
+    @Test
+    void intPred_to_pred() {
+        assertFalse(Z.fuse(isIntTwo, not).test(2));
+    }
+
+    @Test
+    void intPred_to_bipred() {
+        assertTrue(Z.fuse(isIntTwo, maybeNotFromString).apply(2).test("false"));
+    }
+
+    @Evil
+    @Test
+    void intPred_to_cns() {
+        synchronized(consumedBooleanA) {
+            consumedBooleanA = false;
+
+            Z.fuse(isIntTwo, saveBooleanA).accept(2);
+
+            assertTrue(consumedBooleanA);
+        }
+    }
+
+    @Evil
+    @Test
+    void intPred_to_bicns() {
+        synchronized(consumedBooleanB) {
+            synchronized(consumedStringG) {
+                consumedBooleanB = false;
+                consumedStringG = "";
+
+                Z.fuse(isIntTwo, saveBooleanBAndStringG).apply(2).accept("yolo");
+
+                assertTrue(consumedBooleanB);
+                assertEquals("yolo", consumedStringG);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void intPred_to_objDblCns() {
+        synchronized(consumedBooleanC) {
+            synchronized(consumedDoubleC) {
+                consumedBooleanC = false;
+                consumedDoubleC = 0.0;
+
+                Z.fuse(isIntTwo, saveBooleanCDoubleC).apply(2).accept(5.0);
+
+                assertTrue(consumedBooleanC);
+                assertEquals(5.0, consumedDoubleC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void intPred_to_objIntCns() {
+        synchronized(consumedBooleanD) {
+            synchronized(consumedIntC) {
+                consumedBooleanD = false;
+                consumedIntC = 0;
+
+                Z.fuse(isIntTwo, saveBooleanDIntC).apply(2).accept(6);
+
+                assertTrue(consumedBooleanD);
+                assertEquals(6, consumedIntC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void intPred_to_objLongFn() {
+        synchronized(consumedBooleanE) {
+            synchronized(consumedLongC) {
+                consumedBooleanE = false;
+                consumedLongC = 0L;
+
+                Z.fuse(isIntTwo, saveBooleanELongC).apply(2).accept(7L);
+
+                assertTrue(consumedBooleanE);
+                assertEquals(7L, consumedLongC);
+            }
+        }
+    }
+
+    @Test
+    void intPred_to_toUnop() {
+        assertTrue(Z.fuse(isIntTwo, booleanId).test(2));
+    }
+
+    @Test
+    void intPred_to_toBiop() {
+        assertTrue(Z.fuse(isIntTwo, maybeNot).apply(2).test(false));
+    }
+
+    @Test
+    void longPred_to_fn() {
+        assertEquals("true", Z.fuse(isLongThree, booleanToString).apply(3L));
+    }
+
+    @Test
+    void longPred_to_bifn() {
+        assertEquals("HI", Z.fuse(isLongThree, maybeToUpper).apply(3L).apply("hi"));
+    }
+
+    @Test
+    void longPred_to_toDblFn() {
+        assertEquals(1.0, Z.fuse(isLongThree, maybeOneAsDouble).applyAsDouble(3L));
+    }
+
+    @Test
+    void longPred_to_toDblBifn() {
+        assertEquals(2.0, Z.fuse(isLongThree, maybeAddOneToStringAsDouble).apply(3L).applyAsDouble("1.0"));
+    }
+
+    @Test
+    void longPred_to_toIntFn() {
+        assertEquals(2, Z.fuse(isLongThree, maybeTwoAsInt).applyAsInt(3L));
+    }
+
+    @Test
+    void longPred_to_toIntBifn() {
+        assertEquals(3, Z.fuse(isLongThree, maybeAddTwoToStringAsInt).apply(3L).applyAsInt("1"));
+    }
+
+    @Test
+    void longPred_to_toLongFn() {
+        assertEquals(3L, Z.fuse(isLongThree, maybeThreeAsLong).applyAsLong(3L));
+    }
+
+    @Test
+    void longPred_to_toLongBifn() {
+        assertEquals(4L, Z.fuse(isLongThree, maybeAddThreeToStringAsLong).apply(3L).applyAsLong("1"));
+    }
+
+    @Test
+    void longPred_to_pred() {
+        assertFalse(Z.fuse(isLongThree, not).test(3L));
+    }
+
+    @Test
+    void longPred_to_bipred() {
+        assertTrue(Z.fuse(isLongThree, maybeNotFromString).apply(3L).test("false"));
+    }
+
+    @Evil
+    @Test
+    void longPred_to_cns() {
+        synchronized(consumedBooleanA) {
+            consumedBooleanA = false;
+
+            Z.fuse(isLongThree, saveBooleanA).accept(3L);
+
+            assertTrue(consumedBooleanA);
+        }
+    }
+
+    @Evil
+    @Test
+    void longPred_to_bicns() {
+        synchronized(consumedBooleanB) {
+            synchronized(consumedStringG) {
+                consumedBooleanB = false;
+                consumedStringG = "";
+
+                Z.fuse(isLongThree, saveBooleanBAndStringG).apply(3L).accept("yolo");
+
+                assertTrue(consumedBooleanB);
+                assertEquals("yolo", consumedStringG);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void longPred_to_objDblCns() {
+        synchronized(consumedBooleanC) {
+            synchronized(consumedDoubleC) {
+                consumedBooleanC = false;
+                consumedDoubleC = 0.0;
+
+                Z.fuse(isLongThree, saveBooleanCDoubleC).apply(3L).accept(5.0);
+
+                assertTrue(consumedBooleanC);
+                assertEquals(5.0, consumedDoubleC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void longPred_to_objIntCns() {
+        synchronized(consumedBooleanD) {
+            synchronized(consumedIntC) {
+                consumedBooleanD = false;
+                consumedIntC = 0;
+
+                Z.fuse(isLongThree, saveBooleanDIntC).apply(3L).accept(6);
+
+                assertTrue(consumedBooleanD);
+                assertEquals(6, consumedIntC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void longPred_to_objLongFn() {
+        synchronized(consumedBooleanE) {
+            synchronized(consumedLongC) {
+                consumedBooleanE = false;
+                consumedLongC = 0L;
+
+                Z.fuse(isLongThree, saveBooleanELongC).apply(3L).accept(7L);
+
+                assertTrue(consumedBooleanE);
+                assertEquals(7L, consumedLongC);
+            }
+        }
+    }
+
+    @Test
+    void longPred_to_toUnop() {
+        assertTrue(Z.fuse(isLongThree, booleanId).test(3L));
+    }
+
+    @Test
+    void longPred_to_toBiop() {
+        assertTrue(Z.fuse(isLongThree, maybeNot).apply(3L).test(false));
+    }
+
     // TODO: Supplier
     // TODO: BooleanSupplier
     // TODO: DoubleSupplier
