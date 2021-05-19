@@ -48,7 +48,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public <C> Function<A, C> fuse(Function<B, C> next) {
-            return Z.fuse(initial, next);
+            return fuseFunction(next);
         }
 
         public <C> WithFunction<A, C> fusingFunction(Function<B, C> next) {
@@ -56,7 +56,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public <C> WithFunction<A, C> fusing(Function<B, C> next) {
-            return WithFunction.of(Z.fuse(initial, next));
+            return fusingFunction(next);
         }
 
         /* Function<A, B> -> BiFunction<B, C, D> */
@@ -66,7 +66,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public <C, D> Function<A, Function<C, D>> fuse(BiFunction<B, C, D> next) {
-            return Z.fuse(initial, next);
+            return fuseBiFunction(next);
         }
 
         public <C, D> WithBiFunction<A, C, D> fusingBiFunction(BiFunction<B, C, D> next) {
@@ -75,8 +75,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public <C, D> WithBiFunction<A, C, D> fusing(BiFunction<B, C, D> next) {
-            // TODO: Need a currying combinator?
-            return WithBiFunction.of(Z.assimilate2(Z.fuse(initial, next)));
+            return fusingBiFunction(next);
         }
 
         /* Function<A, B> -> DoubleFunction<B> */
@@ -86,7 +85,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public ToDoubleFunction<A> fuse(ToDoubleFunction<B> next) {
-            return Z.fuse(initial, next);
+            return fuseToDoubleFunction(next);
         }
 
         public WithToDoubleFunction<A> fusingToDoubleFunction(ToDoubleFunction<B> next) {
@@ -94,7 +93,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithToDoubleFunction<A> fusing(ToDoubleFunction<B> next) {
-            return WithToDoubleFunction.of(Z.fuse(initial, next));
+            return fusingToDoubleFunction(next);
         }
 
         /* Function<A, B> -> ToDoubleBiFunction<B> [TODO] */
@@ -106,7 +105,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public ToIntFunction<A> fuse(ToIntFunction<B> next) {
-            return Z.fuse(initial, next);
+            return fuseToIntFunction(next);
         }
 
         public WithToIntFunction<A> fusingToIntFunction(ToIntFunction<B> next) {
@@ -114,7 +113,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithToIntFunction<A> fusing(ToIntFunction<B> next) {
-            return WithToIntFunction.of(Z.fuse(initial, next));
+            return fusingToIntFunction(next);
         }
 
         /* Function<A, B> -> ToIntBiFunction<B> [TODO] */
@@ -126,7 +125,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public ToLongFunction<A> fuse(ToLongFunction<B> next) {
-            return Z.fuse(initial, next);
+            return fuseToLongFunction(next);
         }
 
         public WithToLongFunction<A> fusingToLongFunction(ToLongFunction<B> next) {
@@ -134,7 +133,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithToLongFunction<A> fusing(ToLongFunction<B> next) {
-            return WithToLongFunction.of(Z.fuse(initial, next));
+            return fusingToLongFunction(next);
         }
 
         /* Function<A, B> -> ToLongBiFunction<B> [TODO] */
@@ -154,7 +153,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithPredicate<A> fusing(Predicate<B> next) {
-            return WithPredicate.of(Z.fuse(initial, next));
+            return fusingPredicate(next);
         }
 
         /* Function<A, B> -> BiPredicate<B, C> [TODO] */
@@ -166,7 +165,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public Consumer<A> fuse(Consumer<B> next) {
-            return Z.fuse(initial, next);
+            return fuseConsumer(next);
         }
 
         public WithConsumer<A> fusingConsumer(Consumer<B> next) {
@@ -174,7 +173,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithConsumer<A> fusing(Consumer<B> next) {
-            return WithConsumer.of(Z.fuse(initial, next));
+            return fusingConsumer(next);
         }
 
         /* Function<A, B> -> BiConsumer<B, C> [TODO] */
@@ -192,7 +191,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public Function<A, B> fuse(UnaryOperator<B> next) {
-            return Z.fuse(initial, next);
+            return fuseUnaryOperator(next);
         }
 
         public WithFunction<A, B> fusingUnaryOperator(UnaryOperator<B> next) {
@@ -200,7 +199,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithFunction<A, B> fusing(UnaryOperator<B> next) {
-            return WithFunction.of(Z.fuse(initial, next));
+            return fusingUnaryOperator(next);
         }
 
         /* Function<A, B> -> BinaryOperator<B> */
@@ -210,7 +209,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public Function<A, UnaryOperator<B>> fuse(BinaryOperator<B> next) {
-            return Z.fuse(initial, next);
+            return fuseBinaryOperator(next);
         }
 
         public WithBiFunction<A, B, B> fusingBinaryOperator(BinaryOperator<B> next) {
@@ -219,8 +218,7 @@ public abstract class Fusion<A, Fn> {
         }
 
         public WithBiFunction<A, B, B> fusing(BinaryOperator<B> next) {
-            // TODO: simplify with currying
-            return WithBiFunction.of((A a, B b) -> next.apply(initial.apply(a), b));
+            return fusingBinaryOperator(next);
         }
 
         /* Function<A, B> -> [Multi]Function<B...> [TODO...?] */
@@ -256,16 +254,20 @@ public abstract class Fusion<A, Fn> {
 
         /* BiFunction<A, B, C> -> Function<C, D> */
 
-        public <D> Function<A, Function<B, D>> fuseFn(Function<C, D> next) {
+        public <D> Function<A, Function<B, D>> fuseFunction(Function<C, D> next) {
             return Z.fuse(initial, next);
         }
 
         public <D> Function<A, Function<B, D>> fuse(Function<C, D> next) {
-            return fuseFn(next);
+            return fuseFunction(next);
+        }
+
+        public <D> WithBiFunction<A, B, D> fusingFunction(Function<C, D> next) {
+            return WithBiFunction.of(fuseFunction(next));
         }
 
         public <D> WithBiFunction<A, B, D> fusing(Function<C, D> next) {
-            return WithBiFunction.of(fuseFn(next));
+            return fusingFunction(next);
         }
     }
 
@@ -425,20 +427,20 @@ public abstract class Fusion<A, Fn> {
 
         /* Predicate<A> -> Function<Boolean, B> */
 
-        public <B> Function<A, B> fuseFn(Function<Boolean, B> next) {
+        public <B> Function<A, B> fuseFunction(Function<Boolean, B> next) {
             return Z.fuse(initial, next);
         }
 
         public <B> Function<A, B> fuse(Function<Boolean, B> next) {
-            return fuseFn(next);
+            return fuseFunction(next);
         }
 
-        public <B> WithFunction<A, B> fusingFn(Function<Boolean, B> next) {
-            return WithFunction.of(fuseFn(next));
+        public <B> WithFunction<A, B> fusingFunction(Function<Boolean, B> next) {
+            return WithFunction.of(fuseFunction(next));
         }
 
         public <B> WithFunction<A, B> fusing(Function<Boolean, B> next) {
-            return fusingFn(next);
+            return fusingFunction(next);
         }
     }
 
@@ -481,38 +483,38 @@ public abstract class Fusion<A, Fn> {
 
         /* Supplier<A> -> Function<A, B> */
 
-        public <B> Supplier<B> fuseFn(Function<A, B> next) {
+        public <B> Supplier<B> fuseFunction(Function<A, B> next) {
             return Z.fuse(resolve(), next);
         }
 
         public <B> Supplier<B> fuse(Function<A, B> next) {
-            return fuseFn(next);
+            return fuseFunction(next);
         }
 
-        public <B> WithSupplier<B> fusingFn(Function<A, B> next) {
+        public <B> WithSupplier<B> fusingFunction(Function<A, B> next) {
             return WithSupplier.of(fuse(next));
         }
 
         public <B> WithSupplier<B> fusing(Function<A, B> next) {
-            return fusingFn(next);
+            return fusingFunction(next);
         }
 
         /* Supplier<A> -> BiFunction<A, B, C> */
 
-        public <B, C> Function<B, C> fuseBifn(BiFunction<A, B, C> next) {
+        public <B, C> Function<B, C> fuseBiFunction(BiFunction<A, B, C> next) {
             return Z.fuse(resolve(), next);
         }
 
         public <B, C> Function<B, C> fuse(BiFunction<A, B, C> next) {
-            return fuseBifn(next);
+            return fuseBiFunction(next);
         }
 
-        public <B, C> WithFunction<B, C> fusingBifn(BiFunction<A, B, C> next) {
-            return WithFunction.of(fuseBifn(next));
+        public <B, C> WithFunction<B, C> fusingBiFunction(BiFunction<A, B, C> next) {
+            return WithFunction.of(fuseBiFunction(next));
         }
 
         public <B, C> WithFunction<B, C> fusing(BiFunction<A, B, C> next) {
-            return fusingBifn(next);
+            return fusingBiFunction(next);
         }
     }
 }

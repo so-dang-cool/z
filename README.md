@@ -75,7 +75,7 @@ Z
 
 ```
 var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
-    .fusingFn(Pattern::compile)
+    .fusingFunction(Pattern::compile)
     .fusing(Pattern::matcher)
     .fuse(Matcher::matches);
 

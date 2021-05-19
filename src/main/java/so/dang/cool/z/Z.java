@@ -1153,7 +1153,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithFunction<A, A> with(Class<A> clazz) {
-        return Fusion.WithFunction.of(Z.id(clazz));
+        return withClass(clazz);
     }
 
     public static <A> Fusion.WithSupplier<A> withObject(A initial) {
@@ -1161,7 +1161,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithSupplier<A> with(A initial) {
-        return Fusion.WithSupplier.of(() -> initial);
+        return withObject(initial);
     }
 
     public static <A, B> Fusion.WithFunction<A, B> withFunction(Function<A, B> initial) {
@@ -1169,7 +1169,7 @@ public final class Z {
     }
 
     public static <A, B> Fusion.WithFunction<A, B> with(Function<A, B> initial) {
-        return Fusion.WithFunction.of(initial);
+        return withFunction(initial);
     }
 
     public static <A, B, C> Fusion.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
@@ -1177,7 +1177,7 @@ public final class Z {
     }
 
     public static <A, B, C> Fusion.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
-        return Fusion.WithBiFunction.of(initial);
+        return withBiFunction(initial);
     }
 
     public static <A> Fusion.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
@@ -1185,7 +1185,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
-        return Fusion.WithToDoubleFunction.of(initial);
+        return withToDoubleFunction(initial);
     }
 
     public static <A> Fusion.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
@@ -1193,7 +1193,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithToIntFunction<A> with(ToIntFunction<A> initial) {
-        return Fusion.WithToIntFunction.of(initial);
+        return withToIntFunction(initial);
     }
 
     public static <A> Fusion.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
@@ -1201,7 +1201,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithToLongFunction<A> with(ToLongFunction<A> initial) {
-        return Fusion.WithToLongFunction.of(initial);
+        return withToLongFunction(initial);
     }
 
     public static <A> Fusion.WithPredicate<A> withPredicate(Predicate<A> initial) {
@@ -1209,7 +1209,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithPredicate<A> with(Predicate<A> initial) {
-        return Fusion.WithPredicate.of(initial);
+        return withPredicate(initial);
     }
 
     public static <A, B> Fusion.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
@@ -1217,7 +1217,7 @@ public final class Z {
     }
 
     public static <A, B> Fusion.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
-        return Fusion.WithBiPredicate.of(initial);
+        return withBiPredicate(initial);
     }
 
     @Evil
@@ -1227,7 +1227,7 @@ public final class Z {
 
     @Evil
     public static <A> Fusion.WithConsumer<A> with(Consumer<A> initial) {
-        return Fusion.WithConsumer.of(initial);
+        return withConsumer(initial);
     }
 
     @Evil
@@ -1237,7 +1237,7 @@ public final class Z {
 
     @Evil
     public static <A, B> Fusion.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
-        return Fusion.WithBiConsumer.of(initial);
+        return withBiConsumer(initial);
     }
 
     public static <A> Fusion.WithSupplier<A> withSupplier(Supplier<A> initial) {
@@ -1245,7 +1245,7 @@ public final class Z {
     }
 
     public static <A> Fusion.WithSupplier<A> with(Supplier<A> initial) {
-        return Fusion.WithSupplier.of(initial);
+        return withSupplier(initial);
     }
 
     /* TODO: More combinators! */
