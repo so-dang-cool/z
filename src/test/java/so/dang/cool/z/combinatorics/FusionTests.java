@@ -9,6 +9,7 @@ import static so.dang.cool.z.combinatorics.TestFunctions.*;
 import org.junit.jupiter.api.Test;
 
 import so.dang.cool.z.Z;
+import so.dang.cool.z.annotation.Evil;
 
 public class FusionTests {
     @Test
@@ -429,7 +430,7 @@ public class FusionTests {
         synchronized(consumedIntA) {
             consumedIntA = 0;
 
-            Z.fuse(doubleToInt, saveIntegerA).accept(2.2);
+            Z.fuse(doubleToInt, saveIntA).accept(2.2);
 
             assertEquals(2, consumedIntA);
         }
@@ -487,27 +488,27 @@ public class FusionTests {
     }
 
     @Test
-    void toDbl_to_dblFn() {
+    void toDblFn_to_dblFn() {
         assertEquals("4.5", Z.fuse(stringToDouble, doubleToString).apply("4.5"));
     }
 
     @Test
-    void toDbl_to_dblToInt() {
+    void toDblFn_to_dblToInt() {
         assertEquals(4, Z.fuse(stringToDouble, doubleToInt).applyAsInt("4.6"));
     }
 
     @Test
-    void toDbl_to_dblToLong() {
+    void toDblFn_to_dblToLong() {
         assertEquals(4L, Z.fuse(stringToDouble, doubleToLong).applyAsLong("4.7"));
     }
 
     @Test
-    void toDbl_to_dblPred() {
+    void toDblFn_to_dblPred() {
         assertTrue(Z.fuse(stringToDouble, isDoubleOne).test("1.0"));
     }
 
     @Test
-    void toDbl_to_dblCns() {
+    void toDblFn_to_dblCns() {
         synchronized(consumedDoubleA) {
             consumedDoubleA = 0.0;
 
@@ -518,12 +519,12 @@ public class FusionTests {
     }
 
     @Test
-    void toDbl_to_dblUnop() {
+    void toDblFn_to_dblUnop() {
         assertEquals(7.5, Z.fuse(stringToDouble, addOneToDouble).applyAsDouble("6.5"));
     }
 
     @Test
-    void toDbl_to_dblBiop() {
+    void toDblFn_to_dblBiop() {
         assertEquals(3.0, Z.fuse(stringToDouble, addDoubles).apply("1.0").applyAsDouble(2.0));
     }
 
@@ -699,10 +700,170 @@ public class FusionTests {
         assertEquals("same-ish", Z.fuse(intToString, relation).apply(234).apply("234"));
     }
 
-    // TODO: IntToDoubleFunction
-    // TODO: IntToLongFunction
-    // TODO: ToIntFunction
-    // TODO: ToIntBiFunction
+    @Test
+    void intToDbl_to_dblFn() {
+        assertEquals("1.0", Z.fuse(intToDouble, doubleToString).apply(1));
+    }
+
+    @Test
+    void intToDbl_to_dblToInt() {
+        assertEquals(2, Z.fuse(intToDouble, doubleToInt).applyAsInt(2));
+    }
+
+    @Test
+    void intToDbl_to_dblToLong() {
+        assertEquals(3L, Z.fuse(intToDouble, doubleToLong).applyAsLong(3));
+    }
+
+    @Test
+    void intToDbl_to_dblPred() {
+        assertTrue(Z.fuse(intToDouble, isDoubleOne).test(1));
+    }
+
+    @Evil
+    @Test
+    void intToDbl_to_dblCns() {
+        synchronized(consumedDoubleA) {
+            consumedDoubleA = 0.0;
+
+            Z.fuse(intToDouble, saveDoubleA).accept(1);
+
+            assertEquals(1.0, consumedDoubleA);
+        }
+    }
+
+    @Test
+    void intToDbl_to_dblUnop() {
+        assertEquals(2.0, Z.fuse(intToDouble, addOneToDouble).applyAsDouble(1));
+    }
+
+    @Test
+    void intToDbl_to_dblBiop() {
+        assertEquals(1.5, Z.fuse(intToDouble, addDoubles).apply(1).applyAsDouble(0.5));
+    }
+
+    @Test
+    void intToLong_to_longFn() {
+        assertEquals("1", Z.fuse(intToLong, longToString).apply(1));
+    }
+
+    @Test
+    void intToLong_to_longToDbl() {
+        assertEquals(1.0, Z.fuse(intToLong, longToDouble).applyAsDouble(1));
+    }
+
+    @Test
+    void intToLong_to_longToInt() {
+        assertEquals(1, Z.fuse(intToLong, longToInt).applyAsInt(1));
+    }
+
+    @Test
+    void intToLong_to_longPred() {
+        assertTrue(Z.fuse(intToLong, isLongThree).test(3));
+    }
+
+    @Test
+    void  intToLong_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+            
+            Z.fuse(intToLong, saveLongA).accept(3);
+
+            assertEquals(3L, consumedLongA);
+        }
+    }
+
+    @Test
+    void  intToLong_to_longUnop() {
+        assertEquals(4L, Z.fuse(intToLong, addThreeToLong).applyAsLong(1));
+    }
+
+    @Test
+    void  intToLong_to_longBiop() {
+        assertEquals(4L, Z.fuse(intToLong, addLongs).apply(1).applyAsLong(3L));
+    }
+
+    @Test
+    void toIntFn_to_dblFn() {
+        assertEquals("1", Z.fuse(stringToInt, intToString).apply("1"));
+    }
+
+    @Test
+    void toIntFn_to_dblToInt() {
+        assertEquals(1.0, Z.fuse(stringToInt, intToDouble).applyAsDouble("1"));
+    }
+
+    @Test
+    void toIntFn_to_dblToLong() {
+        assertEquals(1L, Z.fuse(stringToInt, intToLong).applyAsLong("1"));
+    }
+
+    @Test
+    void toIntFn_to_dblPred() {
+        assertTrue(Z.fuse(stringToInt, isIntTwo).test("2"));
+    }
+
+    @Test
+    void toIntFn_to_dblCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+
+            Z.fuse(stringToInt, saveIntA).accept("5");
+
+            assertEquals(5, consumedIntA);
+        }
+    }
+
+    @Test
+    void toIntFn_to_intUnop() {
+        assertEquals(8, Z.fuse(stringToInt, addTwoToInt).applyAsInt("6"));
+    }
+
+    @Test
+    void toIntFn_to_intBiop() {
+        assertEquals(3, Z.fuse(stringToInt, addInts).apply("1").applyAsInt(2));
+    }
+
+    @Test
+    void toIntBifn_to_dblFn() {
+        assertEquals("3", Z.fuse(addStringsAsInt, intToString).apply("1").apply("2"));
+    }
+
+    @Test
+    void toIntBifn_to_dblToInt() {
+        assertEquals(3.0, Z.fuse(addStringsAsInt, intToDouble).apply("1").applyAsDouble("2"));
+    }
+
+    @Test
+    void toIntBifn_to_dblToLong() {
+        assertEquals(9L, Z.fuse(addStringsAsInt, intToLong).apply("4").applyAsLong("5"));
+    }
+
+    @Test
+    void toIntBifn_to_dblPred() {
+        assertTrue(Z.fuse(addStringsAsInt, isIntTwo).apply("-1").test("3"));
+    }
+
+    @Test
+    void toIntBifn_to_dblCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+
+            Z.fuse(addStringsAsInt, saveIntA).apply("2").accept("3");
+
+            assertEquals(5, consumedIntA);
+        }
+    }
+    
+    @Test
+    void toIntBifn_to_intUnop() {
+        assertEquals(6, Z.fuse(addStringsAsInt, addTwoToInt).apply("1").applyAsInt("3"));
+    }
+
+    @Test
+    void toIntBifn_to_intBiop() {
+        assertEquals(6, Z.fuse(addStringsAsInt, addInts).apply("1").apply("2").applyAsInt(3));
+    }
 
     @Test
     void longFn_to_fn() {

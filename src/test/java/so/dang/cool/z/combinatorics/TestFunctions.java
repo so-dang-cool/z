@@ -114,7 +114,7 @@ public final class TestFunctions {
     static BiConsumer<String, String> saveStringsBandC = (b, c) -> { consumedStringB = b; consumedStringC = c; };
     static DoubleConsumer saveDoubleA = a -> consumedDoubleA = a;
     static ObjDoubleConsumer<String> saveStringDDoubleB = (d, b) -> { consumedStringD = d; consumedDoubleB = b; };
-    static IntConsumer saveIntegerA = a -> consumedIntA = a;
+    static IntConsumer saveIntA = a -> consumedIntA = a;
     static ObjIntConsumer<String> saveStringEIntB = (e, b) -> { consumedStringE = e; consumedIntB = b; };
     static LongConsumer saveLongA = a -> consumedLongA = a;
     static ObjLongConsumer<String> saveStringFLongB = (f, b) -> { consumedStringF = f; consumedLongB = b; };
