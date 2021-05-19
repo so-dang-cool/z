@@ -403,4 +403,266 @@ public class CombinationTests {
     void dblFn_to_toBiop() {
         assertEquals("same-ish", Z.fuse(doubleToString, relation).apply(10.5).apply("10.5"));
     }
+
+    @Test
+    void intFn_to_fn() {
+        assertEquals("1!", Z.fuse(intToString, addExclamationMark).apply(1));
+    }
+
+    @Test
+    void intFn_to_bifn() {
+        assertEquals("1.0", Z.fuse(intToString, concat).apply(1).apply(".0"));
+    }
+
+    @Test
+    void intFn_to_toDblFn() {
+        assertEquals(1.0, Z.fuse(intToString, stringToDouble).applyAsDouble(1));
+    }
+
+    @Test
+    void intFn_to_toDblBin() {
+        assertEquals(3.0, Z.fuse(intToString, addStringsAsDouble).apply(1).applyAsDouble("2.0"));
+    }
+
+    @Test
+    void intFn_to_toInt() {
+        assertEquals(1, Z.fuse(intToString, stringToInt).applyAsInt(1));
+    }
+
+    @Test
+    void intFn_to_toIntBifn() {
+        assertEquals(3, Z.fuse(intToString, addStringsAsInt).apply(1).applyAsInt("2"));
+    }
+
+    @Test
+    void intFn_to_toLongFn() {
+        assertEquals(1L, Z.fuse(intToString, stringToLong).applyAsLong(1));
+    }
+
+    @Test
+    void intFn_to_toLongBifn() {
+        assertEquals(3L, Z.fuse(intToString, addStringsAsLong).apply(1).applyAsLong("2"));
+    }
+
+    @Test
+    void intFn_to_pred() {
+        assertFalse(Z.fuse(intToString, isEmpty).test(1));
+    }
+
+    @Test
+    void intFn_to_bipred() {
+        assertTrue(Z.fuse(intToString, startsWith).apply(11).test("1"));
+    }
+
+    @Test
+    void intFn_to_cns() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.fuse(intToString, saveStringA).accept(123);
+
+            assertEquals("123", consumedStringA);
+        }
+    }
+
+    @Test
+    void intFn_to_bicns() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.fuse(intToString, saveStringsBandC).apply(34).accept("thirty four");
+
+                assertEquals("34", consumedStringB);
+                assertEquals("thirty four", consumedStringC);
+            }
+        }
+    }
+
+    @Test
+    void intFn_to_objDblCns() {
+        synchronized(consumedStringD) {
+            synchronized(consumedDoubleB) {
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+
+                Z.fuse(intToString, saveStringDDoubleB).apply(45).accept(4.5);
+
+                assertEquals("45", consumedStringD);
+                assertEquals(4.5, consumedDoubleB);
+            }
+        }
+    }
+
+    @Test
+    void intFn_to_objIntCns() {
+        synchronized(consumedStringE) {
+            synchronized(consumedIntB) {
+                consumedStringE = "";
+                consumedIntB = 0;
+
+                Z.fuse(intToString, saveStringEIntB).apply(56).accept(67);
+
+                assertEquals("56", consumedStringE);
+                assertEquals(67, consumedIntB);
+            }
+        }
+    }
+
+    @Test
+    void intFn_to_objLongCns() {
+        synchronized(consumedStringF) {
+            synchronized(consumedLongB) {
+                consumedStringF = "";
+                consumedLongB = 0L;
+
+                Z.fuse(intToString, saveStringFLongB).apply(78).accept(89L);
+
+                assertEquals("78", consumedStringF);
+                assertEquals(89L, consumedLongB);
+            }
+        }
+    }
+
+    @Test
+    void intFn_to_toUnop() {
+        assertEquals("10?", Z.fuse(intToString, addQuestionMark).apply(10));
+    }
+
+    @Test
+    void intFn_to_toBiop() {
+        assertEquals("same-ish", Z.fuse(intToString, relation).apply(234).apply("234"));
+    }
+
+    @Test
+    void longFn_to_fn() {
+        assertEquals("1!", Z.fuse(longToString, addExclamationMark).apply(1L));
+    }
+
+    @Test
+    void longFn_to_bifn() {
+        assertEquals("1.0", Z.fuse(longToString, concat).apply(1L).apply(".0"));
+    }
+
+    @Test
+    void longFn_to_toDblFn() {
+        assertEquals(1.0, Z.fuse(longToString, stringToDouble).applyAsDouble(1L));
+    }
+
+    @Test
+    void longFn_to_toDblBin() {
+        assertEquals(3.0, Z.fuse(longToString, addStringsAsDouble).apply(1L).applyAsDouble("2.0"));
+    }
+
+    @Test
+    void longFn_to_toInt() {
+        assertEquals(1, Z.fuse(longToString, stringToInt).applyAsInt(1L));
+    }
+
+    @Test
+    void longFn_to_toIntBifn() {
+        assertEquals(3, Z.fuse(longToString, addStringsAsInt).apply(1L).applyAsInt("2"));
+    }
+
+    @Test
+    void longFn_to_toLongFn() {
+        assertEquals(1L, Z.fuse(longToString, stringToLong).applyAsLong(1L));
+    }
+
+    @Test
+    void longFn_to_toLongBifn() {
+        assertEquals(3L, Z.fuse(longToString, addStringsAsLong).apply(1L).applyAsLong("2"));
+    }
+
+    @Test
+    void longFn_to_pred() {
+        assertFalse(Z.fuse(longToString, isEmpty).test(1L));
+    }
+
+    @Test
+    void longFn_to_bipred() {
+        assertTrue(Z.fuse(longToString, startsWith).apply(11L).test("1"));
+    }
+
+    @Test
+    void longFn_to_cns() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.fuse(longToString, saveStringA).accept(345L);
+
+            assertEquals("345", consumedStringA);
+        }
+    }
+
+    @Test
+    void longFn_to_bicns() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.fuse(longToString, saveStringsBandC).apply(123L).accept("one twenty three");
+
+                assertEquals("123", consumedStringB);
+                assertEquals("one twenty three", consumedStringC);
+            }
+        }
+    }
+
+    @Test
+    void longFn_to_objDblCns() {
+        synchronized(consumedStringD) {
+            synchronized(consumedDoubleB) {
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+
+                Z.fuse(longToString, saveStringDDoubleB).apply(234L).accept(234.0);
+
+                assertEquals("234", consumedStringD);
+                assertEquals(234.0, consumedDoubleB);
+            }
+        }
+    }
+
+    @Test
+    void longFn_to_objIntCns() {
+        synchronized(consumedStringE) {
+            synchronized(consumedIntB) {
+                consumedStringE = "";
+                consumedIntB = 0;
+
+                Z.fuse(longToString, saveStringEIntB).apply(345L).accept(456);
+
+                assertEquals("345", consumedStringE);
+                assertEquals(456, consumedIntB);
+            }
+        }
+    }
+
+    @Test
+    void longFn_to_objLongCns() {
+        synchronized(consumedStringF) {
+            synchronized(consumedLongB) {
+                consumedStringF = "";
+                consumedLongB = 0L;
+
+                Z.fuse(longToString, saveStringFLongB).apply(567L).accept(678L);
+
+                assertEquals("567", consumedStringF);
+                assertEquals(678L, consumedLongB);
+            }
+        }
+    }
+
+    @Test
+    void longFn_to_toUnop() {
+        assertEquals("100?", Z.fuse(longToString, addQuestionMark).apply(100L));
+    }
+
+    @Test
+    void longFn_to_toBiop() {
+        assertEquals("same-ish", Z.fuse(longToString, relation).apply(789L).apply("789"));
+    }
 }
