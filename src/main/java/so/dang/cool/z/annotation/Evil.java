@@ -1,12 +1,12 @@
 package so.dang.cool.z.annotation;
 
 /**
- * WARNING!! You are using evil code.
- *
+ * <b>WARNING!!</b> You are using evil code.
+ * <br>
  * In the battle between good and evil, always strive for a heroic path. All
- * code marked as @Evil is evil. It can destroy your assumptions and run amok
- * in ways that are hard to anticipate.
- *
+ * code marked as {@code @Evil} is evil. It can destroy your assumptions and
+ * run amok in ways that are hard to anticipate.
+ * <br>
  * There are only two reasons to use Evil code:
  *
  * <ol>
@@ -19,13 +19,13 @@ package so.dang.cool.z.annotation;
  * and determination, you might even be able to completely tame evil code.
  * You may even make it a redeemed companion... But remember that redemption
  * comes at a cost.
- *
+ * <br>
  * If you're attempting to control evil, you might need to explain how you're
  * doing it.
- *
+ * <br>
  * If you're reviewing code that uses evil code, it's a code smell and it's
  * reasonable to ask for explanations.
- *
+ * <br>
  * Categories of evil:
  *
  * <ul>

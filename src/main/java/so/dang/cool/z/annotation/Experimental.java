@@ -1,5 +1,8 @@
 package so.dang.cool.z.annotation;
 
-public @interface Experimental {
-
-}
+/**
+ * <b>WARNING!!</b> You are using experimental code.
+ * <br>
+ * This is not yet stable, and may change in future versions.
+ */
+public @interface Experimental { }
