@@ -45,6 +45,8 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
+import so.dang.cool.z.internal.function.BooleanConsumer;
+import so.dang.cool.z.internal.function.BooleanUnaryOperator;
 import so.dang.cool.z.internal.function.DecFunction;
 import so.dang.cool.z.internal.function.DodecFunction;
 import so.dang.cool.z.internal.function.NonFunction;
@@ -129,9 +131,9 @@ public final class TestFunctions {
     static IntPredicate isIntTwo = i -> i == 2;
     static LongPredicate isLongThree = n -> n == 3L;
     static Consumer<String> saveStringA = a -> consumedStringA = a;
-    static Consumer<Boolean> saveBooleanA = b -> consumedBooleanA = b;
     static BiConsumer<String, String> saveStringsBandC = (b, c) -> { consumedStringB = b; consumedStringC = c; };
     static BiConsumer<Boolean, String> saveBooleanBAndStringG = (b, g) -> { consumedBooleanB = b; consumedStringG = g; };
+    static BooleanConsumer saveBooleanA = b -> consumedBooleanA = b;
     static DoubleConsumer saveDoubleA = a -> consumedDoubleA = a;
     static ObjDoubleConsumer<String> saveStringDDoubleB = (d, b) -> { consumedStringD = d; consumedDoubleB = b; };
     static ObjDoubleConsumer<Boolean> saveBooleanCDoubleC = (b, d) -> { consumedBooleanC = b; consumedDoubleC = d; };
@@ -148,9 +150,9 @@ public final class TestFunctions {
     static LongSupplier getLong = () -> suppliedLong;
     static Operator doOperation = () -> wasOperated = true;
     static UnaryOperator<String> addQuestionMark = s -> s.concat("?");
-    static UnaryOperator<Boolean> booleanId = b -> b;
     static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
     static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
+    static BooleanUnaryOperator booleanId = b -> b;
     static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
     static DoubleBinaryOperator addDoubles = (d1, d2) -> d1 + d2;
     static IntUnaryOperator addTwoToInt = i -> i + 2;

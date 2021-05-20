@@ -46,6 +46,8 @@ import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.internal.combination.Fusion;
+import so.dang.cool.z.internal.function.BooleanConsumer;
+import so.dang.cool.z.internal.function.BooleanUnaryOperator;
 import so.dang.cool.z.internal.function.DecFunction;
 import so.dang.cool.z.internal.function.DodecFunction;
 import so.dang.cool.z.internal.function.NonFunction;
@@ -809,7 +811,7 @@ public final class Z {
         return (A a) -> (B b) -> next.test(initial.test(a), b);
     }
 
-    public static <A> Consumer<A> fuse(Predicate<A> initial, Consumer<Boolean> next) {
+    public static <A> Consumer<A> fuse(Predicate<A> initial, BooleanConsumer next) {
         return (A a) -> next.accept(initial.test(a));
     }
 
@@ -829,8 +831,8 @@ public final class Z {
         return (A a) -> (long n) -> next.accept(initial.test(a), n);
     }
 
-    public static <A> Predicate<A> fuse(Predicate<A> initial, UnaryOperator<Boolean> next) {
-        return (A a) -> next.apply(initial.test(a));
+    public static <A> Predicate<A> fuse(Predicate<A> initial, BooleanUnaryOperator next) {
+        return (A a) -> next.applyAsBoolean(initial.test(a));
     }
 
     public static <A> Function<A, Predicate<Boolean>> fuse(Predicate<A> initial, BinaryOperator<Boolean> next) {
@@ -879,7 +881,7 @@ public final class Z {
         return (A a) -> (B b) -> (C c) -> next.test(initial.test(a, b), c);
     }
 
-    public static <A, B> Function<A, Consumer<B>> fuse(BiPredicate<A, B> initial, Consumer<Boolean> next) {
+    public static <A, B> Function<A, Consumer<B>> fuse(BiPredicate<A, B> initial, BooleanConsumer next) {
         return (A a) -> (B b) -> next.accept(initial.test(a, b));
     }
 
@@ -899,8 +901,8 @@ public final class Z {
         return (A a) -> (B b) -> (long n) -> next.accept(initial.test(a, b), n);
     }
 
-    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, UnaryOperator<Boolean> next) {
-        return (A a) -> (B b) -> next.apply(initial.test(a, b));
+    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, BooleanUnaryOperator next) {
+        return (A a) -> (B b) -> next.applyAsBoolean(initial.test(a, b));
     }
 
     public static <A, B> Function<A, Function<B, Predicate<Boolean>>> fuse(BiPredicate<A, B> initial, BinaryOperator<Boolean> next) {
@@ -949,7 +951,7 @@ public final class Z {
         return (double d) -> (A a) -> next.test(initial.test(d), a);
     }
 
-    public static DoubleConsumer fuse(DoublePredicate initial, Consumer<Boolean> next) {
+    public static DoubleConsumer fuse(DoublePredicate initial, BooleanConsumer next) {
         return (double d) -> next.accept(initial.test(d));
     }
 
@@ -969,8 +971,8 @@ public final class Z {
         return (double d) -> (long n) -> next.accept(initial.test(d), n);
     }
 
-    public static DoublePredicate fuse(DoublePredicate initial, UnaryOperator<Boolean> next) {
-        return (double d) -> next.apply(initial.test(d));
+    public static DoublePredicate fuse(DoublePredicate initial, BooleanUnaryOperator next) {
+        return (double d) -> next.applyAsBoolean(initial.test(d));
     }
 
     public static DoubleFunction<Predicate<Boolean>> fuse(DoublePredicate initial, BinaryOperator<Boolean> next) {
@@ -1019,7 +1021,7 @@ public final class Z {
         return (int i) -> (A a) -> next.test(initial.test(i), a);
     }
 
-    public static IntConsumer fuse(IntPredicate initial, Consumer<Boolean> next) {
+    public static IntConsumer fuse(IntPredicate initial, BooleanConsumer next) {
         return (int i) -> next.accept(initial.test(i));
     }
 
@@ -1039,8 +1041,8 @@ public final class Z {
         return (int i) -> (long n) -> next.accept(initial.test(i), n);
     }
 
-    public static IntPredicate fuse(IntPredicate initial, UnaryOperator<Boolean> next) {
-        return (int i) -> next.apply(initial.test(i));
+    public static IntPredicate fuse(IntPredicate initial, BooleanUnaryOperator next) {
+        return (int i) -> next.applyAsBoolean(initial.test(i));
     }
 
     public static IntFunction<Predicate<Boolean>> fuse(IntPredicate initial, BinaryOperator<Boolean> next) {
@@ -1089,7 +1091,7 @@ public final class Z {
         return (long n) -> (A a) -> next.test(initial.test(n), a);
     }
 
-    public static LongConsumer fuse(LongPredicate initial, Consumer<Boolean> next) {
+    public static LongConsumer fuse(LongPredicate initial, BooleanConsumer next) {
         return (long n) -> next.accept(initial.test(n));
     }
 
@@ -1109,8 +1111,8 @@ public final class Z {
         return (long n1) -> (long n2) -> next.accept(initial.test(n1), n2);
     }
 
-    public static LongPredicate fuse(LongPredicate initial, UnaryOperator<Boolean> next) {
-        return (long n) -> next.apply(initial.test(n));
+    public static LongPredicate fuse(LongPredicate initial, BooleanUnaryOperator next) {
+        return (long n) -> next.applyAsBoolean(initial.test(n));
     }
 
     public static LongFunction<Predicate<Boolean>> fuse(LongPredicate initial, BinaryOperator<Boolean> next) {
@@ -1230,8 +1232,7 @@ public final class Z {
         return (A a) -> next.test(initial.getAsBoolean(), a);
     }
 
-    // TODO: Should there be a BooleanConsumer?
-    public static Operator fuse(BooleanSupplier initial, Consumer<Boolean> next) {
+    public static Operator fuse(BooleanSupplier initial, BooleanConsumer next) {
         return () -> next.accept(initial.getAsBoolean());
     }
 
@@ -1251,13 +1252,12 @@ public final class Z {
         return (long n) -> next.accept(initial.getAsBoolean(), n);
     }
 
-    public static BooleanSupplier fuse(BooleanSupplier initial, UnaryOperator<Boolean> next) {
-        return () -> next.apply(initial.getAsBoolean());
+    public static BooleanSupplier fuse(BooleanSupplier initial, BooleanUnaryOperator next) {
+        return () -> next.applyAsBoolean(initial.getAsBoolean());
     }
 
-    // TODO: Add a BooleanUnaryOperator interface? (But is this dumb?)
-    public static UnaryOperator<Boolean> fuse(BooleanSupplier initial, BinaryOperator<Boolean> next) {
-        return (Boolean b) -> next.apply(initial.getAsBoolean(), b);
+    public static BooleanUnaryOperator fuse(BooleanSupplier initial, BinaryOperator<Boolean> next) {
+        return (boolean b) -> next.apply(initial.getAsBoolean(), b);
     }
 
     /* DoubleSupplier */

@@ -2145,7 +2145,7 @@ public class FusionTests {
 
     @Test
     void boolSup_to_toBiop() {
-        assertTrue(Z.fuse(getBooleanTrue, maybeNot).apply(false));
+        assertTrue(Z.fuse(getBooleanTrue, maybeNot).applyAsBoolean(false));
     }
 
     // TODO: DoubleSupplier
