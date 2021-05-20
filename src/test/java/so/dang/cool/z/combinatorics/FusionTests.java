@@ -831,7 +831,7 @@ public class FusionTests {
         assertEquals(4L, Z.fuse(intToLong, addLongs).apply(1).applyAsLong(3L));
     }
 
-    // ToIntBunction
+    // ToIntFunction
 
     @Test
     void toIntFn_to_intFn() {
@@ -2696,8 +2696,179 @@ public class FusionTests {
         assertEquals(4.0, Z.fuse(addDoubles, addDoubles).apply(0.5).apply(1.5).applyAsDouble(2.0));
     }
     
-    // TODO: IntUnaryOperator
-    // TODO: IntBinaryOperator
-    // TODO: LongUnaryOperator
-    // TODO: LongBinaryOperator
+    // IntUnaryOperator
+
+    @Test
+    void intUnop_to_intFn() {
+        assertEquals("3", Z.fuse(addTwoToInt, intToString).apply(1));
+    }
+
+    @Test
+    void intUnop_to_intToDbl() {
+        assertEquals(3.0, Z.fuse(addTwoToInt, intToDouble).applyAsDouble(1));
+    }
+
+    @Test
+    void intUnop_to_intToLong() {
+        assertEquals(3L, Z.fuse(addTwoToInt, intToLong).applyAsLong(1));
+    }
+
+    @Test
+    void intUnop_to_intPred() {
+        assertTrue(Z.fuse(addTwoToInt, isIntTwo).test(0));
+    }
+
+    @Evil
+    @Test
+    void intUnop_to_intCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+
+            Z.fuse(addTwoToInt, saveIntA).accept(3);
+
+            assertEquals(5, consumedIntA);
+        }
+    }
+
+    @Test
+    void intUnop_to_intUnop() {
+        assertEquals(8, Z.fuse(addTwoToInt, addTwoToInt).applyAsInt(4));
+    }
+
+    @Test
+    void intUnop_to_intBiop() {
+        assertEquals(3, Z.fuse(addTwoToInt, addInts).apply(0).applyAsInt(1));
+    }
+
+    // IntBinaryOperator
+
+    @Test
+    void intBiop_to_intFn() {
+        assertEquals("3", Z.fuse(addInts, intToString).apply(1).apply(2));
+    }
+
+    @Test
+    void intBiop_to_intToDbl() {
+        assertEquals(3.0, Z.fuse(addInts, intToDouble).apply(1).applyAsDouble(2));
+    }
+
+    @Test
+    void intBiop_to_dblToLong() {
+        assertEquals(9L, Z.fuse(addInts, intToLong).apply(4).applyAsLong(5));
+    }
+
+    @Test
+    void intBiop_to_intPred() {
+        assertTrue(Z.fuse(addInts, isIntTwo).apply(-1).test(3));
+    }
+
+    @Evil
+    @Test
+    void intBiop_to_intCns() {
+        synchronized(consumedIntA) {
+            consumedIntA = 0;
+
+            Z.fuse(addInts, saveIntA).apply(2).accept(3);
+
+            assertEquals(5, consumedIntA);
+        }
+    }
+    
+    @Test
+    void intBiop_to_intUnop() {
+        assertEquals(6, Z.fuse(addInts, addTwoToInt).apply(1).applyAsInt(3));
+    }
+
+    @Test
+    void intBiop_to_intBiop() {
+        assertEquals(6, Z.fuse(addInts, addInts).apply(1).apply(2).applyAsInt(3));
+    }
+
+    // LongUnaryOperator
+
+    @Test
+    void longUnop_to_longFn() {
+        assertEquals("4", Z.fuse(addThreeToLong, longToString).apply(1L));
+    }
+
+    @Test
+    void longUnop_to_longToDbl() {
+        assertEquals(4.0, Z.fuse(addThreeToLong, longToDouble).applyAsDouble(1L));
+    }
+
+    @Test
+    void longUnop_to_longToInt() {
+        assertEquals(4, Z.fuse(addThreeToLong, longToInt).applyAsInt(1L));
+    }
+
+    @Test
+    void longUnop_to_longPred() {
+        assertTrue(Z.fuse(addThreeToLong, isLongThree).test(0L));
+    }
+
+    @Evil
+    @Test
+    void longUnop_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+
+            Z.fuse(addThreeToLong, saveLongA).accept(2L);
+
+            assertEquals(5L, consumedLongA);
+        }
+    }
+
+    @Test
+    void longUnop_to_longUnop() {
+        assertEquals(9L, Z.fuse(addThreeToLong, addThreeToLong).applyAsLong(3L));
+    }
+
+    @Test
+    void longUnop_to_longBiop() {
+        assertEquals(6L, Z.fuse(addThreeToLong, addLongs).apply(1L).applyAsLong(2L));
+    }
+
+    // LongBinaryOperator
+
+    @Test
+    void longBiop_to_longFn() {
+        assertEquals("3", Z.fuse(addLongs, longToString).apply(1L).apply(2L));
+    }
+
+    @Test
+    void longBiop_to_longToDbl() {
+        assertEquals(3.0, Z.fuse(addLongs, longToDouble).apply(1L).applyAsDouble(2L));
+    }
+
+    @Test
+    void longBiop_to_longToInt() {
+        assertEquals(9, Z.fuse(addLongs, longToInt).apply(4L).applyAsInt(5L));
+    }
+
+    @Test
+    void longBiop_to_longPred() {
+        assertTrue(Z.fuse(addLongs, isLongThree).apply(-1L).test(4L));
+    }
+
+    @Evil
+    @Test
+    void longBiop_to_longCns() {
+        synchronized(consumedLongA) {
+            consumedLongA = 0L;
+
+            Z.fuse(addLongs, saveLongA).apply(2L).accept(3L);
+
+            assertEquals(5L, consumedLongA);
+        }
+    }
+
+    @Test
+    void longBiop_to_longUnop() {
+        assertEquals(6L, Z.fuse(addLongs, addThreeToLong).apply(1L).applyAsLong(2L));
+    }
+
+    @Test
+    void longBiop_to_longBiop() {
+        assertEquals(6L, Z.fuse(addLongs, addLongs).apply(1L).apply(2L).applyAsLong(3L));
+    }
 }
