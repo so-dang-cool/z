@@ -1,5 +1,7 @@
 # Z
 
+[![Maven Central](https://img.shields.io/maven-central/v/so.dang.cool/z.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22so.dang.cool%22%20AND%20a:%22z%22)
+
 **Z is a Java library for bold, exciting, and fearless function combination.**
 
 Unlock your functional programming potential with these combination techniques:
