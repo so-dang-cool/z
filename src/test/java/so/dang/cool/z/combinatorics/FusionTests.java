@@ -2607,8 +2607,95 @@ public class FusionTests {
         assertEquals("same-ish", Z.fuse(relation, relation).apply("hey").apply("HEY").apply("SAME-ISH"));
     }
 
-    // TODO: DoubleUnaryOperator
-    // TODO: DoubleBinaryOperator
+    // DoubleUnaryOperator
+
+
+    @Test
+    void dblUnop_to_dblFn() {
+        assertEquals("4.5", Z.fuse(addOneToDouble, doubleToString).apply(3.5));
+    }
+
+    @Test
+    void dblUnop_to_dblToInt() {
+        assertEquals(4, Z.fuse(addOneToDouble, doubleToInt).applyAsInt(3.6));
+    }
+
+    @Test
+    void dblUnop_to_dblToLong() {
+        assertEquals(4L, Z.fuse(addOneToDouble, doubleToLong).applyAsLong(3.7));
+    }
+
+    @Test
+    void dblUnop_to_dblPred() {
+        assertTrue(Z.fuse(addOneToDouble, isDoubleOne).test(0.0));
+    }
+
+    @Evil
+    @Test
+    void dblUnop_to_dblCns() {
+        synchronized(consumedDoubleA) {
+            consumedDoubleA = 0.0;
+
+            Z.fuse(addOneToDouble, saveDoubleA).accept(4.5);
+
+            assertEquals(5.5, consumedDoubleA);
+        }
+    }
+
+    @Test
+    void dblUnop_to_dblUnop() {
+        assertEquals(7.5, Z.fuse(addOneToDouble, addOneToDouble).applyAsDouble(5.5));
+    }
+
+    @Test
+    void dblUnop_to_dblBiop() {
+        assertEquals(4.0, Z.fuse(addOneToDouble, addDoubles).apply(1.0).applyAsDouble(2.0));
+    }
+
+    // DoubleBinaryOperator
+
+    @Test
+    void dblBiop_to_dblFn() {
+        assertEquals("3.0", Z.fuse(addDoubles, doubleToString).apply(1.0).apply(2.0));
+    }
+
+    @Test
+    void dblBiop_to_dblToInt() {
+        assertEquals(3, Z.fuse(addDoubles, doubleToInt).apply(1.2).applyAsInt(2.3));
+    }
+
+    @Test
+    void dblBiop_to_dblToLong() {
+        assertEquals(10L, Z.fuse(addDoubles, doubleToLong).apply(4.5).applyAsLong(5.6));
+    }
+
+    @Test
+    void dblBiop_to_dblPred() {
+        assertTrue(Z.fuse(addDoubles, isDoubleOne).apply(0.5).test(0.5));
+    }
+
+    @Evil
+    @Test
+    void dblBiop_to_dblCns() {
+        synchronized(consumedDoubleA) {
+            consumedDoubleA = 0.0;
+
+            Z.fuse(addDoubles, saveDoubleA).apply(1.0).accept(5.5);
+
+            assertEquals(6.5, consumedDoubleA);
+        }
+    }
+    
+    @Test
+    void dblBiop_to_dblUnop() {
+        assertEquals(7.5, Z.fuse(addDoubles, addOneToDouble).apply(0.5).applyAsDouble(6.0));
+    }
+
+    @Test
+    void dblBiop_to_dblBiop() {
+        assertEquals(4.0, Z.fuse(addDoubles, addDoubles).apply(0.5).apply(1.5).applyAsDouble(2.0));
+    }
+    
     // TODO: IntUnaryOperator
     // TODO: IntBinaryOperator
     // TODO: LongUnaryOperator
