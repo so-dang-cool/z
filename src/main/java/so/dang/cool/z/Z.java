@@ -1331,7 +1331,7 @@ public final class Z {
         return () -> next.applyAsDouble(initial.getAsLong());
     }
 
-    public static DoubleSupplier fuse(LongSupplier initial, LongToIntFunction next) {
+    public static IntSupplier fuse(LongSupplier initial, LongToIntFunction next) {
         return () -> next.applyAsInt(initial.getAsLong());
     }
 

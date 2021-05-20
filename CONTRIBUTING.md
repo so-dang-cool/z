@@ -40,23 +40,23 @@ different class also matches, and there's no benefit to specificity.
 1. Function
 1. BiFunction
 1. BooleanFunction (Z)
-1. BooleanToDoubleFunction (Z) [todo]
-1. BooleanToIntFunction (Z) [todo]
-1. BooleanToLongFunction (Z) [todo]
+1. BooleanToDoubleFunction (Z) [maybe todo]
+1. BooleanToIntFunction (Z) [maybe todo]
+1. BooleanToLongFunction (Z) [maybe todo]
 1. DoubleFunction
-1. DoubleToBooleanFunction (Z) [todo]
+1. DoubleToBooleanFunction (Z) [maybe todo]
 1. DoubleToIntFunction
 1. DoubleToLongFunction
 1. ToDoubleFunction
 1. ToDoubleBiFunction
 1. IntFunction
-1. IntToBooleanFunction (Z) [todo]
+1. IntToBooleanFunction (Z) [maybe todo]
 1. IntToDoubleFunction
 1. IntToLongFunction
 1. ToIntFunction
 1. ToIntBiFunction
 1. LongFunction
-1. LongToBooleanFunction (Z) [todo]
+1. LongToBooleanFunction (Z) [maybe todo]
 1. LongToDoubleFunction
 1. LongToIntFunction
 1. ToLongFunction
