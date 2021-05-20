@@ -1188,8 +1188,77 @@ public final class Z {
         return (long n) -> next.accept(initial.get(), n);
     }
 
-    /* BooleanSupplier [SKIPPED] Because Supplier<Boolean> matches.
-       Unlike double/int/long, there's no auto-boxing optimizations to be had here. */
+    /* BooleanSupplier */
+
+    public static <A> Supplier<A> fuse(BooleanSupplier initial, Function<Boolean, A> next) {
+        return () -> next.apply(initial.getAsBoolean());
+    }
+
+    public static <A, B> Function<A, B> fuse(BooleanSupplier initial, BiFunction<Boolean, A, B> next) {
+        return (A a) -> next.apply(initial.getAsBoolean(), a);
+    }
+  
+    public static DoubleSupplier fuse(BooleanSupplier initial, ToDoubleFunction<Boolean> next) {
+        return () -> next.applyAsDouble(initial.getAsBoolean());
+    }
+
+    public static <A> ToDoubleFunction<A> fuse(BooleanSupplier initial, ToDoubleBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsDouble(initial.getAsBoolean(), a);
+    }
+
+    public static IntSupplier fuse(BooleanSupplier initial, ToIntFunction<Boolean> next) {
+        return () -> next.applyAsInt(initial.getAsBoolean());
+    }
+
+    public static <A> ToIntFunction<A> fuse(BooleanSupplier initial, ToIntBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsInt(initial.getAsBoolean(), a);
+    }
+
+    public static LongSupplier fuse(BooleanSupplier initial, ToLongFunction<Boolean> next) {
+        return () -> next.applyAsLong(initial.getAsBoolean());
+    }
+
+    public static <A> ToLongFunction<A> fuse(BooleanSupplier initial, ToLongBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsLong(initial.getAsBoolean(), a);
+    }
+
+    public static BooleanSupplier fuse(BooleanSupplier initial, Predicate<Boolean> next) {
+        return () -> next.test(initial.getAsBoolean());
+    }
+
+    public static <A> Predicate<A> fuse(BooleanSupplier initial, BiPredicate<Boolean, A> next) {
+        return (A a) -> next.test(initial.getAsBoolean(), a);
+    }
+
+    // TODO: Should there be a BooleanConsumer?
+    public static Operator fuse(BooleanSupplier initial, Consumer<Boolean> next) {
+        return () -> next.accept(initial.getAsBoolean());
+    }
+
+    public static <A> Consumer<A> fuse(BooleanSupplier initial, BiConsumer<Boolean, A> next) {
+        return (A a) -> next.accept(initial.getAsBoolean(), a);
+    }
+
+    public static DoubleConsumer fuse(BooleanSupplier initial, ObjDoubleConsumer<Boolean> next) {
+        return (double d) -> next.accept(initial.getAsBoolean(), d);
+    }
+
+    public static IntConsumer fuse(BooleanSupplier initial, ObjIntConsumer<Boolean> next) {
+        return (int i) -> next.accept(initial.getAsBoolean(), i);
+    }
+
+    public static LongConsumer fuse(BooleanSupplier initial, ObjLongConsumer<Boolean> next) {
+        return (long n) -> next.accept(initial.getAsBoolean(), n);
+    }
+
+    public static BooleanSupplier fuse(BooleanSupplier initial, UnaryOperator<Boolean> next) {
+        return () -> next.apply(initial.getAsBoolean());
+    }
+
+    // TODO: Add a BooleanUnaryOperator interface? (But is this dumb?)
+    public static UnaryOperator<Boolean> fuse(BooleanSupplier initial, BinaryOperator<Boolean> next) {
+        return (Boolean b) -> next.apply(initial.getAsBoolean(), b);
+    }
 
     /* DoubleSupplier */
 

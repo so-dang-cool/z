@@ -63,7 +63,6 @@ import so.dang.cool.z.internal.function.UndecFunction;
  */
 public final class TestFunctions {
     static final String suppliedString = "Z";
-    static final boolean suppliedBoolean = true;
     static final double suppliedDouble = 1.0;
     static final int suppliedInt = 2;
     static final long suppliedLong = 3L;
@@ -143,7 +142,7 @@ public final class TestFunctions {
     static ObjLongConsumer<String> saveStringFLongB = (f, b) -> { consumedStringF = f; consumedLongB = b; };
     static ObjLongConsumer<Boolean> saveBooleanELongC = (e, c) -> { consumedBooleanE = e; consumedLongC = c; };
     static Supplier<String> getString = () -> suppliedString;
-    static BooleanSupplier getBoolean = () -> suppliedBoolean;
+    static BooleanSupplier getBooleanTrue = () -> true;
     static DoubleSupplier getDouble = () -> suppliedDouble;
     static IntSupplier getInt = () -> suppliedInt;
     static LongSupplier getLong = () -> suppliedLong;
