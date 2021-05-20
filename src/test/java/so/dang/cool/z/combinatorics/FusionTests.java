@@ -2331,8 +2331,282 @@ public class FusionTests {
         assertEquals(5, Z.fuse(getLong, addLongs).applyAsLong(2L));
     }
 
-    // TODO: UnaryOperator
-    // TODO: BinaryOperator
+    // UnaryOperator
+
+    @Test
+    void unop_to_fn() {
+        assertEquals("hello?", Z.fuse(addQuestionMark, toLower).apply("HeLlO"));
+    }
+
+    @Test
+    void unop_to_bifn() {
+        assertEquals("hello?!", Z.fuse(addQuestionMark, concat).apply("hello").apply("!"));
+    }
+
+    @Test
+    void unop_to_toDblFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToDouble).applyAsDouble("1.0"));
+    }
+
+    @Test
+    void unop_to_toDblBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsDouble).apply("1.0").applyAsDouble("2.0"));
+    }
+
+    @Test
+    void unop_to_toIntFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToInt).applyAsInt("1"));
+    }
+
+    @Test
+    void unop_to_toIntBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsInt).apply("1").applyAsInt("2"));
+    }
+
+    @Test
+    void unop_to_toLongFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToLong).applyAsLong("1"));
+    }
+
+    @Test
+    void unop_to_toLongBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsLong).apply("1").applyAsLong("2"));
+    }
+
+    @Test
+    void unop_to_pred() {
+        assertFalse(Z.fuse(addQuestionMark, isEmpty).test(""));
+    }
+
+    @Test
+    void unop_to_bipred() {
+        assertTrue(Z.fuse(addQuestionMark, startsWith).apply("hello").test("hell"));
+    }
+
+    @Evil
+    @Test
+    void unop_to_cns() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.fuse(addQuestionMark, saveStringA).accept("hello");
+
+            assertEquals("hello?", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void unop_to_bicns() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.fuse(addQuestionMark, saveStringsBandC).apply("greetings").accept("earthlings");
+
+                assertEquals("greetings?", consumedStringB);
+                assertEquals("earthlings", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void unop_to_objDblCns() {
+        synchronized(consumedStringD) {
+            synchronized(consumedDoubleB) {
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+
+                Z.fuse(addQuestionMark, saveStringDDoubleB).apply("five").accept(5.0);
+
+                assertEquals("five?", consumedStringD);
+                assertEquals(5.0, consumedDoubleB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void unop_to_objIntCns() {
+        synchronized(consumedStringE) {
+            synchronized(consumedIntB) {
+                consumedStringE = "";
+                consumedIntB = 0;
+
+                Z.fuse(addQuestionMark, saveStringEIntB).apply("six").accept(6);
+
+                assertEquals("six?", consumedStringE);
+                assertEquals(6, consumedIntB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void unop_to_objLongFn() {
+        synchronized(consumedStringF) {
+            synchronized(consumedLongB) {
+                consumedStringF = "";
+                consumedLongB = 0L;
+
+                Z.fuse(addQuestionMark, saveStringFLongB).apply("seven").accept(7L);
+
+                assertEquals("seven?", consumedStringF);
+                assertEquals(7L, consumedLongB);
+            }
+        }
+    }
+
+    @Test
+    void unop_to_unop() {
+        assertEquals("goodbye??", Z.fuse(addQuestionMark, addQuestionMark).apply("goodbye"));
+    }
+
+    @Test
+    void unop_to_biop() {
+        assertEquals("same-ish", Z.fuse(addQuestionMark, relation).apply("yo man").apply("YO MAN?"));
+    }
+
+    // BinaryOperator
+
+    @Test
+    void biop_to_fn() {
+        assertEquals("same-ish", Z.fuse(relation, trim).apply("hey").apply("HEY"));
+    }
+
+    @Test
+    void biop_to_bifn() {
+        assertEquals("same-ish-ness", Z.fuse(relation, concat).apply("hey").apply("HEY").apply("-ness"));
+    }
+
+    @Test
+    void biop_to_toDblFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToDouble).apply("1").applyAsDouble(".5"));
+    }
+
+    @Test
+    void biop_to_toDblBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsDouble).apply("1").apply(".0").applyAsDouble("2.0"));
+    }
+
+    @Test
+    void biop_to_toIntFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToInt).apply("1").applyAsInt("2"));
+    }
+
+    @Test
+    void biop_to_toIntBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsInt).apply("2").apply("3").applyAsInt("7"));
+    }
+
+    @Test
+    void biop_to_toLongFn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToLong).apply("3").applyAsLong("4"));
+    }
+
+    @Test
+    void biop_to_toLongBifn() {
+        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsLong).apply("3").apply("4").applyAsLong("6"));
+    }
+
+    @Test
+    void biop_to_pred() {
+        assertFalse(Z.fuse(relation, isEmpty).apply("hey").test("HEY"));
+    }
+
+    @Test
+    void biop_to_bipred() {
+        assertTrue(Z.fuse(relation, startsWith).apply("hey").apply("HEY").test("same"));
+    }
+
+    @Evil
+    @Test
+    void biop_to_cns() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.fuse(relation, saveStringA).apply("hey").accept("HEY");
+
+            assertEquals("same-ish", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void biop_to_bicns() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.fuse(relation, saveStringsBandC).apply("hey").apply("HEY").accept("mother");
+
+                assertEquals("same-ish", consumedStringB);
+                assertEquals("mother", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void biop_to_objDblCns() {
+        synchronized(consumedStringD) {
+            synchronized(consumedDoubleB) {
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+
+                Z.fuse(relation, saveStringDDoubleB).apply("hey").apply("HEY").accept(0.5);
+
+                assertEquals("same-ish", consumedStringD);
+                assertEquals(0.5, consumedDoubleB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void biop_to_objIntCns() {
+        synchronized(consumedStringE) {
+            synchronized(consumedIntB) {
+                consumedStringE = "";
+                consumedIntB = 0;
+
+                Z.fuse(relation, saveStringEIntB).apply("hey").apply("HEY").accept(111);
+
+                assertEquals("same-ish", consumedStringE);
+                assertEquals(111, consumedIntB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void biop_to_objLongFn() {
+        synchronized(consumedStringF) {
+            synchronized(consumedLongB) {
+                consumedStringF = "";
+                consumedLongB = 0L;
+
+                Z.fuse(relation, saveStringFLongB).apply("hey").apply("HEY").accept(22L);
+
+                assertEquals("same-ish", consumedStringF);
+                assertEquals(22L, consumedLongB);
+            }
+        }
+    }
+
+    @Test
+    void biop_to_unop() {
+        assertEquals("same-ish?", Z.fuse(relation, addQuestionMark).apply("hey").apply("HEY"));
+    }
+
+    @Test
+    void biop_to_biop() {
+        assertEquals("same-ish", Z.fuse(relation, relation).apply("hey").apply("HEY").apply("SAME-ISH"));
+    }
+
     // TODO: DoubleUnaryOperator
     // TODO: DoubleBinaryOperator
     // TODO: IntUnaryOperator
