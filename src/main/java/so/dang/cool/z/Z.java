@@ -45,6 +45,7 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.annotation.Evil;
+import so.dang.cool.z.annotation.Experimental;
 import so.dang.cool.z.internal.combination.Fusion;
 import so.dang.cool.z.internal.function.BooleanConsumer;
 import so.dang.cool.z.internal.function.BooleanFunction;
@@ -1557,102 +1558,126 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
+    @Experimental
     public static <A> Fusion.WithFunction<A, A> withClass(Class<A> clazz) {
         return Fusion.WithFunction.of(Z.id(clazz));
     }
 
+    @Experimental
     public static <A> Fusion.WithFunction<A, A> with(Class<A> clazz) {
         return withClass(clazz);
     }
 
+    @Experimental
     public static <A> Fusion.WithSupplier<A> withObject(A initial) {
         return Fusion.WithSupplier.of(() -> initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithSupplier<A> with(A initial) {
         return withObject(initial);
     }
 
+    @Experimental
     public static <A, B> Fusion.WithFunction<A, B> withFunction(Function<A, B> initial) {
         return Fusion.WithFunction.of(initial);
     }
 
+    @Experimental
     public static <A, B> Fusion.WithFunction<A, B> with(Function<A, B> initial) {
         return withFunction(initial);
     }
 
+    @Experimental
     public static <A, B, C> Fusion.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
         return Fusion.WithBiFunction.of(initial);
     }
 
+    @Experimental
     public static <A, B, C> Fusion.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
         return withBiFunction(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
         return Fusion.WithToDoubleFunction.of(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
         return withToDoubleFunction(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
         return Fusion.WithToIntFunction.of(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToIntFunction<A> with(ToIntFunction<A> initial) {
         return withToIntFunction(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
         return Fusion.WithToLongFunction.of(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithToLongFunction<A> with(ToLongFunction<A> initial) {
         return withToLongFunction(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithPredicate<A> withPredicate(Predicate<A> initial) {
         return Fusion.WithPredicate.of(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithPredicate<A> with(Predicate<A> initial) {
         return withPredicate(initial);
     }
 
+    @Experimental
     public static <A, B> Fusion.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
         return Fusion.WithBiPredicate.of(initial);
     }
 
+    @Experimental
     public static <A, B> Fusion.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
         return withBiPredicate(initial);
     }
 
     @Evil
+    @Experimental
     public static <A> Fusion.WithConsumer<A> withConsumer(Consumer<A> initial) {
         return Fusion.WithConsumer.of(initial);
     }
 
     @Evil
+    @Experimental
     public static <A> Fusion.WithConsumer<A> with(Consumer<A> initial) {
         return withConsumer(initial);
     }
 
     @Evil
+    @Experimental
     public static <A, B> Fusion.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
         return Fusion.WithBiConsumer.of(initial);
     }
 
     @Evil
+    @Experimental
     public static <A, B> Fusion.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
         return withBiConsumer(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithSupplier<A> withSupplier(Supplier<A> initial) {
         return Fusion.WithSupplier.of(initial);
     }
 
+    @Experimental
     public static <A> Fusion.WithSupplier<A> with(Supplier<A> initial) {
         return withSupplier(initial);
     }
