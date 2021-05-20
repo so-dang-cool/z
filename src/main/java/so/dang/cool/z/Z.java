@@ -47,6 +47,7 @@ import java.util.function.UnaryOperator;
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.internal.combination.Fusion;
 import so.dang.cool.z.internal.function.BooleanConsumer;
+import so.dang.cool.z.internal.function.BooleanFunction;
 import so.dang.cool.z.internal.function.BooleanUnaryOperator;
 import so.dang.cool.z.internal.function.DecFunction;
 import so.dang.cool.z.internal.function.DodecFunction;
@@ -771,7 +772,7 @@ public final class Z {
 
     /* Predicate */
 
-    public static <A, B> Function<A, B> fuse(Predicate<A> initial, Function<Boolean, B> next) {
+    public static <A, B> Function<A, B> fuse(Predicate<A> initial, BooleanFunction<B> next) {
         return (A a) -> next.apply(initial.test(a));
     }
 
@@ -841,7 +842,7 @@ public final class Z {
 
     /* <BiPredicate> */
 
-    public static <A, B, C> Function<A, Function<B, C>> fuse(BiPredicate<A, B> initial, Function<Boolean, C> next) {
+    public static <A, B, C> Function<A, Function<B, C>> fuse(BiPredicate<A, B> initial, BooleanFunction<C> next) {
         return (A a) -> (B b) -> next.apply(initial.test(a, b));
     }
 
@@ -911,7 +912,7 @@ public final class Z {
 
     /* <DoublePredicate> */
 
-    public static <A> DoubleFunction<A> fuse(DoublePredicate initial, Function<Boolean, A> next) {
+    public static <A> DoubleFunction<A> fuse(DoublePredicate initial, BooleanFunction<A> next) {
         return (double d) -> next.apply(initial.test(d));
     }
 
@@ -981,7 +982,7 @@ public final class Z {
 
     /* IntPredicate */
 
-    public static <A> IntFunction<A> fuse(IntPredicate initial, Function<Boolean, A> next) {
+    public static <A> IntFunction<A> fuse(IntPredicate initial, BooleanFunction<A> next) {
         return (int i) -> next.apply(initial.test(i));
     }
 
@@ -1051,7 +1052,7 @@ public final class Z {
 
     /* LongPredicate */
 
-    public static <A> LongFunction<A> fuse(LongPredicate initial, Function<Boolean, A> next) {
+    public static <A> LongFunction<A> fuse(LongPredicate initial, BooleanFunction<A> next) {
         return (long n) -> next.apply(initial.test(n));
     }
 
@@ -1192,7 +1193,7 @@ public final class Z {
 
     /* BooleanSupplier */
 
-    public static <A> Supplier<A> fuse(BooleanSupplier initial, Function<Boolean, A> next) {
+    public static <A> Supplier<A> fuse(BooleanSupplier initial, BooleanFunction<A> next) {
         return () -> next.apply(initial.getAsBoolean());
     }
 

@@ -17,6 +17,7 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.Z;
+import so.dang.cool.z.internal.function.BooleanFunction;
 
 public abstract class Fusion<A, Fn> {
     private Fusion() {}
@@ -425,21 +426,21 @@ public abstract class Fusion<A, Fn> {
             return initial;
         }
 
-        /* Predicate<A> -> Function<Boolean, B> */
+        /* Predicate<A> -> BooleanFunction<B> */
 
-        public <B> Function<A, B> fuseFunction(Function<Boolean, B> next) {
+        public <B> Function<A, B> fuseFunction(BooleanFunction<B> next) {
             return Z.fuse(initial, next);
         }
 
-        public <B> Function<A, B> fuse(Function<Boolean, B> next) {
+        public <B> Function<A, B> fuse(BooleanFunction<B> next) {
             return fuseFunction(next);
         }
 
-        public <B> WithFunction<A, B> fusingFunction(Function<Boolean, B> next) {
+        public <B> WithFunction<A, B> fusingFunction(BooleanFunction<B> next) {
             return WithFunction.of(fuseFunction(next));
         }
 
-        public <B> WithFunction<A, B> fusing(Function<Boolean, B> next) {
+        public <B> WithFunction<A, B> fusing(BooleanFunction<B> next) {
             return fusingFunction(next);
         }
     }

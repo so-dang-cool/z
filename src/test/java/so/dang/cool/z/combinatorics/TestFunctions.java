@@ -46,6 +46,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import so.dang.cool.z.internal.function.BooleanConsumer;
+import so.dang.cool.z.internal.function.BooleanFunction;
 import so.dang.cool.z.internal.function.BooleanUnaryOperator;
 import so.dang.cool.z.internal.function.DecFunction;
 import so.dang.cool.z.internal.function.DodecFunction;
@@ -92,16 +93,14 @@ public final class TestFunctions {
     static Boolean consumedBooleanE = false;
     static Boolean wasOperated = false;
 
-    TestFunctions() {
-
-    }
+    TestFunctions() {}
 
     static Function<String, String> toLower = String::toLowerCase;
     static Function<String, String> trim = String::trim;
     static Function<String, String> addExclamationMark = s -> s.concat("!");
-    static Function<Boolean, String> booleanToString = String::valueOf;
     static BiFunction<String, String, String> concat = String::concat;
     static BiFunction<Boolean, String, String> maybeToUpper = (b, s) -> b ? s.toUpperCase() : s;
+    static BooleanFunction<String> booleanToString = String::valueOf;
     static DoubleFunction<String> doubleToString = String::valueOf;
     static DoubleToIntFunction doubleToInt = d -> (int) d;
     static DoubleToLongFunction doubleToLong = d -> (long) d;

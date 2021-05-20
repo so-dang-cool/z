@@ -39,17 +39,24 @@ different class also matches, and there's no benefit to specificity.
 
 1. Function
 1. BiFunction
+1. BooleanFunction (Z)
+1. BooleanToDoubleFunction (Z) [todo]
+1. BooleanToIntFunction (Z) [todo]
+1. BooleanToLongFunction (Z) [todo]
 1. DoubleFunction
+1. DoubleToBooleanFunction (Z) [todo]
 1. DoubleToIntFunction
 1. DoubleToLongFunction
 1. ToDoubleFunction
 1. ToDoubleBiFunction
 1. IntFunction
+1. IntToBooleanFunction (Z) [todo]
 1. IntToDoubleFunction
 1. IntToLongFunction
 1. ToIntFunction
 1. ToIntBiFunction
 1. LongFunction
+1. LongToBooleanFunction (Z) [todo]
 1. LongToDoubleFunction
 1. LongToIntFunction
 1. ToLongFunction
@@ -67,6 +74,7 @@ different class also matches, and there's no benefit to specificity.
 
 1. Consumer
 1. BiConsumer
+1. BooleanConsumer (Z)
 1. DoubleConsumer
 1. ObjDoubleConsumer
 1. IntConsumer
@@ -109,13 +117,9 @@ different class also matches, and there's no benefit to specificity.
 
 # Testing
 
-Examples in tests are encouraged.
+Usage examples in tests are welcomed, unit tests are required.
 
-Because of the complexity of generics and function signatures, and the simplicity of function implementations (many only a single line) compilation itself is often enough testing for me to be happy with the validity of code.
-
-More rigorous tests will be added later.
-
-All PRs must continue to compile.
+Any PR must continue to compile and pass tests.
 
 # Publishing
 
