@@ -102,6 +102,7 @@ public final class TestFunctions {
     static BiFunction<Boolean, String, String> maybeToUpper = (b, s) -> b ? s.toUpperCase() : s;
     static BooleanFunction<String> booleanToString = String::valueOf;
     static DoubleFunction<String> doubleToString = String::valueOf;
+    static DoubleFunction<String> doubleFloorToString = (double d) -> String.valueOf(d).split("\\.")[0];
     static DoubleToIntFunction doubleToInt = d -> (int) d;
     static DoubleToLongFunction doubleToLong = d -> (long) d;
     static ToDoubleFunction<String> stringToDouble = Double::parseDouble;
@@ -149,7 +150,9 @@ public final class TestFunctions {
     static LongSupplier getLong = () -> suppliedLong;
     static Operator doOperation = () -> wasOperated = true;
     static UnaryOperator<String> addQuestionMark = s -> s.concat("?");
+    static UnaryOperator<String> addTrailingZero = s -> s.concat("0");
     static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
+    static BinaryOperator<String> concatAndAddTrailingZero = (a, b) -> a.concat(b).concat("0");
     static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
     static BooleanUnaryOperator booleanId = b -> b;
     static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;

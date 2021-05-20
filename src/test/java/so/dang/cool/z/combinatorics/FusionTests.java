@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combinatorics.TestFunctions.*;
 
+import java.util.function.DoubleFunction;
+
 import org.junit.jupiter.api.Test;
 
 import so.dang.cool.z.Z;
@@ -315,22 +317,22 @@ public class FusionTests {
 
     @Test
     void dblFn_to_toInt() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(doubleToString, stringToInt).applyAsInt(1.0));
+        assertEquals(1, Z.fuse(doubleFloorToString, stringToInt).applyAsInt(1.0));
     }
 
     @Test
     void dblFn_to_toIntBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(doubleToString, addStringsAsInt).apply(1.0).applyAsInt("2"));
+        assertEquals(3, Z.fuse(doubleFloorToString, addStringsAsInt).apply(1.0).applyAsInt("2"));
     }
 
     @Test
     void dblFn_to_toLongFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(doubleToString, stringToLong).applyAsLong(1.0));
+        assertEquals(1L, Z.fuse(doubleFloorToString, stringToLong).applyAsLong(1.0));
     }
 
     @Test
     void dblFn_to_toLongBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(doubleToString, addStringsAsLong).apply(1.0).applyAsLong("2"));
+        assertEquals(3L, Z.fuse(doubleFloorToString, addStringsAsLong).apply(1.0).applyAsLong("2"));
     }
 
     @Test
@@ -1937,32 +1939,32 @@ public class FusionTests {
 
     @Test
     void sup_to_toDblFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, stringToDouble).getAsDouble());
+        assertEquals(1.0, Z.fuse(() -> "1.0", stringToDouble).getAsDouble());
     }
 
     @Test
     void sup_to_toDblBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, addStringsAsDouble).applyAsDouble("1.0"));
+        assertEquals(2.0, Z.fuse(() -> "1.0", addStringsAsDouble).applyAsDouble("1.0"));
     }
 
     @Test
     void sup_to_toIntFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, stringToInt).getAsInt());
+        assertEquals(1, Z.fuse(() -> "1", stringToInt).getAsInt());
     }
 
     @Test
     void sup_to_toIntBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, addStringsAsInt).applyAsInt("1"));
+        assertEquals(2, Z.fuse(() -> "1", addStringsAsInt).applyAsInt("1"));
     }
 
     @Test
     void sup_to_toLongFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, stringToLong).getAsLong());
+        assertEquals(1L, Z.fuse(() -> "1", stringToLong).getAsLong());
     }
 
     @Test
     void sup_to_toLongBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(getString, addStringsAsLong).applyAsLong("1"));
+        assertEquals(2L, Z.fuse(() -> "1", addStringsAsLong).applyAsLong("1"));
     }
 
     @Test
@@ -2345,32 +2347,32 @@ public class FusionTests {
 
     @Test
     void unop_to_toDblFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToDouble).applyAsDouble("1.0"));
+        assertEquals(1.0, Z.fuse(addTrailingZero, stringToDouble).applyAsDouble("1."));
     }
 
     @Test
     void unop_to_toDblBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsDouble).apply("1.0").applyAsDouble("2.0"));
+        assertEquals(3.0, Z.fuse(addTrailingZero, addStringsAsDouble).apply("1.").applyAsDouble("2.0"));
     }
 
     @Test
     void unop_to_toIntFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToInt).applyAsInt("1"));
+        assertEquals(10, Z.fuse(addTrailingZero, stringToInt).applyAsInt("1"));
     }
 
     @Test
     void unop_to_toIntBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsInt).apply("1").applyAsInt("2"));
+        assertEquals(12, Z.fuse(addTrailingZero, addStringsAsInt).apply("1").applyAsInt("2"));
     }
 
     @Test
     void unop_to_toLongFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, stringToLong).applyAsLong("1"));
+        assertEquals(10L, Z.fuse(addTrailingZero, stringToLong).applyAsLong("1"));
     }
 
     @Test
     void unop_to_toLongBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(addQuestionMark, addStringsAsLong).apply("1").applyAsLong("2"));
+        assertEquals(12L, Z.fuse(addTrailingZero, addStringsAsLong).apply("1").applyAsLong("2"));
     }
 
     @Test
@@ -2483,32 +2485,32 @@ public class FusionTests {
 
     @Test
     void biop_to_toDblFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToDouble).apply("1").applyAsDouble(".5"));
+        assertEquals(15.0, Z.fuse(concatAndAddTrailingZero, stringToDouble).apply("1").applyAsDouble("5."));
     }
 
     @Test
     void biop_to_toDblBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsDouble).apply("1").apply(".0").applyAsDouble("2.0"));
+        assertEquals(12.0, Z.fuse(concatAndAddTrailingZero, addStringsAsDouble).apply("1").apply("0.").applyAsDouble("2.0"));
     }
 
     @Test
     void biop_to_toIntFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToInt).apply("1").applyAsInt("2"));
+        assertEquals(120, Z.fuse(concatAndAddTrailingZero, stringToInt).apply("1").applyAsInt("2"));
     }
 
     @Test
     void biop_to_toIntBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsInt).apply("2").apply("3").applyAsInt("7"));
+        assertEquals(237, Z.fuse(concatAndAddTrailingZero, addStringsAsInt).apply("2").apply("3").applyAsInt("7"));
     }
 
     @Test
     void biop_to_toLongFn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, stringToLong).apply("3").applyAsLong("4"));
+        assertEquals(340L, Z.fuse(concatAndAddTrailingZero, stringToLong).apply("3").applyAsLong("4"));
     }
 
     @Test
     void biop_to_toLongBifn() {
-        assertThrows(NumberFormatException.class, () -> Z.fuse(relation, addStringsAsLong).apply("3").apply("4").applyAsLong("6"));
+        assertEquals(346L, Z.fuse(concatAndAddTrailingZero, addStringsAsLong).apply("3").apply("4").applyAsLong("6"));
     }
 
     @Test
