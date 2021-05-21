@@ -45,20 +45,20 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-import so.dang.cool.z.internal.function.BooleanConsumer;
-import so.dang.cool.z.internal.function.BooleanFunction;
-import so.dang.cool.z.internal.function.BooleanUnaryOperator;
-import so.dang.cool.z.internal.function.DecFunction;
-import so.dang.cool.z.internal.function.DodecFunction;
-import so.dang.cool.z.internal.function.NonFunction;
-import so.dang.cool.z.internal.function.OctFunction;
-import so.dang.cool.z.internal.function.Operator;
-import so.dang.cool.z.internal.function.QuadFunction;
-import so.dang.cool.z.internal.function.QuinFunction;
-import so.dang.cool.z.internal.function.SeptFunction;
-import so.dang.cool.z.internal.function.SexFunction;
-import so.dang.cool.z.internal.function.TriFunction;
-import so.dang.cool.z.internal.function.UndecFunction;
+import so.dang.cool.z.function.BooleanConsumer;
+import so.dang.cool.z.function.BooleanFunction;
+import so.dang.cool.z.function.BooleanUnaryOperator;
+import so.dang.cool.z.function.DecFunction;
+import so.dang.cool.z.function.DodecFunction;
+import so.dang.cool.z.function.NonFunction;
+import so.dang.cool.z.function.OctFunction;
+import so.dang.cool.z.function.Operator;
+import so.dang.cool.z.function.QuadFunction;
+import so.dang.cool.z.function.QuinFunction;
+import so.dang.cool.z.function.SeptFunction;
+import so.dang.cool.z.function.SexFunction;
+import so.dang.cool.z.function.TriFunction;
+import so.dang.cool.z.function.UndecFunction;
 
 /**
  * Testing functions. For simplicity of combinations, every generic uses the
@@ -101,6 +101,7 @@ public final class TestFunctions {
     public static BiFunction<String, String, String> concat = String::concat;
     public static BiFunction<Boolean, String, String> maybeToUpper = (b, s) -> b ? s.toUpperCase() : s;
     public static BooleanFunction<String> booleanToString = String::valueOf;
+    public static BooleanFunction<String> maybeOneAsString = b -> b ? "1" : "";
     public static DoubleFunction<String> doubleToString = String::valueOf;
     public static DoubleFunction<String> doubleFloorToString = (double d) -> String.valueOf(d).split("\\.")[0];
     public static DoubleToIntFunction doubleToInt = d -> (int) d;

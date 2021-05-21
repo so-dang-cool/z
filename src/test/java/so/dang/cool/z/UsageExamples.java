@@ -23,7 +23,7 @@ import java.util.function.ToIntFunction;
 import org.junit.jupiter.api.Test;
 
 import so.dang.cool.z.annotation.Evil;
-import so.dang.cool.z.internal.function.Operator;
+import so.dang.cool.z.function.Operator;
 
 public class UsageExamples {
     @Test

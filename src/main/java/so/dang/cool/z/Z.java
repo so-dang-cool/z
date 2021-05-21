@@ -46,21 +46,24 @@ import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.annotation.Experimental;
+import so.dang.cool.z.function.BooleanConsumer;
+import so.dang.cool.z.function.BooleanFunction;
+import so.dang.cool.z.function.BooleanToDoubleFunction;
+import so.dang.cool.z.function.BooleanToIntFunction;
+import so.dang.cool.z.function.BooleanToLongFunction;
+import so.dang.cool.z.function.BooleanUnaryOperator;
+import so.dang.cool.z.function.DecFunction;
+import so.dang.cool.z.function.DodecFunction;
+import so.dang.cool.z.function.NonFunction;
+import so.dang.cool.z.function.OctFunction;
+import so.dang.cool.z.function.Operator;
+import so.dang.cool.z.function.QuadFunction;
+import so.dang.cool.z.function.QuinFunction;
+import so.dang.cool.z.function.SeptFunction;
+import so.dang.cool.z.function.SexFunction;
+import so.dang.cool.z.function.TriFunction;
+import so.dang.cool.z.function.UndecFunction;
 import so.dang.cool.z.internal.combination.Fusion;
-import so.dang.cool.z.internal.function.BooleanConsumer;
-import so.dang.cool.z.internal.function.BooleanFunction;
-import so.dang.cool.z.internal.function.BooleanUnaryOperator;
-import so.dang.cool.z.internal.function.DecFunction;
-import so.dang.cool.z.internal.function.DodecFunction;
-import so.dang.cool.z.internal.function.NonFunction;
-import so.dang.cool.z.internal.function.OctFunction;
-import so.dang.cool.z.internal.function.Operator;
-import so.dang.cool.z.internal.function.QuadFunction;
-import so.dang.cool.z.internal.function.QuinFunction;
-import so.dang.cool.z.internal.function.SeptFunction;
-import so.dang.cool.z.internal.function.SexFunction;
-import so.dang.cool.z.internal.function.TriFunction;
-import so.dang.cool.z.internal.function.UndecFunction;
 
 
 /**
@@ -223,6 +226,68 @@ public final class Z {
 
     public static <A, B, C, D> Function<A, Function<B, LongConsumer>> fuse(BiFunction<A, B, C> initial, ObjLongConsumer<C> next) {
         return (A a) -> (B b) -> (long n) -> next.accept(initial.apply(a, b), n);
+    }
+
+    /* BooleanFunction */
+
+    public static <A, B> BooleanFunction<B> fuse(BooleanFunction<A> initial, Function<A, B> next) {
+        return (boolean b) -> next.apply(initial.apply(b));
+    }
+
+    public static <A, B, C> BooleanFunction<Function<B, C>> fuse(BooleanFunction<A> initial, BiFunction<A, B, C> next) {
+        return (boolean b1) -> (B b2) -> next.apply(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanToDoubleFunction fuse(BooleanFunction<A> initial, ToDoubleFunction<A> next) {
+        return (boolean b) -> next.applyAsDouble(initial.apply(b));
+    }
+
+    public static <A, B> BooleanFunction<ToDoubleFunction<B>> fuse(BooleanFunction<A> initial, ToDoubleBiFunction<A, B> next) {
+        return (boolean b1) -> (B b2) -> next.applyAsDouble(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanToIntFunction fuse(BooleanFunction<A> initial, ToIntFunction<A> next) {
+        return (boolean b) -> next.applyAsInt(initial.apply(b));
+    }
+
+    public static <A, B> BooleanFunction<ToIntFunction<B>> fuse(BooleanFunction<A> initial, ToIntBiFunction<A, B> next) {
+        return (boolean b1) -> (B b2) -> next.applyAsInt(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanToLongFunction fuse(BooleanFunction<A> initial, ToLongFunction<A> next) {
+        return (boolean b) -> next.applyAsLong(initial.apply(b));
+    }
+
+    public static <A, B> BooleanFunction<ToLongFunction<B>> fuse(BooleanFunction<A> initial, ToLongBiFunction<A, B> next) {
+        return (boolean b1) -> (B b2) -> next.applyAsLong(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanUnaryOperator fuse(BooleanFunction<A> initial, Predicate<A> next) {
+        return (boolean b) -> next.test(initial.apply(b));
+    }
+
+    public static <A, B> BooleanFunction<Predicate<B>> fuse(BooleanFunction<A> initial, BiPredicate<A, B> next) {
+        return (boolean b1) -> (B b2) -> next.test(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanConsumer fuse(BooleanFunction<A> initial, Consumer<A> next) {
+        return (boolean b) -> next.accept(initial.apply(b));
+    }
+
+    public static <A, B> BooleanFunction<Consumer<B>> fuse(BooleanFunction<A> initial, BiConsumer<A, B> next) {
+        return (boolean b1) -> (B b2) -> next.accept(initial.apply(b1), b2);
+    }
+
+    public static <A> BooleanFunction<DoubleConsumer> fuse(BooleanFunction<A> initial, ObjDoubleConsumer<A> next) {
+        return (boolean b) -> (double d) -> next.accept(initial.apply(b), d);
+    }
+
+    public static <A> BooleanFunction<IntConsumer> fuse(BooleanFunction<A> initial, ObjIntConsumer<A> next) {
+        return (boolean b) -> (int i) -> next.accept(initial.apply(b), i);
+    }
+
+    public static <A> BooleanFunction<LongConsumer> fuse(BooleanFunction<A> initial, ObjLongConsumer<A> next) {
+        return (boolean b) -> (long n) -> next.accept(initial.apply(b), n);
     }
 
     /* DoubleFunction */

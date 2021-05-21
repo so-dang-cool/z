@@ -1,4 +1,4 @@
-package so.dang.cool.z.internal.function;
+package so.dang.cool.z.function;
 
 import so.dang.cool.z.annotation.Evil;
 

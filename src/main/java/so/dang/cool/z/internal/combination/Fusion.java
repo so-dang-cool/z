@@ -17,7 +17,7 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.Z;
-import so.dang.cool.z.internal.function.BooleanFunction;
+import so.dang.cool.z.function.BooleanFunction;
 
 public abstract class Fusion<A, Fn> {
     private Fusion() {}
