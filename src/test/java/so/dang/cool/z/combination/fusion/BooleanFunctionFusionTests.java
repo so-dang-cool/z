@@ -53,7 +53,7 @@ public class BooleanFunctionFusionTests {
 
     @Test
     void boolFn_to_pred() {
-        assertFalse(Z.fuse(booleanToString, isEmpty).applyAsBoolean(true));
+        assertFalse(Z.fuse(booleanToString, isEmpty).test(true));
     }
 
     @Test

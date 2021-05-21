@@ -144,6 +144,6 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup_to_toBiop() {
-        assertTrue(Z.fuse(getBooleanTrue, maybeNot).applyAsBoolean(false));
+        assertTrue(Z.fuse(getBooleanTrue, maybeNot).test(false));
     }
 }

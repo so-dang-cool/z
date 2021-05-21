@@ -47,7 +47,7 @@ import java.util.stream.Stream;
 
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
-import so.dang.cool.z.function.BooleanUnaryOperator;
+import so.dang.cool.z.function.BooleanPredicate;
 import so.dang.cool.z.function.DecFunction;
 import so.dang.cool.z.function.DodecFunction;
 import so.dang.cool.z.function.NonFunction;
@@ -128,6 +128,7 @@ public final class TestFunctions {
     public static Predicate<Boolean> not = b -> !b;
     public static BiPredicate<String, String> startsWith = String::startsWith;
     public static BiPredicate<Boolean, String> maybeNotFromString = (b, s) -> { boolean b2 = Boolean.parseBoolean(s); return b ? !b2 : b2; };
+    public static BooleanPredicate booleanId = b -> b;
     public static DoublePredicate isDoubleOne = d -> Math.abs(d - 1.0) < Math.ulp(d);
     public static IntPredicate isIntTwo = i -> i == 2;
     public static LongPredicate isLongThree = n -> n == 3L;
@@ -155,7 +156,6 @@ public final class TestFunctions {
     public static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
     public static BinaryOperator<String> concatAndAddTrailingZero = (a, b) -> a.concat(b).concat("0");
     public static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
-    public static BooleanUnaryOperator booleanId = b -> b;
     public static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
     public static DoubleBinaryOperator addDoubles = (d1, d2) -> d1 + d2;
     public static IntUnaryOperator addTwoToInt = i -> i + 2;
