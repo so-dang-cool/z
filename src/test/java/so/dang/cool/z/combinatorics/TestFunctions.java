@@ -65,158 +65,158 @@ import so.dang.cool.z.internal.function.UndecFunction;
  * same type (String) -- primitives, of course, must remain primitives.
  */
 public final class TestFunctions {
-    static final String suppliedString = "Z";
-    static final double suppliedDouble = 1.0;
-    static final int suppliedInt = 2;
-    static final long suppliedLong = 3L;
+    public static final String suppliedString = "Z";
+    public static final double suppliedDouble = 1.0;
+    public static final int suppliedInt = 2;
+    public static final long suppliedLong = 3L;
 
-    static String consumedStringA = "";
-    static String consumedStringB = "";
-    static String consumedStringC = "";
-    static String consumedStringD = "";
-    static String consumedStringE = "";
-    static String consumedStringF = "";
-    static String consumedStringG = "";
-    static Double consumedDoubleA = 0.0;
-    static Double consumedDoubleB = 0.0;
-    static Double consumedDoubleC = 0.0;
-    static Integer consumedIntA = 0;
-    static Integer consumedIntB = 0;
-    static Integer consumedIntC = 0;
-    static Long consumedLongA = 0L;
-    static Long consumedLongB = 0L;
-    static Long consumedLongC = 0L;
-    static Boolean consumedBooleanA = false;
-    static Boolean consumedBooleanB = false;
-    static Boolean consumedBooleanC = false;
-    static Boolean consumedBooleanD = false;
-    static Boolean consumedBooleanE = false;
-    static Boolean wasOperated = false;
+    public static String consumedStringA = "";
+    public static String consumedStringB = "";
+    public static String consumedStringC = "";
+    public static String consumedStringD = "";
+    public static String consumedStringE = "";
+    public static String consumedStringF = "";
+    public static String consumedStringG = "";
+    public static Double consumedDoubleA = 0.0;
+    public static Double consumedDoubleB = 0.0;
+    public static Double consumedDoubleC = 0.0;
+    public static Integer consumedIntA = 0;
+    public static Integer consumedIntB = 0;
+    public static Integer consumedIntC = 0;
+    public static Long consumedLongA = 0L;
+    public static Long consumedLongB = 0L;
+    public static Long consumedLongC = 0L;
+    public static Boolean consumedBooleanA = false;
+    public static Boolean consumedBooleanB = false;
+    public static Boolean consumedBooleanC = false;
+    public static Boolean consumedBooleanD = false;
+    public static Boolean consumedBooleanE = false;
+    public static Boolean wasOperated = false;
 
     TestFunctions() {}
 
-    static Function<String, String> toLower = String::toLowerCase;
-    static Function<String, String> trim = String::trim;
-    static Function<String, String> addExclamationMark = s -> s.concat("!");
-    static BiFunction<String, String, String> concat = String::concat;
-    static BiFunction<Boolean, String, String> maybeToUpper = (b, s) -> b ? s.toUpperCase() : s;
-    static BooleanFunction<String> booleanToString = String::valueOf;
-    static DoubleFunction<String> doubleToString = String::valueOf;
-    static DoubleFunction<String> doubleFloorToString = (double d) -> String.valueOf(d).split("\\.")[0];
-    static DoubleToIntFunction doubleToInt = d -> (int) d;
-    static DoubleToLongFunction doubleToLong = d -> (long) d;
-    static ToDoubleFunction<String> stringToDouble = Double::parseDouble;
-    static ToDoubleFunction<Boolean> maybeOneAsDouble = b -> b ? 1.0 : 0.0;
-    static ToDoubleBiFunction<String, String> addStringsAsDouble = (a, b) -> Double.parseDouble(a) + Double.parseDouble(b);
-    static ToDoubleBiFunction<Boolean, String> maybeAddOneToStringAsDouble = (b, s) -> Double.parseDouble(s) + (b ? 1.0 : 0.0);
-    static IntFunction<String> intToString = String::valueOf;
-    static IntToDoubleFunction intToDouble = i -> (double) i;
-    static IntToLongFunction intToLong = i -> (long) i;
-    static ToIntFunction<String> stringToInt = Integer::parseInt;
-    static ToIntFunction<Boolean> maybeTwoAsInt = b -> b ? 2 : 0;
-    static ToIntBiFunction<String, String> addStringsAsInt = (a, b) -> Integer.parseInt(a) + Integer.parseInt(b);
-    static ToIntBiFunction<Boolean, String> maybeAddTwoToStringAsInt = (b, s) -> Integer.parseInt(s) + (b ? 2 : 0);
-    static LongFunction<String> longToString = String::valueOf;
-    static LongToDoubleFunction longToDouble = n -> (double) n;
-    static LongToIntFunction longToInt = n -> (int) n;
-    static ToLongFunction<String> stringToLong = Long::parseLong;
-    static ToLongFunction<Boolean> maybeThreeAsLong = b -> b ? 3L : 0;
-    static ToLongBiFunction<String, String> addStringsAsLong = (a, b) -> Long.parseLong(a) + Long.parseLong(b);
-    static ToLongBiFunction<Boolean, String> maybeAddThreeToStringAsLong = (b, s) -> Long.parseLong(s) + (b ? 3L : 0);
-    static Predicate<String> isEmpty = String::isEmpty;
-    static Predicate<Boolean> not = b -> !b;
-    static BiPredicate<String, String> startsWith = String::startsWith;
-    static BiPredicate<Boolean, String> maybeNotFromString = (b, s) -> { boolean b2 = Boolean.parseBoolean(s); return b ? !b2 : b2; };
-    static DoublePredicate isDoubleOne = d -> Math.abs(d - 1.0) < Math.ulp(d);
-    static IntPredicate isIntTwo = i -> i == 2;
-    static LongPredicate isLongThree = n -> n == 3L;
-    static Consumer<String> saveStringA = a -> consumedStringA = a;
-    static BiConsumer<String, String> saveStringsBandC = (b, c) -> { consumedStringB = b; consumedStringC = c; };
-    static BiConsumer<Boolean, String> saveBooleanBAndStringG = (b, g) -> { consumedBooleanB = b; consumedStringG = g; };
-    static BooleanConsumer saveBooleanA = b -> consumedBooleanA = b;
-    static DoubleConsumer saveDoubleA = a -> consumedDoubleA = a;
-    static ObjDoubleConsumer<String> saveStringDDoubleB = (d, b) -> { consumedStringD = d; consumedDoubleB = b; };
-    static ObjDoubleConsumer<Boolean> saveBooleanCDoubleC = (b, d) -> { consumedBooleanC = b; consumedDoubleC = d; };
-    static IntConsumer saveIntA = a -> consumedIntA = a;
-    static ObjIntConsumer<String> saveStringEIntB = (e, b) -> { consumedStringE = e; consumedIntB = b; };
-    static ObjIntConsumer<Boolean> saveBooleanDIntC = (d, c) -> { consumedBooleanD = d; consumedIntC = c; };
-    static LongConsumer saveLongA = a -> consumedLongA = a;
-    static ObjLongConsumer<String> saveStringFLongB = (f, b) -> { consumedStringF = f; consumedLongB = b; };
-    static ObjLongConsumer<Boolean> saveBooleanELongC = (e, c) -> { consumedBooleanE = e; consumedLongC = c; };
-    static Supplier<String> getString = () -> suppliedString;
-    static BooleanSupplier getBooleanTrue = () -> true;
-    static DoubleSupplier getDouble = () -> suppliedDouble;
-    static IntSupplier getInt = () -> suppliedInt;
-    static LongSupplier getLong = () -> suppliedLong;
-    static Operator doOperation = () -> wasOperated = true;
-    static UnaryOperator<String> addQuestionMark = s -> s.concat("?");
-    static UnaryOperator<String> addTrailingZero = s -> s.concat("0");
-    static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
-    static BinaryOperator<String> concatAndAddTrailingZero = (a, b) -> a.concat(b).concat("0");
-    static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
-    static BooleanUnaryOperator booleanId = b -> b;
-    static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
-    static DoubleBinaryOperator addDoubles = (d1, d2) -> d1 + d2;
-    static IntUnaryOperator addTwoToInt = i -> i + 2;
-    static IntBinaryOperator addInts = (i1, i2) -> i1 + i2;
-    static LongUnaryOperator addThreeToLong = n -> n + 3L;
-    static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
-    static BiFunction<String, String, String>
+    public static Function<String, String> toLower = String::toLowerCase;
+    public static Function<String, String> trim = String::trim;
+    public static Function<String, String> addExclamationMark = s -> s.concat("!");
+    public static BiFunction<String, String, String> concat = String::concat;
+    public static BiFunction<Boolean, String, String> maybeToUpper = (b, s) -> b ? s.toUpperCase() : s;
+    public static BooleanFunction<String> booleanToString = String::valueOf;
+    public static DoubleFunction<String> doubleToString = String::valueOf;
+    public static DoubleFunction<String> doubleFloorToString = (double d) -> String.valueOf(d).split("\\.")[0];
+    public static DoubleToIntFunction doubleToInt = d -> (int) d;
+    public static DoubleToLongFunction doubleToLong = d -> (long) d;
+    public static ToDoubleFunction<String> stringToDouble = Double::parseDouble;
+    public static ToDoubleFunction<Boolean> maybeOneAsDouble = b -> b ? 1.0 : 0.0;
+    public static ToDoubleBiFunction<String, String> addStringsAsDouble = (a, b) -> Double.parseDouble(a) + Double.parseDouble(b);
+    public static ToDoubleBiFunction<Boolean, String> maybeAddOneToStringAsDouble = (b, s) -> Double.parseDouble(s) + (b ? 1.0 : 0.0);
+    public static IntFunction<String> intToString = String::valueOf;
+    public static IntToDoubleFunction intToDouble = i -> (double) i;
+    public static IntToLongFunction intToLong = i -> (long) i;
+    public static ToIntFunction<String> stringToInt = Integer::parseInt;
+    public static ToIntFunction<Boolean> maybeTwoAsInt = b -> b ? 2 : 0;
+    public static ToIntBiFunction<String, String> addStringsAsInt = (a, b) -> Integer.parseInt(a) + Integer.parseInt(b);
+    public static ToIntBiFunction<Boolean, String> maybeAddTwoToStringAsInt = (b, s) -> Integer.parseInt(s) + (b ? 2 : 0);
+    public static LongFunction<String> longToString = String::valueOf;
+    public static LongToDoubleFunction longToDouble = n -> (double) n;
+    public static LongToIntFunction longToInt = n -> (int) n;
+    public static ToLongFunction<String> stringToLong = Long::parseLong;
+    public static ToLongFunction<Boolean> maybeThreeAsLong = b -> b ? 3L : 0;
+    public static ToLongBiFunction<String, String> addStringsAsLong = (a, b) -> Long.parseLong(a) + Long.parseLong(b);
+    public static ToLongBiFunction<Boolean, String> maybeAddThreeToStringAsLong = (b, s) -> Long.parseLong(s) + (b ? 3L : 0);
+    public static Predicate<String> isEmpty = String::isEmpty;
+    public static Predicate<Boolean> not = b -> !b;
+    public static BiPredicate<String, String> startsWith = String::startsWith;
+    public static BiPredicate<Boolean, String> maybeNotFromString = (b, s) -> { boolean b2 = Boolean.parseBoolean(s); return b ? !b2 : b2; };
+    public static DoublePredicate isDoubleOne = d -> Math.abs(d - 1.0) < Math.ulp(d);
+    public static IntPredicate isIntTwo = i -> i == 2;
+    public static LongPredicate isLongThree = n -> n == 3L;
+    public static Consumer<String> saveStringA = a -> consumedStringA = a;
+    public static BiConsumer<String, String> saveStringsBandC = (b, c) -> { consumedStringB = b; consumedStringC = c; };
+    public static BiConsumer<Boolean, String> saveBooleanBAndStringG = (b, g) -> { consumedBooleanB = b; consumedStringG = g; };
+    public static BooleanConsumer saveBooleanA = b -> consumedBooleanA = b;
+    public static DoubleConsumer saveDoubleA = a -> consumedDoubleA = a;
+    public static ObjDoubleConsumer<String> saveStringDDoubleB = (d, b) -> { consumedStringD = d; consumedDoubleB = b; };
+    public static ObjDoubleConsumer<Boolean> saveBooleanCDoubleC = (b, d) -> { consumedBooleanC = b; consumedDoubleC = d; };
+    public static IntConsumer saveIntA = a -> consumedIntA = a;
+    public static ObjIntConsumer<String> saveStringEIntB = (e, b) -> { consumedStringE = e; consumedIntB = b; };
+    public static ObjIntConsumer<Boolean> saveBooleanDIntC = (d, c) -> { consumedBooleanD = d; consumedIntC = c; };
+    public static LongConsumer saveLongA = a -> consumedLongA = a;
+    public static ObjLongConsumer<String> saveStringFLongB = (f, b) -> { consumedStringF = f; consumedLongB = b; };
+    public static ObjLongConsumer<Boolean> saveBooleanELongC = (e, c) -> { consumedBooleanE = e; consumedLongC = c; };
+    public static Supplier<String> getString = () -> suppliedString;
+    public static BooleanSupplier getBooleanTrue = () -> true;
+    public static DoubleSupplier getDouble = () -> suppliedDouble;
+    public static IntSupplier getInt = () -> suppliedInt;
+    public static LongSupplier getLong = () -> suppliedLong;
+    public static Operator doOperation = () -> wasOperated = true;
+    public static UnaryOperator<String> addQuestionMark = s -> s.concat("?");
+    public static UnaryOperator<String> addTrailingZero = s -> s.concat("0");
+    public static BinaryOperator<String> relation = (a, b) -> a.equalsIgnoreCase(b) ? "same-ish" : "different";
+    public static BinaryOperator<String> concatAndAddTrailingZero = (a, b) -> a.concat(b).concat("0");
+    public static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
+    public static BooleanUnaryOperator booleanId = b -> b;
+    public static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
+    public static DoubleBinaryOperator addDoubles = (d1, d2) -> d1 + d2;
+    public static IntUnaryOperator addTwoToInt = i -> i + 2;
+    public static IntBinaryOperator addInts = (i1, i2) -> i1 + i2;
+    public static LongUnaryOperator addThreeToLong = n -> n + 3L;
+    public static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
+    public static BiFunction<String, String, String>
         concat2 = (a, b) ->
             concatVariableStrings(a, b);
-    static TriFunction<String, String, String, String>
+    public static TriFunction<String, String, String, String>
         concat3 = (a, b, c) ->
             concatVariableStrings(a, b, c);
-    static QuadFunction<String, String, String, String, String>
+    public static QuadFunction<String, String, String, String, String>
         concat4 = (a, b, c, d) ->
             concatVariableStrings(a, b, c, d);
-    static QuinFunction<String, String, String, String, String, String>
+    public static QuinFunction<String, String, String, String, String, String>
         concat5 = (a, b, c, d, e) ->
             concatVariableStrings(a, b, c, d, e);
-    static SexFunction<String, String, String, String, String, String, String>
+    public static SexFunction<String, String, String, String, String, String, String>
         concat6 = (a, b, c, d, e, f) ->
             concatVariableStrings(a, b, c, d, e, f);
-    static SeptFunction<String, String, String, String, String, String, String, String>
+    public static SeptFunction<String, String, String, String, String, String, String, String>
         concat7 = (a, b, c, d, e, f, g) ->
             concatVariableStrings(a, b, c, d, e, f, g);
-    static OctFunction<String, String, String, String, String, String, String, String, String>
+    public static OctFunction<String, String, String, String, String, String, String, String, String>
         concat8 = (a, b, c, d, e, f, g, h) ->
             concatVariableStrings(a, b, c, d, e, f, g, h);
-    static NonFunction<String, String, String, String, String, String, String, String, String, String>
+    public static NonFunction<String, String, String, String, String, String, String, String, String, String>
         concat9 = (a, b, c, d, e, f, g, h, i) ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i);
-    static DecFunction<String, String, String, String, String, String, String, String, String, String, String>
+    public static DecFunction<String, String, String, String, String, String, String, String, String, String, String>
         concat10 = (a, b, c, d, e, f, g, h, i, j) ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
-    static UndecFunction<String, String, String, String, String, String, String, String, String, String, String, String>
+    public static UndecFunction<String, String, String, String, String, String, String, String, String, String, String, String>
         concat11 = (a, b, c, d, e, f, g, h, i, j, k) ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
-    static DodecFunction<String, String, String, String, String, String, String, String, String, String, String, String, String>
+    public static DodecFunction<String, String, String, String, String, String, String, String, String, String, String, String, String>
         concat12 = (a, b, c, d, e, f, g, h, i, j, k, l) ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
-    static Function<String,
+    public static Function<String,
             Function<String, String>>
         curriedConcat2 = a -> b ->
             concatVariableStrings(a, b);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String, String>>>
         curriedConcat3 = a -> b -> c ->
             concatVariableStrings(a, b, c);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String, String>>>>
         curriedConcat4 = a -> b -> c -> d ->
             concatVariableStrings(a, b, c, d);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
                Function<String, String>>>>>
         curriedConcat5 = a -> b -> c -> d -> e ->
             concatVariableStrings(a, b, c, d, e);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -224,7 +224,7 @@ public final class TestFunctions {
                 Function<String, String>>>>>>
         curriedConcat6 = a -> b -> c -> d -> e -> f ->
             concatVariableStrings(a, b, c, d, e, f);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -233,7 +233,7 @@ public final class TestFunctions {
                  Function<String, String>>>>>>>
         curriedConcat7 = a -> b -> c -> d -> e -> f -> g ->
             concatVariableStrings(a, b, c, d, e, f, g);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -243,7 +243,7 @@ public final class TestFunctions {
                   Function<String, String>>>>>>>>
         curriedConcat8 = a -> b -> c -> d -> e -> f -> g -> h ->
             concatVariableStrings(a, b, c, d, e, f, g, h);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -254,7 +254,7 @@ public final class TestFunctions {
                    Function<String, String>>>>>>>>>
         curriedConcat9 = a -> b -> c -> d -> e -> f -> g -> h -> i ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -266,7 +266,7 @@ public final class TestFunctions {
                     Function<String, String>>>>>>>>>>
         curriedConcat10 = a -> b -> c -> d -> e -> f -> g -> h -> i -> j ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
@@ -279,7 +279,7 @@ public final class TestFunctions {
                      Function<String, String>>>>>>>>>>>
         curriedConcat11 = a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k ->
             concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
-    static Function<String,
+    public static Function<String,
             Function<String,
              Function<String,
               Function<String,
