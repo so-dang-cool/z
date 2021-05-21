@@ -67,15 +67,25 @@ import so.dang.cool.z.internal.combination.Fusion;
 
 
 /**
- * Z manipulates Java functional interfaces.
+ * A collection of techniques for combining or manipulating Java functions.
  * 
- * The Z class is the entry point for Z usage.
- * 
+ * <ol>
+ *   <li>{@code Z.fuse(fnA, fnB)} - combines two functions into one.</li>
+ *   <li>{@code Z.absorb(fnA, fnB)} - combines two not-naturally-joining functions into one.</li>
+ *   <li>{@code Z.split(fn)} - transforms a multi-argument function into a curried form.</li>
+ *   <li>{@code Z.assimilate[N](fn)} - transforms a curried function into a multi-argument form.</li>
+ * </ol>
+ *
  * For more general guidance, see the notes on the package itself.
  */
 public final class Z {
     private Z() {}
 
+    /**
+     * Returns an identity function for the given class. Identity functions are
+     * functions that return the value they are given. One use is modeling an
+     * "either transform or stay the same" choice between two functions.
+     */
     public static <A> UnaryOperator<A> id(Class<A> clazz) {
         return (A a) -> a;
     }

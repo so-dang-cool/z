@@ -27,6 +27,9 @@ tasks.named('build') {
     dependsOn jacocoTestCoverageVerification
 }
 
+// Ignore warnings, especially for missing @param/@return, which is overkill.
+javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
 tasks.named('jacocoTestCoverageVerification') {
     violationRules {
         rule {

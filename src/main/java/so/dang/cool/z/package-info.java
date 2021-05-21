@@ -5,20 +5,20 @@
  *
  * Fusion combines two functional interfaces into one. It is the heart and soul of
  * Z techniques.
- * <br>
+ * <br><br>
  * Access through {@code Z.fuse(initial, next)} where both {@code initial} and
  * {@code next} are functional interfaces.
- * <br>
+ * <br><br>
  * The technique used is like the {@code compose} and {@code andThen} static functions
  * available from Java's {@code java.util.function} package, but generalizes to
  * support arbitrary combinations.
- * <br>
+ * <br><br>
  * Fusion supports the combination of any result-providing function with any
  * argument-accepting function.
- * <br>
+ * <br><br>
  * For example, you can combine a {@code Function<A, B>} with a {@code Function<B, C>}
  * to get a {@code Function<A, C>}.
- * <br>
+ * <br><br>
  * <pre>
  * {@code
  * // === Plain Java ===
@@ -38,14 +38,14 @@
  * ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
  * }
  * </pre>
- * <br>
+ * <br><br>
  * Usage with overloaded methods may still require more specification or lambdas.
  *
  * <h1>More complex combinations</h1>
  *
  * If you want to fuse more than two functional interfaces, you may be interested in
  * SuperFusion combinators.
- * <br>
+ * <br><br>
  * If you want to make more evil combinations, (E.g. combining a {@code Consumer<A>}
  * and a {@code Supplier<B>} into a {@code Function<A, B>}) you may be interested in
  * Absorption combinators or evil SuperFusion combinators.
@@ -59,19 +59,19 @@
  * <h1>Fission</h1>
  *
  * Fission dissolves functional interfaces into a curried form.
- * <br>
+ * <br><br>
  * TODO: Explain.
  *
  * <h1>Assimilation (Evil)</h1>
  *
  * Assimilation combines curried functions into many-argument functional interfaces.
- * <br>
+ * <br><br>
  * TODO: Explain
  *
  * <h1>Absorption (Evil)</h1>
  *
  * Absorption forcefully combines functional interfaces that share no direct relation.
- * <br>
+ * <br><br>
  * TODO: Explain
  */
 package so.dang.cool.z;
