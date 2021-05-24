@@ -35,6 +35,14 @@ Because alphabetic ordering may be difficult to grok, the project follows the
 following ordering. Classes may be omitted when there is no benefit, or a
 different class also matches, and there's no benefit to specificity.
 
+### Values family
+
+1. Object
+1. boolean
+1. double
+1. int
+1. long
+
 ### Function family
 
 1. Function

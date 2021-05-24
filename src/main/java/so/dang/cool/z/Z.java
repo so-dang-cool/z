@@ -106,6 +106,236 @@ public final class Z {
         ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
+    /* Object */
+
+    public static <A, B> Supplier<B> fuseObject(A initial, Function<A, B> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static <A, B, C> Function<B, C> fuseObject(A initial, BiFunction<A, B, C> next) {
+        return (B b) -> next.apply(initial, b);
+    }
+
+    public static <A> DoubleSupplier fuseObject(A initial, ToDoubleFunction<A> next) {
+        return () -> next.applyAsDouble(initial);
+    }
+
+    public static <A, B> ToDoubleFunction<B> fuseObject(A initial, ToDoubleBiFunction<A, B> next) {
+        return (B b) -> next.applyAsDouble(initial, b);
+    }
+
+    public static <A> IntSupplier fuseObject(A initial, ToIntFunction<A> next) {
+        return () -> next.applyAsInt(initial);
+    }
+
+    public static <A, B> ToIntFunction<B> fuseObject(A initial, ToIntBiFunction<A, B> next) {
+        return (B b) -> next.applyAsInt(initial, b);
+    }
+
+    public static <A> LongSupplier fuseObject(A initial, ToLongFunction<A> next) {
+        return () -> next.applyAsLong(initial);
+    }
+
+    public static <A, B> ToLongFunction<B> fuseObject(A initial, ToLongBiFunction<A, B> next) {
+        return (B b) -> next.applyAsLong(initial, b);
+    }
+
+    public static <A> BooleanSupplier fuseObject(A initial, Predicate<A> next) {
+        return () -> next.test(initial);
+    }
+
+    public static <A, B> Predicate<B> fuseObject(A initial, BiPredicate<A, B> next) {
+        return (B b) -> next.test(initial, b);
+    }
+
+    public static <A> Operator fuseObject(A initial, Consumer<A> next) {
+        return () -> next.accept(initial);
+    }
+
+    public static <A, B> Consumer<B> fuseObject(A initial, BiConsumer<A, B> next) {
+        return (B b) -> next.accept(initial, b);
+    }
+
+    public static <A> DoubleConsumer fuseObject(A initial, ObjDoubleConsumer<A> next) {
+        return (double d) -> next.accept(initial, d);
+    }
+
+    public static <A> IntConsumer fuseObject(A initial, ObjIntConsumer<A> next) {
+        return (int i) -> next.accept(initial, i);
+    }
+
+    public static <A> LongConsumer fuseObject(A initial, ObjLongConsumer<A> next) {
+        return (long n) -> next.accept(initial, n);
+    }
+
+    public static <A> Supplier<A> fuseObject(A initial, UnaryOperator<A> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static <A> UnaryOperator<A> fuseObject(A initial, BinaryOperator<A> next) {
+        return (A a) -> next.apply(initial, a);
+    }
+
+    /* boolean [TODO] */
+
+    public static <A> Supplier<A> fuse(boolean initial, BooleanFunction<A> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static <A, B> Function<A, B> fuse(boolean initial, BiFunction<Boolean, A, B> next) {
+        return (A a) -> next.apply(initial, a);
+    }
+  
+    public static DoubleSupplier fuse(boolean initial, ToDoubleFunction<Boolean> next) {
+        return () -> next.applyAsDouble(initial);
+    }
+
+    public static <A> ToDoubleFunction<A> fuse(boolean initial, ToDoubleBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsDouble(initial, a);
+    }
+
+    public static IntSupplier fuse(boolean initial, ToIntFunction<Boolean> next) {
+        return () -> next.applyAsInt(initial);
+    }
+
+    public static <A> ToIntFunction<A> fuse(boolean initial, ToIntBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsInt(initial, a);
+    }
+
+    public static LongSupplier fuse(boolean initial, ToLongFunction<Boolean> next) {
+        return () -> next.applyAsLong(initial);
+    }
+
+    public static <A> ToLongFunction<A> fuse(boolean initial, ToLongBiFunction<Boolean, A> next) {
+        return (A a) -> next.applyAsLong(initial, a);
+    }
+
+    public static BooleanSupplier fuse(boolean initial, Predicate<Boolean> next) {
+        return () -> next.test(initial);
+    }
+
+    public static <A> Predicate<A> fuse(boolean initial, BiPredicate<Boolean, A> next) {
+        return (A a) -> next.test(initial, a);
+    }
+
+    public static Operator fuse(boolean initial, BooleanConsumer next) {
+        return () -> next.accept(initial);
+    }
+
+    public static <A> Consumer<A> fuse(boolean initial, BiConsumer<Boolean, A> next) {
+        return (A a) -> next.accept(initial, a);
+    }
+
+    public static DoubleConsumer fuse(boolean initial, ObjDoubleConsumer<Boolean> next) {
+        return (double d) -> next.accept(initial, d);
+    }
+
+    public static IntConsumer fuse(boolean initial, ObjIntConsumer<Boolean> next) {
+        return (int i) -> next.accept(initial, i);
+    }
+
+    public static LongConsumer fuse(boolean initial, ObjLongConsumer<Boolean> next) {
+        return (long n) -> next.accept(initial, n);
+    }
+
+    public static BooleanSupplier fuse(boolean initial, BooleanPredicate next) {
+        return () -> next.test(initial);
+    }
+
+    public static BooleanPredicate fuse(boolean initial, BinaryOperator<Boolean> next) {
+        return (boolean b) -> next.apply(initial, b);
+    }
+
+    /* double */
+
+    public static <A> Supplier<A> fuse(double initial, DoubleFunction<A> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static IntSupplier fuse(double initial, DoubleToIntFunction next) {
+        return () -> next.applyAsInt(initial);
+    }
+
+    public static LongSupplier fuse(double initial, DoubleToLongFunction next) {
+        return () -> next.applyAsLong(initial);
+    }
+
+    public static BooleanSupplier fuse(double initial, DoublePredicate next) {
+        return () -> next.test(initial);
+    }
+
+    public static Operator fuse(double initial, DoubleConsumer next) {
+        return () -> next.accept(initial);
+    }
+
+    public static DoubleSupplier fuse(double initial, DoubleUnaryOperator next) {
+        return () -> next.applyAsDouble(initial);
+    }
+
+    public static DoubleUnaryOperator fuse(double initial, DoubleBinaryOperator next) {
+        return (double d) -> next.applyAsDouble(initial, d);
+    }
+
+    /* int */
+
+    public static <A> Supplier<A> fuse(int initial, IntFunction<A> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static DoubleSupplier fuse(int initial, IntToDoubleFunction next) {
+        return () -> next.applyAsDouble(initial);
+    }
+
+    public static LongSupplier fuse(int initial, IntToLongFunction next) {
+        return () -> next.applyAsLong(initial);
+    }
+
+    public static BooleanSupplier fuse(int initial, IntPredicate next) {
+        return () -> next.test(initial);
+    }
+
+    public static Operator fuse(int initial, IntConsumer next) {
+        return () -> next.accept(initial);
+    }
+
+    public static IntSupplier fuse(int initial, IntUnaryOperator next) {
+        return () -> next.applyAsInt(initial);
+    }
+
+    public static IntUnaryOperator fuse(int initial, IntBinaryOperator next) {
+        return (int i) -> next.applyAsInt(initial, i);
+    }
+
+    /* long */
+
+    public static <A> Supplier<A> fuse(long initial, LongFunction<A> next) {
+        return () -> next.apply(initial);
+    }
+
+    public static DoubleSupplier fuse(long initial, LongToDoubleFunction next) {
+        return () -> next.applyAsDouble(initial);
+    }
+
+    public static IntSupplier fuse(long initial, LongToIntFunction next) {
+        return () -> next.applyAsInt(initial);
+    }
+
+    public static BooleanSupplier fuse(long initial, LongPredicate next) {
+        return () -> next.test(initial);
+    }
+
+    public static Operator fuse(long initial, LongConsumer next) {
+        return () -> next.accept(initial);
+    }
+
+    public static LongSupplier fuse(long initial, LongUnaryOperator next) {
+        return () -> next.applyAsLong(initial);
+    }
+
+    public static LongUnaryOperator fuse(long initial, LongBinaryOperator next) {
+        return (long n) -> next.applyAsLong(initial, n);
+    }
+
     /* Function */
     
     public static <A, B, C> Function<A, C> fuse(Function<A, B> initial, Function<B, C> next) {
