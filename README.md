@@ -39,7 +39,7 @@ var asciiSum = Z.fuse(String::chars, IntStream::sum);
 int sum = asciiSum.applyAsInt("abc");
 ```
 
-Function combination using `Function::compose`
+Equivalent with `Function::compose`
 
 ```java
 Function<IntStream, Integer> sumInts = IntStream::sum;
@@ -49,7 +49,7 @@ var asciiSum = sumInts.compose(String::chars);
 int sum = asciiSum.apply("abc");
 ```
 
-Function combination using a lambda
+Equivalent with a lambda
 
 ```java
 // Inference (e.g. with var) is not possible
