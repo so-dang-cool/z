@@ -7,14 +7,14 @@
 Unlock your functional programming potential with these combination techniques:
 
 1. Fusion: `Z.fuse(fn1, fn2)` Combine two functions.
-1. Super Fusion - `Z.with(fn1).fusing(fn2).[...].fuse(fnN)` Combine _N_
-    functions.
-    - ⚠ **Experimental:** Still in active development, but this will be stable
-    and available in future versions.
 1. Fission - `Z.split(fn)` Split a multiargs function into a curried form.
 1. Assimilation - `Z.assimilate2(curriedFn)` Flatten a curried function into a
     multiargs function.
 1. Absorption - `Z.absorb(fn1, fn2)` Unnaturally combine two functions.
+1. Super Fusion - `Z.with(fn1).fusing(fn2).[...].fuse(fnN)` Combine _N_
+    functions.
+    - **Experimental:** This feature is still in active development, but will
+    be stable in future versions.
 
 ## Links
 
