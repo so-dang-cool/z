@@ -17,8 +17,28 @@ public class SupplierFusionTests {
     }
 
     @Test
+    void sup_to_fn_deep() {
+        assertEquals(suppliedString.toLowerCase(), Z.with(getString).fuse(toLower).get());
+    }
+
+    @Test
+    void sup_to_fn_deeper() {
+        assertEquals(suppliedString.toLowerCase(), Z.with(getString).fusing(toLower).resolve().get());
+    }
+
+    @Test
     void sup_to_bifn() {
         assertEquals("Z!", Z.fuse(getString, concat).apply("!"));
+    }
+
+    @Test
+    void sup_to_bifn_deep() {
+        assertEquals("Z!", Z.with(getString).fuse(concat).apply("!"));
+    }
+
+    @Test
+    void sup_to_bifn_deeper() {
+        assertEquals("Z!", Z.with(getString).fusing(concat).resolve().apply("!"));
     }
 
     @Test
