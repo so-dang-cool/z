@@ -17,16 +17,6 @@ public class BooleanSupplierFusionTests {
     }
 
     @Test
-    void boolSup_to_bifn_deep() {
-        assertEquals("HI", Z.with(getBooleanTrue).fuse(maybeToUpper).apply("hi"));
-    }
-
-    @Test
-    void boolSup_to_bifn_deeper() {
-        assertEquals("HI", Z.with(getBooleanTrue).fusing(maybeToUpper).resolve().apply("hi"));
-    }
-
-    @Test
     void boolSup_to_boolFn() {
         assertEquals("true", Z.fuse(getBooleanTrue, booleanToString).get());
     }
