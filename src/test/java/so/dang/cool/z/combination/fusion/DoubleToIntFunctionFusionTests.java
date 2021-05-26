@@ -16,6 +16,16 @@ public class DoubleToIntFunctionFusionTests {
     }
 
     @Test
+    void dblToInt_to_intFn_deep() {
+        assertEquals("1", Z.with(doubleToInt).fuse(intToString).apply(1.1));
+    }
+
+    @Test
+    void dblToInt_to_intFn_deeper() {
+        assertEquals("1", Z.with(doubleToInt).fusing(intToString).resolve().apply(1.1));
+    }
+
+    @Test
     void dblToInt_to_intToDbl() {
         assertEquals(1.0, Z.fuse(doubleToInt, intToDouble).applyAsDouble(1.2));
     }

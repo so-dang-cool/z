@@ -17,6 +17,16 @@ public class IntPredicateFusionTests {
     }
 
     @Test
+    void intPred_to_fn_deep() {
+        assertEquals("true", Z.with(isIntTwo).fuse(booleanToString).apply(2));
+    }
+
+    @Test
+    void intPred_to_fn_deeper() {
+        assertEquals("true", Z.with(isIntTwo).fusing(booleanToString).resolve().apply(2));
+    }
+
+    @Test
     void intPred_to_bifn() {
         assertEquals("HI", Z.fuse(isIntTwo, maybeToUpper).apply(2).apply("hi"));
     }

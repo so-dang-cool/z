@@ -17,6 +17,16 @@ public class IntFunctionFusionTests {
     }
 
     @Test
+    void intFn_to_fn_deep() {
+        assertEquals("1!", Z.with(intToString).fuse(addExclamationMark).apply(1));
+    }
+
+    @Test
+    void intFn_to_fn_deeper() {
+        assertEquals("1!", Z.with(intToString).fusing(addExclamationMark).resolve().apply(1));
+    }
+
+    @Test
     void intFn_to_bifn() {
         assertEquals("1.0", Z.fuse(intToString, concat).apply(1).apply(".0"));
     }

@@ -16,6 +16,16 @@ public class ToIntFunctionFusionTests {
     }
 
     @Test
+    void toIntFn_to_intFn_deep() {
+        assertEquals("1", Z.with(stringToInt).fuse(intToString).apply("1"));
+    }
+
+    @Test
+    void toIntFn_to_intFn_deeper() {
+        assertEquals("1", Z.with(stringToInt).fusing(intToString).resolve().apply("1"));
+    }
+
+    @Test
     void toIntFn_to_intToDbl() {
         assertEquals(1.0, Z.fuse(stringToInt, intToDouble).applyAsDouble("1"));
     }

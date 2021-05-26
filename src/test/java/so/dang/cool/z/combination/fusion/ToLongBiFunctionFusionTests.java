@@ -16,6 +16,16 @@ public class ToLongBiFunctionFusionTests {
     }
 
     @Test
+    void toLongBifn_to_longFn_deep() {
+        assertEquals("3", Z.with(addStringsAsLong).fuse(longToString).apply("1").apply("2"));
+    }
+
+    @Test
+    void toLongBifn_to_longFn_deeper() {
+        assertEquals("3", Z.with(addStringsAsLong).fusing(longToString).resolve().apply("1").apply("2"));
+    }
+
+    @Test
     void toLongBifn_to_longToDbl() {
         assertEquals(3.0, Z.fuse(addStringsAsLong, longToDouble).apply("1").applyAsDouble("2"));
     }

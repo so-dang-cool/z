@@ -17,8 +17,28 @@ public class UnaryOperatorFusionTests {
     }
 
     @Test
+    void unop_to_fn_deep() {
+        assertEquals("hello?", Z.with(addQuestionMark).fuse(toLower).apply("HeLlO"));
+    }
+
+    @Test
+    void unop_to_fn_deeper() {
+        assertEquals("hello?", Z.with(addQuestionMark).fusing(toLower).resolve().apply("HeLlO"));
+    }
+
+    @Test
     void unop_to_bifn() {
         assertEquals("hello?!", Z.fuse(addQuestionMark, concat).apply("hello").apply("!"));
+    }
+
+    @Test
+    void unop_to_bifn_deep() {
+        assertEquals("hello?!", Z.with(addQuestionMark).fuse(concat).apply("hello").apply("!"));
+    }
+
+    @Test
+    void unop_to_bifn_deeper() {
+        assertEquals("hello?!", Z.with(addQuestionMark).fusing(concat).resolve().apply("hello").apply("!"));
     }
 
     @Test

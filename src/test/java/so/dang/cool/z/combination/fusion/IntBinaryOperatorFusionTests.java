@@ -16,6 +16,16 @@ public class IntBinaryOperatorFusionTests {
     }
 
     @Test
+    void intBiop_to_intFn_deep() {
+        assertEquals("3", Z.with(addInts).fuse(intToString).apply(1).apply(2));
+    }
+
+    @Test
+    void intBiop_to_intFn_deeper() {
+        assertEquals("3", Z.with(addInts).fusing(intToString).resolve().apply(1).apply(2));
+    }
+
+    @Test
     void intBiop_to_intToDbl() {
         assertEquals(3.0, Z.fuse(addInts, intToDouble).apply(1).applyAsDouble(2));
     }

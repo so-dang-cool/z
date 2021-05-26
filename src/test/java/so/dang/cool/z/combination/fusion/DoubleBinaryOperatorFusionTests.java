@@ -16,6 +16,16 @@ public class DoubleBinaryOperatorFusionTests {
     }
 
     @Test
+    void dblBiop_to_dblFn_deep() {
+        assertEquals("3.0", Z.with(addDoubles).fuse(doubleToString).apply(1.0).apply(2.0));
+    }
+
+    @Test
+    void dblBiop_to_dblFn_deeper() {
+        assertEquals("3.0", Z.with(addDoubles).fusing(doubleToString).resolve().apply(1.0).apply(2.0));
+    }
+
+    @Test
     void dblBiop_to_dblToInt() {
         assertEquals(3, Z.fuse(addDoubles, doubleToInt).apply(1.2).applyAsInt(2.3));
     }

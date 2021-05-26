@@ -16,6 +16,16 @@ public class IntUnaryOperatorFusionTests {
     }
 
     @Test
+    void intUnop_to_intFn_deep() {
+        assertEquals("3", Z.with(addTwoToInt).fuse(intToString).apply(1));
+    }
+
+    @Test
+    void intUnop_to_intFn_deeper() {
+        assertEquals("3", Z.with(addTwoToInt).fusing(intToString).resolve().apply(1));
+    }
+
+    @Test
     void intUnop_to_intToDbl() {
         assertEquals(3.0, Z.fuse(addTwoToInt, intToDouble).applyAsDouble(1));
     }

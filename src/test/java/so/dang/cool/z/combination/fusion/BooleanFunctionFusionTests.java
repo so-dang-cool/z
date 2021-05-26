@@ -17,6 +17,16 @@ public class BooleanFunctionFusionTests {
     }
 
     @Test
+    void boolFn_to_fn_deep() {
+        assertEquals("true!", Z.with(booleanToString).fuse(addExclamationMark).apply(true));
+    }
+
+    @Test
+    void boolFn_to_fn_deeper() {
+        assertEquals("true!", Z.with(booleanToString).fusing(addExclamationMark).apply(true));
+    }
+
+    @Test
     void boolFn_to_bifn() {
         assertEquals("true...", Z.fuse(booleanToString, concat).apply(true).apply("..."));
     }

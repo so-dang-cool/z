@@ -17,6 +17,16 @@ public class LongFunctionFusionTests {
     }
 
     @Test
+    void longFn_to_fn_deep() {
+        assertEquals("1!", Z.with(longToString).fuse(addExclamationMark).apply(1L));
+    }
+
+    @Test
+    void longFn_to_fn_deeper() {
+        assertEquals("1!", Z.with(longToString).fusing(addExclamationMark).resolve().apply(1L));
+    }
+
+    @Test
     void longFn_to_bifn() {
         assertEquals("1.0", Z.fuse(longToString, concat).apply(1L).apply(".0"));
     }

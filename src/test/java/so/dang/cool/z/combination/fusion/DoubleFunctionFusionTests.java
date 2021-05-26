@@ -17,6 +17,16 @@ public class DoubleFunctionFusionTests {
     }
 
     @Test
+    void dblFn_to_fn_deep() {
+        assertEquals("1.0!", Z.with(doubleToString).fuse(addExclamationMark).apply(1.0));
+    }
+
+    @Test
+    void dblFn_to_fn_deeper() {
+        assertEquals("1.0!", Z.with(doubleToString).fusing(addExclamationMark).resolve().apply(1.0));
+    }
+
+    @Test
     void dblFn_to_bifn() {
         assertEquals("1.0.0", Z.fuse(doubleToString, concat).apply(1.0).apply(".0"));
     }

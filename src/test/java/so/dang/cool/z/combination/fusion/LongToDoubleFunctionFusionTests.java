@@ -16,6 +16,16 @@ public class LongToDoubleFunctionFusionTests {
     }
 
     @Test
+    void longToDbl_to_dblFn_deep() {
+        assertEquals("1.0", Z.with(longToDouble).fuse(doubleToString).apply(1L));
+    }
+
+    @Test
+    void longToDbl_to_dblFn_deeper() {
+        assertEquals("1.0", Z.with(longToDouble).fusing(doubleToString).resolve().apply(1L));
+    }
+
+    @Test
     void longToDbl_to_dblToInt() {
         assertEquals(2, Z.fuse(longToDouble, doubleToInt).applyAsInt(2L));
     }
