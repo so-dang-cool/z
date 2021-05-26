@@ -16,6 +16,16 @@ public class LongSupplierFusionTests {
     }
 
     @Test
+    void longSup_to_longFn_deep() {
+        assertEquals("3", Z.with(getLong).fuse(longToString).get());
+    }
+
+    @Test
+    void longSup_to_longFn_deeper() {
+        assertEquals("3", Z.with(getLong).fusing(longToString).resolve().get());
+    }
+
+    @Test
     void longSup_to_longToDbl() {
         assertEquals(3.0, Z.fuse(getLong, longToDouble).getAsDouble());
     }

@@ -16,6 +16,16 @@ public class ToIntBiFunctionFusionTests {
     }
 
     @Test
+    void toIntBifn_to_intFn_deep() {
+        assertEquals("3", Z.with(addStringsAsInt).fuse(intToString).apply("1").apply("2"));
+    }
+
+    @Test
+    void toIntBifn_to_intFn_deeper() {
+        assertEquals("3", Z.with(addStringsAsInt).fusing(intToString).resolve().apply("1").apply("2"));
+    }
+
+    @Test
     void toIntBifn_to_intToDbl() {
         assertEquals(3.0, Z.fuse(addStringsAsInt, intToDouble).apply("1").applyAsDouble("2"));
     }

@@ -12,13 +12,23 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BooleanFusionTests {
     @Test
-    void boolean_to_fn() {
-        assertEquals("true", Z.fuse(true, booleanToString).get());
+    void boolean_to_bifn() {
+        assertEquals("HI", Z.fuse(true, maybeToUpper).apply("hi"));
     }
 
     @Test
-    void boolean_to_bifn() {
-        assertEquals("HI", Z.fuse(true, maybeToUpper).apply("hi"));
+    void boolean_to_boolFn() {
+        assertEquals("true", Z.fuse(true, booleanToString).get());
+    }
+    
+    @Test
+    void boolean_to_boolFn_deep() {
+        assertEquals("true", Z.with(true).fuse(booleanToString).get());
+    }
+    
+    @Test
+    void boolean_to_boolFn_deeper() {
+        assertEquals("true", Z.with(true).fusing(booleanToString).resolve().get());
     }
 
     @Test

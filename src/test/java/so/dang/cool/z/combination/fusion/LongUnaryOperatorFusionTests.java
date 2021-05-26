@@ -16,6 +16,16 @@ public class LongUnaryOperatorFusionTests {
     }
 
     @Test
+    void longUnop_to_longFn_deep() {
+        assertEquals("4", Z.with(addThreeToLong).fuse(longToString).apply(1L));
+    }
+
+    @Test
+    void longUnop_to_longFn_deeper() {
+        assertEquals("4", Z.with(addThreeToLong).fusing(longToString).resolve().apply(1L));
+    }
+
+    @Test
     void longUnop_to_longToDbl() {
         assertEquals(4.0, Z.fuse(addThreeToLong, longToDouble).applyAsDouble(1L));
     }

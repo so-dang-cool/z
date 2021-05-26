@@ -9,10 +9,20 @@ import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
-public class LongToIntFunctionFusionTests {    
+public class LongToIntFunctionFusionTests {
     @Test
     void longToInt_to_intFn() {
         assertEquals("1", Z.fuse(longToInt, intToString).apply(1L));
+    }
+
+    @Test
+    void longToInt_to_intFn_deep() {
+        assertEquals("1", Z.with(longToInt).fuse(intToString).apply(1L));
+    }
+
+    @Test
+    void longToInt_to_intFn_deeper() {
+        assertEquals("1", Z.with(longToInt).fusing(intToString).resolve().apply(1L));
     }
 
     @Test

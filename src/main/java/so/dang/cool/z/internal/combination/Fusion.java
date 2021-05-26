@@ -4,8 +4,30 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.DoubleBinaryOperator;
+import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleSupplier;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongBinaryOperator;
+import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
+import java.util.function.LongSupplier;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.LongUnaryOperator;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.ToDoubleBiFunction;
@@ -19,6 +41,10 @@ import java.util.function.UnaryOperator;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Experimental;
 import so.dang.cool.z.function.BooleanFunction;
+import so.dang.cool.z.function.BooleanPredicate;
+import so.dang.cool.z.function.BooleanToDoubleFunction;
+import so.dang.cool.z.function.BooleanToIntFunction;
+import so.dang.cool.z.function.BooleanToLongFunction;
 
 /**
  * Deep fusions involving many functions.
@@ -280,6 +306,251 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
+    public static final class WithBooleanFunction<A> extends Fusion<A, BooleanFunction<A>> {
+        private final BooleanFunction<A> initial;
+
+        private WithBooleanFunction(BooleanFunction<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithBooleanFunction<A> of(BooleanFunction<A> initial) {
+            return new WithBooleanFunction<>(initial);
+        }
+
+        @Override
+        public BooleanFunction<A> resolve() {
+            return initial;
+        }
+
+        /* BooleanFunction<A> -> Function<A,B> */
+
+        public <B> BooleanFunction<B> fuseFunction(Function<A, B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> BooleanFunction<B> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithBooleanFunction<B> fusingFunction(Function<A, B> next) {
+            return WithBooleanFunction.of(fuseFunction(next));
+        }
+
+        public <B> WithBooleanFunction<B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithBooleanToDoubleFunction extends Fusion<Double, BooleanToDoubleFunction> {
+        private final BooleanToDoubleFunction initial;
+
+        private WithBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithBooleanToDoubleFunction of(BooleanToDoubleFunction initial) {
+            return new WithBooleanToDoubleFunction(initial);
+        }
+
+        @Override
+        public BooleanToDoubleFunction resolve() {
+            return initial;
+        }
+
+        /* BooleanToDoubleFunction<A> -> DoubleFunction<B> */
+
+        public <A> BooleanFunction<A> fuseDoubleFunction(DoubleFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> BooleanFunction<A> fuse(DoubleFunction<A> next) {
+            return fuseDoubleFunction(next);
+        }
+
+        public <A> WithBooleanFunction<A> fusingDoubleFunction(DoubleFunction<A> next) {
+            return WithBooleanFunction.of(fuseDoubleFunction(next));
+        }
+
+        public <A> WithBooleanFunction<A> fusing(DoubleFunction<A> next) {
+            return fusingDoubleFunction(next);
+        }
+    }
+
+    public static final class WithBooleanToIntFunction extends Fusion<Integer, BooleanToIntFunction> {
+        private final BooleanToIntFunction initial;
+
+        private WithBooleanToIntFunction(BooleanToIntFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithBooleanToIntFunction of(BooleanToIntFunction initial) {
+            return new WithBooleanToIntFunction(initial);
+        }
+
+        @Override
+        public BooleanToIntFunction resolve() {
+            return initial;
+        }
+
+        /* BooleanToIntFunction<A> -> IntFunction<B> */
+
+        public <A> BooleanFunction<A> fuseIntFunction(IntFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> BooleanFunction<A> fuse(IntFunction<A> next) {
+            return fuseIntFunction(next);
+        }
+
+        public <A> WithBooleanFunction<A> fusingIntFunction(IntFunction<A> next) {
+            return WithBooleanFunction.of(fuseIntFunction(next));
+        }
+
+        public <A> WithBooleanFunction<A> fusing(IntFunction<A> next) {
+            return fusingIntFunction(next);
+        }
+    }
+
+    public static final class WithBooleanToLongFunction extends Fusion<Long, BooleanToLongFunction> {
+        private final BooleanToLongFunction initial;
+
+        private WithBooleanToLongFunction(BooleanToLongFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithBooleanToLongFunction of(BooleanToLongFunction initial) {
+            return new WithBooleanToLongFunction(initial);
+        }
+
+        @Override
+        public BooleanToLongFunction resolve() {
+            return initial;
+        }
+
+        /* BooleanToLongFunction<A> -> LongFunction<B> */
+
+        public <A> BooleanFunction<A> fuseLongFunction(LongFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> BooleanFunction<A> fuse(LongFunction<A> next) {
+            return fuseLongFunction(next);
+        }
+
+        public <A> WithBooleanFunction<A> fusingLongFunction(LongFunction<A> next) {
+            return WithBooleanFunction.of(fuseLongFunction(next));
+        }
+
+        public <A> WithBooleanFunction<A> fusing(LongFunction<A> next) {
+            return fusingLongFunction(next);
+        }
+    }
+
+    public static final class WithDoubleFunction<A> extends Fusion<A, DoubleFunction<A>> {
+        private final DoubleFunction<A> initial;
+
+        private WithDoubleFunction(DoubleFunction<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithDoubleFunction<A> of(DoubleFunction<A> initial) {
+            return new WithDoubleFunction<>(initial);
+        }
+
+        @Override
+        public DoubleFunction<A> resolve() {
+            return initial;
+        }
+
+        /* DoubleFunction<A> -> Function<A,B> */
+
+        public <B> DoubleFunction<B> fuseFunction(Function<A, B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> DoubleFunction<B> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithDoubleFunction<B> fusingFunction(Function<A, B> next) {
+            return WithDoubleFunction.of(fuseFunction(next));
+        }
+
+        public <B> WithDoubleFunction<B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithDoubleToIntFunction extends Fusion<Integer, DoubleToIntFunction> {
+        private final DoubleToIntFunction initial;
+
+        private WithDoubleToIntFunction(DoubleToIntFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithDoubleToIntFunction of(DoubleToIntFunction initial) {
+            return new WithDoubleToIntFunction(initial);
+        }
+
+        @Override
+        public DoubleToIntFunction resolve() {
+            return initial;
+        }
+
+        /* DoubleToIntFunction -> IntFunction<A> */
+
+        public <A> DoubleFunction<A> fuseFunction(IntFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> DoubleFunction<A> fuse(IntFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithDoubleFunction<A> fusingFunction(IntFunction<A> next) {
+            return WithDoubleFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithDoubleFunction<A> fusing(IntFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithDoubleToLongFunction extends Fusion<Long, DoubleToLongFunction> {
+        private final DoubleToLongFunction initial;
+
+        private WithDoubleToLongFunction(DoubleToLongFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithDoubleToLongFunction of(DoubleToLongFunction initial) {
+            return new WithDoubleToLongFunction(initial);
+        }
+
+        @Override
+        public DoubleToLongFunction resolve() {
+            return initial;
+        }
+
+        /* DoubleToLongFunction -> LongFunction<A> */
+
+        public <A> DoubleFunction<A> fuseFunction(LongFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> DoubleFunction<A> fuse(LongFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithDoubleFunction<A> fusingFunction(LongFunction<A> next) {
+            return WithDoubleFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithDoubleFunction<A> fusing(LongFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
     public static final class WithToDoubleFunction<A> extends Fusion<Double, ToDoubleFunction<A>> {
         private final ToDoubleFunction<A> initial;
 
@@ -294,6 +565,24 @@ public abstract class Fusion<A, Fn> {
         @Override
         public ToDoubleFunction<A> resolve() {
             return initial;
+        }
+
+        /* ToDoubleFunction<A> -> DoubleFunction<B> */
+
+        public <B> Function<A, B> fuseDoubleFunction(DoubleFunction<B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> Function<A, B> fuse(DoubleFunction<B> next) {
+            return fuseDoubleFunction(next);
+        }
+
+        public <B> WithFunction<A, B> fusingDoubleFunction(DoubleFunction<B> next) {
+            return WithFunction.of(fuseDoubleFunction(next));
+        }
+
+        public <B> WithFunction<A, B> fusing(DoubleFunction<B> next) {
+            return fusingDoubleFunction(next);
         }
     }
 
@@ -312,6 +601,129 @@ public abstract class Fusion<A, Fn> {
         public ToDoubleBiFunction<A, B> resolve() {
             return initial;
         }
+
+        /* ToDoubleBiFunction<A, B> -> DoubleFunction<C> */
+
+        public <C> Function<A, Function<B, C>> fuseDoubleFunction(DoubleFunction<C> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <C> Function<A, Function<B, C>> fuse(DoubleFunction<C> next) {
+            return fuseDoubleFunction(next);
+        }
+
+        public <C> WithBiFunction<A, B, C> fusingDoubleFunction(DoubleFunction<C> next) {
+            return WithBiFunction.of(fuseDoubleFunction(next));
+        }
+
+        public <C> WithBiFunction<A, B, C> fusing(DoubleFunction<C> next) {
+            return fusingDoubleFunction(next);
+        }
+    }
+
+    public static final class WithIntFunction<A> extends Fusion<A, IntFunction<A>> {
+        private final IntFunction<A> initial;
+
+        private WithIntFunction(IntFunction<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithIntFunction<A> of(IntFunction<A> initial) {
+            return new WithIntFunction<>(initial);
+        }
+
+        @Override
+        public IntFunction<A> resolve() {
+            return initial;
+        }
+
+        /* IntFunction<A> -> Function<A,B> */
+
+        public <B> IntFunction<B> fuseFunction(Function<A, B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> IntFunction<B> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithIntFunction<B> fusingFunction(Function<A, B> next) {
+            return WithIntFunction.of(fuseFunction(next));
+        }
+
+        public <B> WithIntFunction<B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithIntToDoubleFunction extends Fusion<Integer, IntToDoubleFunction> {
+        private final IntToDoubleFunction initial;
+
+        private WithIntToDoubleFunction(IntToDoubleFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithIntToDoubleFunction of(IntToDoubleFunction initial) {
+            return new WithIntToDoubleFunction(initial);
+        }
+
+        @Override
+        public IntToDoubleFunction resolve() {
+            return initial;
+        }
+
+        /* IntToDoubleFunction -> DoubleFunction<A> */
+
+        public <A> IntFunction<A> fuseFunction(DoubleFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> IntFunction<A> fuse(DoubleFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithIntFunction<A> fusingFunction(DoubleFunction<A> next) {
+            return WithIntFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithIntFunction<A> fusing(DoubleFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithIntToLongFunction extends Fusion<Long, IntToLongFunction> {
+        private final IntToLongFunction initial;
+
+        private WithIntToLongFunction(IntToLongFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithIntToLongFunction of(IntToLongFunction initial) {
+            return new WithIntToLongFunction(initial);
+        }
+
+        @Override
+        public IntToLongFunction resolve() {
+            return initial;
+        }
+
+        /* IntToLongFunction -> LongFunction<A> */
+
+        public <A> IntFunction<A> fuseFunction(LongFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> IntFunction<A> fuse(LongFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithIntFunction<A> fusingFunction(LongFunction<A> next) {
+            return WithIntFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithIntFunction<A> fusing(LongFunction<A> next) {
+            return fusingFunction(next);
+        }
     }
 
     public static final class WithToIntFunction<A> extends Fusion<Integer, ToIntFunction<A>> {
@@ -328,6 +740,24 @@ public abstract class Fusion<A, Fn> {
         @Override
         public ToIntFunction<A> resolve() {
             return initial;
+        }
+
+        /* ToIntFunction<A> -> IntFunction<B> */
+
+        public <B> Function<A, B> fuseIntFunction(IntFunction<B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> Function<A, B> fuse(IntFunction<B> next) {
+            return fuseIntFunction(next);
+        }
+
+        public <B> WithFunction<A, B> fusingIntFunction(IntFunction<B> next) {
+            return WithFunction.of(fuseIntFunction(next));
+        }
+
+        public <B> WithFunction<A, B> fusing(IntFunction<B> next) {
+            return fusingIntFunction(next);
         }
     }
 
@@ -346,6 +776,129 @@ public abstract class Fusion<A, Fn> {
         public ToIntBiFunction<A, B> resolve() {
             return initial;
         }
+
+        /* ToIntBiFunction<A, B> -> IntFunction<C> */
+
+        public <C> Function<A, Function<B, C>> fuseIntFunction(IntFunction<C> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <C> Function<A, Function<B, C>> fuse(IntFunction<C> next) {
+            return fuseIntFunction(next);
+        }
+
+        public <C> WithBiFunction<A, B, C> fusingIntFunction(IntFunction<C> next) {
+            return WithBiFunction.of(fuseIntFunction(next));
+        }
+
+        public <C> WithBiFunction<A, B, C> fusing(IntFunction<C> next) {
+            return fusingIntFunction(next);
+        }
+    }
+
+    public static final class WithLongFunction<A> extends Fusion<A, LongFunction<A>> {
+        private final LongFunction<A> initial;
+
+        private WithLongFunction(LongFunction<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithLongFunction<A> of(LongFunction<A> initial) {
+            return new WithLongFunction<>(initial);
+        }
+
+        @Override
+        public LongFunction<A> resolve() {
+            return initial;
+        }
+
+        /* LongFunction<A> -> Function<A,B> */
+
+        public <B> LongFunction<B> fuseFunction(Function<A, B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> LongFunction<B> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithLongFunction<B> fusingFunction(Function<A, B> next) {
+            return WithLongFunction.of(fuseFunction(next));
+        }
+
+        public <B> WithLongFunction<B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithLongToDoubleFunction extends Fusion<Long, LongToDoubleFunction> {
+        private final LongToDoubleFunction initial;
+
+        private WithLongToDoubleFunction(LongToDoubleFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithLongToDoubleFunction of(LongToDoubleFunction initial) {
+            return new WithLongToDoubleFunction(initial);
+        }
+
+        @Override
+        public LongToDoubleFunction resolve() {
+            return initial;
+        }
+
+        /* LongToDoubleFunction -> DoubleFunction<A> */
+
+        public <A> LongFunction<A> fuseFunction(DoubleFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> LongFunction<A> fuse(DoubleFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithLongFunction<A> fusingFunction(DoubleFunction<A> next) {
+            return WithLongFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithLongFunction<A> fusing(DoubleFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithLongToIntFunction extends Fusion<Long, LongToIntFunction> {
+        private final LongToIntFunction initial;
+
+        private WithLongToIntFunction(LongToIntFunction initial) {
+            this.initial = initial;
+        }
+
+        public static WithLongToIntFunction of(LongToIntFunction initial) {
+            return new WithLongToIntFunction(initial);
+        }
+
+        @Override
+        public LongToIntFunction resolve() {
+            return initial;
+        }
+
+        /* LongToIntFunction -> IntFunction<A> */
+
+        public <A> LongFunction<A> fuseFunction(IntFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> LongFunction<A> fuse(IntFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithLongFunction<A> fusingFunction(IntFunction<A> next) {
+            return WithLongFunction.of(fuseFunction(next));
+        }
+
+        public <A> WithLongFunction<A> fusing(IntFunction<A> next) {
+            return fusingFunction(next);
+        }
     }
 
     public static final class WithToLongFunction<A> extends Fusion<Long, ToLongFunction<A>> {
@@ -363,6 +916,24 @@ public abstract class Fusion<A, Fn> {
         public ToLongFunction<A> resolve() {
             return initial;
         }
+
+        /* ToLongFunction<A> -> LongFunction<B> */
+
+        public <B> Function<A, B> fuseLongFunction(LongFunction<B> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <B> Function<A, B> fuse(LongFunction<B> next) {
+            return fuseLongFunction(next);
+        }
+
+        public <B> WithFunction<A, B> fusingLongFunction(LongFunction<B> next) {
+            return WithFunction.of(fuseLongFunction(next));
+        }
+
+        public <B> WithFunction<A, B> fusing(LongFunction<B> next) {
+            return fusingLongFunction(next);
+        }
     }
 
     public static final class WithToLongBiFunction<A, B> extends Fusion<Long, ToLongBiFunction<A, B>> {
@@ -379,6 +950,24 @@ public abstract class Fusion<A, Fn> {
         @Override
         public ToLongBiFunction<A, B> resolve() {
             return initial;
+        }
+
+        /* ToLongBiFunction<A, B> -> LongFunction<C> */
+
+        public <C> Function<A, Function<B, C>> fuseLongFunction(LongFunction<C> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <C> Function<A, Function<B, C>> fuse(LongFunction<C> next) {
+            return fuseLongFunction(next);
+        }
+
+        public <C> WithBiFunction<A, B, C> fusingLongFunction(LongFunction<C> next) {
+            return WithBiFunction.of(fuseLongFunction(next));
+        }
+
+        public <C> WithBiFunction<A, B, C> fusing(LongFunction<C> next) {
+            return fusingLongFunction(next);
         }
     }
 
@@ -415,8 +1004,6 @@ public abstract class Fusion<A, Fn> {
             return initial;
         }
     }
-
-    /* Predicate -> ... [TODO: Incomplete] */
 
     public static final class WithPredicate<A> extends Fusion<Boolean, Predicate<A>> {
         private final Predicate<A> initial;
@@ -468,11 +1055,165 @@ public abstract class Fusion<A, Fn> {
         public BiPredicate<A, B> resolve() {
             return initial;
         }
+
+        /* BiPredicate<A, B> -> BooleanFunction<C> */
+
+        public <C> Function<A, Function<B, C>> fuseBooleanFunction(BooleanFunction<C> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <C> Function<A, Function<B, C>> fuse(BooleanFunction<C> next) {
+            return fuseBooleanFunction(next);
+        }
+
+        public <C> WithBiFunction<A, B, C> fusingBooleanFunction(BooleanFunction<C> next) {
+            return WithBiFunction.of(fuseBooleanFunction(next));
+        }
+
+        public <C> WithBiFunction<A, B, C> fusing(BooleanFunction<C> next) {
+            return fusingBooleanFunction(next);
+        }
     }
 
-    /* Consumer -> ... [TODO: Incomplete]  */
+    public static final class WithBooleanPredicate extends Fusion<Boolean, BooleanPredicate> {
+        private final BooleanPredicate initial;
 
-    /* Supplier -> ... [TODO: Incomplete]  */
+        private WithBooleanPredicate(BooleanPredicate initial) {
+            this.initial = initial;
+        }
+
+        public static WithBooleanPredicate of(BooleanPredicate initial) {
+            return new WithBooleanPredicate(initial);
+        }
+
+        @Override
+        public BooleanPredicate resolve() {
+            return initial;
+        }
+
+        /* BooleanPredicate -> BooleanFunction<A> */
+
+        public <A> BooleanFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> BooleanFunction<A> fuse(BooleanFunction<A> next) {
+            return fuseBooleanFunction(next);
+        }
+
+        public <A> WithBooleanFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+            return WithBooleanFunction.of(fuseBooleanFunction(next));
+        }
+
+        public <A> WithBooleanFunction<A> fusing(BooleanFunction<A> next) {
+            return fusingBooleanFunction(next);
+        }
+    }
+
+    public static final class WithDoublePredicate extends Fusion<Double, DoublePredicate> {
+        private final DoublePredicate initial;
+
+        private WithDoublePredicate(DoublePredicate initial) {
+            this.initial = initial;
+        }
+
+        public static WithDoublePredicate of(DoublePredicate initial) {
+            return new WithDoublePredicate(initial);
+        }
+
+        @Override
+        public DoublePredicate resolve() {
+            return initial;
+        }
+
+        /* DoublePredicate -> BooleanFunction<A> */
+
+        public <A> DoubleFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> DoubleFunction<A> fuse(BooleanFunction<A> next) {
+            return fuseBooleanFunction(next);
+        }
+
+        public <A> WithDoubleFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+            return WithDoubleFunction.of(fuseBooleanFunction(next));
+        }
+
+        public <A> WithDoubleFunction<A> fusing(BooleanFunction<A> next) {
+            return fusingBooleanFunction(next);
+        }
+    }
+
+    public static final class WithIntPredicate extends Fusion<Integer, IntPredicate> {
+        private final IntPredicate initial;
+
+        private WithIntPredicate(IntPredicate initial) {
+            this.initial = initial;
+        }
+
+        public static WithIntPredicate of(IntPredicate initial) {
+            return new WithIntPredicate(initial);
+        }
+
+        @Override
+        public IntPredicate resolve() {
+            return initial;
+        }
+
+        /* IntPredicate -> BooleanFunction<A> */
+
+        public <A> IntFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> IntFunction<A> fuse(BooleanFunction<A> next) {
+            return fuseBooleanFunction(next);
+        }
+
+        public <A> WithIntFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+            return WithIntFunction.of(fuseBooleanFunction(next));
+        }
+
+        public <A> WithIntFunction<A> fusing(BooleanFunction<A> next) {
+            return fusingBooleanFunction(next);
+        }
+    }
+
+    public static final class WithLongPredicate extends Fusion<Long, LongPredicate> {
+        private final LongPredicate initial;
+
+        private WithLongPredicate(LongPredicate initial) {
+            this.initial = initial;
+        }
+
+        public static WithLongPredicate of(LongPredicate initial) {
+            return new WithLongPredicate(initial);
+        }
+
+        @Override
+        public LongPredicate resolve() {
+            return initial;
+        }
+
+        /* LongPredicate -> BooleanFunction<A> */
+
+        public <A> LongFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+            return Z.fuse(initial, next);
+        }
+
+        public <A> LongFunction<A> fuse(BooleanFunction<A> next) {
+            return fuseBooleanFunction(next);
+        }
+
+        public <A> WithLongFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+            return WithLongFunction.of(fuseBooleanFunction(next));
+        }
+
+        public <A> WithLongFunction<A> fusing(BooleanFunction<A> next) {
+            return fusingBooleanFunction(next);
+        }
+    }
 
     public static final class WithSupplier<A> extends Fusion<A, Supplier<A>> {
         private final Supplier<A> initial;
@@ -525,5 +1266,425 @@ public abstract class Fusion<A, Fn> {
         public <B, C> WithFunction<B, C> fusing(BiFunction<A, B, C> next) {
             return fusingBiFunction(next);
         }
+    }
+
+    public static final class WithBooleanSupplier extends Fusion<Boolean, BooleanSupplier> {
+        private final BooleanSupplier initial;
+
+        private WithBooleanSupplier(BooleanSupplier initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithBooleanSupplier of(BooleanSupplier initial) {
+            return new WithBooleanSupplier(initial);
+        }
+
+        @Override
+        public BooleanSupplier resolve() {
+            return initial;
+        }
+
+        /* BooleanSupplier -> BooleanFunction<A> */
+
+        public <A> Supplier<A> fuseFunction(BooleanFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> Supplier<A> fuse(BooleanFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithSupplier<A> fusingFunction(BooleanFunction<A> next) {
+            return WithSupplier.of(fuse(next));
+        }
+
+        public <A> WithSupplier<A> fusing(BooleanFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithDoubleSupplier extends Fusion<Double, DoubleSupplier> {
+        private final DoubleSupplier initial;
+
+        private WithDoubleSupplier(DoubleSupplier initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithDoubleSupplier of(DoubleSupplier initial) {
+            return new WithDoubleSupplier(initial);
+        }
+
+        @Override
+        public DoubleSupplier resolve() {
+            return initial;
+        }
+
+        /* DoubleSupplier -> DoubleFunction<A> */
+
+        public <A> Supplier<A> fuseFunction(DoubleFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> Supplier<A> fuse(DoubleFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithSupplier<A> fusingFunction(DoubleFunction<A> next) {
+            return WithSupplier.of(fuse(next));
+        }
+
+        public <A> WithSupplier<A> fusing(DoubleFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithIntSupplier extends Fusion<Integer, IntSupplier> {
+        private final IntSupplier initial;
+
+        private WithIntSupplier(IntSupplier initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithIntSupplier of(IntSupplier initial) {
+            return new WithIntSupplier(initial);
+        }
+
+        @Override
+        public IntSupplier resolve() {
+            return initial;
+        }
+
+        /* IntSupplier -> IntFunction<A> */
+
+        public <A> Supplier<A> fuseFunction(IntFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> Supplier<A> fuse(IntFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithSupplier<A> fusingFunction(IntFunction<A> next) {
+            return WithSupplier.of(fuse(next));
+        }
+
+        public <A> WithSupplier<A> fusing(IntFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithLongSupplier extends Fusion<Long, LongSupplier> {
+        private final LongSupplier initial;
+
+        private WithLongSupplier(LongSupplier initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithLongSupplier of(LongSupplier initial) {
+            return new WithLongSupplier(initial);
+        }
+
+        @Override
+        public LongSupplier resolve() {
+            return initial;
+        }
+
+        /* LongSupplier -> LongFunction<A> */
+
+        public <A> Supplier<A> fuseFunction(LongFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> Supplier<A> fuse(LongFunction<A> next) {
+            return fuseFunction(next);
+        }
+
+        public <A> WithSupplier<A> fusingFunction(LongFunction<A> next) {
+            return WithSupplier.of(fuse(next));
+        }
+
+        public <A> WithSupplier<A> fusing(LongFunction<A> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithUnaryOperator<A> extends Fusion<A, UnaryOperator<A>> {
+        private final UnaryOperator<A> initial;
+
+        private WithUnaryOperator(UnaryOperator<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithUnaryOperator<A> of(UnaryOperator<A> initial) {
+            return new WithUnaryOperator<>(initial);
+        }
+
+        @Override
+        public UnaryOperator<A> resolve() {
+            return initial;
+        }
+
+        /* UnaryOperator -> Function<A, B> */
+
+        public <B> Function<A, B> fuseFunction(Function<A, B> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <B> Function<A, B> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithFunction<A, B> fusingFunction(Function<A, B> next) {
+            return WithFunction.of(fuse(next));
+        }
+
+        public <B> WithFunction<A, B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+
+        /* UnaryOperator -> BiFunction<A, B, C> */
+
+        public <B, C> Function<A, Function<B, C>> fuseBiFunction(BiFunction<A, B, C> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <B, C> Function<A, Function<B, C>> fuse(BiFunction<A, B, C> next) {
+            return fuseBiFunction(next);
+        }
+
+        public <B, C> WithBiFunction<A, B, C> fusingBiFunction(BiFunction<A, B, C> next) {
+            return WithBiFunction.of(fuse(next));
+        }
+
+        public <B, C> WithBiFunction<A, B, C> fusing(BiFunction<A, B, C> next) {
+            return fusingBiFunction(next);
+        }
+    }
+
+    public static final class WithBinaryOperator<A> extends Fusion<A, BinaryOperator<A>> {
+        private final BinaryOperator<A> initial;
+
+        private WithBinaryOperator(BinaryOperator<A> initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithBinaryOperator<A> of(BinaryOperator<A> initial) {
+            return new WithBinaryOperator<>(initial);
+        }
+
+        @Override
+        public BinaryOperator<A> resolve() {
+            return initial;
+        }
+
+        /* BinaryOperator -> Function<A, B> */
+
+        public <B> Function<A, Function<A, B>> fuseFunction(Function<A, B> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <B> Function<A, Function<A, B>> fuse(Function<A, B> next) {
+            return fuseFunction(next);
+        }
+
+        public <B> WithBiFunction<A, A, B> fusingFunction(Function<A, B> next) {
+            return WithBiFunction.of(fuse(next));
+        }
+
+        public <B> WithBiFunction<A, A, B> fusing(Function<A, B> next) {
+            return fusingFunction(next);
+        }
+    }
+
+    public static final class WithDoubleUnaryOperator extends Fusion<Double, DoubleUnaryOperator> {
+        private final DoubleUnaryOperator initial;
+
+        private WithDoubleUnaryOperator(DoubleUnaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithDoubleUnaryOperator of(DoubleUnaryOperator initial) {
+            return new WithDoubleUnaryOperator(initial);
+        }
+
+        @Override
+        public DoubleUnaryOperator resolve() {
+            return initial;
+        }
+
+        /* DoubleUnaryOperator -> DoubleFunction<A> */
+
+        public <A> DoubleFunction<A> fuseDoubleFunction(DoubleFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> DoubleFunction<A> fuse(DoubleFunction<A> next) {
+            return fuseDoubleFunction(next);
+        }
+
+        public <A> WithDoubleFunction<A> fusingDoubleFunction(DoubleFunction<A> next) {
+            return WithDoubleFunction.of(fuseDoubleFunction(next));
+        }
+
+        public <A> WithDoubleFunction<A> fusing(DoubleFunction<A> next) {
+            return fusingDoubleFunction(next);
+        }
+    }
+
+    public static final class WithDoubleBinaryOperator extends Fusion<Double, DoubleBinaryOperator> {
+        private final DoubleBinaryOperator initial;
+
+        private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithDoubleBinaryOperator of(DoubleBinaryOperator initial) {
+            return new WithDoubleBinaryOperator(initial);
+        }
+
+        @Override
+        public DoubleBinaryOperator resolve() {
+            return initial;
+        }
+
+        /* DoubleBinaryOperator -> DoubleFunction<A> */
+
+        public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(DoubleFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> DoubleFunction<DoubleFunction<A>> fuse(DoubleFunction<A> next) {
+            return fuseDoubleFunction(next);
+        }
+
+        // TODO: "fusing" -- Need better currying support or DoubleBiFunction functional interface?
+    }
+
+    public static final class WithIntUnaryOperator extends Fusion<Integer, IntUnaryOperator> {
+        private final IntUnaryOperator initial;
+
+        private WithIntUnaryOperator(IntUnaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithIntUnaryOperator of(IntUnaryOperator initial) {
+            return new WithIntUnaryOperator(initial);
+        }
+
+        @Override
+        public IntUnaryOperator resolve() {
+            return initial;
+        }
+
+        /* IntUnaryOperator -> IntFunction<A> */
+
+        public <A> IntFunction<A> fuseIntFunction(IntFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> IntFunction<A> fuse(IntFunction<A> next) {
+            return fuseIntFunction(next);
+        }
+
+        public <A> WithIntFunction<A> fusingIntFunction(IntFunction<A> next) {
+            return WithIntFunction.of(fuseIntFunction(next));
+        }
+
+        public <A> WithIntFunction<A> fusing(IntFunction<A> next) {
+            return fusingIntFunction(next);
+        }
+    }
+
+    public static final class WithIntBinaryOperator extends Fusion<Integer, IntBinaryOperator> {
+        private final IntBinaryOperator initial;
+
+        private WithIntBinaryOperator(IntBinaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithIntBinaryOperator of(IntBinaryOperator initial) {
+            return new WithIntBinaryOperator(initial);
+        }
+
+        @Override
+        public IntBinaryOperator resolve() {
+            return initial;
+        }
+
+        /* IntBinaryOperator -> IntFunction<A> */
+
+        public <A> IntFunction<IntFunction<A>> fuseIntFunction(IntFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> IntFunction<IntFunction<A>> fuse(IntFunction<A> next) {
+            return fuseIntFunction(next);
+        }
+
+        // TODO: "fusing" -- Need better currying support or IntBiFunction functional interface?
+    }
+
+    public static final class WithLongUnaryOperator extends Fusion<Long, LongUnaryOperator> {
+        private final LongUnaryOperator initial;
+
+        private WithLongUnaryOperator(LongUnaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithLongUnaryOperator of(LongUnaryOperator initial) {
+            return new WithLongUnaryOperator(initial);
+        }
+
+        @Override
+        public LongUnaryOperator resolve() {
+            return initial;
+        }
+
+        /* LongUnaryOperator -> LongFunction<A> */
+
+        public <A> LongFunction<A> fuseLongFunction(LongFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> LongFunction<A> fuse(LongFunction<A> next) {
+            return fuseLongFunction(next);
+        }
+
+        public <A> WithLongFunction<A> fusingLongFunction(LongFunction<A> next) {
+            return WithLongFunction.of(fuseLongFunction(next));
+        }
+
+        public <A> WithLongFunction<A> fusing(LongFunction<A> next) {
+            return fusingLongFunction(next);
+        }
+    }
+
+    public static final class WithLongBinaryOperator extends Fusion<Long, LongBinaryOperator> {
+        private final LongBinaryOperator initial;
+
+        private WithLongBinaryOperator(LongBinaryOperator initial) {
+            this.initial = initial;
+        }
+
+        public static <A> WithLongBinaryOperator of(LongBinaryOperator initial) {
+            return new WithLongBinaryOperator(initial);
+        }
+
+        @Override
+        public LongBinaryOperator resolve() {
+            return initial;
+        }
+
+        /* LongBinaryOperator -> LongFunction<A> */
+
+        public <A> LongFunction<LongFunction<A>> fuseLongFunction(LongFunction<A> next) {
+            return Z.fuse(resolve(), next);
+        }
+
+        public <A> LongFunction<LongFunction<A>> fuse(LongFunction<A> next) {
+            return fuseLongFunction(next);
+        }
+
+        // TODO: "fusing" -- Need better currying support or LongBiFunction functional interface?
     }
 }

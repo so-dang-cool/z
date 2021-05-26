@@ -16,6 +16,16 @@ public class ToDoubleFunctionFusionTests {
     }
 
     @Test
+    void toDblFn_to_dblFn_deep() {
+        assertEquals("4.5", Z.with(stringToDouble).fuse(doubleToString).apply("4.5"));
+    }
+
+    @Test
+    void toDblFn_to_dblFn_deeper() {
+        assertEquals("4.5", Z.with(stringToDouble).fusing(doubleToString).resolve().apply("4.5"));
+    }
+
+    @Test
     void toDblFn_to_dblToInt() {
         assertEquals(4, Z.fuse(stringToDouble, doubleToInt).applyAsInt("4.6"));
     }

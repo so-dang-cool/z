@@ -16,6 +16,11 @@ public class LongBinaryOperatorFusionTests {
     }
 
     @Test
+    void longBiop_to_longFn_deep() {
+        assertEquals("3", Z.with(addLongs).fuse(longToString).apply(1L).apply(2L));
+    }
+
+    @Test
     void longBiop_to_longToDbl() {
         assertEquals(3.0, Z.fuse(addLongs, longToDouble).apply(1L).applyAsDouble(2L));
     }

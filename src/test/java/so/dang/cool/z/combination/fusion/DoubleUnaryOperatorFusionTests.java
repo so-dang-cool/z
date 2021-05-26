@@ -16,6 +16,16 @@ public class DoubleUnaryOperatorFusionTests {
     }
 
     @Test
+    void dblUnop_to_dblFn_deep() {
+        assertEquals("4.5", Z.with(addOneToDouble).fuse(doubleToString).apply(3.5));
+    }
+
+    @Test
+    void dblUnop_to_dblFn_deeper() {
+        assertEquals("4.5", Z.with(addOneToDouble).fusing(doubleToString).resolve().apply(3.5));
+    }
+
+    @Test
     void dblUnop_to_dblToInt() {
         assertEquals(4, Z.fuse(addOneToDouble, doubleToInt).applyAsInt(3.6));
     }

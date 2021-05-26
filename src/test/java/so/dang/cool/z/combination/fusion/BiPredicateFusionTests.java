@@ -12,13 +12,23 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BiPredicateFusionTests {
     @Test
-    void bipred_to_fn() {
+    void bipred_to_bifn() {
+        assertEquals("YO", Z.fuse(startsWith, maybeToUpper).apply("yolo").apply("yo").apply("yo"));
+    }
+
+    @Test
+    void bipred_to_boolFn() {
         assertEquals("true", Z.fuse(startsWith, booleanToString).apply("yolo").apply("yo"));
     }
 
     @Test
-    void bipred_to_bifn() {
-        assertEquals("YO", Z.fuse(startsWith, maybeToUpper).apply("yolo").apply("yo").apply("yo"));
+    void bipred_to_boolFn_deep() {
+        assertEquals("true", Z.with(startsWith).fuse(booleanToString).apply("yolo").apply("yo"));
+    }
+
+    @Test
+    void bipred_to_boolFn_deeper() {
+        assertEquals("true", Z.with(startsWith).fusing(booleanToString).resolve().apply("yolo").apply("yo"));
     }
 
     @Test

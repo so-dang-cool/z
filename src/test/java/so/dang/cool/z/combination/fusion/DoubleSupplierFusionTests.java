@@ -16,6 +16,16 @@ public class DoubleSupplierFusionTests {
     }
 
     @Test
+    void dblSup_to_dblFn_deep() {
+        assertEquals("1.0", Z.with(getDouble).fuse(doubleToString).get());
+    }
+
+    @Test
+    void dblSup_to_dblFn_deeper() {
+        assertEquals("1.0", Z.with(getDouble).fusing(doubleToString).resolve().get());
+    }
+
+    @Test
     void dblSup_to_dblToInt() {
         assertEquals(1, Z.fuse(getDouble, doubleToInt).getAsInt());
     }

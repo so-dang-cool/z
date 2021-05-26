@@ -16,6 +16,16 @@ public class IntToLongFunctionFusionTests {
     }
 
     @Test
+    void intToLong_to_longFn_deep() {
+        assertEquals("1", Z.with(intToLong).fuse(longToString).apply(1));
+    }
+
+    @Test
+    void intToLong_to_longFn_deeper() {
+        assertEquals("1", Z.with(intToLong).fusing(longToString).resolve().apply(1));
+    }
+
+    @Test
     void intToLong_to_longToDbl() {
         assertEquals(1.0, Z.fuse(intToLong, longToDouble).applyAsDouble(1));
     }
