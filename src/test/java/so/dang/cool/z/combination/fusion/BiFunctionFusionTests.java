@@ -16,6 +16,16 @@ public class BiFunctionFusionTests {
     }
 
     @Test
+    void bifn_to_fn_deep() {
+        assertEquals("hey there", Z.with(concat).fuse(trim).apply(" hey ").apply("there "));
+    }
+
+    @Test
+    void bifn_to_fn_deeper() {
+        assertEquals("hey there", Z.with(concat).fusing(trim).resolve().apply(" hey ").apply("there "));
+    }
+
+    @Test
     void bifn_to_bifn() {
         assertEquals("かめはめ波", Z.fuse(concat, concat).apply("かめ").apply("はめ").apply("波"));
     }
