@@ -23,7 +23,7 @@ public class BooleanFunctionFusionTests {
 
     @Test
     void boolFn_to_fn_deeper() {
-        assertEquals("true!", Z.with(booleanToString).fusing(addExclamationMark).apply(true));
+        assertEquals("true!", Z.with(booleanToString).fusing(addExclamationMark).resolve().apply(true));
     }
 
     @Test

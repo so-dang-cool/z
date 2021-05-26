@@ -530,6 +530,96 @@ public final class Z {
         return (boolean b) -> (long n) -> next.accept(initial.apply(b), n);
     }
 
+    /* BooleanToDoubleFunction */
+
+    public static <A> BooleanFunction<A> fuse(BooleanToDoubleFunction initial, DoubleFunction<A> next) {
+        return (boolean b) -> next.apply(initial.applyAsDouble(b));
+    }
+
+    public static BooleanToIntFunction fuse(BooleanToDoubleFunction initial, DoubleToIntFunction next) {
+        return (boolean b) -> next.applyAsInt(initial.applyAsDouble(b));
+    }
+
+    public static BooleanToLongFunction fuse(BooleanToDoubleFunction initial, DoubleToLongFunction next) {
+        return (boolean b) -> next.applyAsLong(initial.applyAsDouble(b));
+    }
+
+    public static BooleanPredicate fuse(BooleanToDoubleFunction initial, DoublePredicate next) {
+        return (boolean b) -> next.test(initial.applyAsDouble(b));
+    }
+
+    public static BooleanConsumer fuse(BooleanToDoubleFunction initial, DoubleConsumer next) {
+        return (boolean b) -> next.accept(initial.applyAsDouble(b));
+    }
+
+    public static BooleanToDoubleFunction fuse(BooleanToDoubleFunction initial, DoubleUnaryOperator next) {
+        return (boolean b) -> next.applyAsDouble(initial.applyAsDouble(b));
+    }
+
+    public static BooleanFunction<DoubleUnaryOperator> fuse(BooleanToDoubleFunction initial, DoubleBinaryOperator next) {
+        return (boolean b) -> (double d) -> next.applyAsDouble(initial.applyAsDouble(b), d);
+    }
+
+    /* BooleanToLongFunction */
+
+    public static <A> BooleanFunction<A> fuse(BooleanToLongFunction initial, LongFunction<A> next) {
+        return (boolean b) -> next.apply(initial.applyAsLong(b));
+    }
+
+    public static BooleanToDoubleFunction fuse(BooleanToLongFunction initial, LongToDoubleFunction next) {
+        return (boolean b) -> next.applyAsDouble(initial.applyAsLong(b));
+    }
+
+    public static BooleanToIntFunction fuse(BooleanToLongFunction initial, LongToIntFunction next) {
+        return (boolean b) -> next.applyAsInt(initial.applyAsLong(b));
+    }
+
+    public static BooleanPredicate fuse(BooleanToLongFunction initial, LongPredicate next) {
+        return (boolean b) -> next.test(initial.applyAsLong(b));
+    }
+
+    public static BooleanConsumer fuse(BooleanToLongFunction initial, LongConsumer next) {
+        return (boolean b) -> next.accept(initial.applyAsLong(b));
+    }
+
+    public static BooleanToLongFunction fuse(BooleanToLongFunction initial, LongUnaryOperator next) {
+        return (boolean b) -> next.applyAsLong(initial.applyAsLong(b));
+    }
+
+    public static BooleanFunction<LongUnaryOperator> fuse(BooleanToLongFunction initial, LongBinaryOperator next) {
+        return (boolean b) -> (long n) -> next.applyAsLong(initial.applyAsLong(b), n);
+    }
+
+    /* BooleanToIntFunction */
+
+    public static <A> BooleanFunction<A> fuse(BooleanToIntFunction initial, IntFunction<A> next) {
+        return (boolean b) -> next.apply(initial.applyAsInt(b));
+    }
+
+    public static BooleanToDoubleFunction fuse(BooleanToIntFunction initial, IntToDoubleFunction next) {
+        return (boolean b) -> next.applyAsDouble(initial.applyAsInt(b));
+    }
+
+    public static BooleanToLongFunction fuse(BooleanToIntFunction initial, IntToLongFunction next) {
+        return (boolean b) -> next.applyAsLong(initial.applyAsInt(b));
+    }
+
+    public static BooleanPredicate fuse(BooleanToIntFunction initial, IntPredicate next) {
+        return (boolean b) -> next.test(initial.applyAsInt(b));
+    }
+
+    public static BooleanConsumer fuse(BooleanToIntFunction initial, IntConsumer next) {
+        return (boolean b) -> next.accept(initial.applyAsInt(b));
+    }
+
+    public static BooleanToIntFunction fuse(BooleanToIntFunction initial, IntUnaryOperator next) {
+        return (boolean b) -> next.applyAsInt(initial.applyAsInt(b));
+    }
+
+    public static BooleanFunction<IntUnaryOperator> fuse(BooleanToIntFunction initial, IntBinaryOperator next) {
+        return (boolean b) -> (int i) -> next.applyAsInt(initial.applyAsInt(b), i);
+    }
+
     /* DoubleFunction */
 
     public static <A, B> DoubleFunction<B> fuse(DoubleFunction<A> initial, Function<A, B> next) {
@@ -1904,6 +1994,76 @@ public final class Z {
     }
 
     @Experimental
+    public static <A> Fusion.WithBooleanFunction<A> withBooleanFunction(BooleanFunction<A> initial) {
+        return Fusion.WithBooleanFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithBooleanFunction<A> with(BooleanFunction<A> initial) {
+        return withBooleanFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithBooleanToDoubleFunction withBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
+        return Fusion.WithBooleanToDoubleFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithBooleanToDoubleFunction with(BooleanToDoubleFunction initial) {
+        return withBooleanToDoubleFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithBooleanToLongFunction withBooleanToLongFunction(BooleanToLongFunction initial) {
+        return Fusion.WithBooleanToLongFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithBooleanToLongFunction with(BooleanToLongFunction initial) {
+        return withBooleanToLongFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithBooleanToIntFunction withBooleanToIntFunction(BooleanToIntFunction initial) {
+        return Fusion.WithBooleanToIntFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithBooleanToIntFunction with(BooleanToIntFunction initial) {
+        return withBooleanToIntFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleFunction<A> withDoubleFunction(DoubleFunction<A> initial) {
+        return Fusion.WithDoubleFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleFunction<A> with(DoubleFunction<A> initial) {
+        return withDoubleFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleToIntFunction withDoubleToIntFunction(DoubleToIntFunction initial) {
+        return Fusion.WithDoubleToIntFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleToIntFunction with(DoubleToIntFunction initial) {
+        return withDoubleToIntFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleToLongFunction withDoubleToLongFunction(DoubleToLongFunction initial) {
+        return Fusion.WithDoubleToLongFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithDoubleToLongFunction with(DoubleToLongFunction initial) {
+        return withDoubleToLongFunction(initial);
+    }
+
+    @Experimental
     public static <A> Fusion.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
         return Fusion.WithToDoubleFunction.of(initial);
     }
@@ -1914,6 +2074,46 @@ public final class Z {
     }
 
     @Experimental
+    public static <A, B> Fusion.WithToDoubleBiFunction<A, B> withToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
+        return Fusion.WithToDoubleBiFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A, B> Fusion.WithToDoubleBiFunction<A, B> with(ToDoubleBiFunction<A, B> initial) {
+        return withToDoubleBiFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithIntFunction<A> withIntFunction(IntFunction<A> initial) {
+        return Fusion.WithIntFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithIntFunction<A> with(IntFunction<A> initial) {
+        return withIntFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithIntToDoubleFunction withIntToDoubleFunction(IntToDoubleFunction initial) {
+        return Fusion.WithIntToDoubleFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithIntToDoubleFunction with(IntToDoubleFunction initial) {
+        return withIntToDoubleFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithIntToLongFunction withIntToLongFunction(IntToLongFunction initial) {
+        return Fusion.WithIntToLongFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithIntToLongFunction with(IntToLongFunction initial) {
+        return withIntToLongFunction(initial);
+    }
+
+    @Experimental
     public static <A> Fusion.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
         return Fusion.WithToIntFunction.of(initial);
     }
@@ -1921,6 +2121,36 @@ public final class Z {
     @Experimental
     public static <A> Fusion.WithToIntFunction<A> with(ToIntFunction<A> initial) {
         return withToIntFunction(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithLongFunction<A> withLongFunction(LongFunction<A> initial) {
+        return Fusion.WithLongFunction.of(initial);
+    }
+
+    @Experimental
+    public static <A> Fusion.WithLongFunction<A> with(LongFunction<A> initial) {
+        return withLongFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithLongToDoubleFunction withLongToDoubleFunction(LongToDoubleFunction initial) {
+        return Fusion.WithLongToDoubleFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithLongToDoubleFunction with(LongToDoubleFunction initial) {
+        return withLongToDoubleFunction(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithLongToIntFunction withLongToIntFunction(LongToIntFunction initial) {
+        return Fusion.WithLongToIntFunction.of(initial);
+    }
+
+    @Experimental
+    public static  Fusion.WithLongToIntFunction with(LongToIntFunction initial) {
+        return withLongToIntFunction(initial);
     }
 
     @Experimental
