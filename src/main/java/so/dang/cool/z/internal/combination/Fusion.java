@@ -147,7 +147,7 @@ public abstract class Fusion<A, Fn> {
 
         /* Function<A, B> -> ToLongBiFunction<B> [TODO] */
 
-        /* Function<A, B> -> Predicate<B> [TODO: Incomplete] */
+        /* Function<A, B> -> Predicate<B> */
 
         public Predicate<A> fusePredicate(Predicate<B> next) {
             return Z.fuse(resolve(), next);

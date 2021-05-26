@@ -14,6 +14,16 @@ public class FunctionFusionTests {
     void fn_to_fn() {
         assertEquals("hello", Z.fuse(trim, toLower).apply(" HeLlO "));
     }
+    
+    @Test
+    void fn_to_fn_deep() {
+        assertEquals("hello", Z.with(trim).fuse(toLower).apply(" HeLlO "));
+    }
+    
+    @Test
+    void fn_to_fn_deeper() {
+        assertEquals("hello", Z.with(trim).fusing(toLower).resolve().apply(" HeLlO "));
+    }
 
     @Test
     void fn_to_bifn() {
@@ -21,8 +31,28 @@ public class FunctionFusionTests {
     }
 
     @Test
+    void fn_to_bifn_deep() {
+        assertEquals("hello!", Z.with(trim).fuse(concat).apply(" hello ").apply("!"));
+    }
+
+    @Test
+    void fn_to_bifn_deeper() {
+        assertEquals("hello!", Z.with(trim).fusing(concat).resolve().apply(" hello ").apply("!"));
+    }
+
+    @Test
     void fn_to_toDblFn() {
         assertEquals(1.0, Z.fuse(trim, stringToDouble).applyAsDouble(" 1.0 "));
+    }
+
+    @Test
+    void fn_to_toDblFn_deep() {
+        assertEquals(1.0, Z.with(trim).fuse(stringToDouble).applyAsDouble(" 1.0 "));
+    }
+
+    @Test
+    void fn_to_toDblFn_deeper() {
+        assertEquals(1.0, Z.with(trim).fusing(stringToDouble).resolve().applyAsDouble(" 1.0 "));
     }
 
     @Test
@@ -36,6 +66,16 @@ public class FunctionFusionTests {
     }
 
     @Test
+    void fn_to_toIntFn_deep() {
+        assertEquals(1, Z.with(trim).fuse(stringToInt).applyAsInt(" 1 "));
+    }
+
+    @Test
+    void fn_to_toIntFn_deeper() {
+        assertEquals(1, Z.with(trim).fusing(stringToInt).resolve().applyAsInt(" 1 "));
+    }
+
+    @Test
     void fn_to_toIntBifn() {
         assertEquals(3, Z.fuse(trim, addStringsAsInt).apply(" 1 ").applyAsInt("2"));
     }
@@ -46,6 +86,16 @@ public class FunctionFusionTests {
     }
 
     @Test
+    void fn_to_toLongFn_deep() {
+        assertEquals(1L, Z.with(trim).fuse(stringToLong).applyAsLong(" 1 "));
+    }
+
+    @Test
+    void fn_to_toLongFn_deeper() {
+        assertEquals(1L, Z.with(trim).fusing(stringToLong).resolve().applyAsLong(" 1 "));
+    }
+
+    @Test
     void fn_to_toLongBifn() {
         assertEquals(3L, Z.fuse(trim, addStringsAsLong).apply(" 1 ").applyAsLong("2"));
     }
@@ -53,6 +103,16 @@ public class FunctionFusionTests {
     @Test
     void fn_to_pred() {
         assertTrue(Z.fuse(trim, isEmpty).test(" "));
+    }
+
+    @Test
+    void fn_to_pred_deep() {
+        assertTrue(Z.with(trim).fuse(isEmpty).test(" "));
+    }
+
+    @Test
+    void fn_to_pred_deeper() {
+        assertTrue(Z.with(trim).fusing(isEmpty).resolve().test(" "));
     }
 
     @Test
@@ -67,6 +127,30 @@ public class FunctionFusionTests {
             consumedStringA = "";
 
             Z.fuse(trim, saveStringA).accept(" hello ");
+
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void fn_to_cns_deep() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.with(trim).fuse(saveStringA).accept(" hello ");
+
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void fn_to_cns_deeper() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.with(trim).fusing(saveStringA).resolve().accept(" hello ");
 
             assertEquals("hello", consumedStringA);
         }
@@ -142,7 +226,27 @@ public class FunctionFusionTests {
     }
 
     @Test
+    void fn_to_toUnop_deep() {
+        assertEquals("goodbye?", Z.with(trim).fuse(addQuestionMark).apply(" goodbye "));
+    }
+
+    @Test
+    void fn_to_toUnop_deeper() {
+        assertEquals("goodbye?", Z.with(trim).fusing(addQuestionMark).resolve().apply(" goodbye "));
+    }
+
+    @Test
     void fn_to_toBiop() {
         assertEquals("same-ish", Z.fuse(trim, relation).apply(" yo man ").apply("YO MAN"));
-    }    
+    }
+
+    @Test
+    void fn_to_toBiop_deep() {
+        assertEquals("same-ish", Z.with(trim).fuse(relation).apply(" yo man ").apply("YO MAN"));
+    }
+
+    @Test
+    void fn_to_toBiop_deeper() {
+        assertEquals("same-ish", Z.with(trim).fusing(relation).resolve().apply(" yo man ").apply("YO MAN"));
+    }
 }
