@@ -269,10 +269,10 @@ public class UsageExamples {
         // builder, and add a static pure function from Stringer -> String.
         class Stringer {
 
-            int start;
-            int end;
-            Function<Integer, String> xform;
-            String delim;
+            transient int start;
+            transient int end;
+            transient Function<Integer, String> xform;
+            transient String delim;
 
             Stringer() {}
 
@@ -282,12 +282,12 @@ public class UsageExamples {
                 return this;
             }
 
-            Stringer xform(Function<Integer, String> xform) {
+            Stringer transform(Function<Integer, String> xform) {
                 this.xform = xform;
                 return this;
             }
 
-            Stringer delim(String delim) {
+            Stringer delimiter(String delim) {
                 this.delim = delim;
                 return this;
             }
@@ -300,17 +300,18 @@ public class UsageExamples {
                     .apply(delim);
             }
         }
+
         String res = new Stringer()
             .range(0, 15)
-            .xform(
+            .transform(
                 i ->
                     new Stringer()
                         .range(1, 16)
-                        .xform(iToS.apply(i))
-                        .delim(", ")
+                        .transform(iToS.apply(i))
+                        .delimiter(", ")
                         .go()
             )
-            .delim("\n")
+            .delimiter("\n")
             .go();
 
         assertEquals(

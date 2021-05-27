@@ -17,7 +17,7 @@ public class BooleanConsumerTests {
                 consumedBooleanA = false;
                 consumedBooleanF = false;
 
-                saveBooleanA.andThen​(saveBooleanF).accept(true);
+                saveBooleanA.andThen(saveBooleanF).accept(true);
 
                 assertTrue(consumedBooleanA);
                 assertTrue(consumedBooleanF);
@@ -33,7 +33,7 @@ public class BooleanConsumerTests {
                 consumedBooleanA = true;
                 consumedBooleanF = true;
 
-                saveBooleanA.andThen​(saveBooleanF).accept(false);
+                saveBooleanA.andThen(saveBooleanF).accept(false);
 
                 assertFalse(consumedBooleanA);
                 assertFalse(consumedBooleanF);

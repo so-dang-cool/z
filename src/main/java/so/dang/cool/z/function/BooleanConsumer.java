@@ -24,7 +24,7 @@ public interface BooleanConsumer {
      * @return a composed BooleanConsumer that performs in sequence this
      *         operation followed by the after operation
      */
-    default BooleanConsumer andThen​(BooleanConsumer after) {
+    default BooleanConsumer andThen(BooleanConsumer after) {
         return b -> {
             this.accept(b);
             after.accept(b);

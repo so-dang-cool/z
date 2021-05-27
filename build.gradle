@@ -1,11 +1,12 @@
 plugins {
     id 'java-library'
     id 'jacoco'
-    id "com.diffplug.spotless" version "5.12.5"
+    id 'com.diffplug.spotless' version '5.12.5'
+    id 'pmd'
 
     id 'maven-publish'
     id 'signing'
-    id('io.github.gradle-nexus.publish-plugin') version '1.1.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
 group = 'so.dang.cool'
@@ -59,6 +60,10 @@ spotless {
         removeUnusedImports()
         prettier(['prettier': '2.3.0', 'prettier-plugin-java': '1.1.1']).config(['parser': 'java', 'tabWidth': 4])
     }
+}
+
+pmdTest {
+    rulesMinimumPriority = 2
 }
 
 tasks.named('test') {

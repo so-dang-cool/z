@@ -64,7 +64,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithFunction<A, B>
         extends Combine<B, Function<A, B>> {
 
-        private final Function<A, B> initial;
+        private final transient Function<A, B> initial;
 
         private WithFunction(Function<A, B> initial) {
             this.initial = initial;
@@ -290,7 +290,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBiFunction<A, B, C>
         extends Combine<C, Function<A, Function<B, C>>> {
 
-        private final BiFunction<A, B, C> initial;
+        private final transient BiFunction<A, B, C> initial;
 
         private WithBiFunction(BiFunction<A, B, C> initial) {
             this.initial = initial;
@@ -339,7 +339,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanFunction<A>
         extends Combine<A, BooleanFunction<A>> {
 
-        private final BooleanFunction<A> initial;
+        private final transient BooleanFunction<A> initial;
 
         private WithBooleanFunction(BooleanFunction<A> initial) {
             this.initial = initial;
@@ -378,7 +378,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanToDoubleFunction
         extends Combine<Double, BooleanToDoubleFunction> {
 
-        private final BooleanToDoubleFunction initial;
+        private final transient BooleanToDoubleFunction initial;
 
         private WithBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
             this.initial = initial;
@@ -421,7 +421,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanToIntFunction
         extends Combine<Integer, BooleanToIntFunction> {
 
-        private final BooleanToIntFunction initial;
+        private final transient BooleanToIntFunction initial;
 
         private WithBooleanToIntFunction(BooleanToIntFunction initial) {
             this.initial = initial;
@@ -462,7 +462,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanToLongFunction
         extends Combine<Long, BooleanToLongFunction> {
 
-        private final BooleanToLongFunction initial;
+        private final transient BooleanToLongFunction initial;
 
         private WithBooleanToLongFunction(BooleanToLongFunction initial) {
             this.initial = initial;
@@ -503,7 +503,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleFunction<A>
         extends Combine<A, DoubleFunction<A>> {
 
-        private final DoubleFunction<A> initial;
+        private final transient DoubleFunction<A> initial;
 
         private WithDoubleFunction(DoubleFunction<A> initial) {
             this.initial = initial;
@@ -540,7 +540,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleToIntFunction
         extends Combine<Integer, DoubleToIntFunction> {
 
-        private final DoubleToIntFunction initial;
+        private final transient DoubleToIntFunction initial;
 
         private WithDoubleToIntFunction(DoubleToIntFunction initial) {
             this.initial = initial;
@@ -577,7 +577,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleToLongFunction
         extends Combine<Long, DoubleToLongFunction> {
 
-        private final DoubleToLongFunction initial;
+        private final transient DoubleToLongFunction initial;
 
         private WithDoubleToLongFunction(DoubleToLongFunction initial) {
             this.initial = initial;
@@ -616,7 +616,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToDoubleFunction<A>
         extends Combine<Double, ToDoubleFunction<A>> {
 
-        private final ToDoubleFunction<A> initial;
+        private final transient ToDoubleFunction<A> initial;
 
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
             this.initial = initial;
@@ -657,7 +657,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToDoubleBiFunction<A, B>
         extends Combine<Double, Function<A, ToDoubleFunction<B>>> {
 
-        private final ToDoubleBiFunction<A, B> initial;
+        private final transient ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
             this.initial = initial;
@@ -701,7 +701,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntFunction<A>
         extends Combine<A, IntFunction<A>> {
 
-        private final IntFunction<A> initial;
+        private final transient IntFunction<A> initial;
 
         private WithIntFunction(IntFunction<A> initial) {
             this.initial = initial;
@@ -738,7 +738,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntToDoubleFunction
         extends Combine<Integer, IntToDoubleFunction> {
 
-        private final IntToDoubleFunction initial;
+        private final transient IntToDoubleFunction initial;
 
         private WithIntToDoubleFunction(IntToDoubleFunction initial) {
             this.initial = initial;
@@ -775,7 +775,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntToLongFunction
         extends Combine<Long, IntToLongFunction> {
 
-        private final IntToLongFunction initial;
+        private final transient IntToLongFunction initial;
 
         private WithIntToLongFunction(IntToLongFunction initial) {
             this.initial = initial;
@@ -812,7 +812,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToIntFunction<A>
         extends Combine<Integer, ToIntFunction<A>> {
 
-        private final ToIntFunction<A> initial;
+        private final transient ToIntFunction<A> initial;
 
         private WithToIntFunction(ToIntFunction<A> initial) {
             this.initial = initial;
@@ -849,7 +849,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToIntBiFunction<A, B>
         extends Combine<Integer, Function<A, ToIntFunction<B>>> {
 
-        private final ToIntBiFunction<A, B> initial;
+        private final transient ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
             this.initial = initial;
@@ -893,7 +893,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongFunction<A>
         extends Combine<A, LongFunction<A>> {
 
-        private final LongFunction<A> initial;
+        private final transient LongFunction<A> initial;
 
         private WithLongFunction(LongFunction<A> initial) {
             this.initial = initial;
@@ -930,7 +930,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongToDoubleFunction
         extends Combine<Long, LongToDoubleFunction> {
 
-        private final LongToDoubleFunction initial;
+        private final transient LongToDoubleFunction initial;
 
         private WithLongToDoubleFunction(LongToDoubleFunction initial) {
             this.initial = initial;
@@ -969,7 +969,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongToIntFunction
         extends Combine<Long, LongToIntFunction> {
 
-        private final LongToIntFunction initial;
+        private final transient LongToIntFunction initial;
 
         private WithLongToIntFunction(LongToIntFunction initial) {
             this.initial = initial;
@@ -1006,7 +1006,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToLongFunction<A>
         extends Combine<Long, ToLongFunction<A>> {
 
-        private final ToLongFunction<A> initial;
+        private final transient ToLongFunction<A> initial;
 
         private WithToLongFunction(ToLongFunction<A> initial) {
             this.initial = initial;
@@ -1043,7 +1043,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithToLongBiFunction<A, B>
         extends Combine<Long, Function<A, ToLongFunction<B>>> {
 
-        private final ToLongBiFunction<A, B> initial;
+        private final transient ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
             this.initial = initial;
@@ -1088,7 +1088,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithConsumer<A>
         extends Combine<Void, Consumer<A>> {
 
-        private final Consumer<A> initial;
+        private final transient Consumer<A> initial;
 
         private WithConsumer(Consumer<A> initial) {
             this.initial = initial;
@@ -1132,7 +1132,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBiConsumer<A, B>
         extends Combine<Void, Function<A, Consumer<B>>> {
 
-        private final BiConsumer<A, B> initial;
+        private final transient BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
             this.initial = initial;
@@ -1178,7 +1178,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithPredicate<A>
         extends Combine<Boolean, Predicate<A>> {
 
-        private final Predicate<A> initial;
+        private final transient Predicate<A> initial;
 
         private WithPredicate(Predicate<A> initial) {
             this.initial = initial;
@@ -1215,7 +1215,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBiPredicate<A, B>
         extends Combine<Boolean, Function<A, Predicate<B>>> {
 
-        private final BiPredicate<A, B> initial;
+        private final transient BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
             this.initial = initial;
@@ -1259,7 +1259,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanPredicate
         extends Combine<Boolean, BooleanPredicate> {
 
-        private final BooleanPredicate initial;
+        private final transient BooleanPredicate initial;
 
         private WithBooleanPredicate(BooleanPredicate initial) {
             this.initial = initial;
@@ -1300,7 +1300,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoublePredicate
         extends Combine<Double, DoublePredicate> {
 
-        private final DoublePredicate initial;
+        private final transient DoublePredicate initial;
 
         private WithDoublePredicate(DoublePredicate initial) {
             this.initial = initial;
@@ -1341,7 +1341,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntPredicate
         extends Combine<Integer, IntPredicate> {
 
-        private final IntPredicate initial;
+        private final transient IntPredicate initial;
 
         private WithIntPredicate(IntPredicate initial) {
             this.initial = initial;
@@ -1380,7 +1380,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongPredicate
         extends Combine<Long, LongPredicate> {
 
-        private final LongPredicate initial;
+        private final transient LongPredicate initial;
 
         private WithLongPredicate(LongPredicate initial) {
             this.initial = initial;
@@ -1420,7 +1420,7 @@ public abstract class Combine<A, Fn> {
 
     public static final class WithSupplier<A> extends Combine<A, Supplier<A>> {
 
-        private final Supplier<A> initial;
+        private final transient Supplier<A> initial;
 
         private WithSupplier(Supplier<A> initial) {
             this.initial = initial;
@@ -1477,7 +1477,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBooleanSupplier
         extends Combine<Boolean, BooleanSupplier> {
 
-        private final BooleanSupplier initial;
+        private final transient BooleanSupplier initial;
 
         private WithBooleanSupplier(BooleanSupplier initial) {
             this.initial = initial;
@@ -1514,7 +1514,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleSupplier
         extends Combine<Double, DoubleSupplier> {
 
-        private final DoubleSupplier initial;
+        private final transient DoubleSupplier initial;
 
         private WithDoubleSupplier(DoubleSupplier initial) {
             this.initial = initial;
@@ -1551,7 +1551,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntSupplier
         extends Combine<Integer, IntSupplier> {
 
-        private final IntSupplier initial;
+        private final transient IntSupplier initial;
 
         private WithIntSupplier(IntSupplier initial) {
             this.initial = initial;
@@ -1588,7 +1588,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongSupplier
         extends Combine<Long, LongSupplier> {
 
-        private final LongSupplier initial;
+        private final transient LongSupplier initial;
 
         private WithLongSupplier(LongSupplier initial) {
             this.initial = initial;
@@ -1625,7 +1625,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithUnaryOperator<A>
         extends Combine<A, UnaryOperator<A>> {
 
-        private final UnaryOperator<A> initial;
+        private final transient UnaryOperator<A> initial;
 
         private WithUnaryOperator(UnaryOperator<A> initial) {
             this.initial = initial;
@@ -1686,7 +1686,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithBinaryOperator<A>
         extends Combine<A, Function<A, UnaryOperator<A>>> {
 
-        private final BinaryOperator<A> initial;
+        private final transient BinaryOperator<A> initial;
 
         private WithBinaryOperator(BinaryOperator<A> initial) {
             this.initial = initial;
@@ -1726,7 +1726,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleUnaryOperator
         extends Combine<Double, DoubleUnaryOperator> {
 
-        private final DoubleUnaryOperator initial;
+        private final transient DoubleUnaryOperator initial;
 
         private WithDoubleUnaryOperator(DoubleUnaryOperator initial) {
             this.initial = initial;
@@ -1769,7 +1769,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithDoubleBinaryOperator
         extends Combine<Double, DoubleFunction<DoubleUnaryOperator>> {
 
-        private final DoubleBinaryOperator initial;
+        private final transient DoubleBinaryOperator initial;
 
         private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
             this.initial = initial;
@@ -1805,7 +1805,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntUnaryOperator
         extends Combine<Integer, IntUnaryOperator> {
 
-        private final IntUnaryOperator initial;
+        private final transient IntUnaryOperator initial;
 
         private WithIntUnaryOperator(IntUnaryOperator initial) {
             this.initial = initial;
@@ -1842,7 +1842,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithIntBinaryOperator
         extends Combine<Integer, IntFunction<IntUnaryOperator>> {
 
-        private final IntBinaryOperator initial;
+        private final transient IntBinaryOperator initial;
 
         private WithIntBinaryOperator(IntBinaryOperator initial) {
             this.initial = initial;
@@ -1874,7 +1874,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongUnaryOperator
         extends Combine<Long, LongUnaryOperator> {
 
-        private final LongUnaryOperator initial;
+        private final transient LongUnaryOperator initial;
 
         private WithLongUnaryOperator(LongUnaryOperator initial) {
             this.initial = initial;
@@ -1913,7 +1913,7 @@ public abstract class Combine<A, Fn> {
     public static final class WithLongBinaryOperator
         extends Combine<Long, LongFunction<LongUnaryOperator>> {
 
-        private final LongBinaryOperator initial;
+        private final transient LongBinaryOperator initial;
 
         private WithLongBinaryOperator(LongBinaryOperator initial) {
             this.initial = initial;
