@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BooleanFunctionFusionTests {
     @Test
+    void boolFn() {
+        assertEquals("true", booleanToString.apply(true));
+    }
+
+    @Test
+    void boolFn_deep() {
+        assertEquals("true", Z.with(booleanToString).resolve().apply(true));
+    }
+
+    @Test
     void boolFn_to_fn() {
         assertEquals("true!", Z.fuse(booleanToString, addExclamationMark).apply(true));
     }

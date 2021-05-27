@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class UnaryOperatorFusionTests {
     @Test
+    void unop() {
+        assertEquals("hello?", addQuestionMark.apply("hello"));
+    }
+
+    @Test
+    void unop_deep() {
+        assertEquals("is it me you're looking for?", Z.with(addQuestionMark).resolve().apply("is it me you're looking for"));
+    }
+
+    @Test
     void unop_to_fn() {
         assertEquals("hello?", Z.fuse(addQuestionMark, toLower).apply("HeLlO"));
     }

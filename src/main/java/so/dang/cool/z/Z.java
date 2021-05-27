@@ -186,7 +186,7 @@ public final class Z {
         return (A a) -> next.apply(initial, a);
     }
   
-    public static DoubleSupplier fuse(boolean initial, ToDoubleFunction<Boolean> next) {
+    public static DoubleSupplier fuse(boolean initial, BooleanToDoubleFunction next) {
         return () -> next.applyAsDouble(initial);
     }
 
@@ -194,7 +194,7 @@ public final class Z {
         return (A a) -> next.applyAsDouble(initial, a);
     }
 
-    public static IntSupplier fuse(boolean initial, ToIntFunction<Boolean> next) {
+    public static IntSupplier fuse(boolean initial, BooleanToIntFunction next) {
         return () -> next.applyAsInt(initial);
     }
 
@@ -202,7 +202,7 @@ public final class Z {
         return (A a) -> next.applyAsInt(initial, a);
     }
 
-    public static LongSupplier fuse(boolean initial, ToLongFunction<Boolean> next) {
+    public static LongSupplier fuse(boolean initial, BooleanToLongFunction next) {
         return () -> next.applyAsLong(initial);
     }
 
@@ -210,7 +210,7 @@ public final class Z {
         return (A a) -> next.applyAsLong(initial, a);
     }
 
-    public static BooleanSupplier fuse(boolean initial, Predicate<Boolean> next) {
+    public static BooleanSupplier fuse(boolean initial, BooleanPredicate next) {
         return () -> next.test(initial);
     }
 
@@ -236,10 +236,6 @@ public final class Z {
 
     public static LongConsumer fuse(boolean initial, ObjLongConsumer<Boolean> next) {
         return (long n) -> next.accept(initial, n);
-    }
-
-    public static BooleanSupplier fuse(boolean initial, BooleanPredicate next) {
-        return () -> next.test(initial);
     }
 
     public static BooleanPredicate fuse(boolean initial, BinaryOperator<Boolean> next) {
@@ -1176,7 +1172,7 @@ public final class Z {
         return (A a) -> (B b) -> next.apply(initial.test(a), b);
     }
 
-    public static <A> ToDoubleFunction<A> fuse(Predicate<A> initial, ToDoubleFunction<Boolean> next) {
+    public static <A> ToDoubleFunction<A> fuse(Predicate<A> initial, BooleanToDoubleFunction next) {
         return (A a) -> next.applyAsDouble(initial.test(a));
     }
 
@@ -1184,7 +1180,7 @@ public final class Z {
         return (A a) -> (B b) -> next.applyAsDouble(initial.test(a), b);
     }
 
-    public static <A> ToIntFunction<A> fuse(Predicate<A> initial, ToIntFunction<Boolean> next) {
+    public static <A> ToIntFunction<A> fuse(Predicate<A> initial, BooleanToIntFunction next) {
         return (A a) -> next.applyAsInt(initial.test(a));
     }
 
@@ -1192,7 +1188,7 @@ public final class Z {
         return (A a) -> (B b) -> next.applyAsInt(initial.test(a), b);
     }
 
-    public static <A> ToLongFunction<A> fuse(Predicate<A> initial, ToLongFunction<Boolean> next) {
+    public static <A> ToLongFunction<A> fuse(Predicate<A> initial, BooleanToLongFunction next) {
         return (A a) -> next.applyAsLong(initial.test(a));
     }
 
@@ -1200,7 +1196,7 @@ public final class Z {
         return (A a) -> (B b) -> next.applyAsLong(initial.test(a), b);
     }
 
-    public static <A> Predicate<A> fuse(Predicate<A> initial, Predicate<Boolean> next) {
+    public static <A> Predicate<A> fuse(Predicate<A> initial, BooleanPredicate next) {
         return (A a) -> next.test(initial.test(a));
     }
 
@@ -1228,12 +1224,8 @@ public final class Z {
         return (A a) -> (long n) -> next.accept(initial.test(a), n);
     }
 
-    public static <A> Predicate<A> fuse(Predicate<A> initial, BooleanPredicate next) {
-        return (A a) -> next.test(initial.test(a));
-    }
-
-    public static <A> Function<A, Predicate<Boolean>> fuse(Predicate<A> initial, BinaryOperator<Boolean> next) {
-        return (A a) -> (Boolean b) -> next.apply(initial.test(a), b);
+    public static <A> Function<A, BooleanPredicate> fuse(Predicate<A> initial, BinaryOperator<Boolean> next) {
+        return (A a) -> (boolean b) -> next.apply(initial.test(a), b);
     }
 
     /* <BiPredicate> */
@@ -1246,7 +1238,7 @@ public final class Z {
         return (A a) -> (B b) -> (C c) -> next.apply(initial.test(a, b), c);
     }
 
-    public static <A, B> Function<A, ToDoubleFunction<B>> fuse(BiPredicate<A, B> initial, ToDoubleFunction<Boolean> next) {
+    public static <A, B> Function<A, ToDoubleFunction<B>> fuse(BiPredicate<A, B> initial, BooleanToDoubleFunction next) {
         return (A a) -> (B b) -> next.applyAsDouble(initial.test(a, b));
     }
 
@@ -1254,7 +1246,7 @@ public final class Z {
         return (A a) -> (B b) -> (C c) -> next.applyAsDouble(initial.test(a, b), c);
     }
 
-    public static <A, B> Function<A, ToIntFunction<B>> fuse(BiPredicate<A, B> initial, ToIntFunction<Boolean> next) {
+    public static <A, B> Function<A, ToIntFunction<B>> fuse(BiPredicate<A, B> initial, BooleanToIntFunction next) {
         return (A a) -> (B b) -> next.applyAsInt(initial.test(a, b));
     }
 
@@ -1262,7 +1254,7 @@ public final class Z {
         return (A a) -> (B b) -> (C c) -> next.applyAsInt(initial.test(a, b), c);
     }
 
-    public static <A, B> Function<A, ToLongFunction<B>> fuse(BiPredicate<A, B> initial, ToLongFunction<Boolean> next) {
+    public static <A, B> Function<A, ToLongFunction<B>> fuse(BiPredicate<A, B> initial, BooleanToLongFunction next) {
         return (A a) -> (B b) -> next.applyAsLong(initial.test(a, b));
     }
 
@@ -1270,7 +1262,7 @@ public final class Z {
         return (A a) -> (B b) -> (C c) -> next.applyAsLong(initial.test(a, b), c);
     }
 
-    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, Predicate<Boolean> next) {
+    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, BooleanPredicate next) {
         return (A a) -> (B b) -> next.test(initial.test(a, b));
     }
 
@@ -1298,12 +1290,8 @@ public final class Z {
         return (A a) -> (B b) -> (long n) -> next.accept(initial.test(a, b), n);
     }
 
-    public static <A, B> Function<A, Predicate<B>> fuse(BiPredicate<A, B> initial, BooleanPredicate next) {
-        return (A a) -> (B b) -> next.test(initial.test(a, b));
-    }
-
-    public static <A, B> Function<A, Function<B, Predicate<Boolean>>> fuse(BiPredicate<A, B> initial, BinaryOperator<Boolean> next) {
-        return (A a) -> (B b) -> (Boolean bool) -> next.apply(initial.test(a, b), bool);
+    public static <A, B> Function<A, Function<B, BooleanPredicate>> fuse(BiPredicate<A, B> initial, BinaryOperator<Boolean> next) {
+        return (A a) -> (B b) -> (boolean bool) -> next.apply(initial.test(a, b), bool);
     }
 
     /* <BooleanPredicate> */
@@ -1316,7 +1304,7 @@ public final class Z {
         return (boolean b) -> (A a) -> next.apply(initial.test(b), a);
     }
 
-    public static BooleanToDoubleFunction fuse(BooleanPredicate initial, ToDoubleFunction<Boolean> next) {
+    public static BooleanToDoubleFunction fuse(BooleanPredicate initial, BooleanToDoubleFunction next) {
         return (boolean b) -> next.applyAsDouble(initial.test(b));
     }
 
@@ -1324,7 +1312,7 @@ public final class Z {
         return (boolean b) -> (A a) -> next.applyAsDouble(initial.test(b), a);
     }
 
-    public static BooleanToIntFunction fuse(BooleanPredicate initial, ToIntFunction<Boolean> next) {
+    public static BooleanToIntFunction fuse(BooleanPredicate initial, BooleanToIntFunction next) {
         return (boolean b) -> next.applyAsInt(initial.test(b));
     }
 
@@ -1332,7 +1320,7 @@ public final class Z {
         return (boolean b) -> (A a) -> next.applyAsInt(initial.test(b), a);
     }
 
-    public static BooleanToLongFunction fuse(BooleanPredicate initial, ToLongFunction<Boolean> next) {
+    public static BooleanToLongFunction fuse(BooleanPredicate initial, BooleanToLongFunction next) {
         return (boolean b) -> next.applyAsLong(initial.test(b));
     }
 
@@ -1340,12 +1328,12 @@ public final class Z {
         return (boolean b) -> (A a) -> next.applyAsLong(initial.test(b), a);
     }
 
-    public static BooleanPredicate fuse(BooleanPredicate initial, Predicate<Boolean> next) {
-        return (boolean b) -> next.test(initial.test(b));
-    }
-
     public static <A> BooleanFunction<Predicate<A>> fuse(BooleanPredicate initial, BiPredicate<Boolean, A> next) {
         return (boolean b) -> (A a) -> next.test(initial.test(b), a);
+    }
+
+    public static BooleanPredicate fuse(BooleanPredicate initial, BooleanPredicate next) {
+        return (boolean b) -> next.test(initial.test(b));
     }
 
     public static BooleanConsumer fuse(BooleanPredicate initial, BooleanConsumer next) {
@@ -1354,18 +1342,6 @@ public final class Z {
 
     public static <A> BooleanFunction<Consumer<A>> fuse(BooleanPredicate initial, BiConsumer<Boolean, A> next) {
         return (boolean b) -> (A a) -> next.accept(initial.test(b), a);
-    }
-
-    public static BooleanFunction<IntConsumer> fuse(BooleanPredicate initial, ObjIntConsumer<Boolean> next) {
-        return (boolean b) -> (int i) -> next.accept(initial.test(b), i);
-    }
-
-    public static BooleanFunction<LongConsumer> fuse(BooleanPredicate initial, ObjLongConsumer<Boolean> next) {
-        return (boolean b) -> (long n) -> next.accept(initial.test(b), n);
-    }
-
-    public static BooleanPredicate fuse(BooleanPredicate initial, BooleanPredicate next) {
-        return (boolean b) -> next.test(initial.test(b));
     }
 
     /* <DoublePredicate> */
@@ -1378,7 +1354,7 @@ public final class Z {
         return (double d) -> (A a) -> next.apply(initial.test(d), a);
     }
 
-    public static DoubleUnaryOperator fuse(DoublePredicate initial, ToDoubleFunction<Boolean> next) {
+    public static DoubleUnaryOperator fuse(DoublePredicate initial, BooleanToDoubleFunction next) {
         return (double d) -> next.applyAsDouble(initial.test(d));
     }
 
@@ -1386,7 +1362,7 @@ public final class Z {
         return (double d) -> (A a) -> next.applyAsDouble(initial.test(d), a);
     }
 
-    public static DoubleToIntFunction fuse(DoublePredicate initial, ToIntFunction<Boolean> next) {
+    public static DoubleToIntFunction fuse(DoublePredicate initial, BooleanToIntFunction next) {
         return (double d) -> next.applyAsInt(initial.test(d));
     }
 
@@ -1394,7 +1370,7 @@ public final class Z {
         return (double d) -> (A a) -> next.applyAsInt(initial.test(d), a);
     }
 
-    public static DoubleToLongFunction fuse(DoublePredicate initial, ToLongFunction<Boolean> next) {
+    public static DoubleToLongFunction fuse(DoublePredicate initial, BooleanToLongFunction next) {
         return (double d) -> next.applyAsLong(initial.test(d));
     }
 
@@ -1402,7 +1378,7 @@ public final class Z {
         return (double d) -> (A a) -> next.applyAsLong(initial.test(d), a);
     }
 
-    public static DoublePredicate fuse(DoublePredicate initial, Predicate<Boolean> next) {
+    public static DoublePredicate fuse(DoublePredicate initial, BooleanPredicate next) {
         return (double d) -> next.test(initial.test(d));
     }
 
@@ -1430,12 +1406,8 @@ public final class Z {
         return (double d) -> (long n) -> next.accept(initial.test(d), n);
     }
 
-    public static DoublePredicate fuse(DoublePredicate initial, BooleanPredicate next) {
-        return (double d) -> next.test(initial.test(d));
-    }
-
-    public static DoubleFunction<Predicate<Boolean>> fuse(DoublePredicate initial, BinaryOperator<Boolean> next) {
-        return (double d) -> (Boolean b) -> next.apply(initial.test(d), b);
+    public static DoubleFunction<BooleanPredicate> fuse(DoublePredicate initial, BinaryOperator<Boolean> next) {
+        return (double d) -> (boolean b) -> next.apply(initial.test(d), b);
     }
 
     /* IntPredicate */
@@ -1448,7 +1420,7 @@ public final class Z {
         return (int i) -> (A a) -> next.apply(initial.test(i), a);
     }
 
-    public static IntToDoubleFunction fuse(IntPredicate initial, ToDoubleFunction<Boolean> next) {
+    public static IntToDoubleFunction fuse(IntPredicate initial, BooleanToDoubleFunction next) {
         return (int i) -> next.applyAsDouble(initial.test(i));
     }
 
@@ -1456,7 +1428,7 @@ public final class Z {
         return (int i) -> (A a) -> next.applyAsDouble(initial.test(i), a);
     }
 
-    public static IntUnaryOperator fuse(IntPredicate initial, ToIntFunction<Boolean> next) {
+    public static IntUnaryOperator fuse(IntPredicate initial, BooleanToIntFunction next) {
         return (int i) -> next.applyAsInt(initial.test(i));
     }
 
@@ -1464,7 +1436,7 @@ public final class Z {
         return (int i) -> (A a) -> next.applyAsInt(initial.test(i), a);
     }
 
-    public static IntToLongFunction fuse(IntPredicate initial, ToLongFunction<Boolean> next) {
+    public static IntToLongFunction fuse(IntPredicate initial, BooleanToLongFunction next) {
         return (int i) -> next.applyAsLong(initial.test(i));
     }
 
@@ -1472,7 +1444,7 @@ public final class Z {
         return (int i) -> (A a) -> next.applyAsLong(initial.test(i), a);
     }
 
-    public static IntPredicate fuse(IntPredicate initial, Predicate<Boolean> next) {
+    public static IntPredicate fuse(IntPredicate initial, BooleanPredicate next) {
         return (int i) -> next.test(initial.test(i));
     }
 
@@ -1500,12 +1472,8 @@ public final class Z {
         return (int i) -> (long n) -> next.accept(initial.test(i), n);
     }
 
-    public static IntPredicate fuse(IntPredicate initial, BooleanPredicate next) {
-        return (int i) -> next.test(initial.test(i));
-    }
-
-    public static IntFunction<Predicate<Boolean>> fuse(IntPredicate initial, BinaryOperator<Boolean> next) {
-        return (int i) -> (Boolean b) -> next.apply(initial.test(i), b);
+    public static IntFunction<BooleanPredicate> fuse(IntPredicate initial, BinaryOperator<Boolean> next) {
+        return (int i) -> (boolean b) -> next.apply(initial.test(i), b);
     }
 
     /* LongPredicate */
@@ -1518,7 +1486,7 @@ public final class Z {
         return (long n) -> (A a) -> next.apply(initial.test(n), a);
     }
 
-    public static LongToDoubleFunction fuse(LongPredicate initial, ToDoubleFunction<Boolean> next) {
+    public static LongToDoubleFunction fuse(LongPredicate initial, BooleanToDoubleFunction next) {
         return (long n) -> next.applyAsDouble(initial.test(n));
     }
 
@@ -1526,7 +1494,7 @@ public final class Z {
         return (long n) -> (A a) -> next.applyAsDouble(initial.test(n), a);
     }
 
-    public static LongToIntFunction fuse(LongPredicate initial, ToIntFunction<Boolean> next) {
+    public static LongToIntFunction fuse(LongPredicate initial, BooleanToIntFunction next) {
         return (long n) -> next.applyAsInt(initial.test(n));
     }
 
@@ -1534,7 +1502,7 @@ public final class Z {
         return (long n) -> (A a) -> next.applyAsInt(initial.test(n), a);
     }
 
-    public static LongUnaryOperator fuse(LongPredicate initial, ToLongFunction<Boolean> next) {
+    public static LongUnaryOperator fuse(LongPredicate initial, BooleanToLongFunction next) {
         return (long n) -> next.applyAsLong(initial.test(n));
     }
 
@@ -1542,7 +1510,7 @@ public final class Z {
         return (long n) -> (A a) -> next.applyAsLong(initial.test(n), a);
     }
 
-    public static LongPredicate fuse(LongPredicate initial, Predicate<Boolean> next) {
+    public static LongPredicate fuse(LongPredicate initial, BooleanPredicate next) {
         return (long n) -> next.test(initial.test(n));
     }
 
@@ -1570,12 +1538,8 @@ public final class Z {
         return (long n1) -> (long n2) -> next.accept(initial.test(n1), n2);
     }
 
-    public static LongPredicate fuse(LongPredicate initial, BooleanPredicate next) {
-        return (long n) -> next.test(initial.test(n));
-    }
-
-    public static LongFunction<Predicate<Boolean>> fuse(LongPredicate initial, BinaryOperator<Boolean> next) {
-        return (long n) -> (Boolean b) -> next.apply(initial.test(n), b);
+    public static LongFunction<BooleanPredicate> fuse(LongPredicate initial, BinaryOperator<Boolean> next) {
+        return (long n) -> (boolean b) -> next.apply(initial.test(n), b);
     }
 
     /* Consumer [SKIPPED] Covered in absorption */
@@ -1659,7 +1623,7 @@ public final class Z {
         return (A a) -> next.apply(initial.getAsBoolean(), a);
     }
   
-    public static DoubleSupplier fuse(BooleanSupplier initial, ToDoubleFunction<Boolean> next) {
+    public static DoubleSupplier fuse(BooleanSupplier initial, BooleanToDoubleFunction next) {
         return () -> next.applyAsDouble(initial.getAsBoolean());
     }
 
@@ -1667,7 +1631,7 @@ public final class Z {
         return (A a) -> next.applyAsDouble(initial.getAsBoolean(), a);
     }
 
-    public static IntSupplier fuse(BooleanSupplier initial, ToIntFunction<Boolean> next) {
+    public static IntSupplier fuse(BooleanSupplier initial, BooleanToIntFunction next) {
         return () -> next.applyAsInt(initial.getAsBoolean());
     }
 
@@ -1675,7 +1639,7 @@ public final class Z {
         return (A a) -> next.applyAsInt(initial.getAsBoolean(), a);
     }
 
-    public static LongSupplier fuse(BooleanSupplier initial, ToLongFunction<Boolean> next) {
+    public static LongSupplier fuse(BooleanSupplier initial, BooleanToLongFunction next) {
         return () -> next.applyAsLong(initial.getAsBoolean());
     }
 
@@ -1683,7 +1647,7 @@ public final class Z {
         return (A a) -> next.applyAsLong(initial.getAsBoolean(), a);
     }
 
-    public static BooleanSupplier fuse(BooleanSupplier initial, Predicate<Boolean> next) {
+    public static BooleanSupplier fuse(BooleanSupplier initial, BooleanPredicate next) {
         return () -> next.test(initial.getAsBoolean());
     }
 
@@ -1709,10 +1673,6 @@ public final class Z {
 
     public static LongConsumer fuse(BooleanSupplier initial, ObjLongConsumer<Boolean> next) {
         return (long n) -> next.accept(initial.getAsBoolean(), n);
-    }
-
-    public static BooleanSupplier fuse(BooleanSupplier initial, BooleanPredicate next) {
-        return () -> next.test(initial.getAsBoolean());
     }
 
     public static BooleanPredicate fuse(BooleanSupplier initial, BinaryOperator<Boolean> next) {

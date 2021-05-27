@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntUnaryOperatorFusionTests {
     @Test
+    void intUnop() {
+        assertEquals(3, addTwoToInt.applyAsInt(1));
+    }
+
+    @Test
+    void intUnop_deep() {
+        assertEquals(3, Z.with(addTwoToInt).resolve().applyAsInt(1));
+    }
+
+    @Test
     void intUnop_to_intFn() {
         assertEquals("3", Z.fuse(addTwoToInt, intToString).apply(1));
     }

@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class PredicateFusionTests {
     @Test
+    void pred() {
+        assertTrue(isEmpty.test(""));
+    }
+
+    @Test
+    void pred_deep() {
+        assertTrue(Z.with(isEmpty).resolve().test(""));
+    }
+
+    @Test
     void pred_to_bifn() {
         assertEquals("HI", Z.fuse(isEmpty, maybeToUpper).apply("").apply("hi"));
     }

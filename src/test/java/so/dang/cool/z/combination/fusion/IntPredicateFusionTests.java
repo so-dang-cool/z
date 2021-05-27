@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntPredicateFusionTests {
     @Test
+    void intPred() {
+        assertTrue(isIntTwo.test(2));
+    }
+
+    @Test
+    void intPred_deep() {
+        assertTrue(Z.with(isIntTwo).resolve().test(2));
+    }
+
+    @Test
     void intPred_to_fn() {
         assertEquals("true", Z.fuse(isIntTwo, booleanToString).apply(2));
     }

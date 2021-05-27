@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntFunctionFusionTests {
     @Test
+    void intFn() {
+        assertEquals("1", intToString.apply(1));
+    }
+
+    @Test
+    void intFn_deep() {
+        assertEquals("1", Z.with(intToString).resolve().apply(1));
+    }
+
+    @Test
     void intFn_to_fn() {
         assertEquals("1!", Z.fuse(intToString, addExclamationMark).apply(1));
     }

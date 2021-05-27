@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoubleSupplierFusionTests {
     @Test
+    void dblSup() {
+        assertEquals(suppliedDouble, getDouble.getAsDouble());
+    }
+
+    @Test
+    void dblSup_deep() {
+        assertEquals(suppliedDouble, Z.with(getDouble).resolve().getAsDouble());
+    }
+
+    @Test
     void dblSup_to_dblFn() {
         assertEquals("1.0", Z.fuse(getDouble, doubleToString).get());
     }

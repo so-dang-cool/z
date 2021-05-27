@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntBinaryOperatorFusionTests {
     @Test
+    void intBiop() {
+        assertEquals(3, addInts.applyAsInt(1, 2));
+    }
+
+    @Test
+    void intBiop_deep() {
+        assertEquals(3, Z.with(addInts).resolve().apply(1).applyAsInt(2));
+    }
+
+    @Test
     void intBiop_to_intFn() {
         assertEquals("3", Z.fuse(addInts, intToString).apply(1).apply(2));
     }

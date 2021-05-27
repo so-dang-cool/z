@@ -12,6 +12,11 @@ import so.dang.cool.z.annotation.Evil;
 
 public class ObjectFusionTests {
     @Test
+    void class_deep() {
+        assertEquals("hi", Z.with(String.class).resolve().apply("hi"));
+    }
+
+    @Test
     void class_to_fn_deep() {
         assertEquals(suppliedString.toLowerCase(), Z.with(String.class).fuse(toLower).apply("Z"));
     }
@@ -19,6 +24,10 @@ public class ObjectFusionTests {
     @Test
     void class_to_fn_deeper() {
         assertEquals(suppliedString.toLowerCase(), Z.with(String.class).fusing(toLower).resolve().apply("Z"));
+    }
+    @Test
+    void object_deep() {
+        assertEquals("hi", Z.with("hi").resolve().get());
     }
 
     @Test

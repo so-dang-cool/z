@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class ToDoubleFunctionFusionTests {
     @Test
+    void toDblFn() {
+        assertEquals(1.5, stringToDouble.applyAsDouble("1.5"));
+    }
+
+    @Test
+    void toDblFn_deep() {
+        assertEquals(1.5, Z.with(stringToDouble).resolve().applyAsDouble("1.5"));
+    }
+
+    @Test
     void toDblFn_to_dblFn() {
         assertEquals("4.5", Z.fuse(stringToDouble, doubleToString).apply("4.5"));
     }

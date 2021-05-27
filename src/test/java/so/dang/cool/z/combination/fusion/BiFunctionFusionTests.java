@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BiFunctionFusionTests {
     @Test
+    void bifn() {
+        assertEquals("greetings", concat.apply("greet", "ings"));
+    }
+
+    @Test
+    void bifn_deep() {
+        assertEquals("greetings", Z.with(concat).resolve().apply("greet").apply("ings"));
+    }
+
+    @Test
     void bifn_to_fn() {
         assertEquals("hey there", Z.fuse(concat, trim).apply(" hey ").apply("there "));
     }

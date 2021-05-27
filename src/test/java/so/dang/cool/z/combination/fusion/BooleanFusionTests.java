@@ -12,6 +12,11 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BooleanFusionTests {
     @Test
+    void boolean_deep() {
+        assertTrue(Z.with(true).resolve().getAsBoolean());
+    }
+
+    @Test
     void boolean_to_bifn() {
         assertEquals("HI", Z.fuse(true, maybeToUpper).apply("hi"));
     }
@@ -32,7 +37,7 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_toDblFn() {
+    void boolean_to_boolToDblFn() {
         assertEquals(1.0, Z.fuse(true, maybeOneAsDouble).getAsDouble());
     }
 
@@ -42,7 +47,7 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_toIntFn() {
+    void boolean_to_boolToIntFn() {
         assertEquals(2, Z.fuse(true, maybeTwoAsInt).getAsInt());
     }
 
@@ -52,7 +57,7 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_toLongFn() {
+    void boolean_to_boolToLongFn() {
         assertEquals(3L, Z.fuse(true, maybeThreeAsLong).getAsLong());
     }
 

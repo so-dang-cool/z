@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BiPredicateFusionTests {
     @Test
+    void bipred() {
+        assertTrue(startsWith.test("yolo", "yo"));
+    }
+
+    @Test
+    void bipred_deep() {
+        assertTrue(Z.with(startsWith).resolve().apply("yolo").test("yo"));
+    }
+
+    @Test
     void bipred_to_bifn() {
         assertEquals("YO", Z.fuse(startsWith, maybeToUpper).apply("yolo").apply("yo").apply("yo"));
     }

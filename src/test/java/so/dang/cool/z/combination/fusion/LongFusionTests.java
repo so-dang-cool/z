@@ -11,6 +11,11 @@ import so.dang.cool.z.annotation.Evil;
 
 public class LongFusionTests {
     @Test
+    void long_deep() {
+        assertEquals(3L, Z.with(3L).resolve().getAsLong());
+    }
+
+    @Test
     void long_to_longFn() {
         assertEquals("3", Z.fuse(3L, longToString).get());
     }

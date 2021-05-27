@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class SupplierFusionTests {
     @Test
+    void sup() {
+        assertEquals(suppliedString, getString.get());
+    }
+
+    @Test
+    void sup_deep() {
+        assertEquals(suppliedString, Z.with(getString).resolve().get());
+    }
+
+    @Test
     void sup_to_fn() {
         assertEquals(suppliedString.toLowerCase(), Z.fuse(getString, toLower).get());
     }

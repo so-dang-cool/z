@@ -11,6 +11,11 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoubleFusionTests {
     @Test
+    void double_deep() {
+        assertEquals(1.0, Z.with(1.0).resolve().getAsDouble());
+    }
+
+    @Test
     void double_to_dblFn() {
         assertEquals("1.0", Z.fuse(1.0, doubleToString).get());
     }

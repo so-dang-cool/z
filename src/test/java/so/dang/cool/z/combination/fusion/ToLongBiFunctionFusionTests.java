@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class ToLongBiFunctionFusionTests {
     @Test
+    void toLongBifn() {
+        assertEquals(3L, addStringsAsLong.applyAsLong("1", "2"));
+    }
+
+    @Test
+    void toLongBifn_deep() {
+        assertEquals(3L, Z.with(addStringsAsLong).resolve().apply("1").applyAsLong("2"));
+    }
+
+    @Test
     void toLongBifn_to_longFn() {
         assertEquals("3", Z.fuse(addStringsAsLong, longToString).apply("1").apply("2"));
     }

@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BinaryOperatorFusionTests {
     @Test
+    void biop() {
+        assertEquals("same-ish", relation.apply("hi", "HI"));
+    }
+
+    @Test
+    void biop_deep() {
+        assertEquals("same-ish", Z.with(relation).resolve().apply("hi").apply("HI"));
+    }
+
+    @Test
     void biop_to_fn() {
         assertEquals("same-ish", Z.fuse(relation, trim).apply("hey").apply("HEY"));
     }

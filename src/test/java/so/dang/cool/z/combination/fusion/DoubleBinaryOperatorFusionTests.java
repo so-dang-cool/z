@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoubleBinaryOperatorFusionTests {
     @Test
+    void dblBiop() {
+        assertEquals(3.0, addDoubles.applyAsDouble(1.0, 2.0));
+    }
+
+    @Test
+    void dblBiop_deep() {
+        assertEquals(3.0, Z.with(addDoubles).resolve().apply(1.0).applyAsDouble(2.0));
+    }
+
+    @Test
     void dblBiop_to_dblFn() {
         assertEquals("3.0", Z.fuse(addDoubles, doubleToString).apply(1.0).apply(2.0));
     }

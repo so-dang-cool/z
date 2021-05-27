@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoubleUnaryOperatorFusionTests {
     @Test
+    void dblUnop() {
+        assertEquals(1.5, addOneToDouble.applyAsDouble(0.5));
+    }
+
+    @Test
+    void dblUnop_deep() {
+        assertEquals(1.5, Z.with(addOneToDouble).resolve().applyAsDouble(0.5));
+    }
+
+    @Test
     void dblUnop_to_dblFn() {
         assertEquals("4.5", Z.fuse(addOneToDouble, doubleToString).apply(3.5));
     }

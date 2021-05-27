@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class LongBinaryOperatorFusionTests {
     @Test
+    void longBiop() {
+        assertEquals(3L, addLongs.applyAsLong(1L, 2L));
+    }
+
+    @Test
+    void longBiop_deep() {
+        assertEquals(3L, Z.with(addLongs).resolve().apply(1L).applyAsLong(2L));
+    }
+
+    @Test
     void longBiop_to_longFn() {
         assertEquals("3", Z.fuse(addLongs, longToString).apply(1L).apply(2L));
     }

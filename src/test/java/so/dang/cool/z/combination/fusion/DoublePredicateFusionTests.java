@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoublePredicateFusionTests {
     @Test
+    void dblPred() {
+        assertTrue(isDoubleOne.test(1.0));
+    }
+
+    @Test
+    void dblPred_deep() {
+        assertTrue(Z.with(isDoubleOne).resolve().test(1.0));
+    }
+
+    @Test
     void dblPred_to_bifn() {
         assertEquals("HI", Z.fuse(isDoubleOne, maybeToUpper).apply(1.0).apply("hi"));
     }

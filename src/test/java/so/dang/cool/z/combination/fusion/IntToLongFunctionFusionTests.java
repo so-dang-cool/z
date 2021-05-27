@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntToLongFunctionFusionTests {
     @Test
+    void intToLong() {
+        assertEquals(2L, intToLong.applyAsLong(2));
+    }
+
+    @Test
+    void intToLong_deep() {
+        assertEquals(2L, Z.with(intToLong).resolve().applyAsLong(2));
+    }
+
+    @Test
     void intToLong_to_longFn() {
         assertEquals("1", Z.fuse(intToLong, longToString).apply(1));
     }

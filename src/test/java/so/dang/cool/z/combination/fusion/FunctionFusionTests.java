@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class FunctionFusionTests {
     @Test
+    void fn() {
+        assertEquals("hello", trim.apply(" hello "));
+    }
+
+    @Test
+    void fn_deep() {
+        assertEquals("hello", Z.with(trim).resolve().apply(" hello "));
+    }
+
+    @Test
     void fn_to_fn() {
         assertEquals("hello", Z.fuse(trim, toLower).apply(" HeLlO "));
     }

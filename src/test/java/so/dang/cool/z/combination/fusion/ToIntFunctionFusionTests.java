@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class ToIntFunctionFusionTests {
     @Test
+    void toIntFn() {
+        assertEquals(1, stringToInt.applyAsInt("1"));
+    }
+
+    @Test
+    void toIntFn_deep() {
+        assertEquals(1, Z.with(stringToInt).resolve().applyAsInt("1"));
+    }
+
+    @Test
     void toIntFn_to_intFn() {
         assertEquals("1", Z.fuse(stringToInt, intToString).apply("1"));
     }

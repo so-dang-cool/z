@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class ToIntBiFunctionFusionTests {
     @Test
+    void toIntBifn() {
+        assertEquals(3, addStringsAsInt.applyAsInt("1", "2"));
+    }
+
+    @Test
+    void toIntBifn_deep() {
+        assertEquals(3, Z.with(addStringsAsInt).resolve().apply("1").applyAsInt("2"));
+    }
+
+    @Test
     void toIntBifn_to_intFn() {
         assertEquals("3", Z.fuse(addStringsAsInt, intToString).apply("1").apply("2"));
     }

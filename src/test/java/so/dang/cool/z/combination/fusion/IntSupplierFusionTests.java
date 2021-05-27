@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class IntSupplierFusionTests {
     @Test
+    void intSup() {
+        assertEquals(suppliedInt, getInt.getAsInt());
+    }
+
+    @Test
+    void intSup_deep() {
+        assertEquals(suppliedInt, Z.with(getInt).resolve().getAsInt());
+    }
+
+    @Test
     void intSup_to_intFn() {
         assertEquals("2", Z.fuse(getInt, intToString).get());
     }

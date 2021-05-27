@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class BooleanSupplierFusionTests {
     @Test
+    void boolSup() {
+        assertTrue(getBooleanTrue.getAsBoolean());
+    }
+
+    @Test
+    void boolSup_deep() {
+        assertTrue(Z.with(getBooleanTrue).resolve().getAsBoolean());
+    }
+
+    @Test
     void boolSup_to_bifn() {
         assertEquals("HI", Z.fuse(getBooleanTrue, maybeToUpper).apply("hi"));
     }

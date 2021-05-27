@@ -12,6 +12,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class LongPredicateFusionTests {
     @Test
+    void longPred() {
+        assertTrue(isLongThree.test(3L));
+    }
+
+    @Test
+    void longPred_deep() {
+        assertTrue(Z.with(isLongThree).resolve().test(3L));
+    }
+
+    @Test
     void longPred_to_bifn() {
         assertEquals("HI", Z.fuse(isLongThree, maybeToUpper).apply(3L).apply("hi"));
     }

@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class LongUnaryOperatorFusionTests {
     @Test
+    void longUnop() {
+        assertEquals(4L, addThreeToLong.applyAsLong(1L));
+    }
+
+    @Test
+    void longUnop_deep() {
+        assertEquals(4L, Z.with(addThreeToLong).resolve().applyAsLong(1L));
+    }
+
+    @Test
     void longUnop_to_longFn() {
         assertEquals("4", Z.fuse(addThreeToLong, longToString).apply(1L));
     }

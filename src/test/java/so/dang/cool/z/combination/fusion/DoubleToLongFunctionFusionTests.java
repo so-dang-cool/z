@@ -11,6 +11,16 @@ import so.dang.cool.z.annotation.Evil;
 
 public class DoubleToLongFunctionFusionTests {
     @Test
+    void dblToLong() {
+        assertEquals(1L, doubleToLong.applyAsLong(1.0));
+    }
+
+    @Test
+    void dblToLong_deep() {
+        assertEquals(1L, Z.with(doubleToLong).resolve().applyAsLong(1.0));
+    }
+
+    @Test
     void dblToLong_to_longFn() {
         assertEquals("1", Z.fuse(doubleToLong, longToString).apply(1.6));
     }

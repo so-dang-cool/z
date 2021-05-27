@@ -586,7 +586,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToDoubleBiFunction<A, B> extends Fusion<Double, ToDoubleBiFunction<A, B>> {
+    public static final class WithToDoubleBiFunction<A, B> extends Fusion<Double, Function<A, ToDoubleFunction<B>>> {
         private final ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
@@ -598,8 +598,9 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public ToDoubleBiFunction<A, B> resolve() {
-            return initial;
+        public Function<A, ToDoubleFunction<B>> resolve() {
+            // TODO: Add Z.split(ToDoubleBiFunciton)
+            return (A a) -> (B b) -> initial.applyAsDouble(a, b);
         }
 
         /* ToDoubleBiFunction<A, B> -> DoubleFunction<C> */
@@ -761,7 +762,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToIntBiFunction<A, B> extends Fusion<Integer, ToIntBiFunction<A, B>> {
+    public static final class WithToIntBiFunction<A, B> extends Fusion<Integer, Function<A, ToIntFunction<B>>> {
         private final ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
@@ -773,8 +774,9 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public ToIntBiFunction<A, B> resolve() {
-            return initial;
+        public Function<A, ToIntFunction<B>> resolve() {
+            // TODO: Add Z.split(ToIntBiFunction)
+            return (A a) -> (B b) -> initial.applyAsInt(a, b);
         }
 
         /* ToIntBiFunction<A, B> -> IntFunction<C> */
@@ -936,7 +938,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToLongBiFunction<A, B> extends Fusion<Long, ToLongBiFunction<A, B>> {
+    public static final class WithToLongBiFunction<A, B> extends Fusion<Long, Function<A, ToLongFunction<B>>> {
         private final ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
@@ -948,8 +950,9 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public ToLongBiFunction<A, B> resolve() {
-            return initial;
+        public Function<A, ToLongFunction<B>> resolve() {
+            // TODO: Add Z.split(ToLongBiFunction)
+            return (A a) -> (B b) -> initial.applyAsLong(a, b);
         }
 
         /* ToLongBiFunction<A, B> -> LongFunction<C> */
@@ -988,7 +991,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBiConsumer<A, B> extends Fusion<Void, BiConsumer<A, B>> {
+    public static final class WithBiConsumer<A, B> extends Fusion<Void, Function<A, Consumer<B>>> {
         private final BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
@@ -1000,8 +1003,9 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public BiConsumer<A, B> resolve() {
-            return initial;
+        public Function<A, Consumer<B>> resolve() {
+            // TODO: Add Z.split(BiConsumer)
+            return (A a) -> (B b) -> initial.accept(a, b);
         }
     }
 
@@ -1040,7 +1044,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBiPredicate<A, B> extends Fusion<Boolean, BiPredicate<A, B>> {
+    public static final class WithBiPredicate<A, B> extends Fusion<Boolean, Function<A, Predicate<B>>> {
         private final BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
@@ -1052,8 +1056,9 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public BiPredicate<A, B> resolve() {
-            return initial;
+        public Function<A, Predicate<B>> resolve() {
+            // TODO: Add Z.split(BiPredicate)
+            return (A a) -> (B b) -> initial.test(a, b);
         }
 
         /* BiPredicate<A, B> -> BooleanFunction<C> */
@@ -1461,7 +1466,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBinaryOperator<A> extends Fusion<A, BinaryOperator<A>> {
+    public static final class WithBinaryOperator<A> extends Fusion<A, Function<A, UnaryOperator<A>>> {
         private final BinaryOperator<A> initial;
 
         private WithBinaryOperator(BinaryOperator<A> initial) {
@@ -1473,14 +1478,15 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public BinaryOperator<A> resolve() {
-            return initial;
+        public Function<A, UnaryOperator<A>> resolve() {
+            // TODO: Add Z.split(BinaryOperator)
+            return (A a1) -> (A a2) -> initial.apply(a1, a2);
         }
 
         /* BinaryOperator -> Function<A, B> */
 
         public <B> Function<A, Function<A, B>> fuseFunction(Function<A, B> next) {
-            return Z.fuse(resolve(), next);
+            return Z.fuse(initial, next);
         }
 
         public <B> Function<A, Function<A, B>> fuse(Function<A, B> next) {
@@ -1531,7 +1537,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleBinaryOperator extends Fusion<Double, DoubleBinaryOperator> {
+    public static final class WithDoubleBinaryOperator extends Fusion<Double, DoubleFunction<DoubleUnaryOperator>> {
         private final DoubleBinaryOperator initial;
 
         private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
@@ -1543,14 +1549,14 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public DoubleBinaryOperator resolve() {
-            return initial;
+        public DoubleFunction<DoubleUnaryOperator> resolve() {
+            return (double d1) -> (double d2) -> initial.applyAsDouble(d1, d2);
         }
 
         /* DoubleBinaryOperator -> DoubleFunction<A> */
 
         public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(DoubleFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return Z.fuse(initial, next);
         }
 
         public <A> DoubleFunction<DoubleFunction<A>> fuse(DoubleFunction<A> next) {
@@ -1595,7 +1601,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntBinaryOperator extends Fusion<Integer, IntBinaryOperator> {
+    public static final class WithIntBinaryOperator extends Fusion<Integer, IntFunction<IntUnaryOperator>> {
         private final IntBinaryOperator initial;
 
         private WithIntBinaryOperator(IntBinaryOperator initial) {
@@ -1607,14 +1613,14 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public IntBinaryOperator resolve() {
-            return initial;
+        public IntFunction<IntUnaryOperator> resolve() {
+            return (int i1) -> (int i2) -> initial.applyAsInt(i1, i2);
         }
 
         /* IntBinaryOperator -> IntFunction<A> */
 
         public <A> IntFunction<IntFunction<A>> fuseIntFunction(IntFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return Z.fuse(initial, next);
         }
 
         public <A> IntFunction<IntFunction<A>> fuse(IntFunction<A> next) {
@@ -1659,7 +1665,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongBinaryOperator extends Fusion<Long, LongBinaryOperator> {
+    public static final class WithLongBinaryOperator extends Fusion<Long, LongFunction<LongUnaryOperator>> {
         private final LongBinaryOperator initial;
 
         private WithLongBinaryOperator(LongBinaryOperator initial) {
@@ -1671,14 +1677,14 @@ public abstract class Fusion<A, Fn> {
         }
 
         @Override
-        public LongBinaryOperator resolve() {
-            return initial;
+        public LongFunction<LongUnaryOperator> resolve() {
+            return (long n1) -> (long n2) -> initial.applyAsLong(n1, n2);
         }
 
         /* LongBinaryOperator -> LongFunction<A> */
 
         public <A> LongFunction<LongFunction<A>> fuseLongFunction(LongFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return Z.fuse(initial, next);
         }
 
         public <A> LongFunction<LongFunction<A>> fuse(LongFunction<A> next) {
