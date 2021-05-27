@@ -13,11 +13,55 @@ import so.dang.cool.z.annotation.Evil;
 public class AbsorptionTests {
     @Evil
     @Test
+    void cns() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            saveStringA.accept("hello");
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void cns_deep() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            Z.with(saveStringA).resolve().accept("hello");
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
     void cns_to_sup() {
         synchronized(consumedStringA) {
             consumedStringA = "";
 
             assertEquals(suppliedString, Z.absorb(saveStringA, getString).apply("hello"));
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void cns_to_sup_deep() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            assertEquals(suppliedString, Z.with(saveStringA).absorb(getString).apply("hello"));
+            assertEquals("hello", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void cns_to_sup_deeper() {
+        synchronized(consumedStringA) {
+            consumedStringA = "";
+
+            assertEquals(suppliedString, Z.with(saveStringA).absorbing(getString).resolve().apply("hello"));
             assertEquals("hello", consumedStringA);
         }
     }
@@ -84,6 +128,36 @@ public class AbsorptionTests {
 
     @Evil
     @Test
+    void bicns() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                saveStringsBandC.accept("cześć", "喂");
+                assertEquals("cześć", consumedStringB);
+                assertEquals("喂", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void bicns_deep() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.with(saveStringsBandC).resolve().apply("cześć").accept("喂");
+                assertEquals("cześć", consumedStringB);
+                assertEquals("喂", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
     void bicns_to_sup() {
         synchronized(consumedStringB) {
             synchronized(consumedStringC) {
@@ -91,6 +165,36 @@ public class AbsorptionTests {
                 consumedStringC = "";
 
                 assertEquals(suppliedString, Z.absorb(saveStringsBandC, getString).apply("cześć").apply("喂"));
+                assertEquals("cześć", consumedStringB);
+                assertEquals("喂", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void bicns_to_sup_deep() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(suppliedString, Z.with(saveStringsBandC).absorb(getString).apply("cześć").apply("喂"));
+                assertEquals("cześć", consumedStringB);
+                assertEquals("喂", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void bicns_to_sup_deeper() {
+        synchronized(consumedStringB) {
+            synchronized(consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(suppliedString, Z.with(saveStringsBandC).absorbing(getString).resolve().apply("cześć").apply("喂"));
                 assertEquals("cześć", consumedStringB);
                 assertEquals("喂", consumedStringC);
             }

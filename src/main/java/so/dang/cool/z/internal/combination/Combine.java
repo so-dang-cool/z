@@ -39,6 +39,7 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 import so.dang.cool.z.Z;
+import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.annotation.Experimental;
 import so.dang.cool.z.function.BooleanFunction;
 import so.dang.cool.z.function.BooleanPredicate;
@@ -974,6 +975,7 @@ public abstract class Combine<A, Fn> {
         }
     }
 
+    @Evil
     public static final class WithConsumer<A> extends Combine<Void, Consumer<A>> {
         private final Consumer<A> initial;
 
@@ -989,8 +991,33 @@ public abstract class Combine<A, Fn> {
         public Consumer<A> resolve() {
             return initial;
         }
+
+        /* Consumer<A> -> Function<B, C> [TODO? And etc?] */
+
+        /* Consumer<A> -> Supplier<B> */
+
+        @Evil
+        public <B> Function<A, B> absorbSupplier(Supplier<B> next) {
+            return Z.absorb(initial, next);
+        }
+
+        @Evil
+        public <B> Function<A, B> absorb(Supplier<B> next) {
+            return absorbSupplier(next);
+        }
+
+        @Evil
+        public <B> WithFunction<A, B> absorbingSupplier(Supplier<B> next) {
+            return WithFunction.of(absorbSupplier(next));
+        }
+
+        @Evil
+        public <B> WithFunction<A, B> absorbing(Supplier<B> next) {
+            return absorbingSupplier(next);
+        }
     }
 
+    @Evil
     public static final class WithBiConsumer<A, B> extends Combine<Void, Function<A, Consumer<B>>> {
         private final BiConsumer<A, B> initial;
 
@@ -1006,6 +1033,30 @@ public abstract class Combine<A, Fn> {
         public Function<A, Consumer<B>> resolve() {
             // TODO: Add Z.split(BiConsumer)
             return (A a) -> (B b) -> initial.accept(a, b);
+        }
+
+        /* Consumer<A> -> Function<B, C> [TODO? And etc?] */
+
+        /* Consumer<A> -> Supplier<B> */
+
+        @Evil
+        public <C> Function<A, Function<B, C>> absorbSupplier(Supplier<C> next) {
+            return Z.absorb(initial, next);
+        }
+
+        @Evil
+        public <C> Function<A, Function<B, C>> absorb(Supplier<C> next) {
+            return absorbSupplier(next);
+        }
+
+        @Evil
+        public <C> WithBiFunction<A, B, C> absorbingSupplier(Supplier<C> next) {
+            return WithBiFunction.of(absorbSupplier(next));
+        }
+
+        @Evil
+        public <C> WithBiFunction<A, B, C> absorbing(Supplier<C> next) {
+            return absorbingSupplier(next);
         }
     }
 
