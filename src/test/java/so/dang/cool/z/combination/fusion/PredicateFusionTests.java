@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class PredicateFusionTests {
+
     @Test
     void pred() {
         assertTrue(isEmpty.test(""));
@@ -38,7 +38,10 @@ public class PredicateFusionTests {
 
     @Test
     void pred_to_boolFn_deeper() {
-        assertEquals("true", Z.with(isEmpty).fusing(booleanToString).resolve().apply(""));
+        assertEquals(
+            "true",
+            Z.with(isEmpty).fusing(booleanToString).resolve().apply("")
+        );
     }
 
     @Test
@@ -48,7 +51,13 @@ public class PredicateFusionTests {
 
     @Test
     void pred_to_toDblBifn() {
-        assertEquals(2.0, Z.fuse(isEmpty, maybeAddOneToStringAsDouble).apply("").applyAsDouble("1.0"));
+        assertEquals(
+            2.0,
+            Z
+                .fuse(isEmpty, maybeAddOneToStringAsDouble)
+                .apply("")
+                .applyAsDouble("1.0")
+        );
     }
 
     @Test
@@ -58,7 +67,10 @@ public class PredicateFusionTests {
 
     @Test
     void pred_to_toIntBifn() {
-        assertEquals(3, Z.fuse(isEmpty, maybeAddTwoToStringAsInt).apply("").applyAsInt("1"));
+        assertEquals(
+            3,
+            Z.fuse(isEmpty, maybeAddTwoToStringAsInt).apply("").applyAsInt("1")
+        );
     }
 
     @Test
@@ -68,7 +80,13 @@ public class PredicateFusionTests {
 
     @Test
     void pred_to_toLongBifn() {
-        assertEquals(4L, Z.fuse(isEmpty, maybeAddThreeToStringAsLong).apply("").applyAsLong("1"));
+        assertEquals(
+            4L,
+            Z
+                .fuse(isEmpty, maybeAddThreeToStringAsLong)
+                .apply("")
+                .applyAsLong("1")
+        );
     }
 
     @Test
@@ -84,7 +102,7 @@ public class PredicateFusionTests {
     @Evil
     @Test
     void pred_to_cns() {
-        synchronized(consumedBooleanA) {
+        synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
             Z.fuse(isEmpty, saveBooleanA).accept("");
@@ -96,12 +114,15 @@ public class PredicateFusionTests {
     @Evil
     @Test
     void pred_to_bicns() {
-        synchronized(consumedBooleanB) {
-            synchronized(consumedStringG) {
+        synchronized (consumedBooleanB) {
+            synchronized (consumedStringG) {
                 consumedBooleanB = false;
                 consumedStringG = "";
 
-                Z.fuse(isEmpty, saveBooleanBAndStringG).apply("").accept("yolo");
+                Z
+                    .fuse(isEmpty, saveBooleanBAndStringG)
+                    .apply("")
+                    .accept("yolo");
 
                 assertTrue(consumedBooleanB);
                 assertEquals("yolo", consumedStringG);
@@ -112,8 +133,8 @@ public class PredicateFusionTests {
     @Evil
     @Test
     void pred_to_objDblCns() {
-        synchronized(consumedBooleanC) {
-            synchronized(consumedDoubleC) {
+        synchronized (consumedBooleanC) {
+            synchronized (consumedDoubleC) {
                 consumedBooleanC = false;
                 consumedDoubleC = 0.0;
 
@@ -128,8 +149,8 @@ public class PredicateFusionTests {
     @Evil
     @Test
     void pred_to_objIntCns() {
-        synchronized(consumedBooleanD) {
-            synchronized(consumedIntC) {
+        synchronized (consumedBooleanD) {
+            synchronized (consumedIntC) {
                 consumedBooleanD = false;
                 consumedIntC = 0;
 
@@ -144,8 +165,8 @@ public class PredicateFusionTests {
     @Evil
     @Test
     void pred_to_objLongFn() {
-        synchronized(consumedBooleanE) {
-            synchronized(consumedLongC) {
+        synchronized (consumedBooleanE) {
+            synchronized (consumedLongC) {
                 consumedBooleanE = false;
                 consumedLongC = 0L;
 
@@ -165,5 +186,5 @@ public class PredicateFusionTests {
     @Test
     void pred_to_toBiop() {
         assertTrue(Z.fuse(isEmpty, maybeNot).apply("").test(false));
-    }    
+    }
 }

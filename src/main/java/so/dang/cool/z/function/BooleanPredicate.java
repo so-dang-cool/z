@@ -3,7 +3,7 @@ package so.dang.cool.z.function;
 /**
  * Represents a predicate (boolean-valued function) of one boolean-valued
  * argument. This is a boolean-consuming primitive type specialization of
- * Predicate. 
+ * Predicate.
  */
 @FunctionalInterface
 public interface BooleanPredicate {

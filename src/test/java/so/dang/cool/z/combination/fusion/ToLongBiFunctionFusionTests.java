@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class ToLongBiFunctionFusionTests {
+
     @Test
     void toLongBifn() {
         assertEquals(3L, addStringsAsLong.applyAsLong("1", "2"));
@@ -17,32 +17,55 @@ public class ToLongBiFunctionFusionTests {
 
     @Test
     void toLongBifn_deep() {
-        assertEquals(3L, Z.with(addStringsAsLong).resolve().apply("1").applyAsLong("2"));
+        assertEquals(
+            3L,
+            Z.with(addStringsAsLong).resolve().apply("1").applyAsLong("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longFn() {
-        assertEquals("3", Z.fuse(addStringsAsLong, longToString).apply("1").apply("2"));
+        assertEquals(
+            "3",
+            Z.fuse(addStringsAsLong, longToString).apply("1").apply("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longFn_deep() {
-        assertEquals("3", Z.with(addStringsAsLong).fuse(longToString).apply("1").apply("2"));
+        assertEquals(
+            "3",
+            Z.with(addStringsAsLong).fuse(longToString).apply("1").apply("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longFn_deeper() {
-        assertEquals("3", Z.with(addStringsAsLong).fusing(longToString).resolve().apply("1").apply("2"));
+        assertEquals(
+            "3",
+            Z
+                .with(addStringsAsLong)
+                .fusing(longToString)
+                .resolve()
+                .apply("1")
+                .apply("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longToDbl() {
-        assertEquals(3.0, Z.fuse(addStringsAsLong, longToDouble).apply("1").applyAsDouble("2"));
+        assertEquals(
+            3.0,
+            Z.fuse(addStringsAsLong, longToDouble).apply("1").applyAsDouble("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longToInt() {
-        assertEquals(9, Z.fuse(addStringsAsLong, longToInt).apply("4").applyAsInt("5"));
+        assertEquals(
+            9,
+            Z.fuse(addStringsAsLong, longToInt).apply("4").applyAsInt("5")
+        );
     }
 
     @Test
@@ -53,7 +76,7 @@ public class ToLongBiFunctionFusionTests {
     @Evil
     @Test
     void toLongBifn_to_longCns() {
-        synchronized(consumedLongA) {
+        synchronized (consumedLongA) {
             consumedLongA = 0L;
 
             Z.fuse(addStringsAsLong, saveLongA).apply("2").accept("3");
@@ -64,11 +87,21 @@ public class ToLongBiFunctionFusionTests {
 
     @Test
     void toLongBifn_to_longUnop() {
-        assertEquals(6L, Z.fuse(addStringsAsLong, addThreeToLong).apply("1").applyAsLong("2"));
+        assertEquals(
+            6L,
+            Z.fuse(addStringsAsLong, addThreeToLong).apply("1").applyAsLong("2")
+        );
     }
 
     @Test
     void toLongBifn_to_longBiop() {
-        assertEquals(6L, Z.fuse(addStringsAsLong, addLongs).apply("1").apply("2").applyAsLong(3L));
+        assertEquals(
+            6L,
+            Z
+                .fuse(addStringsAsLong, addLongs)
+                .apply("1")
+                .apply("2")
+                .applyAsLong(3L)
+        );
     }
 }

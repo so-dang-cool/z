@@ -5,4 +5,5 @@ package so.dang.cool.z.annotation;
  * <br>
  * This is not yet stable, and may change in future versions.
  */
-public @interface Experimental { }
+public @interface Experimental {
+}

@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class IntFunctionFusionTests {
+
     @Test
     void intFn() {
         assertEquals("1", intToString.apply(1));
@@ -28,12 +28,18 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_fn_deep() {
-        assertEquals("1!", Z.with(intToString).fuse(addExclamationMark).apply(1));
+        assertEquals(
+            "1!",
+            Z.with(intToString).fuse(addExclamationMark).apply(1)
+        );
     }
 
     @Test
     void intFn_to_fn_deeper() {
-        assertEquals("1!", Z.with(intToString).fusing(addExclamationMark).resolve().apply(1));
+        assertEquals(
+            "1!",
+            Z.with(intToString).fusing(addExclamationMark).resolve().apply(1)
+        );
     }
 
     @Test
@@ -48,7 +54,13 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_toDblBin() {
-        assertEquals(3.0, Z.fuse(intToString, addStringsAsDouble).apply(1).applyAsDouble("2.0"));
+        assertEquals(
+            3.0,
+            Z
+                .fuse(intToString, addStringsAsDouble)
+                .apply(1)
+                .applyAsDouble("2.0")
+        );
     }
 
     @Test
@@ -58,7 +70,10 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_toIntBifn() {
-        assertEquals(3, Z.fuse(intToString, addStringsAsInt).apply(1).applyAsInt("2"));
+        assertEquals(
+            3,
+            Z.fuse(intToString, addStringsAsInt).apply(1).applyAsInt("2")
+        );
     }
 
     @Test
@@ -68,7 +83,10 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_toLongBifn() {
-        assertEquals(3L, Z.fuse(intToString, addStringsAsLong).apply(1).applyAsLong("2"));
+        assertEquals(
+            3L,
+            Z.fuse(intToString, addStringsAsLong).apply(1).applyAsLong("2")
+        );
     }
 
     @Test
@@ -84,7 +102,7 @@ public class IntFunctionFusionTests {
     @Evil
     @Test
     void intFn_to_cns() {
-        synchronized(consumedStringA) {
+        synchronized (consumedStringA) {
             consumedStringA = "";
 
             Z.fuse(intToString, saveStringA).accept(123);
@@ -96,12 +114,15 @@ public class IntFunctionFusionTests {
     @Evil
     @Test
     void intFn_to_bicns() {
-        synchronized(consumedStringB) {
-            synchronized(consumedStringC) {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
                 consumedStringB = "";
                 consumedStringC = "";
 
-                Z.fuse(intToString, saveStringsBandC).apply(34).accept("thirty four");
+                Z
+                    .fuse(intToString, saveStringsBandC)
+                    .apply(34)
+                    .accept("thirty four");
 
                 assertEquals("34", consumedStringB);
                 assertEquals("thirty four", consumedStringC);
@@ -112,8 +133,8 @@ public class IntFunctionFusionTests {
     @Evil
     @Test
     void intFn_to_objDblCns() {
-        synchronized(consumedStringD) {
-            synchronized(consumedDoubleB) {
+        synchronized (consumedStringD) {
+            synchronized (consumedDoubleB) {
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
 
@@ -128,8 +149,8 @@ public class IntFunctionFusionTests {
     @Evil
     @Test
     void intFn_to_objIntCns() {
-        synchronized(consumedStringE) {
-            synchronized(consumedIntB) {
+        synchronized (consumedStringE) {
+            synchronized (consumedIntB) {
                 consumedStringE = "";
                 consumedIntB = 0;
 
@@ -144,8 +165,8 @@ public class IntFunctionFusionTests {
     @Evil
     @Test
     void intFn_to_objLongCns() {
-        synchronized(consumedStringF) {
-            synchronized(consumedLongB) {
+        synchronized (consumedStringF) {
+            synchronized (consumedLongB) {
                 consumedStringF = "";
                 consumedLongB = 0L;
 
@@ -164,6 +185,9 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_biop() {
-        assertEquals("same-ish", Z.fuse(intToString, relation).apply(234).apply("234"));
+        assertEquals(
+            "same-ish",
+            Z.fuse(intToString, relation).apply(234).apply("234")
+        );
     }
 }

@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class IntBinaryOperatorFusionTests {
+
     @Test
     void intBiop() {
         assertEquals(3, addInts.applyAsInt(1, 2));
@@ -32,7 +32,10 @@ public class IntBinaryOperatorFusionTests {
 
     @Test
     void intBiop_to_intToDbl() {
-        assertEquals(3.0, Z.fuse(addInts, intToDouble).apply(1).applyAsDouble(2));
+        assertEquals(
+            3.0,
+            Z.fuse(addInts, intToDouble).apply(1).applyAsDouble(2)
+        );
     }
 
     @Test
@@ -48,7 +51,7 @@ public class IntBinaryOperatorFusionTests {
     @Evil
     @Test
     void intBiop_to_intCns() {
-        synchronized(consumedIntA) {
+        synchronized (consumedIntA) {
             consumedIntA = 0;
 
             Z.fuse(addInts, saveIntA).apply(2).accept(3);
@@ -56,7 +59,7 @@ public class IntBinaryOperatorFusionTests {
             assertEquals(5, consumedIntA);
         }
     }
-    
+
     @Test
     void intBiop_to_intUnop() {
         assertEquals(6, Z.fuse(addInts, addTwoToInt).apply(1).applyAsInt(3));
@@ -64,6 +67,9 @@ public class IntBinaryOperatorFusionTests {
 
     @Test
     void intBiop_to_intBiop() {
-        assertEquals(6, Z.fuse(addInts, addInts).apply(1).apply(2).applyAsInt(3));
+        assertEquals(
+            6,
+            Z.fuse(addInts, addInts).apply(1).apply(2).applyAsInt(3)
+        );
     }
 }

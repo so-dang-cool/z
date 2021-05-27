@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class DoubleSupplierFusionTests {
+
     @Test
     void dblSup() {
         assertEquals(suppliedDouble, getDouble.getAsDouble());
@@ -32,7 +32,10 @@ public class DoubleSupplierFusionTests {
 
     @Test
     void dblSup_to_dblFn_deeper() {
-        assertEquals("1.0", Z.with(getDouble).fusing(doubleToString).resolve().get());
+        assertEquals(
+            "1.0",
+            Z.with(getDouble).fusing(doubleToString).resolve().get()
+        );
     }
 
     @Test
@@ -53,7 +56,7 @@ public class DoubleSupplierFusionTests {
     @Evil
     @Test
     void dblSup_to_dblCns() {
-        synchronized(consumedDoubleA) {
+        synchronized (consumedDoubleA) {
             consumedDoubleA = 0.0;
 
             Z.fuse(getDouble, saveDoubleA).run();

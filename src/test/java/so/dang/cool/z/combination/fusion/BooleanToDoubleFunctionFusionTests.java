@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class BooleanToDoubleFunctionFusionTests {
+
     @Test
     void boolToDbl() {
         assertEquals(1.0, maybeOneAsDouble.applyAsDouble(true));
@@ -17,22 +17,38 @@ public class BooleanToDoubleFunctionFusionTests {
 
     @Test
     void boolToDbl_deep() {
-        assertEquals(1.0, Z.with(maybeOneAsDouble).resolve().applyAsDouble(true));
+        assertEquals(
+            1.0,
+            Z.with(maybeOneAsDouble).resolve().applyAsDouble(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblFn() {
-        assertEquals("1.0", Z.fuse(maybeOneAsDouble, doubleToString).apply(true));
+        assertEquals(
+            "1.0",
+            Z.fuse(maybeOneAsDouble, doubleToString).apply(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblFn_deep() {
-        assertEquals("1.0", Z.with(maybeOneAsDouble).fuse(doubleToString).apply(true));
+        assertEquals(
+            "1.0",
+            Z.with(maybeOneAsDouble).fuse(doubleToString).apply(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblFn_deeper() {
-        assertEquals("1.0", Z.with(maybeOneAsDouble).fusing(doubleToString).resolve().apply(true));
+        assertEquals(
+            "1.0",
+            Z
+                .with(maybeOneAsDouble)
+                .fusing(doubleToString)
+                .resolve()
+                .apply(true)
+        );
     }
 
     @Test
@@ -42,7 +58,10 @@ public class BooleanToDoubleFunctionFusionTests {
 
     @Test
     void boolToDbl_to_dblToLong() {
-        assertEquals(1L, Z.fuse(maybeOneAsDouble, doubleToLong).applyAsLong(true));
+        assertEquals(
+            1L,
+            Z.fuse(maybeOneAsDouble, doubleToLong).applyAsLong(true)
+        );
     }
 
     @Test
@@ -53,7 +72,7 @@ public class BooleanToDoubleFunctionFusionTests {
     @Evil
     @Test
     void boolToDbl_to_dblCns() {
-        synchronized(consumedDoubleA) {
+        synchronized (consumedDoubleA) {
             consumedDoubleA = 0.0;
 
             Z.fuse(maybeOneAsDouble, saveDoubleA).accept(true);
@@ -64,11 +83,17 @@ public class BooleanToDoubleFunctionFusionTests {
 
     @Test
     void boolToDbl_to_dblUnop() {
-        assertEquals(2.0, Z.fuse(maybeOneAsDouble, addOneToDouble).applyAsDouble(true));
+        assertEquals(
+            2.0,
+            Z.fuse(maybeOneAsDouble, addOneToDouble).applyAsDouble(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblBiop() {
-        assertEquals(1.5, Z.fuse(maybeOneAsDouble, addDoubles).apply(true).applyAsDouble(0.5));
-    }    
+        assertEquals(
+            1.5,
+            Z.fuse(maybeOneAsDouble, addDoubles).apply(true).applyAsDouble(0.5)
+        );
+    }
 }

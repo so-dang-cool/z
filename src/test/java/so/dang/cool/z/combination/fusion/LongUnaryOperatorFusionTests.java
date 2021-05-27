@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class LongUnaryOperatorFusionTests {
+
     @Test
     void longUnop() {
         assertEquals(4L, addThreeToLong.applyAsLong(1L));
@@ -32,12 +32,18 @@ public class LongUnaryOperatorFusionTests {
 
     @Test
     void longUnop_to_longFn_deeper() {
-        assertEquals("4", Z.with(addThreeToLong).fusing(longToString).resolve().apply(1L));
+        assertEquals(
+            "4",
+            Z.with(addThreeToLong).fusing(longToString).resolve().apply(1L)
+        );
     }
 
     @Test
     void longUnop_to_longToDbl() {
-        assertEquals(4.0, Z.fuse(addThreeToLong, longToDouble).applyAsDouble(1L));
+        assertEquals(
+            4.0,
+            Z.fuse(addThreeToLong, longToDouble).applyAsDouble(1L)
+        );
     }
 
     @Test
@@ -53,7 +59,7 @@ public class LongUnaryOperatorFusionTests {
     @Evil
     @Test
     void longUnop_to_longCns() {
-        synchronized(consumedLongA) {
+        synchronized (consumedLongA) {
             consumedLongA = 0L;
 
             Z.fuse(addThreeToLong, saveLongA).accept(2L);
@@ -64,11 +70,17 @@ public class LongUnaryOperatorFusionTests {
 
     @Test
     void longUnop_to_longUnop() {
-        assertEquals(9L, Z.fuse(addThreeToLong, addThreeToLong).applyAsLong(3L));
+        assertEquals(
+            9L,
+            Z.fuse(addThreeToLong, addThreeToLong).applyAsLong(3L)
+        );
     }
 
     @Test
     void longUnop_to_longBiop() {
-        assertEquals(6L, Z.fuse(addThreeToLong, addLongs).apply(1L).applyAsLong(2L));
+        assertEquals(
+            6L,
+            Z.fuse(addThreeToLong, addLongs).apply(1L).applyAsLong(2L)
+        );
     }
 }

@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class BooleanSupplierFusionTests {
+
     @Test
     void boolSup() {
         assertTrue(getBooleanTrue.getAsBoolean());
@@ -33,22 +33,36 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup_to_boolFn_deep() {
-        assertEquals("true", Z.with(getBooleanTrue).fuse(booleanToString).get());
+        assertEquals(
+            "true",
+            Z.with(getBooleanTrue).fuse(booleanToString).get()
+        );
     }
 
     @Test
     void boolSup_to_boolFn_deeper() {
-        assertEquals("true", Z.with(getBooleanTrue).fusing(booleanToString).resolve().get());
+        assertEquals(
+            "true",
+            Z.with(getBooleanTrue).fusing(booleanToString).resolve().get()
+        );
     }
 
     @Test
     void boolSup_to_toDblFn() {
-        assertEquals(1.0, Z.fuse(getBooleanTrue, maybeOneAsDouble).getAsDouble());
+        assertEquals(
+            1.0,
+            Z.fuse(getBooleanTrue, maybeOneAsDouble).getAsDouble()
+        );
     }
 
     @Test
     void boolSup_to_toDblBifn() {
-        assertEquals(3.0, Z.fuse(getBooleanTrue, maybeAddOneToStringAsDouble).applyAsDouble("2.0"));
+        assertEquals(
+            3.0,
+            Z
+                .fuse(getBooleanTrue, maybeAddOneToStringAsDouble)
+                .applyAsDouble("2.0")
+        );
     }
 
     @Test
@@ -58,7 +72,10 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup_to_toIntBifn() {
-        assertEquals(4, Z.fuse(getBooleanTrue, maybeAddTwoToStringAsInt).applyAsInt("2"));
+        assertEquals(
+            4,
+            Z.fuse(getBooleanTrue, maybeAddTwoToStringAsInt).applyAsInt("2")
+        );
     }
 
     @Test
@@ -68,7 +85,10 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup_to_toLongBifn() {
-        assertEquals(7L, Z.fuse(getBooleanTrue, maybeAddThreeToStringAsLong).applyAsLong("4"));
+        assertEquals(
+            7L,
+            Z.fuse(getBooleanTrue, maybeAddThreeToStringAsLong).applyAsLong("4")
+        );
     }
 
     @Test
@@ -84,7 +104,7 @@ public class BooleanSupplierFusionTests {
     @Evil
     @Test
     void boolSup_to_cns() {
-        synchronized(consumedBooleanA) {
+        synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
             Z.fuse(getBooleanTrue, saveBooleanA).run();
@@ -96,8 +116,8 @@ public class BooleanSupplierFusionTests {
     @Evil
     @Test
     void boolSup_to_bicns() {
-        synchronized(consumedBooleanB) {
-            synchronized(consumedStringG) {
+        synchronized (consumedBooleanB) {
+            synchronized (consumedStringG) {
                 consumedBooleanB = false;
                 consumedStringG = "";
 
@@ -112,8 +132,8 @@ public class BooleanSupplierFusionTests {
     @Evil
     @Test
     void boolSup_to_objDblCns() {
-        synchronized(consumedBooleanC) {
-            synchronized(consumedDoubleC) {
+        synchronized (consumedBooleanC) {
+            synchronized (consumedDoubleC) {
                 consumedBooleanC = false;
                 consumedDoubleC = 0.0;
 
@@ -128,8 +148,8 @@ public class BooleanSupplierFusionTests {
     @Evil
     @Test
     void boolSup_to_objIntCns() {
-        synchronized(consumedBooleanD) {
-            synchronized(consumedIntC) {
+        synchronized (consumedBooleanD) {
+            synchronized (consumedIntC) {
                 consumedBooleanD = false;
                 consumedIntC = 0;
 
@@ -144,8 +164,8 @@ public class BooleanSupplierFusionTests {
     @Evil
     @Test
     void boolSup_to_objLongFn() {
-        synchronized(consumedBooleanE) {
-            synchronized(consumedLongC) {
+        synchronized (consumedBooleanE) {
+            synchronized (consumedLongC) {
                 consumedBooleanE = false;
                 consumedLongC = 0L;
 

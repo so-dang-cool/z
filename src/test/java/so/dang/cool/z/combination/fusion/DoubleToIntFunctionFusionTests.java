@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class DoubleToIntFunctionFusionTests {
+
     @Test
     void dblToInt() {
         assertEquals(1, doubleToInt.applyAsInt(1.0));
@@ -32,7 +32,10 @@ public class DoubleToIntFunctionFusionTests {
 
     @Test
     void dblToInt_to_intFn_deeper() {
-        assertEquals("1", Z.with(doubleToInt).fusing(intToString).resolve().apply(1.1));
+        assertEquals(
+            "1",
+            Z.with(doubleToInt).fusing(intToString).resolve().apply(1.1)
+        );
     }
 
     @Test
@@ -53,7 +56,7 @@ public class DoubleToIntFunctionFusionTests {
     @Evil
     @Test
     void dblToInt_to_intCns() {
-        synchronized(consumedIntA) {
+        synchronized (consumedIntA) {
             consumedIntA = 0;
 
             Z.fuse(doubleToInt, saveIntA).accept(2.2);
@@ -70,5 +73,5 @@ public class DoubleToIntFunctionFusionTests {
     @Test
     void dblToInt_to_intBiop() {
         assertEquals(5, Z.fuse(doubleToInt, addInts).apply(2.4).applyAsInt(3));
-    }    
+    }
 }

@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class IntSupplierFusionTests {
+
     @Test
     void intSup() {
         assertEquals(suppliedInt, getInt.getAsInt());
@@ -53,7 +53,7 @@ public class IntSupplierFusionTests {
     @Evil
     @Test
     void intSup_to_intCns() {
-        synchronized(consumedIntA) {
+        synchronized (consumedIntA) {
             consumedIntA = 0;
 
             Z.fuse(getInt, saveIntA).run();

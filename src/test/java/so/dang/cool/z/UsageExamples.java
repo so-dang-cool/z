@@ -5,11 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -19,16 +14,23 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.function.Operator;
 
 public class UsageExamples {
+
     @Test
     public void ascii_sum_plain_java() {
-        var asciiSum = ((Function<IntStream, Integer>) IntStream::sum).compose(String::chars);
+        var asciiSum =
+            ((Function<IntStream, Integer>) IntStream::sum).compose(
+                    String::chars
+                );
 
         assertEquals(294, asciiSum.apply("abc"));
         assertEquals(775, asciiSum.apply("burrito"));
@@ -38,7 +40,7 @@ public class UsageExamples {
     @Test
     public void ascii_sum_plain_java_lambda() {
         ToIntFunction<String> asciiSum = s -> s.chars().sum();
-        
+
         assertEquals(294, asciiSum.applyAsInt("abc"));
         assertEquals(775, asciiSum.applyAsInt("burrito"));
         assertEquals(1196, asciiSum.applyAsInt("albuquerque"));
@@ -48,7 +50,7 @@ public class UsageExamples {
     public void ascii_sum_z() {
         // Z handles composition a little more succinctly.
         var asciiSum = Z.fuse(String::chars, IntStream::sum);
-        
+
         assertEquals(294, asciiSum.applyAsInt("abc"));
         assertEquals(775, asciiSum.applyAsInt("burrito"));
         assertEquals(1196, asciiSum.applyAsInt("albuquerque"));
@@ -59,11 +61,13 @@ public class UsageExamples {
         // Capturing as a functional interface is necessary to expose composition methods.
         Function<String, String> toLowerCase = String::toLowerCase;
         Function<String, Boolean> isLowerCaseToledo = s -> s.equals("toledo");
-        
+
         // Composition doesn't support composing with predicates, only with other functions.
         // (So you'll get an "apply" method instead of "test")
         // A lambda can get you there, though.
-        Function<String, Boolean> isToledoFn = isLowerCaseToledo.compose(toLowerCase);
+        Function<String, Boolean> isToledoFn = isLowerCaseToledo.compose(
+            toLowerCase
+        );
         Predicate<String> isToledo = s -> isToledoFn.apply(s);
 
         assertAll(
@@ -80,7 +84,7 @@ public class UsageExamples {
             () -> isToledo.negate().test("Vienna")
         );
     }
-    
+
     @Test
     public void is_toledo_z() {
         // Types are still required to eliminate ambiguity.
@@ -107,7 +111,8 @@ public class UsageExamples {
     @Test
     public void regex_plain_java() {
         Predicate<String> isLocalHost = (String s) ->
-            Pattern.compile("https?://localhost(:\\d+)?(/\\S*)?")
+            Pattern
+                .compile("https?://localhost(:\\d+)?(/\\S*)?")
                 .matcher(s)
                 .matches();
 
@@ -120,7 +125,10 @@ public class UsageExamples {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
 
-        Predicate<CharSequence> isLocalHost = Z.fuse(pattern::matcher, Matcher::matches);
+        Predicate<CharSequence> isLocalHost = Z.fuse(
+            pattern::matcher,
+            Matcher::matches
+        );
 
         assertFalse(isLocalHost.test("invalid"));
         assertTrue(isLocalHost.test("https://localhost:443"));
@@ -131,8 +139,14 @@ public class UsageExamples {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
 
         Function<String, Pattern> patternOf = Pattern::compile;
-        Function<String, Function<CharSequence, Matcher>> matcherOf = Z.fuse(patternOf, Pattern::matcher);
-        Predicate<CharSequence> isLocalHost = Z.fuse(matcherOf.apply(urlRegex), Matcher::matches);
+        Function<String, Function<CharSequence, Matcher>> matcherOf = Z.fuse(
+            patternOf,
+            Pattern::matcher
+        );
+        Predicate<CharSequence> isLocalHost = Z.fuse(
+            matcherOf.apply(urlRegex),
+            Matcher::matches
+        );
 
         assertFalse(isLocalHost.test("invalid"));
         assertTrue(isLocalHost.test("https://localhost:443"));
@@ -140,7 +154,8 @@ public class UsageExamples {
 
     @Test
     public void complex_regex_example() {
-        var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
+        var isLocalHost = Z
+            .with("https?://localhost(:\\d+)?(/\\S*)?")
             .fusingFunction(Pattern::compile)
             .fusing(Pattern::matcher)
             .fuse(Matcher::matches);
@@ -153,7 +168,8 @@ public class UsageExamples {
     public void uhawwwwwww_example() {
         Function<String, String> addW = (String s) -> s.concat("ｗ");
 
-        var addSevenWs = Z.with(addW)
+        var addSevenWs = Z
+            .with(addW)
             .fusing(addW)
             .fusing(addW)
             .fusing(addW)
@@ -168,11 +184,11 @@ public class UsageExamples {
     public void uhawwwwwww_example_reducing() {
         Function<String, String> addW = (String s) -> s.concat("ｗ");
 
-        Function<String, String> addSevenWs =
-            IntStream.range(0, 7)
-                .mapToObj(ignored -> addW)
-                .reduce(Z::fuse)
-                .get();
+        Function<String, String> addSevenWs = IntStream
+            .range(0, 7)
+            .mapToObj(ignored -> addW)
+            .reduce(Z::fuse)
+            .get();
 
         assertEquals("うはｗｗｗｗｗｗｗ", addSevenWs.apply("うは"));
     }
@@ -186,34 +202,38 @@ public class UsageExamples {
         // var iToS = Z.split(Integer::toString);
 
         // ... but this works!
-        Function<Integer, Function<Integer, String>> iToS =
-            Z.split(Integer::toString);
+        Function<Integer, Function<Integer, String>> iToS = Z.split(
+            Integer::toString
+        );
 
-        String res = IntStream.range(0, 15)
-            .mapToObj(i ->
-                IntStream.range(1, 16)
-                    .mapToObj(Integer::valueOf)
-                    .map(iToS.apply(i))
-                    .collect(Collectors.joining(", "))
+        String res = IntStream
+            .range(0, 15)
+            .mapToObj(
+                i ->
+                    IntStream
+                        .range(1, 16)
+                        .mapToObj(Integer::valueOf)
+                        .map(iToS.apply(i))
+                        .collect(Collectors.joining(", "))
             )
             .collect(Collectors.joining("\n"));
 
         assertEquals(
-            "0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
-            + "1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\n"
-            + "2, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2\n"
-            + "3, 11, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3\n"
-            + "4, 100, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4\n"
-            + "5, 101, 12, 11, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5\n"
-            + "6, 110, 20, 12, 11, 10, 6, 6, 6, 6, 6, 6, 6, 6, 6\n"
-            + "7, 111, 21, 13, 12, 11, 10, 7, 7, 7, 7, 7, 7, 7, 7\n"
-            + "8, 1000, 22, 20, 13, 12, 11, 10, 8, 8, 8, 8, 8, 8, 8\n"
-            + "9, 1001, 100, 21, 14, 13, 12, 11, 10, 9, 9, 9, 9, 9, 9\n"
-            + "10, 1010, 101, 22, 20, 14, 13, 12, 11, 10, a, a, a, a, a\n"
-            + "11, 1011, 102, 23, 21, 15, 14, 13, 12, 11, 10, b, b, b, b\n"
-            + "12, 1100, 110, 30, 22, 20, 15, 14, 13, 12, 11, 10, c, c, c\n"
-            + "13, 1101, 111, 31, 23, 21, 16, 15, 14, 13, 12, 11, 10, d, d\n"
-            + "14, 1110, 112, 32, 24, 22, 20, 16, 15, 14, 13, 12, 11, 10, e",
+            "0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
+            "1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\n" +
+            "2, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2\n" +
+            "3, 11, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3\n" +
+            "4, 100, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4\n" +
+            "5, 101, 12, 11, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5\n" +
+            "6, 110, 20, 12, 11, 10, 6, 6, 6, 6, 6, 6, 6, 6, 6\n" +
+            "7, 111, 21, 13, 12, 11, 10, 7, 7, 7, 7, 7, 7, 7, 7\n" +
+            "8, 1000, 22, 20, 13, 12, 11, 10, 8, 8, 8, 8, 8, 8, 8\n" +
+            "9, 1001, 100, 21, 14, 13, 12, 11, 10, 9, 9, 9, 9, 9, 9\n" +
+            "10, 1010, 101, 22, 20, 14, 13, 12, 11, 10, a, a, a, a, a\n" +
+            "11, 1011, 102, 23, 21, 15, 14, 13, 12, 11, 10, b, b, b, b\n" +
+            "12, 1100, 110, 30, 22, 20, 15, 14, 13, 12, 11, 10, c, c, c\n" +
+            "13, 1101, 111, 31, 23, 21, 16, 15, 14, 13, 12, 11, 10, d, d\n" +
+            "14, 1110, 112, 32, 24, 22, 20, 16, 15, 14, 13, 12, 11, 10, e",
             res
         );
     }
@@ -235,14 +255,11 @@ public class UsageExamples {
 
         var stringing = Z.fuse(
             (Integer start, Integer end) ->
-                integerStream
-                    .apply(start)
-                    .apply(end)
-                    .apply(Integer::valueOf),
+                integerStream.apply(start).apply(end).apply(Integer::valueOf),
             Z.fuse(
-                (BiFunction<Stream<Integer>, Function<Integer, String>, Stream<String>>)
-                    Stream::map,
-                (Stream<String> stream, String delim) -> stream.collect(Collectors.joining(delim))
+                (BiFunction<Stream<Integer>, Function<Integer, String>, Stream<String>>) Stream::map,
+                (Stream<String> stream, String delim) ->
+                    stream.collect(Collectors.joining(delim))
             )
         );
 
@@ -251,25 +268,30 @@ public class UsageExamples {
         // applications, I'd suggest something like Immutables, a staged
         // builder, and add a static pure function from Stringer -> String.
         class Stringer {
+
             int start;
             int end;
             Function<Integer, String> xform;
             String delim;
 
             Stringer() {}
+
             Stringer range(int start, int end) {
                 this.start = start;
                 this.end = end;
                 return this;
             }
+
             Stringer xform(Function<Integer, String> xform) {
                 this.xform = xform;
                 return this;
             }
+
             Stringer delim(String delim) {
                 this.delim = delim;
                 return this;
             }
+
             String go() {
                 return stringing
                     .apply(start)
@@ -277,36 +299,36 @@ public class UsageExamples {
                     .apply(xform)
                     .apply(delim);
             }
-        };
-
+        }
         String res = new Stringer()
             .range(0, 15)
-            .xform(i ->
-                new Stringer()
-                    .range(1, 16)
-                    .xform(iToS.apply(i))
-                    .delim(", ")
-                    .go()
+            .xform(
+                i ->
+                    new Stringer()
+                        .range(1, 16)
+                        .xform(iToS.apply(i))
+                        .delim(", ")
+                        .go()
             )
             .delim("\n")
             .go();
 
         assertEquals(
-            "0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
-            + "1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\n"
-            + "2, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2\n"
-            + "3, 11, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3\n"
-            + "4, 100, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4\n"
-            + "5, 101, 12, 11, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5\n"
-            + "6, 110, 20, 12, 11, 10, 6, 6, 6, 6, 6, 6, 6, 6, 6\n"
-            + "7, 111, 21, 13, 12, 11, 10, 7, 7, 7, 7, 7, 7, 7, 7\n"
-            + "8, 1000, 22, 20, 13, 12, 11, 10, 8, 8, 8, 8, 8, 8, 8\n"
-            + "9, 1001, 100, 21, 14, 13, 12, 11, 10, 9, 9, 9, 9, 9, 9\n"
-            + "10, 1010, 101, 22, 20, 14, 13, 12, 11, 10, a, a, a, a, a\n"
-            + "11, 1011, 102, 23, 21, 15, 14, 13, 12, 11, 10, b, b, b, b\n"
-            + "12, 1100, 110, 30, 22, 20, 15, 14, 13, 12, 11, 10, c, c, c\n"
-            + "13, 1101, 111, 31, 23, 21, 16, 15, 14, 13, 12, 11, 10, d, d\n"
-            + "14, 1110, 112, 32, 24, 22, 20, 16, 15, 14, 13, 12, 11, 10, e",
+            "0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
+            "1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\n" +
+            "2, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2\n" +
+            "3, 11, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3\n" +
+            "4, 100, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4\n" +
+            "5, 101, 12, 11, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5\n" +
+            "6, 110, 20, 12, 11, 10, 6, 6, 6, 6, 6, 6, 6, 6, 6\n" +
+            "7, 111, 21, 13, 12, 11, 10, 7, 7, 7, 7, 7, 7, 7, 7\n" +
+            "8, 1000, 22, 20, 13, 12, 11, 10, 8, 8, 8, 8, 8, 8, 8\n" +
+            "9, 1001, 100, 21, 14, 13, 12, 11, 10, 9, 9, 9, 9, 9, 9\n" +
+            "10, 1010, 101, 22, 20, 14, 13, 12, 11, 10, a, a, a, a, a\n" +
+            "11, 1011, 102, 23, 21, 15, 14, 13, 12, 11, 10, b, b, b, b\n" +
+            "12, 1100, 110, 30, 22, 20, 15, 14, 13, 12, 11, 10, c, c, c\n" +
+            "13, 1101, 111, 31, 23, 21, 16, 15, 14, 13, 12, 11, 10, d, d\n" +
+            "14, 1110, 112, 32, 24, 22, 20, 16, 15, 14, 13, 12, 11, 10, e",
             res
         );
     }
@@ -316,7 +338,8 @@ public class UsageExamples {
     public void phrase_builder_HIDDEN_SIDE_EFFECTS() {
         List<String> regrets = new ArrayList<>();
 
-        Supplier<String> getPhrase = () -> regrets.stream().collect(Collectors.joining(" "));
+        Supplier<String> getPhrase = () ->
+            regrets.stream().collect(Collectors.joining(" "));
 
         Operator no = () -> regrets.add("no");
         Operator nono = Z.absorb(no, no);

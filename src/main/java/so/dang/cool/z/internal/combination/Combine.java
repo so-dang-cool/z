@@ -37,7 +37,6 @@ import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.annotation.Experimental;
@@ -52,6 +51,7 @@ import so.dang.cool.z.function.BooleanToLongFunction;
  */
 @Experimental
 public abstract class Combine<A, Fn> {
+
     private Combine() {}
 
     /**
@@ -61,7 +61,9 @@ public abstract class Combine<A, Fn> {
 
     /* Function -> ... [TODO: Incomplete] */
 
-    public static final class WithFunction<A, B> extends Combine<B, Function<A, B>> {
+    public static final class WithFunction<A, B>
+        extends Combine<B, Function<A, B>> {
+
         private final Function<A, B> initial;
 
         private WithFunction(Function<A, B> initial) {
@@ -97,15 +99,21 @@ public abstract class Combine<A, Fn> {
 
         /* Function<A, B> -> BiFunction<B, C, D> */
 
-        public <C, D> Function<A, Function<C, D>> fuseBiFunction(BiFunction<B, C, D> next) {
+        public <C, D> Function<A, Function<C, D>> fuseBiFunction(
+            BiFunction<B, C, D> next
+        ) {
             return Z.fuse(initial, next);
         }
 
-        public <C, D> Function<A, Function<C, D>> fuse(BiFunction<B, C, D> next) {
+        public <C, D> Function<A, Function<C, D>> fuse(
+            BiFunction<B, C, D> next
+        ) {
             return fuseBiFunction(next);
         }
 
-        public <C, D> WithBiFunction<A, C, D> fusingBiFunction(BiFunction<B, C, D> next) {
+        public <C, D> WithBiFunction<A, C, D> fusingBiFunction(
+            BiFunction<B, C, D> next
+        ) {
             // TODO: Need a currying combinator?
             return WithBiFunction.of(Z.assimilate2(Z.fuse(initial, next)));
         }
@@ -116,7 +124,9 @@ public abstract class Combine<A, Fn> {
 
         /* Function<A, B> -> DoubleFunction<B> */
 
-        public ToDoubleFunction<A> fuseToDoubleFunction(ToDoubleFunction<B> next) {
+        public ToDoubleFunction<A> fuseToDoubleFunction(
+            ToDoubleFunction<B> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -124,7 +134,9 @@ public abstract class Combine<A, Fn> {
             return fuseToDoubleFunction(next);
         }
 
-        public WithToDoubleFunction<A> fusingToDoubleFunction(ToDoubleFunction<B> next) {
+        public WithToDoubleFunction<A> fusingToDoubleFunction(
+            ToDoubleFunction<B> next
+        ) {
             return WithToDoubleFunction.of(Z.fuse(initial, next));
         }
 
@@ -164,7 +176,9 @@ public abstract class Combine<A, Fn> {
             return fuseToLongFunction(next);
         }
 
-        public WithToLongFunction<A> fusingToLongFunction(ToLongFunction<B> next) {
+        public WithToLongFunction<A> fusingToLongFunction(
+            ToLongFunction<B> next
+        ) {
             return WithToLongFunction.of(Z.fuse(initial, next));
         }
 
@@ -240,7 +254,9 @@ public abstract class Combine<A, Fn> {
 
         /* Function<A, B> -> BinaryOperator<B> */
 
-        public Function<A, UnaryOperator<B>> fuseBinaryOperator(BinaryOperator<B> next) {
+        public Function<A, UnaryOperator<B>> fuseBinaryOperator(
+            BinaryOperator<B> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -248,15 +264,18 @@ public abstract class Combine<A, Fn> {
             return fuseBinaryOperator(next);
         }
 
-        public WithBiFunction<A, B, B> fusingBinaryOperator(BinaryOperator<B> next) {
+        public WithBiFunction<A, B, B> fusingBinaryOperator(
+            BinaryOperator<B> next
+        ) {
             // TODO: simplify with currying
-            return WithBiFunction.of((A a, B b) -> next.apply(initial.apply(a), b));
+            return WithBiFunction.of(
+                (A a, B b) -> next.apply(initial.apply(a), b)
+            );
         }
 
         public WithBiFunction<A, B, B> fusing(BinaryOperator<B> next) {
             return fusingBinaryOperator(next);
         }
-
         /* Function<A, B> -> [Multi]Function<B...> [TODO...?] */
     }
 
@@ -268,19 +287,27 @@ public abstract class Combine<A, Fn> {
         = Function<A, Function<C, D>>
     */
 
-    public static final class WithBiFunction<A, B, C> extends Combine<C, Function<A, Function<B, C>>> {
+    public static final class WithBiFunction<A, B, C>
+        extends Combine<C, Function<A, Function<B, C>>> {
+
         private final BiFunction<A, B, C> initial;
 
         private WithBiFunction(BiFunction<A, B, C> initial) {
             this.initial = initial;
         }
 
-        public static <A, B, C> WithBiFunction<A, B, C> of(BiFunction<A, B, C> initial) {
+        public static <A, B, C> WithBiFunction<A, B, C> of(
+            BiFunction<A, B, C> initial
+        ) {
             return new WithBiFunction<>(initial);
         }
 
-        public static <A, B, C> WithBiFunction<A, B, C> of(Function<A, Function<B, C>> initial) {
-            return new WithBiFunction<>((A a, B b) -> initial.apply(a).apply(b));
+        public static <A, B, C> WithBiFunction<A, B, C> of(
+            Function<A, Function<B, C>> initial
+        ) {
+            return new WithBiFunction<>(
+                (A a, B b) -> initial.apply(a).apply(b)
+            );
         }
 
         @Override
@@ -290,7 +317,9 @@ public abstract class Combine<A, Fn> {
 
         /* BiFunction<A, B, C> -> Function<C, D> */
 
-        public <D> Function<A, Function<B, D>> fuseFunction(Function<C, D> next) {
+        public <D> Function<A, Function<B, D>> fuseFunction(
+            Function<C, D> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -307,14 +336,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanFunction<A> extends Combine<A, BooleanFunction<A>> {
+    public static final class WithBooleanFunction<A>
+        extends Combine<A, BooleanFunction<A>> {
+
         private final BooleanFunction<A> initial;
 
         private WithBooleanFunction(BooleanFunction<A> initial) {
             this.initial = initial;
         }
 
-        public static <A> WithBooleanFunction<A> of(BooleanFunction<A> initial) {
+        public static <A> WithBooleanFunction<A> of(
+            BooleanFunction<A> initial
+        ) {
             return new WithBooleanFunction<>(initial);
         }
 
@@ -342,14 +375,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToDoubleFunction extends Combine<Double, BooleanToDoubleFunction> {
+    public static final class WithBooleanToDoubleFunction
+        extends Combine<Double, BooleanToDoubleFunction> {
+
         private final BooleanToDoubleFunction initial;
 
         private WithBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
             this.initial = initial;
         }
 
-        public static WithBooleanToDoubleFunction of(BooleanToDoubleFunction initial) {
+        public static WithBooleanToDoubleFunction of(
+            BooleanToDoubleFunction initial
+        ) {
             return new WithBooleanToDoubleFunction(initial);
         }
 
@@ -360,7 +397,9 @@ public abstract class Combine<A, Fn> {
 
         /* BooleanToDoubleFunction<A> -> DoubleFunction<B> */
 
-        public <A> BooleanFunction<A> fuseDoubleFunction(DoubleFunction<A> next) {
+        public <A> BooleanFunction<A> fuseDoubleFunction(
+            DoubleFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -368,7 +407,9 @@ public abstract class Combine<A, Fn> {
             return fuseDoubleFunction(next);
         }
 
-        public <A> WithBooleanFunction<A> fusingDoubleFunction(DoubleFunction<A> next) {
+        public <A> WithBooleanFunction<A> fusingDoubleFunction(
+            DoubleFunction<A> next
+        ) {
             return WithBooleanFunction.of(fuseDoubleFunction(next));
         }
 
@@ -377,14 +418,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToIntFunction extends Combine<Integer, BooleanToIntFunction> {
+    public static final class WithBooleanToIntFunction
+        extends Combine<Integer, BooleanToIntFunction> {
+
         private final BooleanToIntFunction initial;
 
         private WithBooleanToIntFunction(BooleanToIntFunction initial) {
             this.initial = initial;
         }
 
-        public static WithBooleanToIntFunction of(BooleanToIntFunction initial) {
+        public static WithBooleanToIntFunction of(
+            BooleanToIntFunction initial
+        ) {
             return new WithBooleanToIntFunction(initial);
         }
 
@@ -403,7 +448,9 @@ public abstract class Combine<A, Fn> {
             return fuseIntFunction(next);
         }
 
-        public <A> WithBooleanFunction<A> fusingIntFunction(IntFunction<A> next) {
+        public <A> WithBooleanFunction<A> fusingIntFunction(
+            IntFunction<A> next
+        ) {
             return WithBooleanFunction.of(fuseIntFunction(next));
         }
 
@@ -412,14 +459,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToLongFunction extends Combine<Long, BooleanToLongFunction> {
+    public static final class WithBooleanToLongFunction
+        extends Combine<Long, BooleanToLongFunction> {
+
         private final BooleanToLongFunction initial;
 
         private WithBooleanToLongFunction(BooleanToLongFunction initial) {
             this.initial = initial;
         }
 
-        public static WithBooleanToLongFunction of(BooleanToLongFunction initial) {
+        public static WithBooleanToLongFunction of(
+            BooleanToLongFunction initial
+        ) {
             return new WithBooleanToLongFunction(initial);
         }
 
@@ -438,7 +489,9 @@ public abstract class Combine<A, Fn> {
             return fuseLongFunction(next);
         }
 
-        public <A> WithBooleanFunction<A> fusingLongFunction(LongFunction<A> next) {
+        public <A> WithBooleanFunction<A> fusingLongFunction(
+            LongFunction<A> next
+        ) {
             return WithBooleanFunction.of(fuseLongFunction(next));
         }
 
@@ -447,7 +500,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleFunction<A> extends Combine<A, DoubleFunction<A>> {
+    public static final class WithDoubleFunction<A>
+        extends Combine<A, DoubleFunction<A>> {
+
         private final DoubleFunction<A> initial;
 
         private WithDoubleFunction(DoubleFunction<A> initial) {
@@ -482,7 +537,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleToIntFunction extends Combine<Integer, DoubleToIntFunction> {
+    public static final class WithDoubleToIntFunction
+        extends Combine<Integer, DoubleToIntFunction> {
+
         private final DoubleToIntFunction initial;
 
         private WithDoubleToIntFunction(DoubleToIntFunction initial) {
@@ -517,14 +574,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleToLongFunction extends Combine<Long, DoubleToLongFunction> {
+    public static final class WithDoubleToLongFunction
+        extends Combine<Long, DoubleToLongFunction> {
+
         private final DoubleToLongFunction initial;
 
         private WithDoubleToLongFunction(DoubleToLongFunction initial) {
             this.initial = initial;
         }
 
-        public static WithDoubleToLongFunction of(DoubleToLongFunction initial) {
+        public static WithDoubleToLongFunction of(
+            DoubleToLongFunction initial
+        ) {
             return new WithDoubleToLongFunction(initial);
         }
 
@@ -552,14 +613,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToDoubleFunction<A> extends Combine<Double, ToDoubleFunction<A>> {
+    public static final class WithToDoubleFunction<A>
+        extends Combine<Double, ToDoubleFunction<A>> {
+
         private final ToDoubleFunction<A> initial;
 
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
             this.initial = initial;
         }
 
-        public static <A> WithToDoubleFunction<A> of(ToDoubleFunction<A> initial) {
+        public static <A> WithToDoubleFunction<A> of(
+            ToDoubleFunction<A> initial
+        ) {
             return new WithToDoubleFunction<>(initial);
         }
 
@@ -578,7 +643,9 @@ public abstract class Combine<A, Fn> {
             return fuseDoubleFunction(next);
         }
 
-        public <B> WithFunction<A, B> fusingDoubleFunction(DoubleFunction<B> next) {
+        public <B> WithFunction<A, B> fusingDoubleFunction(
+            DoubleFunction<B> next
+        ) {
             return WithFunction.of(fuseDoubleFunction(next));
         }
 
@@ -587,14 +654,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToDoubleBiFunction<A, B> extends Combine<Double, Function<A, ToDoubleFunction<B>>> {
+    public static final class WithToDoubleBiFunction<A, B>
+        extends Combine<Double, Function<A, ToDoubleFunction<B>>> {
+
         private final ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
             this.initial = initial;
         }
 
-        public static <A, B> WithToDoubleBiFunction<A, B> of(ToDoubleBiFunction<A, B> initial) {
+        public static <A, B> WithToDoubleBiFunction<A, B> of(
+            ToDoubleBiFunction<A, B> initial
+        ) {
             return new WithToDoubleBiFunction<>(initial);
         }
 
@@ -606,7 +677,9 @@ public abstract class Combine<A, Fn> {
 
         /* ToDoubleBiFunction<A, B> -> DoubleFunction<C> */
 
-        public <C> Function<A, Function<B, C>> fuseDoubleFunction(DoubleFunction<C> next) {
+        public <C> Function<A, Function<B, C>> fuseDoubleFunction(
+            DoubleFunction<C> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -614,7 +687,9 @@ public abstract class Combine<A, Fn> {
             return fuseDoubleFunction(next);
         }
 
-        public <C> WithBiFunction<A, B, C> fusingDoubleFunction(DoubleFunction<C> next) {
+        public <C> WithBiFunction<A, B, C> fusingDoubleFunction(
+            DoubleFunction<C> next
+        ) {
             return WithBiFunction.of(fuseDoubleFunction(next));
         }
 
@@ -623,7 +698,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntFunction<A> extends Combine<A, IntFunction<A>> {
+    public static final class WithIntFunction<A>
+        extends Combine<A, IntFunction<A>> {
+
         private final IntFunction<A> initial;
 
         private WithIntFunction(IntFunction<A> initial) {
@@ -658,7 +735,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntToDoubleFunction extends Combine<Integer, IntToDoubleFunction> {
+    public static final class WithIntToDoubleFunction
+        extends Combine<Integer, IntToDoubleFunction> {
+
         private final IntToDoubleFunction initial;
 
         private WithIntToDoubleFunction(IntToDoubleFunction initial) {
@@ -693,7 +772,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntToLongFunction extends Combine<Long, IntToLongFunction> {
+    public static final class WithIntToLongFunction
+        extends Combine<Long, IntToLongFunction> {
+
         private final IntToLongFunction initial;
 
         private WithIntToLongFunction(IntToLongFunction initial) {
@@ -728,7 +809,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToIntFunction<A> extends Combine<Integer, ToIntFunction<A>> {
+    public static final class WithToIntFunction<A>
+        extends Combine<Integer, ToIntFunction<A>> {
+
         private final ToIntFunction<A> initial;
 
         private WithToIntFunction(ToIntFunction<A> initial) {
@@ -763,14 +846,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToIntBiFunction<A, B> extends Combine<Integer, Function<A, ToIntFunction<B>>> {
+    public static final class WithToIntBiFunction<A, B>
+        extends Combine<Integer, Function<A, ToIntFunction<B>>> {
+
         private final ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
             this.initial = initial;
         }
 
-        public static <A, B> WithToIntBiFunction<A, B> of(ToIntBiFunction<A, B> initial) {
+        public static <A, B> WithToIntBiFunction<A, B> of(
+            ToIntBiFunction<A, B> initial
+        ) {
             return new WithToIntBiFunction<>(initial);
         }
 
@@ -782,7 +869,9 @@ public abstract class Combine<A, Fn> {
 
         /* ToIntBiFunction<A, B> -> IntFunction<C> */
 
-        public <C> Function<A, Function<B, C>> fuseIntFunction(IntFunction<C> next) {
+        public <C> Function<A, Function<B, C>> fuseIntFunction(
+            IntFunction<C> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -790,7 +879,9 @@ public abstract class Combine<A, Fn> {
             return fuseIntFunction(next);
         }
 
-        public <C> WithBiFunction<A, B, C> fusingIntFunction(IntFunction<C> next) {
+        public <C> WithBiFunction<A, B, C> fusingIntFunction(
+            IntFunction<C> next
+        ) {
             return WithBiFunction.of(fuseIntFunction(next));
         }
 
@@ -799,7 +890,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongFunction<A> extends Combine<A, LongFunction<A>> {
+    public static final class WithLongFunction<A>
+        extends Combine<A, LongFunction<A>> {
+
         private final LongFunction<A> initial;
 
         private WithLongFunction(LongFunction<A> initial) {
@@ -834,14 +927,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongToDoubleFunction extends Combine<Long, LongToDoubleFunction> {
+    public static final class WithLongToDoubleFunction
+        extends Combine<Long, LongToDoubleFunction> {
+
         private final LongToDoubleFunction initial;
 
         private WithLongToDoubleFunction(LongToDoubleFunction initial) {
             this.initial = initial;
         }
 
-        public static WithLongToDoubleFunction of(LongToDoubleFunction initial) {
+        public static WithLongToDoubleFunction of(
+            LongToDoubleFunction initial
+        ) {
             return new WithLongToDoubleFunction(initial);
         }
 
@@ -869,7 +966,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongToIntFunction extends Combine<Long, LongToIntFunction> {
+    public static final class WithLongToIntFunction
+        extends Combine<Long, LongToIntFunction> {
+
         private final LongToIntFunction initial;
 
         private WithLongToIntFunction(LongToIntFunction initial) {
@@ -904,7 +1003,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToLongFunction<A> extends Combine<Long, ToLongFunction<A>> {
+    public static final class WithToLongFunction<A>
+        extends Combine<Long, ToLongFunction<A>> {
+
         private final ToLongFunction<A> initial;
 
         private WithToLongFunction(ToLongFunction<A> initial) {
@@ -939,14 +1040,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithToLongBiFunction<A, B> extends Combine<Long, Function<A, ToLongFunction<B>>> {
+    public static final class WithToLongBiFunction<A, B>
+        extends Combine<Long, Function<A, ToLongFunction<B>>> {
+
         private final ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
             this.initial = initial;
         }
 
-        public static <A, B> WithToLongBiFunction<A, B> of(ToLongBiFunction<A, B> initial) {
+        public static <A, B> WithToLongBiFunction<A, B> of(
+            ToLongBiFunction<A, B> initial
+        ) {
             return new WithToLongBiFunction<>(initial);
         }
 
@@ -958,7 +1063,9 @@ public abstract class Combine<A, Fn> {
 
         /* ToLongBiFunction<A, B> -> LongFunction<C> */
 
-        public <C> Function<A, Function<B, C>> fuseLongFunction(LongFunction<C> next) {
+        public <C> Function<A, Function<B, C>> fuseLongFunction(
+            LongFunction<C> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -966,7 +1073,9 @@ public abstract class Combine<A, Fn> {
             return fuseLongFunction(next);
         }
 
-        public <C> WithBiFunction<A, B, C> fusingLongFunction(LongFunction<C> next) {
+        public <C> WithBiFunction<A, B, C> fusingLongFunction(
+            LongFunction<C> next
+        ) {
             return WithBiFunction.of(fuseLongFunction(next));
         }
 
@@ -976,7 +1085,9 @@ public abstract class Combine<A, Fn> {
     }
 
     @Evil
-    public static final class WithConsumer<A> extends Combine<Void, Consumer<A>> {
+    public static final class WithConsumer<A>
+        extends Combine<Void, Consumer<A>> {
+
         private final Consumer<A> initial;
 
         private WithConsumer(Consumer<A> initial) {
@@ -1018,7 +1129,9 @@ public abstract class Combine<A, Fn> {
     }
 
     @Evil
-    public static final class WithBiConsumer<A, B> extends Combine<Void, Function<A, Consumer<B>>> {
+    public static final class WithBiConsumer<A, B>
+        extends Combine<Void, Function<A, Consumer<B>>> {
+
         private final BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
@@ -1040,7 +1153,9 @@ public abstract class Combine<A, Fn> {
         /* Consumer<A> -> Supplier<B> */
 
         @Evil
-        public <C> Function<A, Function<B, C>> absorbSupplier(Supplier<C> next) {
+        public <C> Function<A, Function<B, C>> absorbSupplier(
+            Supplier<C> next
+        ) {
             return Z.absorb(initial, next);
         }
 
@@ -1060,7 +1175,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithPredicate<A> extends Combine<Boolean, Predicate<A>> {
+    public static final class WithPredicate<A>
+        extends Combine<Boolean, Predicate<A>> {
+
         private final Predicate<A> initial;
 
         private WithPredicate(Predicate<A> initial) {
@@ -1095,14 +1212,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBiPredicate<A, B> extends Combine<Boolean, Function<A, Predicate<B>>> {
+    public static final class WithBiPredicate<A, B>
+        extends Combine<Boolean, Function<A, Predicate<B>>> {
+
         private final BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
             this.initial = initial;
         }
 
-        public static <A, B> WithBiPredicate<A, B> of(BiPredicate<A, B> initial) {
+        public static <A, B> WithBiPredicate<A, B> of(
+            BiPredicate<A, B> initial
+        ) {
             return new WithBiPredicate<>(initial);
         }
 
@@ -1114,7 +1235,9 @@ public abstract class Combine<A, Fn> {
 
         /* BiPredicate<A, B> -> BooleanFunction<C> */
 
-        public <C> Function<A, Function<B, C>> fuseBooleanFunction(BooleanFunction<C> next) {
+        public <C> Function<A, Function<B, C>> fuseBooleanFunction(
+            BooleanFunction<C> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -1122,7 +1245,9 @@ public abstract class Combine<A, Fn> {
             return fuseBooleanFunction(next);
         }
 
-        public <C> WithBiFunction<A, B, C> fusingBooleanFunction(BooleanFunction<C> next) {
+        public <C> WithBiFunction<A, B, C> fusingBooleanFunction(
+            BooleanFunction<C> next
+        ) {
             return WithBiFunction.of(fuseBooleanFunction(next));
         }
 
@@ -1131,7 +1256,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanPredicate extends Combine<Boolean, BooleanPredicate> {
+    public static final class WithBooleanPredicate
+        extends Combine<Boolean, BooleanPredicate> {
+
         private final BooleanPredicate initial;
 
         private WithBooleanPredicate(BooleanPredicate initial) {
@@ -1149,7 +1276,9 @@ public abstract class Combine<A, Fn> {
 
         /* BooleanPredicate -> BooleanFunction<A> */
 
-        public <A> BooleanFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+        public <A> BooleanFunction<A> fuseBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -1157,7 +1286,9 @@ public abstract class Combine<A, Fn> {
             return fuseBooleanFunction(next);
         }
 
-        public <A> WithBooleanFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+        public <A> WithBooleanFunction<A> fusingBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return WithBooleanFunction.of(fuseBooleanFunction(next));
         }
 
@@ -1166,7 +1297,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoublePredicate extends Combine<Double, DoublePredicate> {
+    public static final class WithDoublePredicate
+        extends Combine<Double, DoublePredicate> {
+
         private final DoublePredicate initial;
 
         private WithDoublePredicate(DoublePredicate initial) {
@@ -1184,7 +1317,9 @@ public abstract class Combine<A, Fn> {
 
         /* DoublePredicate -> BooleanFunction<A> */
 
-        public <A> DoubleFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+        public <A> DoubleFunction<A> fuseBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -1192,7 +1327,9 @@ public abstract class Combine<A, Fn> {
             return fuseBooleanFunction(next);
         }
 
-        public <A> WithDoubleFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+        public <A> WithDoubleFunction<A> fusingBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return WithDoubleFunction.of(fuseBooleanFunction(next));
         }
 
@@ -1201,7 +1338,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntPredicate extends Combine<Integer, IntPredicate> {
+    public static final class WithIntPredicate
+        extends Combine<Integer, IntPredicate> {
+
         private final IntPredicate initial;
 
         private WithIntPredicate(IntPredicate initial) {
@@ -1227,7 +1366,9 @@ public abstract class Combine<A, Fn> {
             return fuseBooleanFunction(next);
         }
 
-        public <A> WithIntFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+        public <A> WithIntFunction<A> fusingBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return WithIntFunction.of(fuseBooleanFunction(next));
         }
 
@@ -1236,7 +1377,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongPredicate extends Combine<Long, LongPredicate> {
+    public static final class WithLongPredicate
+        extends Combine<Long, LongPredicate> {
+
         private final LongPredicate initial;
 
         private WithLongPredicate(LongPredicate initial) {
@@ -1254,7 +1397,9 @@ public abstract class Combine<A, Fn> {
 
         /* LongPredicate -> BooleanFunction<A> */
 
-        public <A> LongFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
+        public <A> LongFunction<A> fuseBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -1262,7 +1407,9 @@ public abstract class Combine<A, Fn> {
             return fuseBooleanFunction(next);
         }
 
-        public <A> WithLongFunction<A> fusingBooleanFunction(BooleanFunction<A> next) {
+        public <A> WithLongFunction<A> fusingBooleanFunction(
+            BooleanFunction<A> next
+        ) {
             return WithLongFunction.of(fuseBooleanFunction(next));
         }
 
@@ -1272,6 +1419,7 @@ public abstract class Combine<A, Fn> {
     }
 
     public static final class WithSupplier<A> extends Combine<A, Supplier<A>> {
+
         private final Supplier<A> initial;
 
         private WithSupplier(Supplier<A> initial) {
@@ -1315,7 +1463,9 @@ public abstract class Combine<A, Fn> {
             return fuseBiFunction(next);
         }
 
-        public <B, C> WithFunction<B, C> fusingBiFunction(BiFunction<A, B, C> next) {
+        public <B, C> WithFunction<B, C> fusingBiFunction(
+            BiFunction<A, B, C> next
+        ) {
             return WithFunction.of(fuseBiFunction(next));
         }
 
@@ -1324,7 +1474,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBooleanSupplier extends Combine<Boolean, BooleanSupplier> {
+    public static final class WithBooleanSupplier
+        extends Combine<Boolean, BooleanSupplier> {
+
         private final BooleanSupplier initial;
 
         private WithBooleanSupplier(BooleanSupplier initial) {
@@ -1359,7 +1511,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleSupplier extends Combine<Double, DoubleSupplier> {
+    public static final class WithDoubleSupplier
+        extends Combine<Double, DoubleSupplier> {
+
         private final DoubleSupplier initial;
 
         private WithDoubleSupplier(DoubleSupplier initial) {
@@ -1394,7 +1548,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntSupplier extends Combine<Integer, IntSupplier> {
+    public static final class WithIntSupplier
+        extends Combine<Integer, IntSupplier> {
+
         private final IntSupplier initial;
 
         private WithIntSupplier(IntSupplier initial) {
@@ -1429,7 +1585,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongSupplier extends Combine<Long, LongSupplier> {
+    public static final class WithLongSupplier
+        extends Combine<Long, LongSupplier> {
+
         private final LongSupplier initial;
 
         private WithLongSupplier(LongSupplier initial) {
@@ -1464,7 +1622,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithUnaryOperator<A> extends Combine<A, UnaryOperator<A>> {
+    public static final class WithUnaryOperator<A>
+        extends Combine<A, UnaryOperator<A>> {
+
         private final UnaryOperator<A> initial;
 
         private WithUnaryOperator(UnaryOperator<A> initial) {
@@ -1500,15 +1660,21 @@ public abstract class Combine<A, Fn> {
 
         /* UnaryOperator -> BiFunction<A, B, C> */
 
-        public <B, C> Function<A, Function<B, C>> fuseBiFunction(BiFunction<A, B, C> next) {
+        public <B, C> Function<A, Function<B, C>> fuseBiFunction(
+            BiFunction<A, B, C> next
+        ) {
             return Z.fuse(resolve(), next);
         }
 
-        public <B, C> Function<A, Function<B, C>> fuse(BiFunction<A, B, C> next) {
+        public <B, C> Function<A, Function<B, C>> fuse(
+            BiFunction<A, B, C> next
+        ) {
             return fuseBiFunction(next);
         }
 
-        public <B, C> WithBiFunction<A, B, C> fusingBiFunction(BiFunction<A, B, C> next) {
+        public <B, C> WithBiFunction<A, B, C> fusingBiFunction(
+            BiFunction<A, B, C> next
+        ) {
             return WithBiFunction.of(fuse(next));
         }
 
@@ -1517,7 +1683,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithBinaryOperator<A> extends Combine<A, Function<A, UnaryOperator<A>>> {
+    public static final class WithBinaryOperator<A>
+        extends Combine<A, Function<A, UnaryOperator<A>>> {
+
         private final BinaryOperator<A> initial;
 
         private WithBinaryOperator(BinaryOperator<A> initial) {
@@ -1536,7 +1704,9 @@ public abstract class Combine<A, Fn> {
 
         /* BinaryOperator -> Function<A, B> */
 
-        public <B> Function<A, Function<A, B>> fuseFunction(Function<A, B> next) {
+        public <B> Function<A, Function<A, B>> fuseFunction(
+            Function<A, B> next
+        ) {
             return Z.fuse(initial, next);
         }
 
@@ -1553,14 +1723,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleUnaryOperator extends Combine<Double, DoubleUnaryOperator> {
+    public static final class WithDoubleUnaryOperator
+        extends Combine<Double, DoubleUnaryOperator> {
+
         private final DoubleUnaryOperator initial;
 
         private WithDoubleUnaryOperator(DoubleUnaryOperator initial) {
             this.initial = initial;
         }
 
-        public static <A> WithDoubleUnaryOperator of(DoubleUnaryOperator initial) {
+        public static <A> WithDoubleUnaryOperator of(
+            DoubleUnaryOperator initial
+        ) {
             return new WithDoubleUnaryOperator(initial);
         }
 
@@ -1571,7 +1745,9 @@ public abstract class Combine<A, Fn> {
 
         /* DoubleUnaryOperator -> DoubleFunction<A> */
 
-        public <A> DoubleFunction<A> fuseDoubleFunction(DoubleFunction<A> next) {
+        public <A> DoubleFunction<A> fuseDoubleFunction(
+            DoubleFunction<A> next
+        ) {
             return Z.fuse(resolve(), next);
         }
 
@@ -1579,7 +1755,9 @@ public abstract class Combine<A, Fn> {
             return fuseDoubleFunction(next);
         }
 
-        public <A> WithDoubleFunction<A> fusingDoubleFunction(DoubleFunction<A> next) {
+        public <A> WithDoubleFunction<A> fusingDoubleFunction(
+            DoubleFunction<A> next
+        ) {
             return WithDoubleFunction.of(fuseDoubleFunction(next));
         }
 
@@ -1588,14 +1766,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithDoubleBinaryOperator extends Combine<Double, DoubleFunction<DoubleUnaryOperator>> {
+    public static final class WithDoubleBinaryOperator
+        extends Combine<Double, DoubleFunction<DoubleUnaryOperator>> {
+
         private final DoubleBinaryOperator initial;
 
         private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
             this.initial = initial;
         }
 
-        public static <A> WithDoubleBinaryOperator of(DoubleBinaryOperator initial) {
+        public static <A> WithDoubleBinaryOperator of(
+            DoubleBinaryOperator initial
+        ) {
             return new WithDoubleBinaryOperator(initial);
         }
 
@@ -1606,18 +1788,23 @@ public abstract class Combine<A, Fn> {
 
         /* DoubleBinaryOperator -> DoubleFunction<A> */
 
-        public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(DoubleFunction<A> next) {
+        public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(
+            DoubleFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
-        public <A> DoubleFunction<DoubleFunction<A>> fuse(DoubleFunction<A> next) {
+        public <A> DoubleFunction<DoubleFunction<A>> fuse(
+            DoubleFunction<A> next
+        ) {
             return fuseDoubleFunction(next);
         }
-
         // TODO: "fusing" -- Need better currying support or DoubleBiFunction functional interface?
     }
 
-    public static final class WithIntUnaryOperator extends Combine<Integer, IntUnaryOperator> {
+    public static final class WithIntUnaryOperator
+        extends Combine<Integer, IntUnaryOperator> {
+
         private final IntUnaryOperator initial;
 
         private WithIntUnaryOperator(IntUnaryOperator initial) {
@@ -1652,7 +1839,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithIntBinaryOperator extends Combine<Integer, IntFunction<IntUnaryOperator>> {
+    public static final class WithIntBinaryOperator
+        extends Combine<Integer, IntFunction<IntUnaryOperator>> {
+
         private final IntBinaryOperator initial;
 
         private WithIntBinaryOperator(IntBinaryOperator initial) {
@@ -1670,18 +1859,21 @@ public abstract class Combine<A, Fn> {
 
         /* IntBinaryOperator -> IntFunction<A> */
 
-        public <A> IntFunction<IntFunction<A>> fuseIntFunction(IntFunction<A> next) {
+        public <A> IntFunction<IntFunction<A>> fuseIntFunction(
+            IntFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
         public <A> IntFunction<IntFunction<A>> fuse(IntFunction<A> next) {
             return fuseIntFunction(next);
         }
-
         // TODO: "fusing" -- Need better currying support or IntBiFunction functional interface?
     }
 
-    public static final class WithLongUnaryOperator extends Combine<Long, LongUnaryOperator> {
+    public static final class WithLongUnaryOperator
+        extends Combine<Long, LongUnaryOperator> {
+
         private final LongUnaryOperator initial;
 
         private WithLongUnaryOperator(LongUnaryOperator initial) {
@@ -1707,7 +1899,9 @@ public abstract class Combine<A, Fn> {
             return fuseLongFunction(next);
         }
 
-        public <A> WithLongFunction<A> fusingLongFunction(LongFunction<A> next) {
+        public <A> WithLongFunction<A> fusingLongFunction(
+            LongFunction<A> next
+        ) {
             return WithLongFunction.of(fuseLongFunction(next));
         }
 
@@ -1716,14 +1910,18 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    public static final class WithLongBinaryOperator extends Combine<Long, LongFunction<LongUnaryOperator>> {
+    public static final class WithLongBinaryOperator
+        extends Combine<Long, LongFunction<LongUnaryOperator>> {
+
         private final LongBinaryOperator initial;
 
         private WithLongBinaryOperator(LongBinaryOperator initial) {
             this.initial = initial;
         }
 
-        public static <A> WithLongBinaryOperator of(LongBinaryOperator initial) {
+        public static <A> WithLongBinaryOperator of(
+            LongBinaryOperator initial
+        ) {
             return new WithLongBinaryOperator(initial);
         }
 
@@ -1734,14 +1932,15 @@ public abstract class Combine<A, Fn> {
 
         /* LongBinaryOperator -> LongFunction<A> */
 
-        public <A> LongFunction<LongFunction<A>> fuseLongFunction(LongFunction<A> next) {
+        public <A> LongFunction<LongFunction<A>> fuseLongFunction(
+            LongFunction<A> next
+        ) {
             return Z.fuse(initial, next);
         }
 
         public <A> LongFunction<LongFunction<A>> fuse(LongFunction<A> next) {
             return fuseLongFunction(next);
         }
-
         // TODO: "fusing" -- Need better currying support or LongBiFunction functional interface?
     }
 }

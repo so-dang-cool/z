@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class LongFunctionFusionTests {
+
     @Test
     void longFn() {
         assertEquals("3", longToString.apply(3L));
@@ -28,12 +28,18 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_fn_deep() {
-        assertEquals("1!", Z.with(longToString).fuse(addExclamationMark).apply(1L));
+        assertEquals(
+            "1!",
+            Z.with(longToString).fuse(addExclamationMark).apply(1L)
+        );
     }
 
     @Test
     void longFn_to_fn_deeper() {
-        assertEquals("1!", Z.with(longToString).fusing(addExclamationMark).resolve().apply(1L));
+        assertEquals(
+            "1!",
+            Z.with(longToString).fusing(addExclamationMark).resolve().apply(1L)
+        );
     }
 
     @Test
@@ -43,12 +49,21 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_toDblFn() {
-        assertEquals(1.0, Z.fuse(longToString, stringToDouble).applyAsDouble(1L));
+        assertEquals(
+            1.0,
+            Z.fuse(longToString, stringToDouble).applyAsDouble(1L)
+        );
     }
 
     @Test
     void longFn_to_toDblBin() {
-        assertEquals(3.0, Z.fuse(longToString, addStringsAsDouble).apply(1L).applyAsDouble("2.0"));
+        assertEquals(
+            3.0,
+            Z
+                .fuse(longToString, addStringsAsDouble)
+                .apply(1L)
+                .applyAsDouble("2.0")
+        );
     }
 
     @Test
@@ -58,7 +73,10 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_toIntBifn() {
-        assertEquals(3, Z.fuse(longToString, addStringsAsInt).apply(1L).applyAsInt("2"));
+        assertEquals(
+            3,
+            Z.fuse(longToString, addStringsAsInt).apply(1L).applyAsInt("2")
+        );
     }
 
     @Test
@@ -68,7 +86,10 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_toLongBifn() {
-        assertEquals(3L, Z.fuse(longToString, addStringsAsLong).apply(1L).applyAsLong("2"));
+        assertEquals(
+            3L,
+            Z.fuse(longToString, addStringsAsLong).apply(1L).applyAsLong("2")
+        );
     }
 
     @Test
@@ -84,7 +105,7 @@ public class LongFunctionFusionTests {
     @Evil
     @Test
     void longFn_to_cns() {
-        synchronized(consumedStringA) {
+        synchronized (consumedStringA) {
             consumedStringA = "";
 
             Z.fuse(longToString, saveStringA).accept(345L);
@@ -96,12 +117,15 @@ public class LongFunctionFusionTests {
     @Evil
     @Test
     void longFn_to_bicns() {
-        synchronized(consumedStringB) {
-            synchronized(consumedStringC) {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
                 consumedStringB = "";
                 consumedStringC = "";
 
-                Z.fuse(longToString, saveStringsBandC).apply(123L).accept("one twenty three");
+                Z
+                    .fuse(longToString, saveStringsBandC)
+                    .apply(123L)
+                    .accept("one twenty three");
 
                 assertEquals("123", consumedStringB);
                 assertEquals("one twenty three", consumedStringC);
@@ -112,12 +136,15 @@ public class LongFunctionFusionTests {
     @Evil
     @Test
     void longFn_to_objDblCns() {
-        synchronized(consumedStringD) {
-            synchronized(consumedDoubleB) {
+        synchronized (consumedStringD) {
+            synchronized (consumedDoubleB) {
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
 
-                Z.fuse(longToString, saveStringDDoubleB).apply(234L).accept(234.0);
+                Z
+                    .fuse(longToString, saveStringDDoubleB)
+                    .apply(234L)
+                    .accept(234.0);
 
                 assertEquals("234", consumedStringD);
                 assertEquals(234.0, consumedDoubleB);
@@ -128,8 +155,8 @@ public class LongFunctionFusionTests {
     @Evil
     @Test
     void longFn_to_objIntCns() {
-        synchronized(consumedStringE) {
-            synchronized(consumedIntB) {
+        synchronized (consumedStringE) {
+            synchronized (consumedIntB) {
                 consumedStringE = "";
                 consumedIntB = 0;
 
@@ -144,8 +171,8 @@ public class LongFunctionFusionTests {
     @Evil
     @Test
     void longFn_to_objLongCns() {
-        synchronized(consumedStringF) {
-            synchronized(consumedLongB) {
+        synchronized (consumedStringF) {
+            synchronized (consumedLongB) {
                 consumedStringF = "";
                 consumedLongB = 0L;
 
@@ -164,6 +191,9 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_biop() {
-        assertEquals("same-ish", Z.fuse(longToString, relation).apply(789L).apply("789"));
+        assertEquals(
+            "same-ish",
+            Z.fuse(longToString, relation).apply(789L).apply("789")
+        );
     }
 }

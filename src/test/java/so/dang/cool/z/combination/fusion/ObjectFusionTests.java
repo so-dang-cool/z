@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class ObjectFusionTests {
+
     @Test
     void class_deep() {
         assertEquals("hi", Z.with(String.class).resolve().apply("hi"));
@@ -18,13 +18,20 @@ public class ObjectFusionTests {
 
     @Test
     void class_to_fn_deep() {
-        assertEquals(suppliedString.toLowerCase(), Z.with(String.class).fuse(toLower).apply("Z"));
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with(String.class).fuse(toLower).apply("Z")
+        );
     }
 
     @Test
     void class_to_fn_deeper() {
-        assertEquals(suppliedString.toLowerCase(), Z.with(String.class).fusing(toLower).resolve().apply("Z"));
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with(String.class).fusing(toLower).resolve().apply("Z")
+        );
     }
+
     @Test
     void object_deep() {
         assertEquals("hi", Z.with("hi").resolve().get());
@@ -32,17 +39,26 @@ public class ObjectFusionTests {
 
     @Test
     void object_to_fn() {
-        assertEquals(suppliedString.toLowerCase(), Z.fuseObject("Z", toLower).get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.fuseObject("Z", toLower).get()
+        );
     }
 
     @Test
     void object_to_fn_deep() {
-        assertEquals(suppliedString.toLowerCase(), Z.with("Z").fuse(toLower).get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with("Z").fuse(toLower).get()
+        );
     }
 
     @Test
     void object_to_fn_deeper() {
-        assertEquals(suppliedString.toLowerCase(), Z.with("Z").fusing(toLower).resolve().get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with("Z").fusing(toLower).resolve().get()
+        );
     }
 
     @Test
@@ -57,7 +73,10 @@ public class ObjectFusionTests {
 
     @Test
     void object_to_toDblBifn() {
-        assertEquals(2.0, Z.fuseObject("1.0", addStringsAsDouble).applyAsDouble("1.0"));
+        assertEquals(
+            2.0,
+            Z.fuseObject("1.0", addStringsAsDouble).applyAsDouble("1.0")
+        );
     }
 
     @Test
@@ -93,7 +112,7 @@ public class ObjectFusionTests {
     @Evil
     @Test
     void object_to_cns() {
-        synchronized(consumedStringA) {
+        synchronized (consumedStringA) {
             consumedStringA = "";
 
             Z.fuseObject("Z", saveStringA).run();
@@ -105,8 +124,8 @@ public class ObjectFusionTests {
     @Evil
     @Test
     void object_to_bicns() {
-        synchronized(consumedStringB) {
-            synchronized(consumedStringC) {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
                 consumedStringB = "";
                 consumedStringC = "";
 
@@ -121,8 +140,8 @@ public class ObjectFusionTests {
     @Evil
     @Test
     void object_to_objDblCns() {
-        synchronized(consumedStringD) {
-            synchronized(consumedDoubleB) {
+        synchronized (consumedStringD) {
+            synchronized (consumedDoubleB) {
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
 
@@ -137,8 +156,8 @@ public class ObjectFusionTests {
     @Evil
     @Test
     void object_to_objIntCns() {
-        synchronized(consumedStringE) {
-            synchronized(consumedIntB) {
+        synchronized (consumedStringE) {
+            synchronized (consumedIntB) {
                 consumedStringE = "";
                 consumedIntB = 0;
 
@@ -153,8 +172,8 @@ public class ObjectFusionTests {
     @Evil
     @Test
     void object_to_objLongFn() {
-        synchronized(consumedStringF) {
-            synchronized(consumedLongB) {
+        synchronized (consumedStringF) {
+            synchronized (consumedLongB) {
                 consumedStringF = "";
                 consumedLongB = 0L;
 

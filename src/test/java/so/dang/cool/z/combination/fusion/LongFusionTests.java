@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class LongFusionTests {
+
     @Test
     void long_deep() {
         assertEquals(3L, Z.with(3L).resolve().getAsLong());
@@ -48,7 +48,7 @@ public class LongFusionTests {
     @Evil
     @Test
     void long_to_longCns() {
-        synchronized(consumedLongA) {
+        synchronized (consumedLongA) {
             consumedLongA = 0L;
 
             Z.fuse(3L, saveLongA).run();

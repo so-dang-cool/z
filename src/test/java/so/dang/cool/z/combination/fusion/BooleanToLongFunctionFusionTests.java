@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class BooleanToLongFunctionFusionTests {
+
     @Test
     void boolToLong() {
         assertEquals(3L, maybeThreeAsLong.applyAsLong(true));
@@ -27,17 +27,26 @@ public class BooleanToLongFunctionFusionTests {
 
     @Test
     void boolToLong_to_longFn_deep() {
-        assertEquals("3", Z.with(maybeThreeAsLong).fuse(longToString).apply(true));
+        assertEquals(
+            "3",
+            Z.with(maybeThreeAsLong).fuse(longToString).apply(true)
+        );
     }
 
     @Test
     void boolToLong_to_longFn_deeper() {
-        assertEquals("3", Z.with(maybeThreeAsLong).fusing(longToString).resolve().apply(true));
+        assertEquals(
+            "3",
+            Z.with(maybeThreeAsLong).fusing(longToString).resolve().apply(true)
+        );
     }
 
     @Test
     void boolToLong_to_longToDbl() {
-        assertEquals(3.0, Z.fuse(maybeThreeAsLong, longToDouble).applyAsDouble(true));
+        assertEquals(
+            3.0,
+            Z.fuse(maybeThreeAsLong, longToDouble).applyAsDouble(true)
+        );
     }
 
     @Test
@@ -53,9 +62,9 @@ public class BooleanToLongFunctionFusionTests {
     @Evil
     @Test
     void boolToLong_to_longCns() {
-        synchronized(consumedLongA) {
+        synchronized (consumedLongA) {
             consumedLongA = 0L;
-            
+
             Z.fuse(maybeThreeAsLong, saveLongA).accept(true);
 
             assertEquals(3L, consumedLongA);
@@ -64,11 +73,17 @@ public class BooleanToLongFunctionFusionTests {
 
     @Test
     void boolToLong_to_longUnop() {
-        assertEquals(6L, Z.fuse(maybeThreeAsLong, addThreeToLong).applyAsLong(true));
+        assertEquals(
+            6L,
+            Z.fuse(maybeThreeAsLong, addThreeToLong).applyAsLong(true)
+        );
     }
 
     @Test
     void boolToLong_to_longBiop() {
-        assertEquals(7L, Z.fuse(maybeThreeAsLong, addLongs).apply(true).applyAsLong(4L));
-    }    
+        assertEquals(
+            7L,
+            Z.fuse(maybeThreeAsLong, addLongs).apply(true).applyAsLong(4L)
+        );
+    }
 }

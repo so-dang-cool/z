@@ -19,7 +19,7 @@ public interface BooleanConsumer {
      * operation throws an exception, it is relayed to the caller of the
      * composed operation. If performing this operation throws an exception,
      * the after operation will not be performed.
-     * 
+     *
      * @param after the operation to perform after this operation
      * @return a composed BooleanConsumer that performs in sequence this
      *         operation followed by the after operation

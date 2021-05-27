@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class BooleanPredicateFusionTests {
+
     @Test
     void boolPred() {
         assertTrue(booleanId.test(true));
@@ -23,7 +23,10 @@ public class BooleanPredicateFusionTests {
 
     @Test
     void boolPred_to_bifn() {
-        assertEquals("HI", Z.fuse(booleanId, maybeToUpper).apply(true).apply("hi"));
+        assertEquals(
+            "HI",
+            Z.fuse(booleanId, maybeToUpper).apply(true).apply("hi")
+        );
     }
 
     @Test
@@ -33,22 +36,37 @@ public class BooleanPredicateFusionTests {
 
     @Test
     void boolPred_to_boolFn_deep() {
-        assertEquals("true", Z.with(booleanId).fuse(booleanToString).apply(true));
+        assertEquals(
+            "true",
+            Z.with(booleanId).fuse(booleanToString).apply(true)
+        );
     }
 
     @Test
     void boolPred_to_boolFn_deeper() {
-        assertEquals("true", Z.with(booleanId).fusing(booleanToString).resolve().apply(true));
+        assertEquals(
+            "true",
+            Z.with(booleanId).fusing(booleanToString).resolve().apply(true)
+        );
     }
 
     @Test
     void boolPred_to_toDblFn() {
-        assertEquals(1.0, Z.fuse(booleanId, maybeOneAsDouble).applyAsDouble(true));
+        assertEquals(
+            1.0,
+            Z.fuse(booleanId, maybeOneAsDouble).applyAsDouble(true)
+        );
     }
 
     @Test
     void boolPred_to_toDblBifn() {
-        assertEquals(2.0, Z.fuse(booleanId, maybeAddOneToStringAsDouble).apply(true).applyAsDouble("1.0"));
+        assertEquals(
+            2.0,
+            Z
+                .fuse(booleanId, maybeAddOneToStringAsDouble)
+                .apply(true)
+                .applyAsDouble("1.0")
+        );
     }
 
     @Test
@@ -58,7 +76,13 @@ public class BooleanPredicateFusionTests {
 
     @Test
     void boolPred_to_toIntBifn() {
-        assertEquals(3, Z.fuse(booleanId, maybeAddTwoToStringAsInt).apply(true).applyAsInt("1"));
+        assertEquals(
+            3,
+            Z
+                .fuse(booleanId, maybeAddTwoToStringAsInt)
+                .apply(true)
+                .applyAsInt("1")
+        );
     }
 
     @Test
@@ -68,12 +92,20 @@ public class BooleanPredicateFusionTests {
 
     @Test
     void boolPred_to_boolToLongBifn() {
-        assertEquals(4L, Z.fuse(booleanId, maybeAddThreeToStringAsLong).apply(true).applyAsLong("1"));
+        assertEquals(
+            4L,
+            Z
+                .fuse(booleanId, maybeAddThreeToStringAsLong)
+                .apply(true)
+                .applyAsLong("1")
+        );
     }
 
     @Test
     void boolPred_to_bipred() {
-        assertTrue(Z.fuse(booleanId, maybeNotFromString).apply(true).test("false"));
+        assertTrue(
+            Z.fuse(booleanId, maybeNotFromString).apply(true).test("false")
+        );
     }
 
     @Test
@@ -84,7 +116,7 @@ public class BooleanPredicateFusionTests {
     @Evil
     @Test
     void boolPred_to_cns() {
-        synchronized(consumedBooleanA) {
+        synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
             Z.fuse(booleanId, saveBooleanA).accept(true);
@@ -96,12 +128,15 @@ public class BooleanPredicateFusionTests {
     @Evil
     @Test
     void boolPred_to_bicns() {
-        synchronized(consumedBooleanB) {
-            synchronized(consumedStringG) {
+        synchronized (consumedBooleanB) {
+            synchronized (consumedStringG) {
                 consumedBooleanB = false;
                 consumedStringG = "";
 
-                Z.fuse(booleanId, saveBooleanBAndStringG).apply(true).accept("yolo");
+                Z
+                    .fuse(booleanId, saveBooleanBAndStringG)
+                    .apply(true)
+                    .accept("yolo");
 
                 assertTrue(consumedBooleanB);
                 assertEquals("yolo", consumedStringG);

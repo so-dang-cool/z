@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class LongToIntFunctionFusionTests {
+
     @Test
     void longToInt() {
         assertEquals(3, longToInt.applyAsInt(3L));
@@ -32,7 +32,10 @@ public class LongToIntFunctionFusionTests {
 
     @Test
     void longToInt_to_intFn_deeper() {
-        assertEquals("1", Z.with(longToInt).fusing(intToString).resolve().apply(1L));
+        assertEquals(
+            "1",
+            Z.with(longToInt).fusing(intToString).resolve().apply(1L)
+        );
     }
 
     @Test
@@ -52,10 +55,10 @@ public class LongToIntFunctionFusionTests {
 
     @Evil
     @Test
-    void  longToInt_to_intCns() {
-        synchronized(consumedIntA) {
+    void longToInt_to_intCns() {
+        synchronized (consumedIntA) {
             consumedIntA = 0;
-            
+
             Z.fuse(longToInt, saveIntA).accept(3L);
 
             assertEquals(3, consumedIntA);
@@ -63,12 +66,12 @@ public class LongToIntFunctionFusionTests {
     }
 
     @Test
-    void  longToInt_to_intUnop() {
+    void longToInt_to_intUnop() {
         assertEquals(3, Z.fuse(longToInt, addTwoToInt).applyAsInt(1L));
     }
 
     @Test
-    void  longToInt_to_intBiop() {
+    void longToInt_to_intBiop() {
         assertEquals(4, Z.fuse(longToInt, addInts).apply(1L).applyAsInt(3));
-    }    
+    }
 }

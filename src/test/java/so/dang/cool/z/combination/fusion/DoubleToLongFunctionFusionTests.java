@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class DoubleToLongFunctionFusionTests {
+
     @Test
     void dblToLong() {
         assertEquals(1L, doubleToLong.applyAsLong(1.0));
@@ -32,12 +32,18 @@ public class DoubleToLongFunctionFusionTests {
 
     @Test
     void dblToLong_to_longFn_deeper() {
-        assertEquals("1", Z.with(doubleToLong).fusing(longToString).resolve().apply(1.6));
+        assertEquals(
+            "1",
+            Z.with(doubleToLong).fusing(longToString).resolve().apply(1.6)
+        );
     }
 
     @Test
     void dblToLong_to_longToDbl() {
-        assertEquals(1.0, Z.fuse(doubleToLong, longToDouble).applyAsDouble(1.7));
+        assertEquals(
+            1.0,
+            Z.fuse(doubleToLong, longToDouble).applyAsDouble(1.7)
+        );
     }
 
     @Test
@@ -53,9 +59,9 @@ public class DoubleToLongFunctionFusionTests {
     @Evil
     @Test
     void dblToLong_to_longCns() {
-        synchronized(consumedLongA) {
+        synchronized (consumedLongA) {
             consumedLongA = 0L;
-            
+
             Z.fuse(doubleToLong, saveLongA).accept(3.2);
 
             assertEquals(3L, consumedLongA);
@@ -69,6 +75,9 @@ public class DoubleToLongFunctionFusionTests {
 
     @Test
     void dblToLong_to_longBiop() {
-        assertEquals(4L, Z.fuse(doubleToLong, addLongs).apply(1.2).applyAsLong(3L));
-    }    
+        assertEquals(
+            4L,
+            Z.fuse(doubleToLong, addLongs).apply(1.2).applyAsLong(3L)
+        );
+    }
 }

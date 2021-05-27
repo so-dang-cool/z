@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class SupplierFusionTests {
+
     @Test
     void sup() {
         assertEquals(suppliedString, getString.get());
@@ -23,17 +23,26 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_fn() {
-        assertEquals(suppliedString.toLowerCase(), Z.fuse(getString, toLower).get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.fuse(getString, toLower).get()
+        );
     }
 
     @Test
     void sup_to_fn_deep() {
-        assertEquals(suppliedString.toLowerCase(), Z.with(getString).fuse(toLower).get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with(getString).fuse(toLower).get()
+        );
     }
 
     @Test
     void sup_to_fn_deeper() {
-        assertEquals(suppliedString.toLowerCase(), Z.with(getString).fusing(toLower).resolve().get());
+        assertEquals(
+            suppliedString.toLowerCase(),
+            Z.with(getString).fusing(toLower).resolve().get()
+        );
     }
 
     @Test
@@ -48,7 +57,10 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_bifn_deeper() {
-        assertEquals("Z!", Z.with(getString).fusing(concat).resolve().apply("!"));
+        assertEquals(
+            "Z!",
+            Z.with(getString).fusing(concat).resolve().apply("!")
+        );
     }
 
     @Test
@@ -58,7 +70,10 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_toDblBifn() {
-        assertEquals(2.0, Z.fuse(() -> "1.0", addStringsAsDouble).applyAsDouble("1.0"));
+        assertEquals(
+            2.0,
+            Z.fuse(() -> "1.0", addStringsAsDouble).applyAsDouble("1.0")
+        );
     }
 
     @Test
@@ -94,7 +109,7 @@ public class SupplierFusionTests {
     @Evil
     @Test
     void sup_to_cns() {
-        synchronized(consumedStringA) {
+        synchronized (consumedStringA) {
             consumedStringA = "";
 
             Z.fuse(getString, saveStringA).run();
@@ -106,8 +121,8 @@ public class SupplierFusionTests {
     @Evil
     @Test
     void sup_to_bicns() {
-        synchronized(consumedStringB) {
-            synchronized(consumedStringC) {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
                 consumedStringB = "";
                 consumedStringC = "";
 
@@ -122,8 +137,8 @@ public class SupplierFusionTests {
     @Evil
     @Test
     void sup_to_objDblCns() {
-        synchronized(consumedStringD) {
-            synchronized(consumedDoubleB) {
+        synchronized (consumedStringD) {
+            synchronized (consumedDoubleB) {
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
 
@@ -138,8 +153,8 @@ public class SupplierFusionTests {
     @Evil
     @Test
     void sup_to_objIntCns() {
-        synchronized(consumedStringE) {
-            synchronized(consumedIntB) {
+        synchronized (consumedStringE) {
+            synchronized (consumedIntB) {
                 consumedStringE = "";
                 consumedIntB = 0;
 
@@ -154,8 +169,8 @@ public class SupplierFusionTests {
     @Evil
     @Test
     void sup_to_objLongFn() {
-        synchronized(consumedStringF) {
-            synchronized(consumedLongB) {
+        synchronized (consumedStringF) {
+            synchronized (consumedLongB) {
                 consumedStringF = "";
                 consumedLongB = 0L;
 

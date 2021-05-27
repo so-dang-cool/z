@@ -9,6 +9,7 @@ import static so.dang.cool.z.combination.TestFunctions.*;
 import org.junit.jupiter.api.Test;
 
 public class BooleanPredicateTests {
+
     @Test
     public void id() {
         assertEquals(booleanId.test(true), BooleanPredicate.ID.test(true));
@@ -40,11 +41,10 @@ public class BooleanPredicateTests {
         assertTrue(not.or(booleanId).test(true));
         assertFalse(not.or(not).test(true));
     }
-    
+
     @Test
     public void negate() {
         assertFalse(booleanId.negate().test(true));
         assertTrue(not.negate().test(true));
     }
-    
 }

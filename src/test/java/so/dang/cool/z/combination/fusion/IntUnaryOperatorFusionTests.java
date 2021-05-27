@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class IntUnaryOperatorFusionTests {
+
     @Test
     void intUnop() {
         assertEquals(3, addTwoToInt.applyAsInt(1));
@@ -32,7 +32,10 @@ public class IntUnaryOperatorFusionTests {
 
     @Test
     void intUnop_to_intFn_deeper() {
-        assertEquals("3", Z.with(addTwoToInt).fusing(intToString).resolve().apply(1));
+        assertEquals(
+            "3",
+            Z.with(addTwoToInt).fusing(intToString).resolve().apply(1)
+        );
     }
 
     @Test
@@ -53,7 +56,7 @@ public class IntUnaryOperatorFusionTests {
     @Evil
     @Test
     void intUnop_to_intCns() {
-        synchronized(consumedIntA) {
+        synchronized (consumedIntA) {
             consumedIntA = 0;
 
             Z.fuse(addTwoToInt, saveIntA).accept(3);

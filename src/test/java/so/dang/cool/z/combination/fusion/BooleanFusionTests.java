@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class BooleanFusionTests {
+
     @Test
     void boolean_deep() {
         assertTrue(Z.with(true).resolve().getAsBoolean());
@@ -25,15 +25,18 @@ public class BooleanFusionTests {
     void boolean_to_boolFn() {
         assertEquals("true", Z.fuse(true, booleanToString).get());
     }
-    
+
     @Test
     void boolean_to_boolFn_deep() {
         assertEquals("true", Z.with(true).fuse(booleanToString).get());
     }
-    
+
     @Test
     void boolean_to_boolFn_deeper() {
-        assertEquals("true", Z.with(true).fusing(booleanToString).resolve().get());
+        assertEquals(
+            "true",
+            Z.with(true).fusing(booleanToString).resolve().get()
+        );
     }
 
     @Test
@@ -43,7 +46,10 @@ public class BooleanFusionTests {
 
     @Test
     void boolean_to_toDblBifn() {
-        assertEquals(3.0, Z.fuse(true, maybeAddOneToStringAsDouble).applyAsDouble("2.0"));
+        assertEquals(
+            3.0,
+            Z.fuse(true, maybeAddOneToStringAsDouble).applyAsDouble("2.0")
+        );
     }
 
     @Test
@@ -63,7 +69,10 @@ public class BooleanFusionTests {
 
     @Test
     void boolean_to_toLongBifn() {
-        assertEquals(7L, Z.fuse(true, maybeAddThreeToStringAsLong).applyAsLong("4"));
+        assertEquals(
+            7L,
+            Z.fuse(true, maybeAddThreeToStringAsLong).applyAsLong("4")
+        );
     }
 
     @Test
@@ -79,7 +88,7 @@ public class BooleanFusionTests {
     @Evil
     @Test
     void boolean_to_cns() {
-        synchronized(consumedBooleanA) {
+        synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
             Z.fuse(true, saveBooleanA).run();
@@ -91,8 +100,8 @@ public class BooleanFusionTests {
     @Evil
     @Test
     void boolean_to_bicns() {
-        synchronized(consumedBooleanB) {
-            synchronized(consumedStringG) {
+        synchronized (consumedBooleanB) {
+            synchronized (consumedStringG) {
                 consumedBooleanB = false;
                 consumedStringG = "";
 
@@ -107,8 +116,8 @@ public class BooleanFusionTests {
     @Evil
     @Test
     void boolean_to_objDblCns() {
-        synchronized(consumedBooleanC) {
-            synchronized(consumedDoubleC) {
+        synchronized (consumedBooleanC) {
+            synchronized (consumedDoubleC) {
                 consumedBooleanC = false;
                 consumedDoubleC = 0.0;
 
@@ -123,8 +132,8 @@ public class BooleanFusionTests {
     @Evil
     @Test
     void boolean_to_objIntCns() {
-        synchronized(consumedBooleanD) {
-            synchronized(consumedIntC) {
+        synchronized (consumedBooleanD) {
+            synchronized (consumedIntC) {
                 consumedBooleanD = false;
                 consumedIntC = 0;
 
@@ -139,8 +148,8 @@ public class BooleanFusionTests {
     @Evil
     @Test
     void boolean_to_objLongFn() {
-        synchronized(consumedBooleanE) {
-            synchronized(consumedLongC) {
+        synchronized (consumedBooleanE) {
+            synchronized (consumedLongC) {
                 consumedBooleanE = false;
                 consumedLongC = 0L;
 

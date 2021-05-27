@@ -34,4 +34,5 @@ package so.dang.cool.z.annotation;
  *   <li><b>Disguising side-effects:</b> The heroic path will create better abstractions. This is very hard.</li>
  * </ul>
  */
-public @interface Evil { }
+public @interface Evil {
+}

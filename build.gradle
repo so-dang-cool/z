@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'jacoco'
+    id "com.diffplug.spotless" version "5.12.5"
 
     id 'maven-publish'
     id 'signing'
@@ -42,6 +43,24 @@ tasks.named('jacocoTestCoverageVerification') {
     }
 }
 
+spotless {
+    format 'misc', {
+        target '*.gradle', '*.md', '.gitignore'
+
+        trimTrailingWhitespace()
+        indentWithSpaces(4)
+        endWithNewline()
+    }
+
+    java {
+        toggleOffOn('autofmt:off', 'autofmt:on')
+
+        importOrder()
+        removeUnusedImports()
+        prettier(['prettier': '2.3.0', 'prettier-plugin-java': '1.1.1']).config(['parser': 'java', 'tabWidth': 4])
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
@@ -65,7 +84,7 @@ publishing {
                 name = 'Z'
                 description = 'Function combinators'
                 url = 'https://github.com/hiljusti/z'
-                
+
                 licenses {
                     license {
                         name = 'MIT License'
