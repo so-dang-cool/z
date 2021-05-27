@@ -63,7 +63,7 @@ import so.dang.cool.z.function.SeptFunction;
 import so.dang.cool.z.function.SexFunction;
 import so.dang.cool.z.function.TriFunction;
 import so.dang.cool.z.function.UndecFunction;
-import so.dang.cool.z.internal.combination.Fusion;
+import so.dang.cool.z.internal.combination.Combine;
 
 
 /**
@@ -1976,466 +1976,466 @@ public final class Z {
     */
 
     @Experimental
-    public static <A> Fusion.WithFunction<A, A> withClass(Class<A> clazz) {
-        return Fusion.WithFunction.of(Z.id(clazz));
+    public static <A> Combine.WithFunction<A, A> withClass(Class<A> clazz) {
+        return Combine.WithFunction.of(Z.id(clazz));
     }
 
     @Experimental
-    public static <A> Fusion.WithFunction<A, A> with(Class<A> clazz) {
+    public static <A> Combine.WithFunction<A, A> with(Class<A> clazz) {
         return withClass(clazz);
     }
 
     @Experimental
-    public static <A> Fusion.WithSupplier<A> withObject(A initial) {
-        return Fusion.WithSupplier.of(() -> initial);
+    public static <A> Combine.WithSupplier<A> withObject(A initial) {
+        return Combine.WithSupplier.of(() -> initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithSupplier<A> with(A initial) {
+    public static <A> Combine.WithSupplier<A> with(A initial) {
         return withObject(initial);
     }
 
     @Experimental
-    public static Fusion.WithBooleanSupplier with(boolean initial) {
-        return Fusion.WithBooleanSupplier.of(() -> initial);
+    public static Combine.WithBooleanSupplier with(boolean initial) {
+        return Combine.WithBooleanSupplier.of(() -> initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleSupplier with(double initial) {
-        return Fusion.WithDoubleSupplier.of(() -> initial);
+    public static Combine.WithDoubleSupplier with(double initial) {
+        return Combine.WithDoubleSupplier.of(() -> initial);
     }
 
     @Experimental
-    public static Fusion.WithIntSupplier with(int initial) {
-        return Fusion.WithIntSupplier.of(() -> initial);
+    public static Combine.WithIntSupplier with(int initial) {
+        return Combine.WithIntSupplier.of(() -> initial);
     }
 
     @Experimental
-    public static Fusion.WithLongSupplier with(long initial) {
-        return Fusion.WithLongSupplier.of(() -> initial);
+    public static Combine.WithLongSupplier with(long initial) {
+        return Combine.WithLongSupplier.of(() -> initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithFunction<A, B> withFunction(Function<A, B> initial) {
-        return Fusion.WithFunction.of(initial);
+    public static <A, B> Combine.WithFunction<A, B> withFunction(Function<A, B> initial) {
+        return Combine.WithFunction.of(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithFunction<A, B> with(Function<A, B> initial) {
+    public static <A, B> Combine.WithFunction<A, B> with(Function<A, B> initial) {
         return withFunction(initial);
     }
 
     @Experimental
-    public static <A, B, C> Fusion.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
-        return Fusion.WithBiFunction.of(initial);
+    public static <A, B, C> Combine.WithBiFunction<A, B, C> withBiFunction(BiFunction<A, B, C> initial) {
+        return Combine.WithBiFunction.of(initial);
     }
 
     @Experimental
-    public static <A, B, C> Fusion.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
+    public static <A, B, C> Combine.WithBiFunction<A, B, C> with(BiFunction<A, B, C> initial) {
         return withBiFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBooleanFunction<A> withBooleanFunction(BooleanFunction<A> initial) {
-        return Fusion.WithBooleanFunction.of(initial);
+    public static <A> Combine.WithBooleanFunction<A> withBooleanFunction(BooleanFunction<A> initial) {
+        return Combine.WithBooleanFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBooleanFunction<A> with(BooleanFunction<A> initial) {
+    public static <A> Combine.WithBooleanFunction<A> with(BooleanFunction<A> initial) {
         return withBooleanFunction(initial);
     }
 
     @Experimental
-    public static  Fusion.WithBooleanToDoubleFunction withBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
-        return Fusion.WithBooleanToDoubleFunction.of(initial);
+    public static  Combine.WithBooleanToDoubleFunction withBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
+        return Combine.WithBooleanToDoubleFunction.of(initial);
     }
 
     @Experimental
-    public static  Fusion.WithBooleanToDoubleFunction with(BooleanToDoubleFunction initial) {
+    public static  Combine.WithBooleanToDoubleFunction with(BooleanToDoubleFunction initial) {
         return withBooleanToDoubleFunction(initial);
     }
 
     @Experimental
-    public static  Fusion.WithBooleanToLongFunction withBooleanToLongFunction(BooleanToLongFunction initial) {
-        return Fusion.WithBooleanToLongFunction.of(initial);
+    public static  Combine.WithBooleanToLongFunction withBooleanToLongFunction(BooleanToLongFunction initial) {
+        return Combine.WithBooleanToLongFunction.of(initial);
     }
 
     @Experimental
-    public static  Fusion.WithBooleanToLongFunction with(BooleanToLongFunction initial) {
+    public static  Combine.WithBooleanToLongFunction with(BooleanToLongFunction initial) {
         return withBooleanToLongFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBooleanToIntFunction withBooleanToIntFunction(BooleanToIntFunction initial) {
-        return Fusion.WithBooleanToIntFunction.of(initial);
+    public static <A> Combine.WithBooleanToIntFunction withBooleanToIntFunction(BooleanToIntFunction initial) {
+        return Combine.WithBooleanToIntFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBooleanToIntFunction with(BooleanToIntFunction initial) {
+    public static <A> Combine.WithBooleanToIntFunction with(BooleanToIntFunction initial) {
         return withBooleanToIntFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleFunction<A> withDoubleFunction(DoubleFunction<A> initial) {
-        return Fusion.WithDoubleFunction.of(initial);
+    public static <A> Combine.WithDoubleFunction<A> withDoubleFunction(DoubleFunction<A> initial) {
+        return Combine.WithDoubleFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleFunction<A> with(DoubleFunction<A> initial) {
+    public static <A> Combine.WithDoubleFunction<A> with(DoubleFunction<A> initial) {
         return withDoubleFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleToIntFunction withDoubleToIntFunction(DoubleToIntFunction initial) {
-        return Fusion.WithDoubleToIntFunction.of(initial);
+    public static <A> Combine.WithDoubleToIntFunction withDoubleToIntFunction(DoubleToIntFunction initial) {
+        return Combine.WithDoubleToIntFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleToIntFunction with(DoubleToIntFunction initial) {
+    public static <A> Combine.WithDoubleToIntFunction with(DoubleToIntFunction initial) {
         return withDoubleToIntFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleToLongFunction withDoubleToLongFunction(DoubleToLongFunction initial) {
-        return Fusion.WithDoubleToLongFunction.of(initial);
+    public static <A> Combine.WithDoubleToLongFunction withDoubleToLongFunction(DoubleToLongFunction initial) {
+        return Combine.WithDoubleToLongFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithDoubleToLongFunction with(DoubleToLongFunction initial) {
+    public static <A> Combine.WithDoubleToLongFunction with(DoubleToLongFunction initial) {
         return withDoubleToLongFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
-        return Fusion.WithToDoubleFunction.of(initial);
+    public static <A> Combine.WithToDoubleFunction<A> withToDoubleFunction(ToDoubleFunction<A> initial) {
+        return Combine.WithToDoubleFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
+    public static <A> Combine.WithToDoubleFunction<A> with(ToDoubleFunction<A> initial) {
         return withToDoubleFunction(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToDoubleBiFunction<A, B> withToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
-        return Fusion.WithToDoubleBiFunction.of(initial);
+    public static <A, B> Combine.WithToDoubleBiFunction<A, B> withToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
+        return Combine.WithToDoubleBiFunction.of(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToDoubleBiFunction<A, B> with(ToDoubleBiFunction<A, B> initial) {
+    public static <A, B> Combine.WithToDoubleBiFunction<A, B> with(ToDoubleBiFunction<A, B> initial) {
         return withToDoubleBiFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithIntFunction<A> withIntFunction(IntFunction<A> initial) {
-        return Fusion.WithIntFunction.of(initial);
+    public static <A> Combine.WithIntFunction<A> withIntFunction(IntFunction<A> initial) {
+        return Combine.WithIntFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithIntFunction<A> with(IntFunction<A> initial) {
+    public static <A> Combine.WithIntFunction<A> with(IntFunction<A> initial) {
         return withIntFunction(initial);
     }
 
     @Experimental
-    public static  Fusion.WithIntToDoubleFunction withIntToDoubleFunction(IntToDoubleFunction initial) {
-        return Fusion.WithIntToDoubleFunction.of(initial);
+    public static  Combine.WithIntToDoubleFunction withIntToDoubleFunction(IntToDoubleFunction initial) {
+        return Combine.WithIntToDoubleFunction.of(initial);
     }
 
     @Experimental
-    public static  Fusion.WithIntToDoubleFunction with(IntToDoubleFunction initial) {
+    public static  Combine.WithIntToDoubleFunction with(IntToDoubleFunction initial) {
         return withIntToDoubleFunction(initial);
     }
 
     @Experimental
-    public static  Fusion.WithIntToLongFunction withIntToLongFunction(IntToLongFunction initial) {
-        return Fusion.WithIntToLongFunction.of(initial);
+    public static  Combine.WithIntToLongFunction withIntToLongFunction(IntToLongFunction initial) {
+        return Combine.WithIntToLongFunction.of(initial);
     }
 
     @Experimental
-    public static  Fusion.WithIntToLongFunction with(IntToLongFunction initial) {
+    public static  Combine.WithIntToLongFunction with(IntToLongFunction initial) {
         return withIntToLongFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
-        return Fusion.WithToIntFunction.of(initial);
+    public static <A> Combine.WithToIntFunction<A> withToIntFunction(ToIntFunction<A> initial) {
+        return Combine.WithToIntFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToIntFunction<A> with(ToIntFunction<A> initial) {
+    public static <A> Combine.WithToIntFunction<A> with(ToIntFunction<A> initial) {
         return withToIntFunction(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToIntBiFunction<A, B> withToIntBiFunction(ToIntBiFunction<A, B> initial) {
-        return Fusion.WithToIntBiFunction.of(initial);
+    public static <A, B> Combine.WithToIntBiFunction<A, B> withToIntBiFunction(ToIntBiFunction<A, B> initial) {
+        return Combine.WithToIntBiFunction.of(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToIntBiFunction<A, B> with(ToIntBiFunction<A, B> initial) {
+    public static <A, B> Combine.WithToIntBiFunction<A, B> with(ToIntBiFunction<A, B> initial) {
         return withToIntBiFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithLongFunction<A> withLongFunction(LongFunction<A> initial) {
-        return Fusion.WithLongFunction.of(initial);
+    public static <A> Combine.WithLongFunction<A> withLongFunction(LongFunction<A> initial) {
+        return Combine.WithLongFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithLongFunction<A> with(LongFunction<A> initial) {
+    public static <A> Combine.WithLongFunction<A> with(LongFunction<A> initial) {
         return withLongFunction(initial);
     }
 
     @Experimental
-    public static  Fusion.WithLongToDoubleFunction withLongToDoubleFunction(LongToDoubleFunction initial) {
-        return Fusion.WithLongToDoubleFunction.of(initial);
+    public static  Combine.WithLongToDoubleFunction withLongToDoubleFunction(LongToDoubleFunction initial) {
+        return Combine.WithLongToDoubleFunction.of(initial);
     }
 
     @Experimental
-    public static  Fusion.WithLongToDoubleFunction with(LongToDoubleFunction initial) {
+    public static  Combine.WithLongToDoubleFunction with(LongToDoubleFunction initial) {
         return withLongToDoubleFunction(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongToIntFunction withLongToIntFunction(LongToIntFunction initial) {
-        return Fusion.WithLongToIntFunction.of(initial);
+    public static Combine.WithLongToIntFunction withLongToIntFunction(LongToIntFunction initial) {
+        return Combine.WithLongToIntFunction.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongToIntFunction with(LongToIntFunction initial) {
+    public static Combine.WithLongToIntFunction with(LongToIntFunction initial) {
         return withLongToIntFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
-        return Fusion.WithToLongFunction.of(initial);
+    public static <A> Combine.WithToLongFunction<A> withToLongFunction(ToLongFunction<A> initial) {
+        return Combine.WithToLongFunction.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithToLongFunction<A> with(ToLongFunction<A> initial) {
+    public static <A> Combine.WithToLongFunction<A> with(ToLongFunction<A> initial) {
         return withToLongFunction(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToLongBiFunction<A, B> withToLongBiFunction(ToLongBiFunction<A, B> initial) {
-        return Fusion.WithToLongBiFunction.of(initial);
+    public static <A, B> Combine.WithToLongBiFunction<A, B> withToLongBiFunction(ToLongBiFunction<A, B> initial) {
+        return Combine.WithToLongBiFunction.of(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithToLongBiFunction<A, B> with(ToLongBiFunction<A, B> initial) {
+    public static <A, B> Combine.WithToLongBiFunction<A, B> with(ToLongBiFunction<A, B> initial) {
         return withToLongBiFunction(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithPredicate<A> withPredicate(Predicate<A> initial) {
-        return Fusion.WithPredicate.of(initial);
+    public static <A> Combine.WithPredicate<A> withPredicate(Predicate<A> initial) {
+        return Combine.WithPredicate.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithPredicate<A> with(Predicate<A> initial) {
+    public static <A> Combine.WithPredicate<A> with(Predicate<A> initial) {
         return withPredicate(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
-        return Fusion.WithBiPredicate.of(initial);
+    public static <A, B> Combine.WithBiPredicate<A, B> withBiPredicate(BiPredicate<A, B> initial) {
+        return Combine.WithBiPredicate.of(initial);
     }
 
     @Experimental
-    public static <A, B> Fusion.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
+    public static <A, B> Combine.WithBiPredicate<A, B> with(BiPredicate<A, B> initial) {
         return withBiPredicate(initial);
     }
 
     @Experimental
-    public static Fusion.WithBooleanPredicate withBooleanPredicate(BooleanPredicate initial) {
-        return Fusion.WithBooleanPredicate.of(initial);
+    public static Combine.WithBooleanPredicate withBooleanPredicate(BooleanPredicate initial) {
+        return Combine.WithBooleanPredicate.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithBooleanPredicate with(BooleanPredicate initial) {
+    public static Combine.WithBooleanPredicate with(BooleanPredicate initial) {
         return withBooleanPredicate(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoublePredicate withDoublePredicate(DoublePredicate initial) {
-        return Fusion.WithDoublePredicate.of(initial);
+    public static Combine.WithDoublePredicate withDoublePredicate(DoublePredicate initial) {
+        return Combine.WithDoublePredicate.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoublePredicate with(DoublePredicate initial) {
+    public static Combine.WithDoublePredicate with(DoublePredicate initial) {
         return withDoublePredicate(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntPredicate withIntPredicate(IntPredicate initial) {
-        return Fusion.WithIntPredicate.of(initial);
+    public static Combine.WithIntPredicate withIntPredicate(IntPredicate initial) {
+        return Combine.WithIntPredicate.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntPredicate with(IntPredicate initial) {
+    public static Combine.WithIntPredicate with(IntPredicate initial) {
         return withIntPredicate(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongPredicate withLongPredicate(LongPredicate initial) {
-        return Fusion.WithLongPredicate.of(initial);
+    public static Combine.WithLongPredicate withLongPredicate(LongPredicate initial) {
+        return Combine.WithLongPredicate.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongPredicate with(LongPredicate initial) {
+    public static Combine.WithLongPredicate with(LongPredicate initial) {
         return withLongPredicate(initial);
     }
 
     @Evil
     @Experimental
-    public static <A> Fusion.WithConsumer<A> withConsumer(Consumer<A> initial) {
-        return Fusion.WithConsumer.of(initial);
+    public static <A> Combine.WithConsumer<A> withConsumer(Consumer<A> initial) {
+        return Combine.WithConsumer.of(initial);
     }
 
     @Evil
     @Experimental
-    public static <A> Fusion.WithConsumer<A> with(Consumer<A> initial) {
+    public static <A> Combine.WithConsumer<A> with(Consumer<A> initial) {
         return withConsumer(initial);
     }
 
     @Evil
     @Experimental
-    public static <A, B> Fusion.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
-        return Fusion.WithBiConsumer.of(initial);
+    public static <A, B> Combine.WithBiConsumer<A, B> withBiConsumer(BiConsumer<A, B> initial) {
+        return Combine.WithBiConsumer.of(initial);
     }
 
     @Evil
     @Experimental
-    public static <A, B> Fusion.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
+    public static <A, B> Combine.WithBiConsumer<A, B> with(BiConsumer<A, B> initial) {
         return withBiConsumer(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithSupplier<A> withSupplier(Supplier<A> initial) {
-        return Fusion.WithSupplier.of(initial);
+    public static <A> Combine.WithSupplier<A> withSupplier(Supplier<A> initial) {
+        return Combine.WithSupplier.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithSupplier<A> with(Supplier<A> initial) {
+    public static <A> Combine.WithSupplier<A> with(Supplier<A> initial) {
         return withSupplier(initial);
     }
 
     @Experimental
-    public static Fusion.WithBooleanSupplier withBooleanSupplier(BooleanSupplier initial) {
-        return Fusion.WithBooleanSupplier.of(initial);
+    public static Combine.WithBooleanSupplier withBooleanSupplier(BooleanSupplier initial) {
+        return Combine.WithBooleanSupplier.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithBooleanSupplier with(BooleanSupplier initial) {
+    public static Combine.WithBooleanSupplier with(BooleanSupplier initial) {
         return withBooleanSupplier(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleSupplier withDoubleSupplier(DoubleSupplier initial) {
-        return Fusion.WithDoubleSupplier.of(initial);
+    public static Combine.WithDoubleSupplier withDoubleSupplier(DoubleSupplier initial) {
+        return Combine.WithDoubleSupplier.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleSupplier with(DoubleSupplier initial) {
+    public static Combine.WithDoubleSupplier with(DoubleSupplier initial) {
         return withDoubleSupplier(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntSupplier withIntSupplier(IntSupplier initial) {
-        return Fusion.WithIntSupplier.of(initial);
+    public static Combine.WithIntSupplier withIntSupplier(IntSupplier initial) {
+        return Combine.WithIntSupplier.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntSupplier with(IntSupplier initial) {
+    public static Combine.WithIntSupplier with(IntSupplier initial) {
         return withIntSupplier(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongSupplier withLongSupplier(LongSupplier initial) {
-        return Fusion.WithLongSupplier.of(initial);
+    public static Combine.WithLongSupplier withLongSupplier(LongSupplier initial) {
+        return Combine.WithLongSupplier.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongSupplier with(LongSupplier initial) {
+    public static Combine.WithLongSupplier with(LongSupplier initial) {
         return withLongSupplier(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithUnaryOperator<A> withUnaryOperator(UnaryOperator<A> initial) {
-        return Fusion.WithUnaryOperator.of(initial);
+    public static <A> Combine.WithUnaryOperator<A> withUnaryOperator(UnaryOperator<A> initial) {
+        return Combine.WithUnaryOperator.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithUnaryOperator<A> with(UnaryOperator<A> initial) {
+    public static <A> Combine.WithUnaryOperator<A> with(UnaryOperator<A> initial) {
         return withUnaryOperator(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBinaryOperator<A> withBinaryOperator(BinaryOperator<A> initial) {
-        return Fusion.WithBinaryOperator.of(initial);
+    public static <A> Combine.WithBinaryOperator<A> withBinaryOperator(BinaryOperator<A> initial) {
+        return Combine.WithBinaryOperator.of(initial);
     }
 
     @Experimental
-    public static <A> Fusion.WithBinaryOperator<A> with(BinaryOperator<A> initial) {
+    public static <A> Combine.WithBinaryOperator<A> with(BinaryOperator<A> initial) {
         return withBinaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleUnaryOperator withDoubleUnaryOperator(DoubleUnaryOperator initial) {
-        return Fusion.WithDoubleUnaryOperator.of(initial);
+    public static Combine.WithDoubleUnaryOperator withDoubleUnaryOperator(DoubleUnaryOperator initial) {
+        return Combine.WithDoubleUnaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleUnaryOperator with(DoubleUnaryOperator initial) {
+    public static Combine.WithDoubleUnaryOperator with(DoubleUnaryOperator initial) {
         return withDoubleUnaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleBinaryOperator withDoubleBinaryOperator(DoubleBinaryOperator initial) {
-        return Fusion.WithDoubleBinaryOperator.of(initial);
+    public static Combine.WithDoubleBinaryOperator withDoubleBinaryOperator(DoubleBinaryOperator initial) {
+        return Combine.WithDoubleBinaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithDoubleBinaryOperator with(DoubleBinaryOperator initial) {
+    public static Combine.WithDoubleBinaryOperator with(DoubleBinaryOperator initial) {
         return withDoubleBinaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntUnaryOperator withIntUnaryOperator(IntUnaryOperator initial) {
-        return Fusion.WithIntUnaryOperator.of(initial);
+    public static Combine.WithIntUnaryOperator withIntUnaryOperator(IntUnaryOperator initial) {
+        return Combine.WithIntUnaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntUnaryOperator with(IntUnaryOperator initial) {
+    public static Combine.WithIntUnaryOperator with(IntUnaryOperator initial) {
         return withIntUnaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntBinaryOperator withIntBinaryOperator(IntBinaryOperator initial) {
-        return Fusion.WithIntBinaryOperator.of(initial);
+    public static Combine.WithIntBinaryOperator withIntBinaryOperator(IntBinaryOperator initial) {
+        return Combine.WithIntBinaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithIntBinaryOperator with(IntBinaryOperator initial) {
+    public static Combine.WithIntBinaryOperator with(IntBinaryOperator initial) {
         return withIntBinaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongUnaryOperator withLongUnaryOperator(LongUnaryOperator initial) {
-        return Fusion.WithLongUnaryOperator.of(initial);
+    public static Combine.WithLongUnaryOperator withLongUnaryOperator(LongUnaryOperator initial) {
+        return Combine.WithLongUnaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongUnaryOperator with(LongUnaryOperator initial) {
+    public static Combine.WithLongUnaryOperator with(LongUnaryOperator initial) {
         return withLongUnaryOperator(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongBinaryOperator withLongBinaryOperator(LongBinaryOperator initial) {
-        return Fusion.WithLongBinaryOperator.of(initial);
+    public static Combine.WithLongBinaryOperator withLongBinaryOperator(LongBinaryOperator initial) {
+        return Combine.WithLongBinaryOperator.of(initial);
     }
 
     @Experimental
-    public static Fusion.WithLongBinaryOperator with(LongBinaryOperator initial) {
+    public static Combine.WithLongBinaryOperator with(LongBinaryOperator initial) {
         return withLongBinaryOperator(initial);
     }
 

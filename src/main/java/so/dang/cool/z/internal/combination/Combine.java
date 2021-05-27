@@ -50,8 +50,8 @@ import so.dang.cool.z.function.BooleanToLongFunction;
  * Deep fusions involving many functions.
  */
 @Experimental
-public abstract class Fusion<A, Fn> {
-    private Fusion() {}
+public abstract class Combine<A, Fn> {
+    private Combine() {}
 
     /**
      * Retrieve the resulting fusion.
@@ -60,7 +60,7 @@ public abstract class Fusion<A, Fn> {
 
     /* Function -> ... [TODO: Incomplete] */
 
-    public static final class WithFunction<A, B> extends Fusion<B, Function<A, B>> {
+    public static final class WithFunction<A, B> extends Combine<B, Function<A, B>> {
         private final Function<A, B> initial;
 
         private WithFunction(Function<A, B> initial) {
@@ -267,7 +267,7 @@ public abstract class Fusion<A, Fn> {
         = Function<A, Function<C, D>>
     */
 
-    public static final class WithBiFunction<A, B, C> extends Fusion<C, Function<A, Function<B, C>>> {
+    public static final class WithBiFunction<A, B, C> extends Combine<C, Function<A, Function<B, C>>> {
         private final BiFunction<A, B, C> initial;
 
         private WithBiFunction(BiFunction<A, B, C> initial) {
@@ -306,7 +306,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanFunction<A> extends Fusion<A, BooleanFunction<A>> {
+    public static final class WithBooleanFunction<A> extends Combine<A, BooleanFunction<A>> {
         private final BooleanFunction<A> initial;
 
         private WithBooleanFunction(BooleanFunction<A> initial) {
@@ -341,7 +341,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToDoubleFunction extends Fusion<Double, BooleanToDoubleFunction> {
+    public static final class WithBooleanToDoubleFunction extends Combine<Double, BooleanToDoubleFunction> {
         private final BooleanToDoubleFunction initial;
 
         private WithBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
@@ -376,7 +376,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToIntFunction extends Fusion<Integer, BooleanToIntFunction> {
+    public static final class WithBooleanToIntFunction extends Combine<Integer, BooleanToIntFunction> {
         private final BooleanToIntFunction initial;
 
         private WithBooleanToIntFunction(BooleanToIntFunction initial) {
@@ -411,7 +411,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanToLongFunction extends Fusion<Long, BooleanToLongFunction> {
+    public static final class WithBooleanToLongFunction extends Combine<Long, BooleanToLongFunction> {
         private final BooleanToLongFunction initial;
 
         private WithBooleanToLongFunction(BooleanToLongFunction initial) {
@@ -446,7 +446,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleFunction<A> extends Fusion<A, DoubleFunction<A>> {
+    public static final class WithDoubleFunction<A> extends Combine<A, DoubleFunction<A>> {
         private final DoubleFunction<A> initial;
 
         private WithDoubleFunction(DoubleFunction<A> initial) {
@@ -481,7 +481,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleToIntFunction extends Fusion<Integer, DoubleToIntFunction> {
+    public static final class WithDoubleToIntFunction extends Combine<Integer, DoubleToIntFunction> {
         private final DoubleToIntFunction initial;
 
         private WithDoubleToIntFunction(DoubleToIntFunction initial) {
@@ -516,7 +516,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleToLongFunction extends Fusion<Long, DoubleToLongFunction> {
+    public static final class WithDoubleToLongFunction extends Combine<Long, DoubleToLongFunction> {
         private final DoubleToLongFunction initial;
 
         private WithDoubleToLongFunction(DoubleToLongFunction initial) {
@@ -551,7 +551,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToDoubleFunction<A> extends Fusion<Double, ToDoubleFunction<A>> {
+    public static final class WithToDoubleFunction<A> extends Combine<Double, ToDoubleFunction<A>> {
         private final ToDoubleFunction<A> initial;
 
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
@@ -586,7 +586,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToDoubleBiFunction<A, B> extends Fusion<Double, Function<A, ToDoubleFunction<B>>> {
+    public static final class WithToDoubleBiFunction<A, B> extends Combine<Double, Function<A, ToDoubleFunction<B>>> {
         private final ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
@@ -622,7 +622,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntFunction<A> extends Fusion<A, IntFunction<A>> {
+    public static final class WithIntFunction<A> extends Combine<A, IntFunction<A>> {
         private final IntFunction<A> initial;
 
         private WithIntFunction(IntFunction<A> initial) {
@@ -657,7 +657,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntToDoubleFunction extends Fusion<Integer, IntToDoubleFunction> {
+    public static final class WithIntToDoubleFunction extends Combine<Integer, IntToDoubleFunction> {
         private final IntToDoubleFunction initial;
 
         private WithIntToDoubleFunction(IntToDoubleFunction initial) {
@@ -692,7 +692,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntToLongFunction extends Fusion<Long, IntToLongFunction> {
+    public static final class WithIntToLongFunction extends Combine<Long, IntToLongFunction> {
         private final IntToLongFunction initial;
 
         private WithIntToLongFunction(IntToLongFunction initial) {
@@ -727,7 +727,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToIntFunction<A> extends Fusion<Integer, ToIntFunction<A>> {
+    public static final class WithToIntFunction<A> extends Combine<Integer, ToIntFunction<A>> {
         private final ToIntFunction<A> initial;
 
         private WithToIntFunction(ToIntFunction<A> initial) {
@@ -762,7 +762,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToIntBiFunction<A, B> extends Fusion<Integer, Function<A, ToIntFunction<B>>> {
+    public static final class WithToIntBiFunction<A, B> extends Combine<Integer, Function<A, ToIntFunction<B>>> {
         private final ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
@@ -798,7 +798,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongFunction<A> extends Fusion<A, LongFunction<A>> {
+    public static final class WithLongFunction<A> extends Combine<A, LongFunction<A>> {
         private final LongFunction<A> initial;
 
         private WithLongFunction(LongFunction<A> initial) {
@@ -833,7 +833,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongToDoubleFunction extends Fusion<Long, LongToDoubleFunction> {
+    public static final class WithLongToDoubleFunction extends Combine<Long, LongToDoubleFunction> {
         private final LongToDoubleFunction initial;
 
         private WithLongToDoubleFunction(LongToDoubleFunction initial) {
@@ -868,7 +868,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongToIntFunction extends Fusion<Long, LongToIntFunction> {
+    public static final class WithLongToIntFunction extends Combine<Long, LongToIntFunction> {
         private final LongToIntFunction initial;
 
         private WithLongToIntFunction(LongToIntFunction initial) {
@@ -903,7 +903,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToLongFunction<A> extends Fusion<Long, ToLongFunction<A>> {
+    public static final class WithToLongFunction<A> extends Combine<Long, ToLongFunction<A>> {
         private final ToLongFunction<A> initial;
 
         private WithToLongFunction(ToLongFunction<A> initial) {
@@ -938,7 +938,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithToLongBiFunction<A, B> extends Fusion<Long, Function<A, ToLongFunction<B>>> {
+    public static final class WithToLongBiFunction<A, B> extends Combine<Long, Function<A, ToLongFunction<B>>> {
         private final ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
@@ -974,7 +974,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithConsumer<A> extends Fusion<Void, Consumer<A>> {
+    public static final class WithConsumer<A> extends Combine<Void, Consumer<A>> {
         private final Consumer<A> initial;
 
         private WithConsumer(Consumer<A> initial) {
@@ -991,7 +991,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBiConsumer<A, B> extends Fusion<Void, Function<A, Consumer<B>>> {
+    public static final class WithBiConsumer<A, B> extends Combine<Void, Function<A, Consumer<B>>> {
         private final BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
@@ -1009,7 +1009,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithPredicate<A> extends Fusion<Boolean, Predicate<A>> {
+    public static final class WithPredicate<A> extends Combine<Boolean, Predicate<A>> {
         private final Predicate<A> initial;
 
         private WithPredicate(Predicate<A> initial) {
@@ -1044,7 +1044,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBiPredicate<A, B> extends Fusion<Boolean, Function<A, Predicate<B>>> {
+    public static final class WithBiPredicate<A, B> extends Combine<Boolean, Function<A, Predicate<B>>> {
         private final BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
@@ -1080,7 +1080,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanPredicate extends Fusion<Boolean, BooleanPredicate> {
+    public static final class WithBooleanPredicate extends Combine<Boolean, BooleanPredicate> {
         private final BooleanPredicate initial;
 
         private WithBooleanPredicate(BooleanPredicate initial) {
@@ -1115,7 +1115,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoublePredicate extends Fusion<Double, DoublePredicate> {
+    public static final class WithDoublePredicate extends Combine<Double, DoublePredicate> {
         private final DoublePredicate initial;
 
         private WithDoublePredicate(DoublePredicate initial) {
@@ -1150,7 +1150,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntPredicate extends Fusion<Integer, IntPredicate> {
+    public static final class WithIntPredicate extends Combine<Integer, IntPredicate> {
         private final IntPredicate initial;
 
         private WithIntPredicate(IntPredicate initial) {
@@ -1185,7 +1185,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongPredicate extends Fusion<Long, LongPredicate> {
+    public static final class WithLongPredicate extends Combine<Long, LongPredicate> {
         private final LongPredicate initial;
 
         private WithLongPredicate(LongPredicate initial) {
@@ -1220,7 +1220,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithSupplier<A> extends Fusion<A, Supplier<A>> {
+    public static final class WithSupplier<A> extends Combine<A, Supplier<A>> {
         private final Supplier<A> initial;
 
         private WithSupplier(Supplier<A> initial) {
@@ -1273,7 +1273,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBooleanSupplier extends Fusion<Boolean, BooleanSupplier> {
+    public static final class WithBooleanSupplier extends Combine<Boolean, BooleanSupplier> {
         private final BooleanSupplier initial;
 
         private WithBooleanSupplier(BooleanSupplier initial) {
@@ -1308,7 +1308,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleSupplier extends Fusion<Double, DoubleSupplier> {
+    public static final class WithDoubleSupplier extends Combine<Double, DoubleSupplier> {
         private final DoubleSupplier initial;
 
         private WithDoubleSupplier(DoubleSupplier initial) {
@@ -1343,7 +1343,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntSupplier extends Fusion<Integer, IntSupplier> {
+    public static final class WithIntSupplier extends Combine<Integer, IntSupplier> {
         private final IntSupplier initial;
 
         private WithIntSupplier(IntSupplier initial) {
@@ -1378,7 +1378,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongSupplier extends Fusion<Long, LongSupplier> {
+    public static final class WithLongSupplier extends Combine<Long, LongSupplier> {
         private final LongSupplier initial;
 
         private WithLongSupplier(LongSupplier initial) {
@@ -1413,7 +1413,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithUnaryOperator<A> extends Fusion<A, UnaryOperator<A>> {
+    public static final class WithUnaryOperator<A> extends Combine<A, UnaryOperator<A>> {
         private final UnaryOperator<A> initial;
 
         private WithUnaryOperator(UnaryOperator<A> initial) {
@@ -1466,7 +1466,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithBinaryOperator<A> extends Fusion<A, Function<A, UnaryOperator<A>>> {
+    public static final class WithBinaryOperator<A> extends Combine<A, Function<A, UnaryOperator<A>>> {
         private final BinaryOperator<A> initial;
 
         private WithBinaryOperator(BinaryOperator<A> initial) {
@@ -1502,7 +1502,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleUnaryOperator extends Fusion<Double, DoubleUnaryOperator> {
+    public static final class WithDoubleUnaryOperator extends Combine<Double, DoubleUnaryOperator> {
         private final DoubleUnaryOperator initial;
 
         private WithDoubleUnaryOperator(DoubleUnaryOperator initial) {
@@ -1537,7 +1537,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithDoubleBinaryOperator extends Fusion<Double, DoubleFunction<DoubleUnaryOperator>> {
+    public static final class WithDoubleBinaryOperator extends Combine<Double, DoubleFunction<DoubleUnaryOperator>> {
         private final DoubleBinaryOperator initial;
 
         private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
@@ -1566,7 +1566,7 @@ public abstract class Fusion<A, Fn> {
         // TODO: "fusing" -- Need better currying support or DoubleBiFunction functional interface?
     }
 
-    public static final class WithIntUnaryOperator extends Fusion<Integer, IntUnaryOperator> {
+    public static final class WithIntUnaryOperator extends Combine<Integer, IntUnaryOperator> {
         private final IntUnaryOperator initial;
 
         private WithIntUnaryOperator(IntUnaryOperator initial) {
@@ -1601,7 +1601,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithIntBinaryOperator extends Fusion<Integer, IntFunction<IntUnaryOperator>> {
+    public static final class WithIntBinaryOperator extends Combine<Integer, IntFunction<IntUnaryOperator>> {
         private final IntBinaryOperator initial;
 
         private WithIntBinaryOperator(IntBinaryOperator initial) {
@@ -1630,7 +1630,7 @@ public abstract class Fusion<A, Fn> {
         // TODO: "fusing" -- Need better currying support or IntBiFunction functional interface?
     }
 
-    public static final class WithLongUnaryOperator extends Fusion<Long, LongUnaryOperator> {
+    public static final class WithLongUnaryOperator extends Combine<Long, LongUnaryOperator> {
         private final LongUnaryOperator initial;
 
         private WithLongUnaryOperator(LongUnaryOperator initial) {
@@ -1665,7 +1665,7 @@ public abstract class Fusion<A, Fn> {
         }
     }
 
-    public static final class WithLongBinaryOperator extends Fusion<Long, LongFunction<LongUnaryOperator>> {
+    public static final class WithLongBinaryOperator extends Combine<Long, LongFunction<LongUnaryOperator>> {
         private final LongBinaryOperator initial;
 
         private WithLongBinaryOperator(LongBinaryOperator initial) {
