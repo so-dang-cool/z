@@ -2402,20 +2402,136 @@ public abstract class Combine<A, Fn> {
 
         /* IntSupplier -> IntFunction<A> */
 
-        public <A> Supplier<A> fuseFunction(IntFunction<A> next) {
-            return () -> next.apply(resolve().getAsInt());
+        public <A> Supplier<A> fuseIntFunction(IntFunction<A> next) {
+            return () -> next.apply(initial.getAsInt());
         }
 
         public <A> Supplier<A> fuse(IntFunction<A> next) {
-            return fuseFunction(next);
+            return fuseIntFunction(next);
         }
 
-        public <A> WithSupplier<A> fusingFunction(IntFunction<A> next) {
+        public <A> WithSupplier<A> fusingIntFunction(IntFunction<A> next) {
             return WithSupplier.of(fuse(next));
         }
 
         public <A> WithSupplier<A> fusing(IntFunction<A> next) {
-            return fusingFunction(next);
+            return fusingIntFunction(next);
+        }
+
+        /* IntSupplier -> IntToDoubleFunction */
+
+        public DoubleSupplier fuseIntToDoubleFunction(
+            IntToDoubleFunction next
+        ) {
+            return () -> next.applyAsDouble(initial.getAsInt());
+        }
+
+        public DoubleSupplier fuse(IntToDoubleFunction next) {
+            return fuseIntToDoubleFunction(next);
+        }
+
+        public WithDoubleSupplier fusingIntToDoubleFunction(
+            IntToDoubleFunction next
+        ) {
+            return WithDoubleSupplier.of(fuse(next));
+        }
+
+        public WithDoubleSupplier fusing(IntToDoubleFunction next) {
+            return fusingIntToDoubleFunction(next);
+        }
+
+        /* IntSupplier -> IntToLongFunction */
+
+        public LongSupplier fuseIntToLongFunction(IntToLongFunction next) {
+            return () -> next.applyAsLong(initial.getAsInt());
+        }
+
+        public LongSupplier fuse(IntToLongFunction next) {
+            return fuseIntToLongFunction(next);
+        }
+
+        public WithLongSupplier fusingIntToLongFunction(
+            IntToLongFunction next
+        ) {
+            return WithLongSupplier.of(fuse(next));
+        }
+
+        public WithLongSupplier fusing(IntToLongFunction next) {
+            return fusingIntToLongFunction(next);
+        }
+
+        /* IntSupplier -> IntPredicate */
+
+        public BooleanSupplier fuseIntPredicate(IntPredicate next) {
+            return () -> next.test(initial.getAsInt());
+        }
+
+        public BooleanSupplier fuse(IntPredicate next) {
+            return fuseIntPredicate(next);
+        }
+
+        public WithBooleanSupplier fusingIntPredicate(IntPredicate next) {
+            return WithBooleanSupplier.of(fuse(next));
+        }
+
+        public WithBooleanSupplier fusing(IntPredicate next) {
+            return fusingIntPredicate(next);
+        }
+
+        /* IntSupplier -> IntConsumer */
+
+        public Operator fuseIntConsumer(IntConsumer next) {
+            return () -> next.accept(initial.getAsInt());
+        }
+
+        public Operator fuse(IntConsumer next) {
+            return fuseIntConsumer(next);
+        }
+
+        public WithOperator fusingIntConsumer(IntConsumer next) {
+            return WithOperator.of(fuse(next));
+        }
+
+        public WithOperator fusing(IntConsumer next) {
+            return fusingIntConsumer(next);
+        }
+
+        /* IntSupplier -> IntUnaryOperator */
+
+        public IntSupplier fuseIntUnaryOperator(IntUnaryOperator next) {
+            return () -> next.applyAsInt(initial.getAsInt());
+        }
+
+        public IntSupplier fuse(IntUnaryOperator next) {
+            return fuseIntUnaryOperator(next);
+        }
+
+        public WithIntSupplier fusingIntUnaryOperator(IntUnaryOperator next) {
+            return WithIntSupplier.of(fuse(next));
+        }
+
+        public WithIntSupplier fusing(IntUnaryOperator next) {
+            return fusingIntUnaryOperator(next);
+        }
+
+        /* IntSupplier -> IntBinaryOperator */
+
+        public IntUnaryOperator fuseIntBinaryOperator(IntBinaryOperator next) {
+            return (int i) -> next.applyAsInt(initial.getAsInt(), i);
+        }
+
+        public IntUnaryOperator fuse(IntBinaryOperator next) {
+            return fuseIntBinaryOperator(next);
+        }
+
+        public WithIntUnaryOperator fusingIntBinaryOperator(
+            IntBinaryOperator next
+        ) {
+            return WithIntUnaryOperator.of(fuse(next));
+        }
+
+        public WithIntUnaryOperator fusing(IntBinaryOperator next) {
+            return fusingIntBinaryOperator(next);
         }
     }
 
@@ -2453,6 +2569,124 @@ public abstract class Combine<A, Fn> {
 
         public <A> WithSupplier<A> fusing(LongFunction<A> next) {
             return fusingFunction(next);
+        }
+
+        /* LongSupplier -> LongToDoubleFunction */
+
+        public DoubleSupplier fuseLongToDoubleFunction(
+            LongToDoubleFunction next
+        ) {
+            return () -> next.applyAsDouble(initial.getAsLong());
+        }
+
+        public DoubleSupplier fuse(LongToDoubleFunction next) {
+            return fuseLongToDoubleFunction(next);
+        }
+
+        public WithDoubleSupplier fusingLongToDoubleFunction(
+            LongToDoubleFunction next
+        ) {
+            return WithDoubleSupplier.of(fuse(next));
+        }
+
+        public WithDoubleSupplier fusing(LongToDoubleFunction next) {
+            return fusingLongToDoubleFunction(next);
+        }
+
+        /* LongSupplier -> LongToIntFunction */
+
+        public IntSupplier fuseLongToIntFunction(LongToIntFunction next) {
+            return () -> next.applyAsInt(initial.getAsLong());
+        }
+
+        public IntSupplier fuse(LongToIntFunction next) {
+            return fuseLongToIntFunction(next);
+        }
+
+        public WithIntSupplier fusingLongToIntFunction(LongToIntFunction next) {
+            return WithIntSupplier.of(fuse(next));
+        }
+
+        public WithIntSupplier fusing(LongToIntFunction next) {
+            return fusingLongToIntFunction(next);
+        }
+
+        /* LongSupplier -> LongPredicate */
+
+        public BooleanSupplier fuseLongPredicate(LongPredicate next) {
+            return () -> next.test(initial.getAsLong());
+        }
+
+        public BooleanSupplier fuse(LongPredicate next) {
+            return fuseLongPredicate(next);
+        }
+
+        public WithBooleanSupplier fusingLongPredicate(LongPredicate next) {
+            return WithBooleanSupplier.of(fuse(next));
+        }
+
+        public WithBooleanSupplier fusing(LongPredicate next) {
+            return fusingLongPredicate(next);
+        }
+
+        /* LongSupplier -> LongConsumer */
+
+        public Operator fuseLongConsumer(LongConsumer next) {
+            return () -> next.accept(initial.getAsLong());
+        }
+
+        public Operator fuse(LongConsumer next) {
+            return fuseLongConsumer(next);
+        }
+
+        public WithOperator fusingLongConsumer(LongConsumer next) {
+            return WithOperator.of(fuse(next));
+        }
+
+        public WithOperator fusing(LongConsumer next) {
+            return fusingLongConsumer(next);
+        }
+
+        /* LongSupplier -> LongUnaryOperator */
+
+        public LongSupplier fuseLongUnaryOperator(LongUnaryOperator next) {
+            return () -> next.applyAsLong(initial.getAsLong());
+        }
+
+        public LongSupplier fuse(LongUnaryOperator next) {
+            return fuseLongUnaryOperator(next);
+        }
+
+        public WithLongSupplier fusingLongUnaryOperator(
+            LongUnaryOperator next
+        ) {
+            return WithLongSupplier.of(fuse(next));
+        }
+
+        public WithLongSupplier fusing(LongUnaryOperator next) {
+            return fusingLongUnaryOperator(next);
+        }
+
+        /* LongSupplier -> LongBinaryOperator */
+
+        public LongUnaryOperator fuseLongBinaryOperator(
+            LongBinaryOperator next
+        ) {
+            return (long n) -> next.applyAsLong(initial.getAsLong(), n);
+        }
+
+        public LongUnaryOperator fuse(LongBinaryOperator next) {
+            return fuseLongBinaryOperator(next);
+        }
+
+        public WithLongUnaryOperator fusingLongBinaryOperator(
+            LongBinaryOperator next
+        ) {
+            return WithLongUnaryOperator.of(fuse(next));
+        }
+
+        public WithLongUnaryOperator fusing(LongBinaryOperator next) {
+            return fusingLongBinaryOperator(next);
         }
     }
 

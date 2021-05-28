@@ -13,41 +13,40 @@ public class LongSupplierFusionTests {
     @Test
     void longSup() {
         assertEquals(suppliedLong, getLong.getAsLong());
-    }
-
-    @Test
-    void longSup_deep() {
         assertEquals(suppliedLong, Z.with(getLong).resolve().getAsLong());
     }
 
     @Test
     void longSup_to_longFn() {
         assertEquals("3", Z.fuse(getLong, longToString).get());
-    }
-
-    @Test
-    void longSup_to_longFn_deep() {
         assertEquals("3", Z.with(getLong).fuse(longToString).get());
-    }
-
-    @Test
-    void longSup_to_longFn_deeper() {
         assertEquals("3", Z.with(getLong).fusing(longToString).resolve().get());
     }
 
     @Test
     void longSup_to_longToDbl() {
         assertEquals(3.0, Z.fuse(getLong, longToDouble).getAsDouble());
+        assertEquals(3.0, Z.with(getLong).fuse(longToDouble).getAsDouble());
+        assertEquals(
+            3.0,
+            Z.with(getLong).fusing(longToDouble).resolve().getAsDouble()
+        );
     }
 
     @Test
     void longSup_to_longToInt() {
         assertEquals(3, Z.fuse(getLong, longToInt).getAsInt());
+        assertEquals(3, Z.with(getLong).fuse(longToInt).getAsInt());
+        assertEquals(3, Z.with(getLong).fusing(longToInt).resolve().getAsInt());
     }
 
     @Test
     void longSup_to_longPred() {
         assertTrue(Z.fuse(getLong, isLongThree).getAsBoolean());
+        assertTrue(Z.with(getLong).fuse(isLongThree).getAsBoolean());
+        assertTrue(
+            Z.with(getLong).fusing(isLongThree).resolve().getAsBoolean()
+        );
     }
 
     @Evil
@@ -57,6 +56,8 @@ public class LongSupplierFusionTests {
             consumedLongA = 0L;
 
             Z.fuse(getLong, saveLongA).run();
+            Z.with(getLong).fuse(saveLongA).run();
+            Z.with(getLong).fusing(saveLongA).resolve().run();
 
             assertEquals(suppliedLong, consumedLongA);
         }
@@ -65,10 +66,20 @@ public class LongSupplierFusionTests {
     @Test
     void longSup_to_longUnop() {
         assertEquals(6, Z.fuse(getLong, addThreeToLong).getAsLong());
+        assertEquals(6, Z.with(getLong).fuse(addThreeToLong).getAsLong());
+        assertEquals(
+            6,
+            Z.with(getLong).fusing(addThreeToLong).resolve().getAsLong()
+        );
     }
 
     @Test
     void longSup_to_longBiop() {
         assertEquals(5, Z.fuse(getLong, addLongs).applyAsLong(2L));
+        assertEquals(5, Z.with(getLong).fuse(addLongs).applyAsLong(2L));
+        assertEquals(
+            5,
+            Z.with(getLong).fusing(addLongs).resolve().applyAsLong(2L)
+        );
     }
 }

@@ -2737,33 +2737,33 @@ public final class Z {
         IntSupplier initial,
         IntToDoubleFunction next
     ) {
-        return () -> next.applyAsDouble(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(
         IntSupplier initial,
         IntToLongFunction next
     ) {
-        return () -> next.applyAsLong(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(IntSupplier initial, IntPredicate next) {
-        return () -> next.test(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(IntSupplier initial, IntConsumer next) {
-        return () -> next.accept(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(IntSupplier initial, IntUnaryOperator next) {
-        return () -> next.applyAsInt(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static IntUnaryOperator fuse(
         IntSupplier initial,
         IntBinaryOperator next
     ) {
-        return (int i) -> next.applyAsInt(initial.getAsInt(), i);
+        return Z.with(initial).fuse(next);
     }
 
     /* LongSupplier */
@@ -2779,39 +2779,39 @@ public final class Z {
         LongSupplier initial,
         LongToDoubleFunction next
     ) {
-        return () -> next.applyAsDouble(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(
         LongSupplier initial,
         LongToIntFunction next
     ) {
-        return () -> next.applyAsInt(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(
         LongSupplier initial,
         LongPredicate next
     ) {
-        return () -> next.test(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(LongSupplier initial, LongConsumer next) {
-        return () -> next.accept(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(
         LongSupplier initial,
         LongUnaryOperator next
     ) {
-        return () -> next.applyAsLong(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static LongUnaryOperator fuse(
         LongSupplier initial,
         LongBinaryOperator next
     ) {
-        return (long n) -> next.applyAsLong(initial.getAsLong(), n);
+        return Z.with(initial).fuse(next);
     }
 
     /* UnaryOperator [SKIPPED] Overlap with Function<A, A> (Erasure applies) */
