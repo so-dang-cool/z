@@ -4,7 +4,7 @@
 [![Javadoc](https://javadoc.io/badge2/so.dang.cool/z/javadoc.svg)](https://javadoc.io/doc/so.dang.cool/z)
 [![codecov](https://codecov.io/gh/hiljusti/z/branch/core/graph/badge.svg?token=CF80PDSXUB)](https://codecov.io/gh/hiljusti/z)
 
-**Z is a Java library for bold, exciting, and fearless function combination.**
+**Z is a Java library for exciting and fearless function combination.**
 
 Unlock your functional programming potential with these combination techniques:
 
