@@ -2870,11 +2870,9 @@ public final class Z {
         return (long n) -> next.applyAsLong(initial.getAsLong(), n);
     }
 
-    /* Operator [TODO: verify these are covered] [SKIPPED] Covered in absorption */
+    /* UnaryOperator [SKIPPED] Overlap with Function<A, A> (Erasure applies) */
 
-    /* UnaryOperator [SKIPPED] Overlap with Function<A, B> when A == B */
-
-    /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, B, C> when A == B == C */
+    /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, A, A> (Erasure applies) */
 
     /* DoubleUnaryOperator */
 
@@ -3692,9 +3690,7 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjDoubleConsumer<A> with(
-        ObjDoubleConsumer<A> initial
-    ) {
+    public static <A> Combine.WithObjDoubleConsumer<A> with(ObjDoubleConsumer<A> initial) {
         return withObjDoubleConsumer(initial);
     }
 
@@ -3720,9 +3716,7 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjIntConsumer<A> with(
-        ObjIntConsumer<A> initial
-    ) {
+    public static <A> Combine.WithObjIntConsumer<A> with(ObjIntConsumer<A> initial) {
         return withObjIntConsumer(initial);
     }
 
@@ -3750,9 +3744,7 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjLongConsumer<A> with(
-        ObjLongConsumer<A> initial
-    ) {
+    public static <A> Combine.WithObjLongConsumer<A> with(ObjLongConsumer<A> initial) {
         return withObjLongConsumer(initial);
     }
 
