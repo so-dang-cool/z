@@ -29,13 +29,19 @@ tasks.named('build') {
     dependsOn jacocoTestCoverageVerification
 }
 
-// Ignore warnings, especially for missing @param/@return, which is overkill.
-javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+javadoc {
+    options.addBooleanOption('html5', true)
+
+    // Ignore warnings, especially for missing @param/@return, which is overkill.
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
 
 tasks.named('jacocoTestCoverageVerification') {
     violationRules {
         rule {
             limit {
+                // 100% minimum test coverage.
+                //
                 // My greatest opponent is myself. If I can discover what my weaknesses are,
                 // then I will be an even stronger fighter than I already am. -- Piccolo
                 minimum = 1.00
