@@ -1,13 +1,15 @@
 # Z
 
+**Z is a Java library for exciting and fearless function combination.**
+
 [![Maven Central](https://img.shields.io/maven-central/v/so.dang.cool/z.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22so.dang.cool%22%20AND%20a:%22z%22)
 [![Javadoc](https://javadoc.io/badge2/so.dang.cool/z/javadoc.svg)](https://javadoc.io/doc/so.dang.cool/z)
+![License](https://img.shields.io/github/license/hiljusti/z)
+
+![dependency count](https://img.shields.io/badge/dependencies-0-brightgreen)
 [![codecov](https://codecov.io/gh/hiljusti/z/branch/core/graph/badge.svg?token=CF80PDSXUB)](https://codecov.io/gh/hiljusti/z)
-![Build](https://img.shields.io/github/workflow/status/hiljusti/z/build?event=push)
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
-
-**Z is a Java library for exciting and fearless function combination.**
 
 Unlock your functional programming potential with these combination techniques:
 

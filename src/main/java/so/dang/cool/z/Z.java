@@ -225,96 +225,68 @@ public final class Z {
         boolean initial,
         BiFunction<Boolean, A, B> next
     ) {
-        return (A a) -> next.apply(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(
         boolean initial,
         BooleanToDoubleFunction next
     ) {
-        return () -> next.applyAsDouble(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToDoubleFunction<A> fuse(
         boolean initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
-        return (A a) -> next.applyAsDouble(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(boolean initial, BooleanToIntFunction next) {
-        return () -> next.applyAsInt(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToIntFunction<A> fuse(
         boolean initial,
         ToIntBiFunction<Boolean, A> next
     ) {
-        return (A a) -> next.applyAsInt(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(
         boolean initial,
         BooleanToLongFunction next
     ) {
-        return () -> next.applyAsLong(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToLongFunction<A> fuse(
         boolean initial,
         ToLongBiFunction<Boolean, A> next
     ) {
-        return (A a) -> next.applyAsLong(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(boolean initial, BooleanPredicate next) {
-        return () -> next.test(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> Predicate<A> fuse(
         boolean initial,
         BiPredicate<Boolean, A> next
     ) {
-        return (A a) -> next.test(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(boolean initial, BooleanConsumer next) {
-        return () -> next.accept(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> Consumer<A> fuse(
         boolean initial,
         BiConsumer<Boolean, A> next
     ) {
-        return (A a) -> next.accept(initial, a);
-    }
-
-    public static DoubleConsumer fuse(
-        boolean initial,
-        ObjDoubleConsumer<Boolean> next
-    ) {
-        return (double d) -> next.accept(initial, d);
-    }
-
-    public static IntConsumer fuse(
-        boolean initial,
-        ObjIntConsumer<Boolean> next
-    ) {
-        return (int i) -> next.accept(initial, i);
-    }
-
-    public static LongConsumer fuse(
-        boolean initial,
-        ObjLongConsumer<Boolean> next
-    ) {
-        return (long n) -> next.accept(initial, n);
-    }
-
-    public static BooleanPredicate fuse(
-        boolean initial,
-        BinaryOperator<Boolean> next
-    ) {
-        return (boolean b) -> next.apply(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     /* double */
@@ -324,33 +296,33 @@ public final class Z {
     }
 
     public static IntSupplier fuse(double initial, DoubleToIntFunction next) {
-        return () -> next.applyAsInt(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(double initial, DoubleToLongFunction next) {
-        return () -> next.applyAsLong(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(double initial, DoublePredicate next) {
-        return () -> next.test(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(double initial, DoubleConsumer next) {
-        return () -> next.accept(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(
         double initial,
         DoubleUnaryOperator next
     ) {
-        return () -> next.applyAsDouble(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleUnaryOperator fuse(
         double initial,
         DoubleBinaryOperator next
     ) {
-        return (double d) -> next.applyAsDouble(initial, d);
+        return Z.with(initial).fuse(next);
     }
 
     /* int */
@@ -2704,34 +2676,6 @@ public final class Z {
         return (A a) -> next.accept(initial.getAsBoolean(), a);
     }
 
-    public static DoubleConsumer fuse(
-        BooleanSupplier initial,
-        ObjDoubleConsumer<Boolean> next
-    ) {
-        return (double d) -> next.accept(initial.getAsBoolean(), d);
-    }
-
-    public static IntConsumer fuse(
-        BooleanSupplier initial,
-        ObjIntConsumer<Boolean> next
-    ) {
-        return (int i) -> next.accept(initial.getAsBoolean(), i);
-    }
-
-    public static LongConsumer fuse(
-        BooleanSupplier initial,
-        ObjLongConsumer<Boolean> next
-    ) {
-        return (long n) -> next.accept(initial.getAsBoolean(), n);
-    }
-
-    public static BooleanPredicate fuse(
-        BooleanSupplier initial,
-        BinaryOperator<Boolean> next
-    ) {
-        return (boolean b) -> next.apply(initial.getAsBoolean(), b);
-    }
-
     /* DoubleSupplier */
 
     public static <A> Supplier<A> fuse(
@@ -2745,39 +2689,39 @@ public final class Z {
         DoubleSupplier initial,
         DoubleToIntFunction next
     ) {
-        return () -> next.applyAsInt(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(
         DoubleSupplier initial,
         DoubleToLongFunction next
     ) {
-        return () -> next.applyAsLong(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(
         DoubleSupplier initial,
         DoublePredicate next
     ) {
-        return () -> next.test(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(DoubleSupplier initial, DoubleConsumer next) {
-        return () -> next.accept(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(
         DoubleSupplier initial,
         DoubleUnaryOperator next
     ) {
-        return () -> next.applyAsDouble(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleUnaryOperator fuse(
         DoubleSupplier initial,
         DoubleBinaryOperator next
     ) {
-        return (double d) -> next.applyAsDouble(initial.getAsDouble(), d);
+        return Z.with(initial).fuse(next);
     }
 
     /* IntSupplier */

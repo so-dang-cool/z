@@ -113,61 +113,8 @@ public class BooleanFusionTests {
         }
     }
 
-    @Evil
-    @Test
-    void boolean_to_objDblCns() {
-        synchronized (consumedBooleanC) {
-            synchronized (consumedDoubleC) {
-                consumedBooleanC = false;
-                consumedDoubleC = 0.0;
-
-                Z.fuse(true, saveBooleanCDoubleC).accept(5.0);
-
-                assertTrue(consumedBooleanC);
-                assertEquals(5.0, consumedDoubleC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void boolean_to_objIntCns() {
-        synchronized (consumedBooleanD) {
-            synchronized (consumedIntC) {
-                consumedBooleanD = false;
-                consumedIntC = 0;
-
-                Z.fuse(true, saveBooleanDIntC).accept(6);
-
-                assertTrue(consumedBooleanD);
-                assertEquals(6, consumedIntC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void boolean_to_objLongFn() {
-        synchronized (consumedBooleanE) {
-            synchronized (consumedLongC) {
-                consumedBooleanE = false;
-                consumedLongC = 0L;
-
-                Z.fuse(true, saveBooleanELongC).accept(7L);
-
-                assertTrue(consumedBooleanE);
-                assertEquals(7L, consumedLongC);
-            }
-        }
-    }
-
     @Test
     void boolean_to_toUnop() {
         assertTrue(Z.fuse(true, booleanId).getAsBoolean());
-    }
-
-    @Test
-    void boolean_to_toBiop() {
-        assertTrue(Z.fuse(true, maybeNot).test(false));
     }
 }
