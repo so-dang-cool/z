@@ -193,6 +193,22 @@ public class FissionTests {
 
     @Evil
     @Test
+    void split_bicns_test() {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z.split(saveStringsBandC).apply("salutations").accept("planet");
+
+                assertEquals("salutations", consumedStringB);
+                assertEquals("planet", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
     void split_objDblCns_test() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {

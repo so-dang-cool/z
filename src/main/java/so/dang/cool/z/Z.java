@@ -499,7 +499,7 @@ public final class Z {
         Function<A, B> initial,
         BiConsumer<B, C> next
     ) {
-        return (A a) -> (C c) -> next.accept(initial.apply(a), c);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, DoubleConsumer> fuse(
@@ -3843,8 +3843,7 @@ public final class Z {
          Function<B, C>>
         split2(BiFunction<A, B, C> initial)
     {
-        return (A a) -> (B b) ->
-            initial.apply(a, b);
+        return Z.with(initial).resolve();
     }
 
     public static <A, B, C>
@@ -4142,7 +4141,7 @@ public final class Z {
     public static <A, B> Function<A, ToDoubleFunction<B>> splitToDoubleBiFunction(
         ToDoubleBiFunction<A, B> initial
     ) {
-        return (A a) -> (B b) -> initial.applyAsDouble(a, b);
+        return Z.with(initial).resolve();
     }
 
     public static <A, B> Function<A, ToDoubleFunction<B>> split(
@@ -4154,7 +4153,7 @@ public final class Z {
     public static <A, B> Function<A, ToIntFunction<B>> splitToIntBiFunction(
         ToIntBiFunction<A, B> initial
     ) {
-        return (A a) -> (B b) -> initial.applyAsInt(a, b);
+        return Z.with(initial).resolve();
     }
 
     public static <A, B> Function<A, ToIntFunction<B>> split(
@@ -4166,7 +4165,7 @@ public final class Z {
     public static <A, B> Function<A, ToLongFunction<B>> splitToLongBiFunction(
         ToLongBiFunction<A, B> initial
     ) {
-        return (A a) -> (B b) -> initial.applyAsLong(a, b);
+        return Z.with(initial).resolve();
     }
 
     public static <A, B> Function<A, ToLongFunction<B>> split(
@@ -4178,7 +4177,7 @@ public final class Z {
     public static <A, B> Function<A, Predicate<B>> splitBiPredicate(
         BiPredicate<A, B> initial
     ) {
-        return (A a) -> (B b) -> initial.test(a, b);
+        return Z.with(initial).resolve();
     }
 
     public static <A, B> Function<A, Predicate<B>> split(
@@ -4221,6 +4220,18 @@ public final class Z {
         ObjLongConsumer<A> initial
     ) {
         return splitObjLongConsumer(initial);
+    }
+
+    public static <A, B> Function<A, Consumer<B>> splitBiConsumer(
+        BiConsumer<A, B> initial
+    ) {
+        return Z.with(initial).resolve();
+    }
+
+    public static <A, B> Function<A, Consumer<B>> split(
+        BiConsumer<A, B> initial
+    ) {
+        return splitBiConsumer(initial);
     }
 
     // ┏┓

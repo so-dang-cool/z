@@ -220,6 +220,47 @@ public class FunctionFusionTests {
 
     @Evil
     @Test
+    void fn_to_bicns_deep() {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z
+                    .with(trim)
+                    .fuse(saveStringsBandC)
+                    .apply(" greetings ")
+                    .accept("earthlings");
+
+                assertEquals("greetings", consumedStringB);
+                assertEquals("earthlings", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void fn_to_bicns_deeper() {
+        synchronized (consumedStringB) {
+            synchronized (consumedStringC) {
+                consumedStringB = "";
+                consumedStringC = "";
+
+                Z
+                    .with(trim)
+                    .fusing(saveStringsBandC)
+                    .resolve()
+                    .apply(" greetings ")
+                    .accept("earthlings");
+
+                assertEquals("greetings", consumedStringB);
+                assertEquals("earthlings", consumedStringC);
+            }
+        }
+    }
+
+    @Evil
+    @Test
     void fn_to_objDblCns() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {

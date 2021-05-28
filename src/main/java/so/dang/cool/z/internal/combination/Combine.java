@@ -62,8 +62,7 @@ public abstract class Combine<A, Fn> {
 
     /* Function -> ... [TODO: Incomplete] */
 
-    public static final class WithFunction<A, B>
-        extends Combine<B, Function<A, B>> {
+    public static class WithFunction<A, B> extends Combine<B, Function<A, B>> {
 
         private final transient Function<A, B> initial;
 
@@ -227,7 +226,27 @@ public abstract class Combine<A, Fn> {
             return fusingConsumer(next);
         }
 
-        /* Function<A, B> -> BiConsumer<B, C> [TODO] */
+        /* Function<A, B> -> BiConsumer<B, C> */
+
+        public <C> Function<A, Consumer<C>> fuseBiConsumer(
+            BiConsumer<B, C> next
+        ) {
+            return (A a) -> (C c) -> next.accept(initial.apply(a), c);
+        }
+
+        public <C> Function<A, Consumer<C>> fuse(BiConsumer<B, C> next) {
+            return fuseBiConsumer(next);
+        }
+
+        public <C> WithBiConsumer<A, C> fusingBiConsumer(
+            BiConsumer<B, C> next
+        ) {
+            return WithBiConsumer.of(fuseBiConsumer(next));
+        }
+
+        public <C> WithBiConsumer<A, C> fusing(BiConsumer<B, C> next) {
+            return fusingBiConsumer(next);
+        }
 
         /* Function<A, B> -> ObjDoubleConsumer<B, C> [TODO] */
 
@@ -313,7 +332,7 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, Function<B, C>> resolve() {
-            return Z.split(initial);
+            return (A a) -> (B b) -> initial.apply(a, b);
         }
 
         /* BiFunction<A, B, C> -> Function<C, D> */
@@ -672,7 +691,6 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, ToDoubleFunction<B>> resolve() {
-            // TODO: Add Z.split(ToDoubleBiFunciton)
             return (A a) -> (B b) -> initial.applyAsDouble(a, b);
         }
 
@@ -864,7 +882,6 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, ToIntFunction<B>> resolve() {
-            // TODO: Add Z.split(ToIntBiFunction)
             return (A a) -> (B b) -> initial.applyAsInt(a, b);
         }
 
@@ -1058,7 +1075,6 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, ToLongFunction<B>> resolve() {
-            // TODO: Add Z.split(ToLongBiFunction)
             return (A a) -> (B b) -> initial.applyAsLong(a, b);
         }
 
@@ -1146,9 +1162,16 @@ public abstract class Combine<A, Fn> {
             return new WithBiConsumer<>(initial);
         }
 
+        public static <A, B> WithBiConsumer<A, B> of(
+            Function<A, Consumer<B>> initial
+        ) {
+            return new WithBiConsumer<>(
+                (A a, B b) -> initial.apply(a).accept(b)
+            );
+        }
+
         @Override
         public Function<A, Consumer<B>> resolve() {
-            // TODO: Add Z.split(BiConsumer)
             return (A a) -> (B b) -> initial.accept(a, b);
         }
 
@@ -1237,7 +1260,6 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, Predicate<B>> resolve() {
-            // TODO: Add Z.split(BiPredicate)
             return (A a) -> (B b) -> initial.test(a, b);
         }
 
@@ -1706,7 +1728,6 @@ public abstract class Combine<A, Fn> {
 
         @Override
         public Function<A, UnaryOperator<A>> resolve() {
-            // TODO: Add Z.split(BinaryOperator)
             return (A a1) -> (A a2) -> initial.apply(a1, a2);
         }
 
