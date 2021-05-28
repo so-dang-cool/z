@@ -123,14 +123,14 @@ public final class Z {
         A initial,
         ToDoubleFunction<A> next
     ) {
-        return () -> next.applyAsDouble(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToDoubleFunction<B> fuseObject(
         A initial,
         ToDoubleBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsDouble(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> IntSupplier fuseObject(A initial, ToIntFunction<A> next) {
@@ -141,75 +141,75 @@ public final class Z {
         A initial,
         ToIntBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsInt(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> LongSupplier fuseObject(
         A initial,
         ToLongFunction<A> next
     ) {
-        return () -> next.applyAsLong(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToLongFunction<B> fuseObject(
         A initial,
         ToLongBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsLong(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanSupplier fuseObject(A initial, Predicate<A> next) {
-        return () -> next.test(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Predicate<B> fuseObject(
         A initial,
         BiPredicate<A, B> next
     ) {
-        return (B b) -> next.test(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> Operator fuseObject(A initial, Consumer<A> next) {
-        return () -> next.accept(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Consumer<B> fuseObject(
         A initial,
         BiConsumer<A, B> next
     ) {
-        return (B b) -> next.accept(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> DoubleConsumer fuseObject(
         A initial,
         ObjDoubleConsumer<A> next
     ) {
-        return (double d) -> next.accept(initial, d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> IntConsumer fuseObject(
         A initial,
         ObjIntConsumer<A> next
     ) {
-        return (int i) -> next.accept(initial, i);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> LongConsumer fuseObject(
         A initial,
         ObjLongConsumer<A> next
     ) {
-        return (long n) -> next.accept(initial, n);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> Supplier<A> fuseObject(A initial, UnaryOperator<A> next) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> UnaryOperator<A> fuseObject(
         A initial,
         BinaryOperator<A> next
     ) {
-        return (A a) -> next.apply(initial, a);
+        return Z.with(initial).fuse(next);
     }
 
     /* boolean */
@@ -2537,88 +2537,88 @@ public final class Z {
         Supplier<A> initial,
         ToDoubleFunction<A> next
     ) {
-        return () -> next.applyAsDouble(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToDoubleFunction<B> fuse(
         Supplier<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsDouble(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> IntSupplier fuse(
         Supplier<A> initial,
         ToIntFunction<A> next
     ) {
-        return () -> next.applyAsInt(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToIntFunction<B> fuse(
         Supplier<A> initial,
         ToIntBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsInt(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> LongSupplier fuse(
         Supplier<A> initial,
         ToLongFunction<A> next
     ) {
-        return () -> next.applyAsLong(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToLongFunction<B> fuse(
         Supplier<A> initial,
         ToLongBiFunction<A, B> next
     ) {
-        return (B b) -> next.applyAsLong(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanSupplier fuse(
         Supplier<A> initial,
         Predicate<A> next
     ) {
-        return () -> next.test(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Predicate<B> fuse(
         Supplier<A> initial,
         BiPredicate<A, B> next
     ) {
-        return (B b) -> next.test(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> Operator fuse(Supplier<A> initial, Consumer<A> next) {
-        return () -> next.accept(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Consumer<B> fuse(
         Supplier<A> initial,
         BiConsumer<A, B> next
     ) {
-        return (B b) -> next.accept(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> DoubleConsumer fuse(
         Supplier<A> initial,
         ObjDoubleConsumer<A> next
     ) {
-        return (double d) -> next.accept(initial.get(), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> IntConsumer fuse(
         Supplier<A> initial,
         ObjIntConsumer<A> next
     ) {
-        return (int i) -> next.accept(initial.get(), i);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> LongConsumer fuse(
         Supplier<A> initial,
         ObjLongConsumer<A> next
     ) {
-        return (long n) -> next.accept(initial.get(), n);
+        return Z.with(initial).fuse(next);
     }
 
     /* BooleanSupplier */
@@ -3652,6 +3652,108 @@ public final class Z {
         BiConsumer<A, B> initial
     ) {
         return withBiConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithBooleanConsumer withBooleanConsumer(
+        BooleanConsumer initial
+    ) {
+        return Combine.WithBooleanConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithBooleanConsumer with(BooleanConsumer initial) {
+        return withBooleanConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithDoubleConsumer withDoubleConsumer(
+        DoubleConsumer initial
+    ) {
+        return Combine.WithDoubleConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithDoubleConsumer with(DoubleConsumer initial) {
+        return withDoubleConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjDoubleConsumer<A> withObjDoubleConsumer(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return Combine.WithObjDoubleConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjDoubleConsumer<A> with(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return withObjDoubleConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithIntConsumer withIntConsumer(IntConsumer initial) {
+        return Combine.WithIntConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithIntConsumer with(IntConsumer initial) {
+        return withIntConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjIntConsumer<A> withObjIntConsumer(
+        ObjIntConsumer<A> initial
+    ) {
+        return Combine.WithObjIntConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjIntConsumer<A> with(
+        ObjIntConsumer<A> initial
+    ) {
+        return withObjIntConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithLongConsumer withLongConsumer(
+        LongConsumer initial
+    ) {
+        return Combine.WithLongConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static Combine.WithLongConsumer with(LongConsumer initial) {
+        return withLongConsumer(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjLongConsumer<A> withObjLongConsumer(
+        ObjLongConsumer<A> initial
+    ) {
+        return Combine.WithObjLongConsumer.of(initial);
+    }
+
+    @Evil
+    @Experimental
+    public static <A> Combine.WithObjLongConsumer<A> with(
+        ObjLongConsumer<A> initial
+    ) {
+        return withObjLongConsumer(initial);
     }
 
     @Experimental

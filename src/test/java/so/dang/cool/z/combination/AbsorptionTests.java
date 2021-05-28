@@ -16,20 +16,128 @@ public class AbsorptionTests {
     void cns() {
         synchronized (consumedStringA) {
             consumedStringA = "";
-
             saveStringA.accept("hello");
+            assertEquals("hello", consumedStringA);
+
+            consumedStringA = "";
+            Z.with(saveStringA).resolve().accept("hello");
             assertEquals("hello", consumedStringA);
         }
     }
 
     @Evil
     @Test
-    void cns_deep() {
-        synchronized (consumedStringA) {
-            consumedStringA = "";
+    void boolCns() {
+        synchronized (consumedBooleanA) {
+            consumedBooleanA = false;
+            saveBooleanA.accept(true);
+            assertTrue(consumedBooleanA);
 
-            Z.with(saveStringA).resolve().accept("hello");
-            assertEquals("hello", consumedStringA);
+            consumedBooleanA = false;
+            Z.with(saveBooleanA).resolve().accept(true);
+            assertTrue(consumedBooleanA);
+        }
+    }
+
+    @Evil
+    @Test
+    void dblCns() {
+        synchronized (consumedDoubleA) {
+            consumedDoubleA = 0.0;
+            saveDoubleA.accept(1.5);
+            assertEquals(1.5, consumedDoubleA);
+
+            consumedDoubleA = 0.0;
+            Z.with(saveDoubleA).resolve().accept(1.5);
+            assertEquals(1.5, consumedDoubleA);
+        }
+    }
+
+    @Evil
+    @Test
+    void objDblCns() {
+        synchronized (consumedStringD) {
+            synchronized (consumedDoubleB) {
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+                saveStringDDoubleB.accept("heyo", 1.5);
+                assertEquals("heyo", consumedStringD);
+                assertEquals(1.5, consumedDoubleB);
+
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+                Z.with(saveStringDDoubleB).resolve().apply("heyo").accept(1.5);
+                assertEquals("heyo", consumedStringD);
+                assertEquals(1.5, consumedDoubleB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void objIntCns() {
+        synchronized (consumedStringE) {
+            synchronized (consumedIntB) {
+                consumedStringE = "";
+                consumedIntB = 0;
+                saveStringEIntB.accept("heyo", 2);
+                assertEquals("heyo", consumedStringE);
+                assertEquals(2, consumedIntB);
+
+                consumedStringE = "";
+                consumedIntB = 0;
+                Z.with(saveStringEIntB).resolve().apply("heyo").accept(2);
+                assertEquals("heyo", consumedStringE);
+                assertEquals(2, consumedIntB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void objLongCns() {
+        synchronized (consumedStringF) {
+            synchronized (consumedLongB) {
+                consumedStringF = "";
+                consumedLongB = 0L;
+                saveStringFLongB.accept("heyo", 2L);
+                assertEquals("heyo", consumedStringF);
+                assertEquals(2L, consumedLongB);
+
+                consumedStringF = "";
+                consumedLongB = 0L;
+                Z.with(saveStringFLongB).resolve().apply("heyo").accept(2L);
+                assertEquals("heyo", consumedStringF);
+                assertEquals(2L, consumedLongB);
+            }
+        }
+    }
+
+    @Evil
+    @Test
+    void intCns() {
+        synchronized (consumedIntA) {
+            consumedIntA = 0;
+            saveIntA.accept(1);
+            assertEquals(1, consumedIntA);
+
+            consumedIntA = 0;
+            Z.with(saveIntA).resolve().accept(1);
+            assertEquals(1, consumedIntA);
+        }
+    }
+
+    @Evil
+    @Test
+    void longCns() {
+        synchronized (consumedLongA) {
+            consumedLongA = 0L;
+            saveLongA.accept(1L);
+            assertEquals(1L, consumedLongA);
+
+            consumedLongA = 0L;
+            Z.with(saveLongA).resolve().accept(1L);
+            assertEquals(1L, consumedLongA);
         }
     }
 
