@@ -1,5 +1,6 @@
 package so.dang.cool.z.internal.combination;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -67,7 +68,7 @@ public abstract class Combine<A, Fn> {
         private final transient Function<A, B> initial;
 
         private WithFunction(Function<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithFunction<A, B> of(Function<A, B> initial) {
@@ -82,7 +83,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> Function<B, C> */
 
         public <C> Function<A, C> fuseFunction(Function<B, C> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.apply(a));
         }
 
         public <C> Function<A, C> fuse(Function<B, C> next) {
@@ -90,7 +91,7 @@ public abstract class Combine<A, Fn> {
         }
 
         public <C> WithFunction<A, C> fusingFunction(Function<B, C> next) {
-            return WithFunction.of(Z.fuse(initial, next));
+            return WithFunction.of(fuseFunction(next));
         }
 
         public <C> WithFunction<A, C> fusing(Function<B, C> next) {
@@ -102,7 +103,7 @@ public abstract class Combine<A, Fn> {
         public <C, D> Function<A, Function<C, D>> fuseBiFunction(
             BiFunction<B, C, D> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (C c) -> next.apply(initial.apply(a), c);
         }
 
         public <C, D> Function<A, Function<C, D>> fuse(
@@ -115,7 +116,7 @@ public abstract class Combine<A, Fn> {
             BiFunction<B, C, D> next
         ) {
             // TODO: Need a currying combinator?
-            return WithBiFunction.of(Z.assimilate2(Z.fuse(initial, next)));
+            return WithBiFunction.of(Z.assimilate2(fuseBiFunction(next)));
         }
 
         public <C, D> WithBiFunction<A, C, D> fusing(BiFunction<B, C, D> next) {
@@ -127,7 +128,7 @@ public abstract class Combine<A, Fn> {
         public ToDoubleFunction<A> fuseToDoubleFunction(
             ToDoubleFunction<B> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.applyAsDouble(initial.apply(a));
         }
 
         public ToDoubleFunction<A> fuse(ToDoubleFunction<B> next) {
@@ -137,7 +138,7 @@ public abstract class Combine<A, Fn> {
         public WithToDoubleFunction<A> fusingToDoubleFunction(
             ToDoubleFunction<B> next
         ) {
-            return WithToDoubleFunction.of(Z.fuse(initial, next));
+            return WithToDoubleFunction.of(fuseToDoubleFunction(next));
         }
 
         public WithToDoubleFunction<A> fusing(ToDoubleFunction<B> next) {
@@ -149,7 +150,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> ToIntFunction<B> */
 
         public ToIntFunction<A> fuseToIntFunction(ToIntFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.applyAsInt(initial.apply(a));
         }
 
         public ToIntFunction<A> fuse(ToIntFunction<B> next) {
@@ -157,7 +158,7 @@ public abstract class Combine<A, Fn> {
         }
 
         public WithToIntFunction<A> fusingToIntFunction(ToIntFunction<B> next) {
-            return WithToIntFunction.of(Z.fuse(initial, next));
+            return WithToIntFunction.of(fuseToIntFunction(next));
         }
 
         public WithToIntFunction<A> fusing(ToIntFunction<B> next) {
@@ -169,7 +170,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> ToLongFunction<B> */
 
         public ToLongFunction<A> fuseToLongFunction(ToLongFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.applyAsLong(initial.apply(a));
         }
 
         public ToLongFunction<A> fuse(ToLongFunction<B> next) {
@@ -179,7 +180,7 @@ public abstract class Combine<A, Fn> {
         public WithToLongFunction<A> fusingToLongFunction(
             ToLongFunction<B> next
         ) {
-            return WithToLongFunction.of(Z.fuse(initial, next));
+            return WithToLongFunction.of(fuseToLongFunction(next));
         }
 
         public WithToLongFunction<A> fusing(ToLongFunction<B> next) {
@@ -191,7 +192,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> Predicate<B> */
 
         public Predicate<A> fusePredicate(Predicate<B> next) {
-            return Z.fuse(resolve(), next);
+            return (A a) -> next.test(resolve().apply(a));
         }
 
         public Predicate<A> fuse(Predicate<B> next) {
@@ -199,7 +200,7 @@ public abstract class Combine<A, Fn> {
         }
 
         public WithPredicate<A> fusingPredicate(Predicate<B> next) {
-            return WithPredicate.of(Z.fuse(initial, next));
+            return WithPredicate.of(fusePredicate(next));
         }
 
         public WithPredicate<A> fusing(Predicate<B> next) {
@@ -211,7 +212,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> Consumer<B> */
 
         public Consumer<A> fuseConsumer(Consumer<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.accept(initial.apply(a));
         }
 
         public Consumer<A> fuse(Consumer<B> next) {
@@ -219,7 +220,7 @@ public abstract class Combine<A, Fn> {
         }
 
         public WithConsumer<A> fusingConsumer(Consumer<B> next) {
-            return WithConsumer.of(Z.fuse(initial, next));
+            return WithConsumer.of(fuseConsumer(next));
         }
 
         public WithConsumer<A> fusing(Consumer<B> next) {
@@ -237,7 +238,7 @@ public abstract class Combine<A, Fn> {
         /* Function<A, B> -> UnaryOperator<B> */
 
         public Function<A, B> fuseUnaryOperator(UnaryOperator<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.apply(a));
         }
 
         public Function<A, B> fuse(UnaryOperator<B> next) {
@@ -245,7 +246,7 @@ public abstract class Combine<A, Fn> {
         }
 
         public WithFunction<A, B> fusingUnaryOperator(UnaryOperator<B> next) {
-            return WithFunction.of(Z.fuse(initial, next));
+            return WithFunction.of(fuseUnaryOperator(next));
         }
 
         public WithFunction<A, B> fusing(UnaryOperator<B> next) {
@@ -257,7 +258,7 @@ public abstract class Combine<A, Fn> {
         public Function<A, UnaryOperator<B>> fuseBinaryOperator(
             BinaryOperator<B> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.apply(a), b);
         }
 
         public Function<A, UnaryOperator<B>> fuse(BinaryOperator<B> next) {
@@ -293,7 +294,7 @@ public abstract class Combine<A, Fn> {
         private final transient BiFunction<A, B, C> initial;
 
         private WithBiFunction(BiFunction<A, B, C> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B, C> WithBiFunction<A, B, C> of(
@@ -320,7 +321,7 @@ public abstract class Combine<A, Fn> {
         public <D> Function<A, Function<B, D>> fuseFunction(
             Function<C, D> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.apply(a, b));
         }
 
         public <D> Function<A, Function<B, D>> fuse(Function<C, D> next) {
@@ -342,7 +343,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanFunction<A> initial;
 
         private WithBooleanFunction(BooleanFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithBooleanFunction<A> of(
@@ -359,7 +360,7 @@ public abstract class Combine<A, Fn> {
         /* BooleanFunction<A> -> Function<A,B> */
 
         public <B> BooleanFunction<B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(initial, next);
+            return (boolean b) -> next.apply(initial.apply(b));
         }
 
         public <B> BooleanFunction<B> fuse(Function<A, B> next) {
@@ -381,7 +382,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanToDoubleFunction initial;
 
         private WithBooleanToDoubleFunction(BooleanToDoubleFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithBooleanToDoubleFunction of(
@@ -400,7 +401,7 @@ public abstract class Combine<A, Fn> {
         public <A> BooleanFunction<A> fuseDoubleFunction(
             DoubleFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (boolean b) -> next.apply(initial.applyAsDouble(b));
         }
 
         public <A> BooleanFunction<A> fuse(DoubleFunction<A> next) {
@@ -424,7 +425,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanToIntFunction initial;
 
         private WithBooleanToIntFunction(BooleanToIntFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithBooleanToIntFunction of(
@@ -441,7 +442,7 @@ public abstract class Combine<A, Fn> {
         /* BooleanToIntFunction<A> -> IntFunction<B> */
 
         public <A> BooleanFunction<A> fuseIntFunction(IntFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (boolean b) -> next.apply(initial.applyAsInt(b));
         }
 
         public <A> BooleanFunction<A> fuse(IntFunction<A> next) {
@@ -465,7 +466,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanToLongFunction initial;
 
         private WithBooleanToLongFunction(BooleanToLongFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithBooleanToLongFunction of(
@@ -482,7 +483,7 @@ public abstract class Combine<A, Fn> {
         /* BooleanToLongFunction<A> -> LongFunction<B> */
 
         public <A> BooleanFunction<A> fuseLongFunction(LongFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (boolean b) -> next.apply(initial.applyAsLong(b));
         }
 
         public <A> BooleanFunction<A> fuse(LongFunction<A> next) {
@@ -506,7 +507,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleFunction<A> initial;
 
         private WithDoubleFunction(DoubleFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithDoubleFunction<A> of(DoubleFunction<A> initial) {
@@ -521,7 +522,7 @@ public abstract class Combine<A, Fn> {
         /* DoubleFunction<A> -> Function<A,B> */
 
         public <B> DoubleFunction<B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(initial, next);
+            return (double d) -> next.apply(initial.apply(d));
         }
 
         public <B> DoubleFunction<B> fuse(Function<A, B> next) {
@@ -543,7 +544,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleToIntFunction initial;
 
         private WithDoubleToIntFunction(DoubleToIntFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithDoubleToIntFunction of(DoubleToIntFunction initial) {
@@ -558,7 +559,7 @@ public abstract class Combine<A, Fn> {
         /* DoubleToIntFunction -> IntFunction<A> */
 
         public <A> DoubleFunction<A> fuseFunction(IntFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (double d) -> next.apply(initial.applyAsInt(d));
         }
 
         public <A> DoubleFunction<A> fuse(IntFunction<A> next) {
@@ -580,7 +581,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleToLongFunction initial;
 
         private WithDoubleToLongFunction(DoubleToLongFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithDoubleToLongFunction of(
@@ -597,7 +598,7 @@ public abstract class Combine<A, Fn> {
         /* DoubleToLongFunction -> LongFunction<A> */
 
         public <A> DoubleFunction<A> fuseFunction(LongFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (double d) -> next.apply(initial.applyAsLong(d));
         }
 
         public <A> DoubleFunction<A> fuse(LongFunction<A> next) {
@@ -619,7 +620,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToDoubleFunction<A> initial;
 
         private WithToDoubleFunction(ToDoubleFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithToDoubleFunction<A> of(
@@ -636,7 +637,7 @@ public abstract class Combine<A, Fn> {
         /* ToDoubleFunction<A> -> DoubleFunction<B> */
 
         public <B> Function<A, B> fuseDoubleFunction(DoubleFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.applyAsDouble(a));
         }
 
         public <B> Function<A, B> fuse(DoubleFunction<B> next) {
@@ -660,7 +661,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToDoubleBiFunction<A, B> initial;
 
         private WithToDoubleBiFunction(ToDoubleBiFunction<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithToDoubleBiFunction<A, B> of(
@@ -680,7 +681,7 @@ public abstract class Combine<A, Fn> {
         public <C> Function<A, Function<B, C>> fuseDoubleFunction(
             DoubleFunction<C> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.applyAsDouble(a, b));
         }
 
         public <C> Function<A, Function<B, C>> fuse(DoubleFunction<C> next) {
@@ -704,7 +705,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntFunction<A> initial;
 
         private WithIntFunction(IntFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithIntFunction<A> of(IntFunction<A> initial) {
@@ -719,7 +720,7 @@ public abstract class Combine<A, Fn> {
         /* IntFunction<A> -> Function<A,B> */
 
         public <B> IntFunction<B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(initial, next);
+            return (int i) -> next.apply(initial.apply(i));
         }
 
         public <B> IntFunction<B> fuse(Function<A, B> next) {
@@ -741,7 +742,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntToDoubleFunction initial;
 
         private WithIntToDoubleFunction(IntToDoubleFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithIntToDoubleFunction of(IntToDoubleFunction initial) {
@@ -756,7 +757,7 @@ public abstract class Combine<A, Fn> {
         /* IntToDoubleFunction -> DoubleFunction<A> */
 
         public <A> IntFunction<A> fuseFunction(DoubleFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (int i) -> next.apply(initial.applyAsDouble(i));
         }
 
         public <A> IntFunction<A> fuse(DoubleFunction<A> next) {
@@ -778,7 +779,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntToLongFunction initial;
 
         private WithIntToLongFunction(IntToLongFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithIntToLongFunction of(IntToLongFunction initial) {
@@ -793,7 +794,7 @@ public abstract class Combine<A, Fn> {
         /* IntToLongFunction -> LongFunction<A> */
 
         public <A> IntFunction<A> fuseFunction(LongFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (int i) -> next.apply(initial.applyAsLong(i));
         }
 
         public <A> IntFunction<A> fuse(LongFunction<A> next) {
@@ -815,7 +816,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToIntFunction<A> initial;
 
         private WithToIntFunction(ToIntFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithToIntFunction<A> of(ToIntFunction<A> initial) {
@@ -830,7 +831,7 @@ public abstract class Combine<A, Fn> {
         /* ToIntFunction<A> -> IntFunction<B> */
 
         public <B> Function<A, B> fuseIntFunction(IntFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.applyAsInt(a));
         }
 
         public <B> Function<A, B> fuse(IntFunction<B> next) {
@@ -852,7 +853,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToIntBiFunction<A, B> initial;
 
         private WithToIntBiFunction(ToIntBiFunction<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithToIntBiFunction<A, B> of(
@@ -872,7 +873,7 @@ public abstract class Combine<A, Fn> {
         public <C> Function<A, Function<B, C>> fuseIntFunction(
             IntFunction<C> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.applyAsInt(a, b));
         }
 
         public <C> Function<A, Function<B, C>> fuse(IntFunction<C> next) {
@@ -896,7 +897,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongFunction<A> initial;
 
         private WithLongFunction(LongFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithLongFunction<A> of(LongFunction<A> initial) {
@@ -911,7 +912,7 @@ public abstract class Combine<A, Fn> {
         /* LongFunction<A> -> Function<A,B> */
 
         public <B> LongFunction<B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(initial, next);
+            return (long n) -> next.apply(initial.apply(n));
         }
 
         public <B> LongFunction<B> fuse(Function<A, B> next) {
@@ -933,7 +934,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongToDoubleFunction initial;
 
         private WithLongToDoubleFunction(LongToDoubleFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithLongToDoubleFunction of(
@@ -950,7 +951,7 @@ public abstract class Combine<A, Fn> {
         /* LongToDoubleFunction -> DoubleFunction<A> */
 
         public <A> LongFunction<A> fuseFunction(DoubleFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (long n) -> next.apply(initial.applyAsDouble(n));
         }
 
         public <A> LongFunction<A> fuse(DoubleFunction<A> next) {
@@ -972,7 +973,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongToIntFunction initial;
 
         private WithLongToIntFunction(LongToIntFunction initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithLongToIntFunction of(LongToIntFunction initial) {
@@ -987,7 +988,7 @@ public abstract class Combine<A, Fn> {
         /* LongToIntFunction -> IntFunction<A> */
 
         public <A> LongFunction<A> fuseFunction(IntFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (long n) -> next.apply(initial.applyAsInt(n));
         }
 
         public <A> LongFunction<A> fuse(IntFunction<A> next) {
@@ -1009,7 +1010,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToLongFunction<A> initial;
 
         private WithToLongFunction(ToLongFunction<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithToLongFunction<A> of(ToLongFunction<A> initial) {
@@ -1024,7 +1025,7 @@ public abstract class Combine<A, Fn> {
         /* ToLongFunction<A> -> LongFunction<B> */
 
         public <B> Function<A, B> fuseLongFunction(LongFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.applyAsLong(a));
         }
 
         public <B> Function<A, B> fuse(LongFunction<B> next) {
@@ -1046,7 +1047,7 @@ public abstract class Combine<A, Fn> {
         private final transient ToLongBiFunction<A, B> initial;
 
         private WithToLongBiFunction(ToLongBiFunction<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithToLongBiFunction<A, B> of(
@@ -1066,7 +1067,7 @@ public abstract class Combine<A, Fn> {
         public <C> Function<A, Function<B, C>> fuseLongFunction(
             LongFunction<C> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.applyAsLong(a, b));
         }
 
         public <C> Function<A, Function<B, C>> fuse(LongFunction<C> next) {
@@ -1091,7 +1092,7 @@ public abstract class Combine<A, Fn> {
         private final transient Consumer<A> initial;
 
         private WithConsumer(Consumer<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithConsumer<A> of(Consumer<A> initial) {
@@ -1109,7 +1110,10 @@ public abstract class Combine<A, Fn> {
 
         @Evil
         public <B> Function<A, B> absorbSupplier(Supplier<B> next) {
-            return Z.absorb(initial, next);
+            return (A a) -> {
+                initial.accept(a);
+                return next.get();
+            };
         }
 
         @Evil
@@ -1135,7 +1139,7 @@ public abstract class Combine<A, Fn> {
         private final transient BiConsumer<A, B> initial;
 
         private WithBiConsumer(BiConsumer<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithBiConsumer<A, B> of(BiConsumer<A, B> initial) {
@@ -1156,7 +1160,11 @@ public abstract class Combine<A, Fn> {
         public <C> Function<A, Function<B, C>> absorbSupplier(
             Supplier<C> next
         ) {
-            return Z.absorb(initial, next);
+            return (A a) ->
+                (B b) -> {
+                    initial.accept(a, b);
+                    return next.get();
+                };
         }
 
         @Evil
@@ -1181,7 +1189,7 @@ public abstract class Combine<A, Fn> {
         private final transient Predicate<A> initial;
 
         private WithPredicate(Predicate<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithPredicate<A> of(Predicate<A> initial) {
@@ -1196,7 +1204,7 @@ public abstract class Combine<A, Fn> {
         /* Predicate<A> -> BooleanFunction<B> */
 
         public <B> Function<A, B> fuseFunction(BooleanFunction<B> next) {
-            return Z.fuse(initial, next);
+            return (A a) -> next.apply(initial.test(a));
         }
 
         public <B> Function<A, B> fuse(BooleanFunction<B> next) {
@@ -1218,7 +1226,7 @@ public abstract class Combine<A, Fn> {
         private final transient BiPredicate<A, B> initial;
 
         private WithBiPredicate(BiPredicate<A, B> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A, B> WithBiPredicate<A, B> of(
@@ -1238,7 +1246,7 @@ public abstract class Combine<A, Fn> {
         public <C> Function<A, Function<B, C>> fuseBooleanFunction(
             BooleanFunction<C> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (B b) -> next.apply(initial.test(a, b));
         }
 
         public <C> Function<A, Function<B, C>> fuse(BooleanFunction<C> next) {
@@ -1262,7 +1270,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanPredicate initial;
 
         private WithBooleanPredicate(BooleanPredicate initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithBooleanPredicate of(BooleanPredicate initial) {
@@ -1279,7 +1287,7 @@ public abstract class Combine<A, Fn> {
         public <A> BooleanFunction<A> fuseBooleanFunction(
             BooleanFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (boolean b) -> next.apply(initial.test(b));
         }
 
         public <A> BooleanFunction<A> fuse(BooleanFunction<A> next) {
@@ -1303,7 +1311,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoublePredicate initial;
 
         private WithDoublePredicate(DoublePredicate initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithDoublePredicate of(DoublePredicate initial) {
@@ -1320,7 +1328,7 @@ public abstract class Combine<A, Fn> {
         public <A> DoubleFunction<A> fuseBooleanFunction(
             BooleanFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (double d) -> next.apply(initial.test(d));
         }
 
         public <A> DoubleFunction<A> fuse(BooleanFunction<A> next) {
@@ -1344,7 +1352,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntPredicate initial;
 
         private WithIntPredicate(IntPredicate initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithIntPredicate of(IntPredicate initial) {
@@ -1359,7 +1367,7 @@ public abstract class Combine<A, Fn> {
         /* IntPredicate -> BooleanFunction<A> */
 
         public <A> IntFunction<A> fuseBooleanFunction(BooleanFunction<A> next) {
-            return Z.fuse(initial, next);
+            return (int i) -> next.apply(initial.test(i));
         }
 
         public <A> IntFunction<A> fuse(BooleanFunction<A> next) {
@@ -1383,7 +1391,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongPredicate initial;
 
         private WithLongPredicate(LongPredicate initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static WithLongPredicate of(LongPredicate initial) {
@@ -1400,7 +1408,7 @@ public abstract class Combine<A, Fn> {
         public <A> LongFunction<A> fuseBooleanFunction(
             BooleanFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (long n) -> next.apply(initial.test(n));
         }
 
         public <A> LongFunction<A> fuse(BooleanFunction<A> next) {
@@ -1423,7 +1431,7 @@ public abstract class Combine<A, Fn> {
         private final transient Supplier<A> initial;
 
         private WithSupplier(Supplier<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithSupplier<A> of(Supplier<A> initial) {
@@ -1438,7 +1446,7 @@ public abstract class Combine<A, Fn> {
         /* Supplier<A> -> Function<A, B> */
 
         public <B> Supplier<B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(resolve(), next);
+            return () -> next.apply(resolve().get());
         }
 
         public <B> Supplier<B> fuse(Function<A, B> next) {
@@ -1456,7 +1464,7 @@ public abstract class Combine<A, Fn> {
         /* Supplier<A> -> BiFunction<A, B, C> */
 
         public <B, C> Function<B, C> fuseBiFunction(BiFunction<A, B, C> next) {
-            return Z.fuse(resolve(), next);
+            return (B b) -> next.apply(resolve().get(), b);
         }
 
         public <B, C> Function<B, C> fuse(BiFunction<A, B, C> next) {
@@ -1480,7 +1488,7 @@ public abstract class Combine<A, Fn> {
         private final transient BooleanSupplier initial;
 
         private WithBooleanSupplier(BooleanSupplier initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithBooleanSupplier of(BooleanSupplier initial) {
@@ -1495,7 +1503,7 @@ public abstract class Combine<A, Fn> {
         /* BooleanSupplier -> BooleanFunction<A> */
 
         public <A> Supplier<A> fuseFunction(BooleanFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return () -> next.apply(resolve().getAsBoolean());
         }
 
         public <A> Supplier<A> fuse(BooleanFunction<A> next) {
@@ -1517,7 +1525,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleSupplier initial;
 
         private WithDoubleSupplier(DoubleSupplier initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithDoubleSupplier of(DoubleSupplier initial) {
@@ -1532,7 +1540,7 @@ public abstract class Combine<A, Fn> {
         /* DoubleSupplier -> DoubleFunction<A> */
 
         public <A> Supplier<A> fuseFunction(DoubleFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return () -> next.apply(resolve().getAsDouble());
         }
 
         public <A> Supplier<A> fuse(DoubleFunction<A> next) {
@@ -1554,7 +1562,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntSupplier initial;
 
         private WithIntSupplier(IntSupplier initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithIntSupplier of(IntSupplier initial) {
@@ -1569,7 +1577,7 @@ public abstract class Combine<A, Fn> {
         /* IntSupplier -> IntFunction<A> */
 
         public <A> Supplier<A> fuseFunction(IntFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return () -> next.apply(resolve().getAsInt());
         }
 
         public <A> Supplier<A> fuse(IntFunction<A> next) {
@@ -1591,7 +1599,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongSupplier initial;
 
         private WithLongSupplier(LongSupplier initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithLongSupplier of(LongSupplier initial) {
@@ -1606,7 +1614,7 @@ public abstract class Combine<A, Fn> {
         /* LongSupplier -> LongFunction<A> */
 
         public <A> Supplier<A> fuseFunction(LongFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return () -> next.apply(resolve().getAsLong());
         }
 
         public <A> Supplier<A> fuse(LongFunction<A> next) {
@@ -1628,7 +1636,7 @@ public abstract class Combine<A, Fn> {
         private final transient UnaryOperator<A> initial;
 
         private WithUnaryOperator(UnaryOperator<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithUnaryOperator<A> of(UnaryOperator<A> initial) {
@@ -1643,7 +1651,7 @@ public abstract class Combine<A, Fn> {
         /* UnaryOperator -> Function<A, B> */
 
         public <B> Function<A, B> fuseFunction(Function<A, B> next) {
-            return Z.fuse(resolve(), next);
+            return (A a) -> next.apply(resolve().apply(a));
         }
 
         public <B> Function<A, B> fuse(Function<A, B> next) {
@@ -1663,7 +1671,7 @@ public abstract class Combine<A, Fn> {
         public <B, C> Function<A, Function<B, C>> fuseBiFunction(
             BiFunction<A, B, C> next
         ) {
-            return Z.fuse(resolve(), next);
+            return (A a) -> (B c) -> next.apply(resolve().apply(a), c);
         }
 
         public <B, C> Function<A, Function<B, C>> fuse(
@@ -1689,7 +1697,7 @@ public abstract class Combine<A, Fn> {
         private final transient BinaryOperator<A> initial;
 
         private WithBinaryOperator(BinaryOperator<A> initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithBinaryOperator<A> of(BinaryOperator<A> initial) {
@@ -1707,7 +1715,7 @@ public abstract class Combine<A, Fn> {
         public <B> Function<A, Function<A, B>> fuseFunction(
             Function<A, B> next
         ) {
-            return Z.fuse(initial, next);
+            return (A a) -> (A b) -> next.apply(initial.apply(a, b));
         }
 
         public <B> Function<A, Function<A, B>> fuse(Function<A, B> next) {
@@ -1729,7 +1737,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleUnaryOperator initial;
 
         private WithDoubleUnaryOperator(DoubleUnaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithDoubleUnaryOperator of(
@@ -1748,7 +1756,7 @@ public abstract class Combine<A, Fn> {
         public <A> DoubleFunction<A> fuseDoubleFunction(
             DoubleFunction<A> next
         ) {
-            return Z.fuse(resolve(), next);
+            return (double d) -> next.apply(resolve().applyAsDouble(d));
         }
 
         public <A> DoubleFunction<A> fuse(DoubleFunction<A> next) {
@@ -1772,7 +1780,7 @@ public abstract class Combine<A, Fn> {
         private final transient DoubleBinaryOperator initial;
 
         private WithDoubleBinaryOperator(DoubleBinaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithDoubleBinaryOperator of(
@@ -1791,7 +1799,8 @@ public abstract class Combine<A, Fn> {
         public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(
             DoubleFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (double d) ->
+                (double d2) -> next.apply(initial.applyAsDouble(d, d2));
         }
 
         public <A> DoubleFunction<DoubleFunction<A>> fuse(
@@ -1808,7 +1817,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntUnaryOperator initial;
 
         private WithIntUnaryOperator(IntUnaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithIntUnaryOperator of(IntUnaryOperator initial) {
@@ -1823,7 +1832,7 @@ public abstract class Combine<A, Fn> {
         /* IntUnaryOperator -> IntFunction<A> */
 
         public <A> IntFunction<A> fuseIntFunction(IntFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return (int i) -> next.apply(resolve().applyAsInt(i));
         }
 
         public <A> IntFunction<A> fuse(IntFunction<A> next) {
@@ -1845,7 +1854,7 @@ public abstract class Combine<A, Fn> {
         private final transient IntBinaryOperator initial;
 
         private WithIntBinaryOperator(IntBinaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithIntBinaryOperator of(IntBinaryOperator initial) {
@@ -1862,7 +1871,7 @@ public abstract class Combine<A, Fn> {
         public <A> IntFunction<IntFunction<A>> fuseIntFunction(
             IntFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (int i) -> (int i2) -> next.apply(initial.applyAsInt(i, i2));
         }
 
         public <A> IntFunction<IntFunction<A>> fuse(IntFunction<A> next) {
@@ -1877,7 +1886,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongUnaryOperator initial;
 
         private WithLongUnaryOperator(LongUnaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithLongUnaryOperator of(LongUnaryOperator initial) {
@@ -1892,7 +1901,7 @@ public abstract class Combine<A, Fn> {
         /* LongUnaryOperator -> LongFunction<A> */
 
         public <A> LongFunction<A> fuseLongFunction(LongFunction<A> next) {
-            return Z.fuse(resolve(), next);
+            return (long n) -> next.apply(resolve().applyAsLong(n));
         }
 
         public <A> LongFunction<A> fuse(LongFunction<A> next) {
@@ -1916,7 +1925,7 @@ public abstract class Combine<A, Fn> {
         private final transient LongBinaryOperator initial;
 
         private WithLongBinaryOperator(LongBinaryOperator initial) {
-            this.initial = initial;
+            this.initial = Objects.requireNonNull(initial);
         }
 
         public static <A> WithLongBinaryOperator of(
@@ -1935,7 +1944,8 @@ public abstract class Combine<A, Fn> {
         public <A> LongFunction<LongFunction<A>> fuseLongFunction(
             LongFunction<A> next
         ) {
-            return Z.fuse(initial, next);
+            return (long n) ->
+                (long n2) -> next.apply(initial.applyAsLong(n, n2));
         }
 
         public <A> LongFunction<LongFunction<A>> fuse(LongFunction<A> next) {

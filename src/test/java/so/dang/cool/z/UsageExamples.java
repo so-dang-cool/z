@@ -202,7 +202,7 @@ public class UsageExamples {
         // var iToS = Z.split(Integer::toString);
 
         // ... but this works!
-        Function<Integer, Function<Integer, String>> iToS = Z.split(
+        Function<Integer, Function<Integer, String>> iToS = Z.split2(
             Integer::toString
         );
 

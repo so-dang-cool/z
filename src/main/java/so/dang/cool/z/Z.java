@@ -109,14 +109,14 @@ public final class Z {
         A initial,
         Function<A, B> next
     ) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<B, C> fuseObject(
         A initial,
         BiFunction<A, B, C> next
     ) {
-        return (B b) -> next.apply(initial, b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> DoubleSupplier fuseObject(
@@ -218,7 +218,7 @@ public final class Z {
         boolean initial,
         BooleanFunction<A> next
     ) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, B> fuse(
@@ -320,7 +320,7 @@ public final class Z {
     /* double */
 
     public static <A> Supplier<A> fuse(double initial, DoubleFunction<A> next) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(double initial, DoubleToIntFunction next) {
@@ -356,7 +356,7 @@ public final class Z {
     /* int */
 
     public static <A> Supplier<A> fuse(int initial, IntFunction<A> next) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(int initial, IntToDoubleFunction next) {
@@ -386,7 +386,7 @@ public final class Z {
     /* long */
 
     public static <A> Supplier<A> fuse(long initial, LongFunction<A> next) {
-        return () -> next.apply(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(long initial, LongToDoubleFunction next) {
@@ -422,21 +422,21 @@ public final class Z {
         Function<A, B> initial,
         Function<B, C> next
     ) {
-        return (A a) -> next.apply(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<C, D>> fuse(
         Function<A, B> initial,
         BiFunction<B, C, D> next
     ) {
-        return (A a) -> (C c) -> next.apply(initial.apply(a), c);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToDoubleFunction<A> fuse(
         Function<A, B> initial,
         ToDoubleFunction<B> next
     ) {
-        return (A a) -> next.applyAsDouble(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToDoubleFunction<C>> fuse(
@@ -450,7 +450,7 @@ public final class Z {
         Function<A, B> initial,
         ToIntFunction<B> next
     ) {
-        return (A a) -> next.applyAsInt(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToIntFunction<C>> fuse(
@@ -464,7 +464,7 @@ public final class Z {
         Function<A, B> initial,
         ToLongFunction<B> next
     ) {
-        return (A a) -> next.applyAsLong(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToLongFunction<C>> fuse(
@@ -478,7 +478,7 @@ public final class Z {
         Function<A, B> initial,
         Predicate<B> next
     ) {
-        return (A a) -> next.test(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, Predicate<C>> fuse(
@@ -492,7 +492,7 @@ public final class Z {
         Function<A, B> initial,
         Consumer<B> next
     ) {
-        return (A a) -> next.accept(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, Consumer<C>> fuse(
@@ -527,14 +527,14 @@ public final class Z {
         Function<A, B> initial,
         UnaryOperator<B> next
     ) {
-        return (A a) -> next.apply(initial.apply(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, UnaryOperator<B>> fuse(
         Function<A, B> initial,
         BinaryOperator<B> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.apply(a), b);
+        return Z.with(initial).fuse(next);
     }
 
     /* BiFunction */
@@ -543,7 +543,7 @@ public final class Z {
         BiFunction<A, B, C> initial,
         Function<C, D> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D, E> Function<A, Function<B, Function<D, E>>> fuse(
@@ -655,7 +655,7 @@ public final class Z {
         BooleanFunction<A> initial,
         Function<A, B> next
     ) {
-        return (boolean b) -> next.apply(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> BooleanFunction<Function<B, C>> fuse(
@@ -816,7 +816,7 @@ public final class Z {
         BooleanToLongFunction initial,
         LongFunction<A> next
     ) {
-        return (boolean b) -> next.apply(initial.applyAsLong(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanToDoubleFunction fuse(
@@ -868,7 +868,7 @@ public final class Z {
         BooleanToIntFunction initial,
         IntFunction<A> next
     ) {
-        return (boolean b) -> next.apply(initial.applyAsInt(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanToDoubleFunction fuse(
@@ -920,7 +920,7 @@ public final class Z {
         DoubleFunction<A> initial,
         Function<A, B> next
     ) {
-        return (double d) -> next.apply(initial.apply(d));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> DoubleFunction<Function<B, C>> fuse(
@@ -1027,7 +1027,7 @@ public final class Z {
         DoubleToIntFunction initial,
         IntFunction<A> next
     ) {
-        return (double d) -> next.apply(initial.applyAsInt(d));
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleUnaryOperator fuse(
@@ -1079,7 +1079,7 @@ public final class Z {
         DoubleToLongFunction initial,
         LongFunction<A> next
     ) {
-        return (double d) -> next.apply(initial.applyAsLong(d));
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleUnaryOperator fuse(
@@ -1131,7 +1131,7 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleFunction<B> next
     ) {
-        return (A a) -> next.apply(initial.applyAsDouble(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToIntFunction<A> fuse(
@@ -1183,7 +1183,7 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleFunction<C> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.applyAsDouble(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, ToIntFunction<B>> fuse(
@@ -1238,7 +1238,7 @@ public final class Z {
         IntFunction<A> initial,
         Function<A, B> next
     ) {
-        return (int i) -> next.apply(initial.apply(i));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> IntFunction<Function<B, C>> fuse(
@@ -1345,7 +1345,7 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleFunction<A> next
     ) {
-        return (int i) -> next.apply(initial.applyAsDouble(i));
+        return Z.with(initial).fuse(next);
     }
 
     public static IntUnaryOperator fuse(
@@ -1397,7 +1397,7 @@ public final class Z {
         IntToLongFunction initial,
         LongFunction<A> next
     ) {
-        return (int i) -> next.apply(initial.applyAsLong(i));
+        return Z.with(initial).fuse(next);
     }
 
     public static IntToDoubleFunction fuse(
@@ -1449,7 +1449,7 @@ public final class Z {
         ToIntFunction<A> initial,
         IntFunction<B> next
     ) {
-        return (A a) -> next.apply(initial.applyAsInt(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToDoubleFunction<A> fuse(
@@ -1500,7 +1500,7 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntFunction<C> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.applyAsInt(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToDoubleFunction<B>> fuse(
@@ -1552,7 +1552,7 @@ public final class Z {
         LongFunction<A> initial,
         Function<A, B> next
     ) {
-        return (long n) -> next.apply(initial.apply(n));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> LongFunction<Function<B, C>> fuse(
@@ -1659,7 +1659,7 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleFunction<A> next
     ) {
-        return (long n) -> next.apply(initial.applyAsDouble(n));
+        return Z.with(initial).fuse(next);
     }
 
     public static LongToIntFunction fuse(
@@ -1711,7 +1711,7 @@ public final class Z {
         LongToIntFunction initial,
         IntFunction<A> next
     ) {
-        return (long n) -> next.apply(initial.applyAsInt(n));
+        return Z.with(initial).fuse(next);
     }
 
     public static LongToDoubleFunction fuse(
@@ -1762,7 +1762,7 @@ public final class Z {
         ToLongFunction<A> initial,
         LongFunction<B> next
     ) {
-        return (A a) -> next.apply(initial.applyAsLong(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> ToDoubleFunction<A> fuse(
@@ -1813,7 +1813,7 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongFunction<C> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.applyAsLong(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, ToDoubleFunction<B>> fuse(
@@ -1865,7 +1865,7 @@ public final class Z {
         Predicate<A> initial,
         BooleanFunction<B> next
     ) {
-        return (A a) -> next.apply(initial.test(a));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, Function<B, C>> fuse(
@@ -1979,7 +1979,7 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanFunction<C> next
     ) {
-        return (A a) -> (B b) -> next.apply(initial.test(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, Function<C, D>>> fuse(
@@ -2098,7 +2098,7 @@ public final class Z {
         BooleanPredicate initial,
         BooleanFunction<A> next
     ) {
-        return (boolean b) -> next.apply(initial.test(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<Function<A, B>> fuse(
@@ -2184,7 +2184,7 @@ public final class Z {
         DoublePredicate initial,
         BooleanFunction<A> next
     ) {
-        return (double d) -> next.apply(initial.test(d));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<Function<A, B>> fuse(
@@ -2298,7 +2298,7 @@ public final class Z {
         IntPredicate initial,
         BooleanFunction<A> next
     ) {
-        return (int i) -> next.apply(initial.test(i));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> IntFunction<Function<A, B>> fuse(
@@ -2409,7 +2409,7 @@ public final class Z {
         LongPredicate initial,
         BooleanFunction<A> next
     ) {
-        return (long n) -> next.apply(initial.test(n));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> LongFunction<Function<A, B>> fuse(
@@ -2517,29 +2517,20 @@ public final class Z {
         return (long n) -> (boolean b) -> next.apply(initial.test(n), b);
     }
 
-    /* Consumer [SKIPPED] Covered in absorption */
-    /* BiConsumer [SKIPPED] Covered in absorption */
-    /* DoubleConsumer [SKIPPED] Covered in absorption */
-    /* ObjDoubleConsumer [SKIPPED] Covered in absorption */
-    /* IntConsumer [SKIPPED] Covered in absorption */
-    /* ObjIntConsumer [SKIPPED] Covered in absorption */
-    /* LongConsumer [SKIPPED] Covered in absorption */
-    /* ObjLongConsumer [SKIPPED] Covered in absorption */
-
     /* Supplier */
 
     public static <A, B> Supplier<B> fuse(
         Supplier<A> initial,
         Function<A, B> next
     ) {
-        return () -> next.apply(initial.get());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<B, C> fuse(
         Supplier<A> initial,
         BiFunction<A, B, C> next
     ) {
-        return (B b) -> next.apply(initial.get(), b);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> DoubleSupplier fuse(
@@ -2636,7 +2627,7 @@ public final class Z {
         BooleanSupplier initial,
         BooleanFunction<A> next
     ) {
-        return () -> next.apply(initial.getAsBoolean());
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> Function<A, B> fuse(
@@ -2747,7 +2738,7 @@ public final class Z {
         DoubleSupplier initial,
         DoubleFunction<A> next
     ) {
-        return () -> next.apply(initial.getAsDouble());
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(
@@ -2795,7 +2786,7 @@ public final class Z {
         IntSupplier initial,
         IntFunction<A> next
     ) {
-        return () -> next.apply(initial.getAsInt());
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(
@@ -2837,7 +2828,7 @@ public final class Z {
         LongSupplier initial,
         LongFunction<A> next
     ) {
-        return () -> next.apply(initial.getAsLong());
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleSupplier fuse(
@@ -2879,7 +2870,7 @@ public final class Z {
         return (long n) -> next.applyAsLong(initial.getAsLong(), n);
     }
 
-    /* Operator [SKIPPED] Covered in absorption */
+    /* Operator [TODO: verify these are covered] [SKIPPED] Covered in absorption */
 
     /* UnaryOperator [SKIPPED] Overlap with Function<A, B> when A == B */
 
@@ -2891,7 +2882,7 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleFunction<A> next
     ) {
-        return (double d) -> next.apply(initial.applyAsDouble(d));
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleToIntFunction fuse(
@@ -2943,8 +2934,7 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleFunction<A> next
     ) {
-        return (double d) ->
-            (double d2) -> next.apply(initial.applyAsDouble(d, d2));
+        return Z.with(initial).fuse(next);
     }
 
     public static DoubleFunction<DoubleToIntFunction> fuse(
@@ -3003,7 +2993,7 @@ public final class Z {
         IntUnaryOperator initial,
         IntFunction<A> next
     ) {
-        return (int i) -> next.apply(initial.applyAsInt(i));
+        return Z.with(initial).fuse(next);
     }
 
     public static IntToDoubleFunction fuse(
@@ -3052,7 +3042,7 @@ public final class Z {
         IntBinaryOperator initial,
         IntFunction<A> next
     ) {
-        return (int i) -> (int i2) -> next.apply(initial.applyAsInt(i, i2));
+        return Z.with(initial).fuse(next);
     }
 
     public static IntFunction<IntToDoubleFunction> fuse(
@@ -3108,7 +3098,7 @@ public final class Z {
         LongUnaryOperator initial,
         LongFunction<A> next
     ) {
-        return (long n) -> next.apply(initial.applyAsLong(n));
+        return Z.with(initial).fuse(next);
     }
 
     public static LongToDoubleFunction fuse(
@@ -3160,7 +3150,7 @@ public final class Z {
         LongBinaryOperator initial,
         LongFunction<A> next
     ) {
-        return (long n) -> (long n2) -> next.apply(initial.applyAsLong(n, n2));
+        return Z.with(initial).fuse(next);
     }
 
     public static LongFunction<LongToDoubleFunction> fuse(
@@ -3851,10 +3841,28 @@ public final class Z {
     public static <A, B, C>
         Function<A,
          Function<B, C>>
-        split(BiFunction<A, B, C> initial)
+        split2(BiFunction<A, B, C> initial)
     {
         return (A a) -> (B b) ->
             initial.apply(a, b);
+    }
+
+    public static <A, B, C>
+        Function<A,
+         Function<B, C>>
+        split(BiFunction<A, B, C> initial)
+    {
+        return split2(initial);
+    }
+
+    public static <A, B, C, D>
+        Function<A,
+         Function<B,
+          Function<C, D>>>
+        split3(TriFunction<A, B, C, D> initial)
+    {
+        return (A a) -> (B b) -> (C c) ->
+            initial.apply(a, b, c);
     }
 
     public static <A, B, C, D>
@@ -3863,8 +3871,18 @@ public final class Z {
           Function<C, D>>>
         split(TriFunction<A, B, C, D> initial)
     {
-        return (A a) -> (B b) -> (C c) ->
-            initial.apply(a, b, c);
+        return split3(initial);
+    }
+
+    public static <A, B, C, D, E>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D, E>>>>
+        split4(QuadFunction<A, B, C, D, E> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) ->
+            initial.apply(a, b, c, d);
     }
 
     public static <A, B, C, D, E>
@@ -3874,8 +3892,19 @@ public final class Z {
            Function<D, E>>>>
         split(QuadFunction<A, B, C, D, E> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) ->
-            initial.apply(a, b, c, d);
+        return split4(initial);
+    }
+
+    public static <A, B, C, D, E, F>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E, F>>>>>
+        split5(QuinFunction<A, B, C, D, E, F> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) ->
+            initial.apply(a, b, c, d, e);
     }
 
     public static <A, B, C, D, E, F>
@@ -3886,8 +3915,20 @@ public final class Z {
             Function<E, F>>>>>
         split(QuinFunction<A, B, C, D, E, F> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) ->
-            initial.apply(a, b, c, d, e);
+        return split5(initial);
+    }
+
+    public static <A, B, C, D, E, F, G>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F, G>>>>>>
+        split6(SexFunction<A, B, C, D, E, F, G> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
+            initial.apply(a, b, c, d, e, f);
     }
 
     public static <A, B, C, D, E, F, G>
@@ -3899,8 +3940,21 @@ public final class Z {
              Function<F, G>>>>>>
         split(SexFunction<A, B, C, D, E, F, G> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
-            initial.apply(a, b, c, d, e, f);
+        return split6(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G, H>>>>>>>
+        split7(SeptFunction<A, B, C, D, E, F, G, H> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) ->
+            initial.apply(a, b, c, d, e, f, g);
     }
 
     public static <A, B, C, D, E, F, G, H>
@@ -3913,8 +3967,22 @@ public final class Z {
               Function<G, H>>>>>>>
         split(SeptFunction<A, B, C, D, E, F, G, H> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) ->
-            initial.apply(a, b, c, d, e, f, g);
+        return split7(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H, I>>>>>>>>
+        split8(OctFunction<A, B, C, D, E, F, G, H, I> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) ->
+            initial.apply(a, b, c, d, e, f, g, h);
     }
 
     public static <A, B, C, D, E, F, G, H, I>
@@ -3928,8 +3996,23 @@ public final class Z {
                Function<H, I>>>>>>>>
         split(OctFunction<A, B, C, D, E, F, G, H, I> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) ->
-            initial.apply(a, b, c, d, e, f, g, h);
+        return split8(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I, J>>>>>>>>>
+        split9(NonFunction<A, B, C, D, E, F, G, H, I, J> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) ->
+            initial.apply(a, b, c, d, e, f, g, h, i);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J>
@@ -3944,8 +4027,24 @@ public final class Z {
                 Function<I, J>>>>>>>>>
         split(NonFunction<A, B, C, D, E, F, G, H, I, J> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) ->
-            initial.apply(a, b, c, d, e, f, g, h, i);
+        return split9(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J, K>>>>>>>>>>
+        split10(DecFunction<A, B, C, D, E, F, G, H, I, J, K> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) -> (J j) ->
+            initial.apply(a, b, c, d, e, f, g, h, i, j);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K>
@@ -3961,8 +4060,26 @@ public final class Z {
                  Function<J, K>>>>>>>>>>
         split(DecFunction<A, B, C, D, E, F, G, H, I, J, K> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) -> (J j) ->
-            initial.apply(a, b, c, d, e, f, g, h, i, j);
+        return split10(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K, L>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J,
+                  Function<K, L>>>>>>>>>>>
+        split11(UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L> initial)
+    {
+        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
+                (G g) -> (H h) -> (I i) -> (J j) -> (K k) ->
+                 initial.apply(a, b, c, d, e, f, g, h, i, j, k);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K, L>
@@ -3979,9 +4096,27 @@ public final class Z {
                   Function<K, L>>>>>>>>>>>
         split(UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L> initial)
     {
+        return split11(initial);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K, L, M>
+        Function<A,
+         Function<B,
+          Function<C,
+           Function<D,
+            Function<E,
+             Function<F,
+              Function<G,
+               Function<H,
+                Function<I,
+                 Function<J,
+                  Function<K,
+                   Function<L, M>>>>>>>>>>>>
+        split12(DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M> initial)
+    {
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
-                (G g) -> (H h) -> (I i) -> (J j) -> (K k) ->
-                 initial.apply(a, b, c, d, e, f, g, h, i, j, k);
+                (G g) -> (H h) -> (I i) -> (J j) -> (K k) -> (L l) ->
+                 initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
     }
 
     public static <A, B, C, D, E, F, G, H, I, J, K, L, M>
@@ -3999,12 +4134,94 @@ public final class Z {
                    Function<L, M>>>>>>>>>>>>
         split(DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M> initial)
     {
-        return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
-                (G g) -> (H h) -> (I i) -> (J j) -> (K k) -> (L l) ->
-                 initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
+        return split12(initial);
     }
 
 	// autofmt:on
+
+    public static <A, B> Function<A, ToDoubleFunction<B>> splitToDoubleBiFunction(
+        ToDoubleBiFunction<A, B> initial
+    ) {
+        return (A a) -> (B b) -> initial.applyAsDouble(a, b);
+    }
+
+    public static <A, B> Function<A, ToDoubleFunction<B>> split(
+        ToDoubleBiFunction<A, B> initial
+    ) {
+        return splitToDoubleBiFunction(initial);
+    }
+
+    public static <A, B> Function<A, ToIntFunction<B>> splitToIntBiFunction(
+        ToIntBiFunction<A, B> initial
+    ) {
+        return (A a) -> (B b) -> initial.applyAsInt(a, b);
+    }
+
+    public static <A, B> Function<A, ToIntFunction<B>> split(
+        ToIntBiFunction<A, B> initial
+    ) {
+        return splitToIntBiFunction(initial);
+    }
+
+    public static <A, B> Function<A, ToLongFunction<B>> splitToLongBiFunction(
+        ToLongBiFunction<A, B> initial
+    ) {
+        return (A a) -> (B b) -> initial.applyAsLong(a, b);
+    }
+
+    public static <A, B> Function<A, ToLongFunction<B>> split(
+        ToLongBiFunction<A, B> initial
+    ) {
+        return splitToLongBiFunction(initial);
+    }
+
+    public static <A, B> Function<A, Predicate<B>> splitBiPredicate(
+        BiPredicate<A, B> initial
+    ) {
+        return (A a) -> (B b) -> initial.test(a, b);
+    }
+
+    public static <A, B> Function<A, Predicate<B>> split(
+        BiPredicate<A, B> initial
+    ) {
+        return splitBiPredicate(initial);
+    }
+
+    public static <A> Function<A, DoubleConsumer> splitObjDoubleConsumer(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return (A a) -> (double d) -> initial.accept(a, d);
+    }
+
+    public static <A> Function<A, DoubleConsumer> split(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return splitObjDoubleConsumer(initial);
+    }
+
+    public static <A> Function<A, IntConsumer> splitObjIntConsumer(
+        ObjIntConsumer<A> initial
+    ) {
+        return (A a) -> (int i) -> initial.accept(a, i);
+    }
+
+    public static <A> Function<A, IntConsumer> split(
+        ObjIntConsumer<A> initial
+    ) {
+        return splitObjIntConsumer(initial);
+    }
+
+    public static <A> Function<A, LongConsumer> splitObjLongConsumer(
+        ObjLongConsumer<A> initial
+    ) {
+        return (A a) -> (long n) -> initial.accept(a, n);
+    }
+
+    public static <A> Function<A, LongConsumer> split(
+        ObjLongConsumer<A> initial
+    ) {
+        return splitObjLongConsumer(initial);
+    }
 
     // ┏┓
     // ┏━━━━┓
@@ -4229,10 +4446,7 @@ public final class Z {
         Consumer<A> initial,
         Supplier<B> next
     ) {
-        return (A a) -> {
-            initial.accept(a);
-            return next.get();
-        };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
@@ -4294,11 +4508,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         Supplier<C> next
     ) {
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                return next.get();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
