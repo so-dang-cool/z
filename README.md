@@ -1,6 +1,7 @@
 # Z
 
 [![Maven Central](https://img.shields.io/maven-central/v/so.dang.cool/z.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22so.dang.cool%22%20AND%20a:%22z%22)
+[![Javadoc](https://javadoc.io/badge2/so.dang.cool/z/javadoc.svg)](https://javadoc.io/doc/so.dang.cool/z)
 
 **Z is a Java library for bold, exciting, and fearless function combination.**
 
@@ -15,11 +16,6 @@ Unlock your functional programming potential with these combination techniques:
     functions.
     - **Experimental:** This feature is still in active development, but will
     be stable in future versions.
-
-## Links
-
-- [Read the Docs](https://www.javadoc.io/doc/so.dang.cool/z/latest/so/dang/cool/z/package-summary.html)
-- [Get Z from Maven Central](https://search.maven.org/artifact/so.dang.cool/z/)
 
 ## Z is lean and principled
 
