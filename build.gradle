@@ -50,6 +50,16 @@ tasks.named('jacocoTestCoverageVerification') {
     }
 }
 
+jacocoTestReport {
+    reports {
+        html.enabled true
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        csv.enabled true
+        csv.destination file("${buildDir}/reports/jacoco/report.csv")
+    }
+}
+
 spotless {
     format 'misc', {
         target '*.gradle', '*.md', '.gitignore'
