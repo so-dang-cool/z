@@ -3690,7 +3690,9 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjDoubleConsumer<A> with(ObjDoubleConsumer<A> initial) {
+    public static <A> Combine.WithObjDoubleConsumer<A> with(
+        ObjDoubleConsumer<A> initial
+    ) {
         return withObjDoubleConsumer(initial);
     }
 
@@ -3716,7 +3718,9 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjIntConsumer<A> with(ObjIntConsumer<A> initial) {
+    public static <A> Combine.WithObjIntConsumer<A> with(
+        ObjIntConsumer<A> initial
+    ) {
         return withObjIntConsumer(initial);
     }
 
@@ -3744,7 +3748,9 @@ public final class Z {
 
     @Evil
     @Experimental
-    public static <A> Combine.WithObjLongConsumer<A> with(ObjLongConsumer<A> initial) {
+    public static <A> Combine.WithObjLongConsumer<A> with(
+        ObjLongConsumer<A> initial
+    ) {
         return withObjLongConsumer(initial);
     }
 
