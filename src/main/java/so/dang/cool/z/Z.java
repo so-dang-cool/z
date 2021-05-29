@@ -332,27 +332,27 @@ public final class Z {
     }
 
     public static DoubleSupplier fuse(int initial, IntToDoubleFunction next) {
-        return () -> next.applyAsDouble(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(int initial, IntToLongFunction next) {
-        return () -> next.applyAsLong(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(int initial, IntPredicate next) {
-        return () -> next.test(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(int initial, IntConsumer next) {
-        return () -> next.accept(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(int initial, IntUnaryOperator next) {
-        return () -> next.applyAsInt(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static IntUnaryOperator fuse(int initial, IntBinaryOperator next) {
-        return (int i) -> next.applyAsInt(initial, i);
+        return Z.with(initial).fuse(next);
     }
 
     /* long */
@@ -362,30 +362,30 @@ public final class Z {
     }
 
     public static DoubleSupplier fuse(long initial, LongToDoubleFunction next) {
-        return () -> next.applyAsDouble(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static IntSupplier fuse(long initial, LongToIntFunction next) {
-        return () -> next.applyAsInt(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanSupplier fuse(long initial, LongPredicate next) {
-        return () -> next.test(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static Operator fuse(long initial, LongConsumer next) {
-        return () -> next.accept(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static LongSupplier fuse(long initial, LongUnaryOperator next) {
-        return () -> next.applyAsLong(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static LongUnaryOperator fuse(
         long initial,
         LongBinaryOperator next
     ) {
-        return (long n) -> next.applyAsLong(initial, n);
+        return Z.with(initial).fuse(next);
     }
 
     /* Function */
@@ -415,6 +415,8 @@ public final class Z {
         Function<A, B> initial,
         ToDoubleBiFunction<B, C> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (C c) -> next.applyAsDouble(initial.apply(a), c);
     }
 
@@ -429,6 +431,8 @@ public final class Z {
         Function<A, B> initial,
         ToIntBiFunction<B, C> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (C c) -> next.applyAsInt(initial.apply(a), c);
     }
 
@@ -443,6 +447,8 @@ public final class Z {
         Function<A, B> initial,
         ToLongBiFunction<B, C> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (C c) -> next.applyAsLong(initial.apply(a), c);
     }
 
@@ -457,6 +463,8 @@ public final class Z {
         Function<A, B> initial,
         BiPredicate<B, C> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (C c) -> next.test(initial.apply(a), c);
     }
 
@@ -478,6 +486,8 @@ public final class Z {
         Function<A, B> initial,
         ObjDoubleConsumer<B> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (double d) -> next.accept(initial.apply(a), d);
     }
 
@@ -485,6 +495,8 @@ public final class Z {
         Function<A, B> initial,
         ObjIntConsumer<B> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (int i) -> next.accept(initial.apply(a), i);
     }
 
@@ -492,6 +504,8 @@ public final class Z {
         Function<A, B> initial,
         ObjLongConsumer<B> next
     ) {
+        // TODO: Defer to Combine.WithFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (long n) -> next.accept(initial.apply(a), n);
     }
 
@@ -522,6 +536,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         BiFunction<C, D, E> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (D d) -> next.apply(initial.apply(a, b), d);
     }
 
@@ -529,6 +545,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToDoubleFunction<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsDouble(initial.apply(a, b));
     }
 
@@ -536,6 +554,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToDoubleBiFunction<C, D> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (D d) -> next.applyAsDouble(initial.apply(a, b), d);
     }
@@ -544,6 +564,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToIntFunction<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.apply(a, b));
     }
 
@@ -551,6 +573,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToIntBiFunction<C, D> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (D d) -> next.applyAsInt(initial.apply(a, b), d);
     }
@@ -559,6 +583,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToLongFunction<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.apply(a, b));
     }
 
@@ -566,6 +592,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ToLongBiFunction<C, D> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (D d) -> next.applyAsLong(initial.apply(a, b), d);
     }
@@ -574,6 +602,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         Predicate<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.apply(a, b));
     }
 
@@ -581,6 +611,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         BiPredicate<C, D> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (D d) -> next.test(initial.apply(a, b), d);
     }
 
@@ -588,6 +620,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         Consumer<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.apply(a, b));
     }
 
@@ -595,6 +629,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         BiConsumer<C, D> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (D d) -> next.accept(initial.apply(a, b), d);
     }
 
@@ -602,6 +638,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ObjDoubleConsumer<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (double d) -> next.accept(initial.apply(a, b), d);
     }
@@ -617,6 +655,8 @@ public final class Z {
         BiFunction<A, B, C> initial,
         ObjLongConsumer<C> next
     ) {
+        // TODO: Defer to Combine.WithBiFunction
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (long n) -> next.accept(initial.apply(a, b), n);
     }
@@ -634,6 +674,8 @@ public final class Z {
         BooleanFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) -> (B b2) -> next.apply(initial.apply(b1), b2);
     }
 
@@ -641,6 +683,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsDouble(initial.apply(b));
     }
 
@@ -648,6 +692,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) ->
             (B b2) -> next.applyAsDouble(initial.apply(b1), b2);
     }
@@ -656,6 +702,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToIntFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsInt(initial.apply(b));
     }
 
@@ -663,6 +711,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) -> (B b2) -> next.applyAsInt(initial.apply(b1), b2);
     }
 
@@ -670,6 +720,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToLongFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsLong(initial.apply(b));
     }
 
@@ -677,6 +729,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) ->
             (B b2) -> next.applyAsLong(initial.apply(b1), b2);
     }
@@ -685,6 +739,8 @@ public final class Z {
         BooleanFunction<A> initial,
         Predicate<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.test(initial.apply(b));
     }
 
@@ -692,6 +748,8 @@ public final class Z {
         BooleanFunction<A> initial,
         BiPredicate<A, B> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) -> (B b2) -> next.test(initial.apply(b1), b2);
     }
 
@@ -699,6 +757,8 @@ public final class Z {
         BooleanFunction<A> initial,
         Consumer<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.accept(initial.apply(b));
     }
 
@@ -706,6 +766,8 @@ public final class Z {
         BooleanFunction<A> initial,
         BiConsumer<A, B> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b1) -> (B b2) -> next.accept(initial.apply(b1), b2);
     }
 
@@ -713,6 +775,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (double d) -> next.accept(initial.apply(b), d);
     }
 
@@ -720,6 +784,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (int i) -> next.accept(initial.apply(b), i);
     }
 
@@ -727,6 +793,8 @@ public final class Z {
         BooleanFunction<A> initial,
         ObjLongConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithBooleanFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (long n) -> next.accept(initial.apply(b), n);
     }
 
@@ -736,13 +804,15 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoubleFunction<A> next
     ) {
-        return (boolean b) -> next.apply(initial.applyAsDouble(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static BooleanToIntFunction fuse(
         BooleanToDoubleFunction initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsInt(initial.applyAsDouble(b));
     }
 
@@ -750,6 +820,8 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsLong(initial.applyAsDouble(b));
     }
 
@@ -757,6 +829,8 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.test(initial.applyAsDouble(b));
     }
 
@@ -764,6 +838,8 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.accept(initial.applyAsDouble(b));
     }
 
@@ -771,6 +847,8 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsDouble(initial.applyAsDouble(b));
     }
 
@@ -778,60 +856,10 @@ public final class Z {
         BooleanToDoubleFunction initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) ->
             (double d) -> next.applyAsDouble(initial.applyAsDouble(b), d);
-    }
-
-    /* BooleanToLongFunction */
-
-    public static <A> BooleanFunction<A> fuse(
-        BooleanToLongFunction initial,
-        LongFunction<A> next
-    ) {
-        return Z.with(initial).fuse(next);
-    }
-
-    public static BooleanToDoubleFunction fuse(
-        BooleanToLongFunction initial,
-        LongToDoubleFunction next
-    ) {
-        return (boolean b) -> next.applyAsDouble(initial.applyAsLong(b));
-    }
-
-    public static BooleanToIntFunction fuse(
-        BooleanToLongFunction initial,
-        LongToIntFunction next
-    ) {
-        return (boolean b) -> next.applyAsInt(initial.applyAsLong(b));
-    }
-
-    public static BooleanPredicate fuse(
-        BooleanToLongFunction initial,
-        LongPredicate next
-    ) {
-        return (boolean b) -> next.test(initial.applyAsLong(b));
-    }
-
-    public static BooleanConsumer fuse(
-        BooleanToLongFunction initial,
-        LongConsumer next
-    ) {
-        return (boolean b) -> next.accept(initial.applyAsLong(b));
-    }
-
-    public static BooleanToLongFunction fuse(
-        BooleanToLongFunction initial,
-        LongUnaryOperator next
-    ) {
-        return (boolean b) -> next.applyAsLong(initial.applyAsLong(b));
-    }
-
-    public static BooleanFunction<LongUnaryOperator> fuse(
-        BooleanToLongFunction initial,
-        LongBinaryOperator next
-    ) {
-        return (boolean b) ->
-            (long n) -> next.applyAsLong(initial.applyAsLong(b), n);
     }
 
     /* BooleanToIntFunction */
@@ -847,6 +875,8 @@ public final class Z {
         BooleanToIntFunction initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsDouble(initial.applyAsInt(b));
     }
 
@@ -854,6 +884,8 @@ public final class Z {
         BooleanToIntFunction initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsLong(initial.applyAsInt(b));
     }
 
@@ -861,6 +893,8 @@ public final class Z {
         BooleanToIntFunction initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.test(initial.applyAsInt(b));
     }
 
@@ -868,6 +902,8 @@ public final class Z {
         BooleanToIntFunction initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.accept(initial.applyAsInt(b));
     }
 
@@ -875,6 +911,8 @@ public final class Z {
         BooleanToIntFunction initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsInt(initial.applyAsInt(b));
     }
 
@@ -882,8 +920,74 @@ public final class Z {
         BooleanToIntFunction initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithBooleanToIntFunction
+        // return Z.with(initial).fuse(next);
         return (boolean b) ->
             (int i) -> next.applyAsInt(initial.applyAsInt(b), i);
+    }
+
+    /* BooleanToLongFunction */
+
+    public static <A> BooleanFunction<A> fuse(
+        BooleanToLongFunction initial,
+        LongFunction<A> next
+    ) {
+        return Z.with(initial).fuse(next);
+    }
+
+    public static BooleanToDoubleFunction fuse(
+        BooleanToLongFunction initial,
+        LongToDoubleFunction next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) -> next.applyAsDouble(initial.applyAsLong(b));
+    }
+
+    public static BooleanToIntFunction fuse(
+        BooleanToLongFunction initial,
+        LongToIntFunction next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) -> next.applyAsInt(initial.applyAsLong(b));
+    }
+
+    public static BooleanPredicate fuse(
+        BooleanToLongFunction initial,
+        LongPredicate next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) -> next.test(initial.applyAsLong(b));
+    }
+
+    public static BooleanConsumer fuse(
+        BooleanToLongFunction initial,
+        LongConsumer next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) -> next.accept(initial.applyAsLong(b));
+    }
+
+    public static BooleanToLongFunction fuse(
+        BooleanToLongFunction initial,
+        LongUnaryOperator next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) -> next.applyAsLong(initial.applyAsLong(b));
+    }
+
+    public static BooleanFunction<LongUnaryOperator> fuse(
+        BooleanToLongFunction initial,
+        LongBinaryOperator next
+    ) {
+        // TODO: Defer to Combine.WithBooleanToLongFunction
+        // return Z.with(initial).fuse(next);
+        return (boolean b) ->
+            (long n) -> next.applyAsLong(initial.applyAsLong(b), n);
     }
 
     /* DoubleFunction */
@@ -899,6 +1003,8 @@ public final class Z {
         DoubleFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.apply(initial.apply(d), b);
     }
 
@@ -906,6 +1012,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsDouble(initial.apply(d));
     }
 
@@ -913,6 +1021,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.applyAsDouble(initial.apply(d), b);
     }
 
@@ -920,6 +1030,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToIntFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsInt(initial.apply(d));
     }
 
@@ -927,6 +1039,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.applyAsInt(initial.apply(d), b);
     }
 
@@ -934,6 +1048,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToLongFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsLong(initial.apply(d));
     }
 
@@ -941,6 +1057,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.applyAsLong(initial.apply(d), b);
     }
 
@@ -948,6 +1066,8 @@ public final class Z {
         DoubleFunction<A> initial,
         Predicate<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.test(initial.apply(d));
     }
 
@@ -955,6 +1075,8 @@ public final class Z {
         DoubleFunction<A> initial,
         BiPredicate<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.test(initial.apply(d), b);
     }
 
@@ -962,6 +1084,8 @@ public final class Z {
         DoubleFunction<A> initial,
         Consumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.accept(initial.apply(d));
     }
 
@@ -969,6 +1093,8 @@ public final class Z {
         DoubleFunction<A> initial,
         BiConsumer<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (B b) -> next.accept(initial.apply(d), b);
     }
 
@@ -976,6 +1102,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (double d2) -> next.accept(initial.apply(d), d2);
     }
 
@@ -983,6 +1111,8 @@ public final class Z {
         DoubleFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> (int i) -> next.accept(initial.apply(d), i);
     }
 
@@ -999,6 +1129,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return Z.with(initial).fuse(next);
     }
 
@@ -1006,6 +1138,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsDouble(initial.applyAsInt(d));
     }
 
@@ -1013,6 +1147,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsLong(initial.applyAsInt(d));
     }
 
@@ -1020,6 +1156,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.test(initial.applyAsInt(d));
     }
 
@@ -1027,6 +1165,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.accept(initial.applyAsInt(d));
     }
 
@@ -1034,6 +1174,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsInt(initial.applyAsInt(d));
     }
 
@@ -1041,6 +1183,8 @@ public final class Z {
         DoubleToIntFunction initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleToIntFunction
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (int i) -> next.applyAsInt(initial.applyAsInt(d), i);
     }
@@ -1058,6 +1202,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsDouble(initial.applyAsLong(d));
     }
 
@@ -1065,6 +1211,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsInt(initial.applyAsLong(d));
     }
 
@@ -1072,6 +1220,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.test(initial.applyAsLong(d));
     }
 
@@ -1079,6 +1229,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.accept(initial.applyAsLong(d));
     }
 
@@ -1086,6 +1238,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsLong(initial.applyAsLong(d));
     }
 
@@ -1093,6 +1247,8 @@ public final class Z {
         DoubleToLongFunction initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (long n) -> next.applyAsLong(initial.applyAsLong(d), n);
     }
@@ -1110,6 +1266,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsInt(initial.applyAsDouble(a));
     }
 
@@ -1117,6 +1275,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsLong(initial.applyAsDouble(a));
     }
 
@@ -1124,6 +1284,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.test(initial.applyAsDouble(a));
     }
 
@@ -1131,6 +1293,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.accept(initial.applyAsDouble(a));
     }
 
@@ -1138,6 +1302,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsDouble(initial.applyAsDouble(a));
     }
 
@@ -1145,6 +1311,8 @@ public final class Z {
         ToDoubleFunction<A> initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (double d) -> next.applyAsDouble(initial.applyAsDouble(a), d);
     }
@@ -1162,6 +1330,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.applyAsDouble(a, b));
     }
 
@@ -1169,6 +1339,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.applyAsDouble(a, b));
     }
 
@@ -1176,6 +1348,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.applyAsDouble(a, b));
     }
 
@@ -1183,6 +1357,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.applyAsDouble(a, b));
     }
 
@@ -1190,6 +1366,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> next.applyAsDouble(initial.applyAsDouble(a, b));
     }
@@ -1198,6 +1376,8 @@ public final class Z {
         ToDoubleBiFunction<A, B> initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) ->
                 (double d) ->
@@ -1217,6 +1397,8 @@ public final class Z {
         IntFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.apply(initial.apply(i), b);
     }
 
@@ -1224,6 +1406,8 @@ public final class Z {
         IntFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int d) -> next.applyAsDouble(initial.apply(d));
     }
 
@@ -1231,6 +1415,8 @@ public final class Z {
         IntFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.applyAsDouble(initial.apply(i), b);
     }
 
@@ -1238,6 +1424,8 @@ public final class Z {
         IntFunction<A> initial,
         ToIntFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsInt(initial.apply(i));
     }
 
@@ -1245,6 +1433,8 @@ public final class Z {
         IntFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.applyAsInt(initial.apply(i), b);
     }
 
@@ -1252,6 +1442,8 @@ public final class Z {
         IntFunction<A> initial,
         ToLongFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsLong(initial.apply(i));
     }
 
@@ -1259,6 +1451,8 @@ public final class Z {
         IntFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.applyAsLong(initial.apply(i), b);
     }
 
@@ -1266,6 +1460,8 @@ public final class Z {
         IntFunction<A> initial,
         Predicate<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.test(initial.apply(i));
     }
 
@@ -1273,6 +1469,8 @@ public final class Z {
         IntFunction<A> initial,
         BiPredicate<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.test(initial.apply(i), b);
     }
 
@@ -1280,6 +1478,8 @@ public final class Z {
         IntFunction<A> initial,
         Consumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.accept(initial.apply(i));
     }
 
@@ -1287,6 +1487,8 @@ public final class Z {
         IntFunction<A> initial,
         BiConsumer<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (B b) -> next.accept(initial.apply(i), b);
     }
 
@@ -1294,6 +1496,8 @@ public final class Z {
         IntFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (double d) -> next.accept(initial.apply(i), d);
     }
 
@@ -1301,6 +1505,8 @@ public final class Z {
         IntFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (int i2) -> next.accept(initial.apply(i), i2);
     }
 
@@ -1308,6 +1514,8 @@ public final class Z {
         IntFunction<A> initial,
         ObjLongConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (long n) -> next.accept(initial.apply(i), n);
     }
 
@@ -1324,6 +1532,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsInt(initial.applyAsDouble(i));
     }
 
@@ -1331,6 +1541,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsLong(initial.applyAsDouble(i));
     }
 
@@ -1338,6 +1550,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.test(initial.applyAsDouble(i));
     }
 
@@ -1345,6 +1559,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.accept(initial.applyAsDouble(i));
     }
 
@@ -1352,6 +1568,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsDouble(initial.applyAsDouble(i));
     }
 
@@ -1359,6 +1577,8 @@ public final class Z {
         IntToDoubleFunction initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (double d) -> next.applyAsDouble(initial.applyAsDouble(i), d);
     }
@@ -1376,6 +1596,8 @@ public final class Z {
         IntToLongFunction initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsDouble(initial.applyAsLong(i));
     }
 
@@ -1383,6 +1605,8 @@ public final class Z {
         IntToLongFunction initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsInt(initial.applyAsLong(i));
     }
 
@@ -1390,6 +1614,8 @@ public final class Z {
         IntToLongFunction initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.test(initial.applyAsLong(i));
     }
 
@@ -1397,6 +1623,8 @@ public final class Z {
         IntToLongFunction initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.accept(initial.applyAsLong(i));
     }
 
@@ -1404,6 +1632,8 @@ public final class Z {
         IntToLongFunction initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsLong(initial.applyAsLong(i));
     }
 
@@ -1411,6 +1641,8 @@ public final class Z {
         IntToLongFunction initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (long n) -> next.applyAsLong(initial.applyAsLong(i), n);
     }
@@ -1421,6 +1653,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntFunction<B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return Z.with(initial).fuse(next);
     }
 
@@ -1428,6 +1662,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsDouble(initial.applyAsInt(a));
     }
 
@@ -1435,6 +1671,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsLong(initial.applyAsInt(a));
     }
 
@@ -1442,6 +1680,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.test(initial.applyAsInt(a));
     }
 
@@ -1449,6 +1689,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.accept(initial.applyAsInt(a));
     }
 
@@ -1456,6 +1698,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsInt(initial.applyAsInt(a));
     }
 
@@ -1463,6 +1707,8 @@ public final class Z {
         ToIntFunction<A> initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (int i) -> next.applyAsInt(initial.applyAsInt(a), i);
     }
 
@@ -1479,6 +1725,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsDouble(initial.applyAsInt(a, b));
     }
 
@@ -1486,6 +1734,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.applyAsInt(a, b));
     }
 
@@ -1493,6 +1743,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.applyAsInt(a, b));
     }
 
@@ -1500,6 +1752,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.applyAsInt(a, b));
     }
 
@@ -1507,6 +1761,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.applyAsInt(a, b));
     }
 
@@ -1514,6 +1770,8 @@ public final class Z {
         ToIntBiFunction<A, B> initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (int i) -> next.applyAsInt(initial.applyAsInt(a, b), i);
     }
@@ -1531,6 +1789,8 @@ public final class Z {
         LongFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.apply(initial.apply(n), b);
     }
 
@@ -1538,6 +1798,8 @@ public final class Z {
         LongFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsDouble(initial.apply(n));
     }
 
@@ -1545,6 +1807,8 @@ public final class Z {
         LongFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.applyAsDouble(initial.apply(n), b);
     }
 
@@ -1552,6 +1816,8 @@ public final class Z {
         LongFunction<A> initial,
         ToIntFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsInt(initial.apply(n));
     }
 
@@ -1559,6 +1825,8 @@ public final class Z {
         LongFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.applyAsInt(initial.apply(n), b);
     }
 
@@ -1566,6 +1834,8 @@ public final class Z {
         LongFunction<A> initial,
         ToLongFunction<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsLong(initial.apply(n));
     }
 
@@ -1573,6 +1843,8 @@ public final class Z {
         LongFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.applyAsLong(initial.apply(n), b);
     }
 
@@ -1580,6 +1852,8 @@ public final class Z {
         LongFunction<A> initial,
         Predicate<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.test(initial.apply(n));
     }
 
@@ -1587,6 +1861,8 @@ public final class Z {
         LongFunction<A> initial,
         BiPredicate<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.test(initial.apply(n), b);
     }
 
@@ -1594,6 +1870,8 @@ public final class Z {
         LongFunction<A> initial,
         Consumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.accept(initial.apply(n));
     }
 
@@ -1601,6 +1879,8 @@ public final class Z {
         LongFunction<A> initial,
         BiConsumer<A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (B b) -> next.accept(initial.apply(n), b);
     }
 
@@ -1608,6 +1888,8 @@ public final class Z {
         LongFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (double d) -> next.accept(initial.apply(n), d);
     }
 
@@ -1615,6 +1897,8 @@ public final class Z {
         LongFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (int i) -> next.accept(initial.apply(n), i);
     }
 
@@ -1622,6 +1906,8 @@ public final class Z {
         LongFunction<A> initial,
         ObjLongConsumer<A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (long n2) -> next.accept(initial.apply(n), n2);
     }
 
@@ -1638,6 +1924,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsInt(initial.applyAsDouble(n));
     }
 
@@ -1645,6 +1933,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsLong(initial.applyAsDouble(n));
     }
 
@@ -1652,6 +1942,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.test(initial.applyAsDouble(n));
     }
 
@@ -1659,6 +1951,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.accept(initial.applyAsDouble(n));
     }
 
@@ -1666,6 +1960,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsDouble(initial.applyAsDouble(n));
     }
 
@@ -1673,6 +1969,8 @@ public final class Z {
         LongToDoubleFunction initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (double d) -> next.applyAsDouble(initial.applyAsDouble(n), d);
     }
@@ -1690,6 +1988,8 @@ public final class Z {
         LongToIntFunction initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsDouble(initial.applyAsInt(n));
     }
 
@@ -1697,6 +1997,8 @@ public final class Z {
         LongToIntFunction initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsLong(initial.applyAsInt(n));
     }
 
@@ -1704,6 +2006,8 @@ public final class Z {
         LongToIntFunction initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.test(initial.applyAsInt(n));
     }
 
@@ -1711,6 +2015,8 @@ public final class Z {
         LongToIntFunction initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.accept(initial.applyAsInt(n));
     }
 
@@ -1718,6 +2024,8 @@ public final class Z {
         LongToIntFunction initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsInt(initial.applyAsInt(n));
     }
 
@@ -1725,6 +2033,8 @@ public final class Z {
         LongToIntFunction initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (int i) -> next.applyAsInt(initial.applyAsInt(n), i);
     }
 
@@ -1741,6 +2051,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsDouble(initial.applyAsLong(a));
     }
 
@@ -1748,6 +2060,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsInt(initial.applyAsLong(a));
     }
 
@@ -1755,6 +2069,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.test(initial.applyAsLong(a));
     }
 
@@ -1762,6 +2078,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.accept(initial.applyAsLong(a));
     }
 
@@ -1769,6 +2087,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsLong(initial.applyAsLong(a));
     }
 
@@ -1776,6 +2096,8 @@ public final class Z {
         ToLongFunction<A> initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (long n) -> next.applyAsLong(initial.applyAsLong(a), n);
     }
 
@@ -1792,6 +2114,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsDouble(initial.applyAsLong(a, b));
     }
 
@@ -1799,6 +2123,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.applyAsLong(a, b));
     }
 
@@ -1806,6 +2132,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.applyAsLong(a, b));
     }
 
@@ -1813,6 +2141,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.applyAsLong(a, b));
     }
 
@@ -1820,6 +2150,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.applyAsLong(a, b));
     }
 
@@ -1827,6 +2159,8 @@ public final class Z {
         ToLongBiFunction<A, B> initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (long n) -> next.applyAsLong(initial.applyAsLong(a, b), n);
     }
@@ -1844,6 +2178,8 @@ public final class Z {
         Predicate<A> initial,
         BiFunction<Boolean, B, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.apply(initial.test(a), b);
     }
 
@@ -1851,6 +2187,8 @@ public final class Z {
         Predicate<A> initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsDouble(initial.test(a));
     }
 
@@ -1858,6 +2196,8 @@ public final class Z {
         Predicate<A> initial,
         ToDoubleBiFunction<Boolean, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsDouble(initial.test(a), b);
     }
 
@@ -1865,6 +2205,8 @@ public final class Z {
         Predicate<A> initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsInt(initial.test(a));
     }
 
@@ -1872,6 +2214,8 @@ public final class Z {
         Predicate<A> initial,
         ToIntBiFunction<Boolean, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.test(a), b);
     }
 
@@ -1879,6 +2223,8 @@ public final class Z {
         Predicate<A> initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsLong(initial.test(a));
     }
 
@@ -1886,6 +2232,8 @@ public final class Z {
         Predicate<A> initial,
         ToLongBiFunction<Boolean, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.test(a), b);
     }
 
@@ -1893,6 +2241,8 @@ public final class Z {
         Predicate<A> initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.test(initial.test(a));
     }
 
@@ -1900,6 +2250,8 @@ public final class Z {
         Predicate<A> initial,
         BiPredicate<Boolean, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.test(a), b);
     }
 
@@ -1907,6 +2259,8 @@ public final class Z {
         Predicate<A> initial,
         BooleanConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.accept(initial.test(a));
     }
 
@@ -1914,6 +2268,8 @@ public final class Z {
         Predicate<A> initial,
         BiConsumer<Boolean, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.test(a), b);
     }
 
@@ -1921,6 +2277,8 @@ public final class Z {
         Predicate<A> initial,
         ObjDoubleConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (double d) -> next.accept(initial.test(a), d);
     }
 
@@ -1928,6 +2286,8 @@ public final class Z {
         Predicate<A> initial,
         ObjIntConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (int i) -> next.accept(initial.test(a), i);
     }
 
@@ -1935,6 +2295,8 @@ public final class Z {
         Predicate<A> initial,
         ObjLongConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (long n) -> next.accept(initial.test(a), n);
     }
 
@@ -1942,6 +2304,8 @@ public final class Z {
         Predicate<A> initial,
         BinaryOperator<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (boolean b) -> next.apply(initial.test(a), b);
     }
 
@@ -1958,6 +2322,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BiFunction<Boolean, C, D> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> next.apply(initial.test(a, b), c);
     }
 
@@ -1965,6 +2331,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsDouble(initial.test(a, b));
     }
 
@@ -1972,6 +2340,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ToDoubleBiFunction<Boolean, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (C c) -> next.applyAsDouble(initial.test(a, b), c);
     }
@@ -1980,6 +2350,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsInt(initial.test(a, b));
     }
 
@@ -1987,6 +2359,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ToIntBiFunction<Boolean, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (C c) -> next.applyAsInt(initial.test(a, b), c);
     }
@@ -1995,6 +2369,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.applyAsLong(initial.test(a, b));
     }
 
@@ -2002,6 +2378,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ToLongBiFunction<Boolean, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (C c) -> next.applyAsLong(initial.test(a, b), c);
     }
@@ -2010,6 +2388,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.test(initial.test(a, b));
     }
 
@@ -2017,6 +2397,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BiPredicate<Boolean, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> next.test(initial.test(a, b), c);
     }
 
@@ -2024,6 +2406,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BooleanConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> next.accept(initial.test(a, b));
     }
 
@@ -2031,6 +2415,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BiConsumer<Boolean, C> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> next.accept(initial.test(a, b), c);
     }
 
@@ -2038,6 +2424,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ObjDoubleConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (double d) -> next.accept(initial.test(a, b), d);
     }
@@ -2046,6 +2434,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ObjIntConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (int i) -> next.accept(initial.test(a, b), i);
     }
 
@@ -2053,6 +2443,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         ObjLongConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (long n) -> next.accept(initial.test(a, b), n);
     }
 
@@ -2060,6 +2452,8 @@ public final class Z {
         BiPredicate<A, B> initial,
         BinaryOperator<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) ->
             (B b) -> (boolean bool) -> next.apply(initial.test(a, b), bool);
     }
@@ -2077,6 +2471,8 @@ public final class Z {
         BooleanPredicate initial,
         BiFunction<Boolean, A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.apply(initial.test(b), a);
     }
 
@@ -2084,6 +2480,8 @@ public final class Z {
         BooleanPredicate initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsDouble(initial.test(b));
     }
 
@@ -2091,6 +2489,8 @@ public final class Z {
         BooleanPredicate initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.applyAsDouble(initial.test(b), a);
     }
 
@@ -2098,6 +2498,8 @@ public final class Z {
         BooleanPredicate initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsInt(initial.test(b));
     }
 
@@ -2105,6 +2507,8 @@ public final class Z {
         BooleanPredicate initial,
         ToIntBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.applyAsInt(initial.test(b), a);
     }
 
@@ -2112,6 +2516,8 @@ public final class Z {
         BooleanPredicate initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.applyAsLong(initial.test(b));
     }
 
@@ -2119,6 +2525,8 @@ public final class Z {
         BooleanPredicate initial,
         ToLongBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.applyAsLong(initial.test(b), a);
     }
 
@@ -2126,6 +2534,8 @@ public final class Z {
         BooleanPredicate initial,
         BiPredicate<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.test(initial.test(b), a);
     }
 
@@ -2133,6 +2543,8 @@ public final class Z {
         BooleanPredicate initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.test(initial.test(b));
     }
 
@@ -2140,6 +2552,8 @@ public final class Z {
         BooleanPredicate initial,
         BooleanConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> next.accept(initial.test(b));
     }
 
@@ -2147,6 +2561,8 @@ public final class Z {
         BooleanPredicate initial,
         BiConsumer<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (boolean b) -> (A a) -> next.accept(initial.test(b), a);
     }
 
@@ -2163,6 +2579,8 @@ public final class Z {
         DoublePredicate initial,
         BiFunction<Boolean, A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.apply(initial.test(d), a);
     }
 
@@ -2170,6 +2588,8 @@ public final class Z {
         DoublePredicate initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsDouble(initial.test(d));
     }
 
@@ -2177,6 +2597,8 @@ public final class Z {
         DoublePredicate initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.applyAsDouble(initial.test(d), a);
     }
 
@@ -2184,6 +2606,8 @@ public final class Z {
         DoublePredicate initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsInt(initial.test(d));
     }
 
@@ -2191,6 +2615,8 @@ public final class Z {
         DoublePredicate initial,
         ToIntBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.applyAsInt(initial.test(d), a);
     }
 
@@ -2198,6 +2624,8 @@ public final class Z {
         DoublePredicate initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsLong(initial.test(d));
     }
 
@@ -2205,6 +2633,8 @@ public final class Z {
         DoublePredicate initial,
         ToLongBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.applyAsLong(initial.test(d), a);
     }
 
@@ -2212,6 +2642,8 @@ public final class Z {
         DoublePredicate initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.test(initial.test(d));
     }
 
@@ -2219,6 +2651,8 @@ public final class Z {
         DoublePredicate initial,
         BiPredicate<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.test(initial.test(d), a);
     }
 
@@ -2226,6 +2660,8 @@ public final class Z {
         DoublePredicate initial,
         BooleanConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.accept(initial.test(d));
     }
 
@@ -2233,6 +2669,8 @@ public final class Z {
         DoublePredicate initial,
         BiConsumer<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (A a) -> next.accept(initial.test(d), a);
     }
 
@@ -2240,6 +2678,8 @@ public final class Z {
         DoublePredicate initial,
         ObjDoubleConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d1) -> (double d2) -> next.accept(initial.test(d1), d2);
     }
 
@@ -2247,6 +2687,8 @@ public final class Z {
         DoublePredicate initial,
         ObjIntConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (int i) -> next.accept(initial.test(d), i);
     }
 
@@ -2254,6 +2696,8 @@ public final class Z {
         DoublePredicate initial,
         ObjLongConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (long n) -> next.accept(initial.test(d), n);
     }
 
@@ -2261,6 +2705,8 @@ public final class Z {
         DoublePredicate initial,
         BinaryOperator<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> (boolean b) -> next.apply(initial.test(d), b);
     }
 
@@ -2277,6 +2723,8 @@ public final class Z {
         IntPredicate initial,
         BiFunction<Boolean, A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.apply(initial.test(i), a);
     }
 
@@ -2284,6 +2732,8 @@ public final class Z {
         IntPredicate initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsDouble(initial.test(i));
     }
 
@@ -2291,6 +2741,8 @@ public final class Z {
         IntPredicate initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.applyAsDouble(initial.test(i), a);
     }
 
@@ -2298,6 +2750,8 @@ public final class Z {
         IntPredicate initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsInt(initial.test(i));
     }
 
@@ -2305,6 +2759,8 @@ public final class Z {
         IntPredicate initial,
         ToIntBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.applyAsInt(initial.test(i), a);
     }
 
@@ -2312,6 +2768,8 @@ public final class Z {
         IntPredicate initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsLong(initial.test(i));
     }
 
@@ -2319,6 +2777,8 @@ public final class Z {
         IntPredicate initial,
         ToLongBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.applyAsLong(initial.test(i), a);
     }
 
@@ -2326,6 +2786,8 @@ public final class Z {
         IntPredicate initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.test(initial.test(i));
     }
 
@@ -2333,10 +2795,14 @@ public final class Z {
         IntPredicate initial,
         BiPredicate<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.test(initial.test(i), a);
     }
 
     public static IntConsumer fuse(IntPredicate initial, BooleanConsumer next) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.accept(initial.test(i));
     }
 
@@ -2344,6 +2810,8 @@ public final class Z {
         IntPredicate initial,
         BiConsumer<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (A a) -> next.accept(initial.test(i), a);
     }
 
@@ -2351,6 +2819,8 @@ public final class Z {
         IntPredicate initial,
         ObjDoubleConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (double d) -> next.accept(initial.test(i), d);
     }
 
@@ -2358,6 +2828,8 @@ public final class Z {
         IntPredicate initial,
         ObjIntConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i1) -> (int i2) -> next.accept(initial.test(i1), i2);
     }
 
@@ -2365,6 +2837,8 @@ public final class Z {
         IntPredicate initial,
         ObjLongConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (long n) -> next.accept(initial.test(i), n);
     }
 
@@ -2372,6 +2846,8 @@ public final class Z {
         IntPredicate initial,
         BinaryOperator<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (boolean b) -> next.apply(initial.test(i), b);
     }
 
@@ -2388,6 +2864,8 @@ public final class Z {
         LongPredicate initial,
         BiFunction<Boolean, A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.apply(initial.test(n), a);
     }
 
@@ -2395,6 +2873,8 @@ public final class Z {
         LongPredicate initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsDouble(initial.test(n));
     }
 
@@ -2402,6 +2882,8 @@ public final class Z {
         LongPredicate initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.applyAsDouble(initial.test(n), a);
     }
 
@@ -2409,6 +2891,8 @@ public final class Z {
         LongPredicate initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsInt(initial.test(n));
     }
 
@@ -2416,6 +2900,8 @@ public final class Z {
         LongPredicate initial,
         ToIntBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.applyAsInt(initial.test(n), a);
     }
 
@@ -2423,6 +2909,8 @@ public final class Z {
         LongPredicate initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsLong(initial.test(n));
     }
 
@@ -2430,6 +2918,8 @@ public final class Z {
         LongPredicate initial,
         ToLongBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.applyAsLong(initial.test(n), a);
     }
 
@@ -2437,6 +2927,8 @@ public final class Z {
         LongPredicate initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.test(initial.test(n));
     }
 
@@ -2444,6 +2936,8 @@ public final class Z {
         LongPredicate initial,
         BiPredicate<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.test(initial.test(n), a);
     }
 
@@ -2451,6 +2945,8 @@ public final class Z {
         LongPredicate initial,
         BooleanConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.accept(initial.test(n));
     }
 
@@ -2458,6 +2954,8 @@ public final class Z {
         LongPredicate initial,
         BiConsumer<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (A a) -> next.accept(initial.test(n), a);
     }
 
@@ -2465,6 +2963,8 @@ public final class Z {
         LongPredicate initial,
         ObjDoubleConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (double d) -> next.accept(initial.test(n), d);
     }
 
@@ -2472,6 +2972,8 @@ public final class Z {
         LongPredicate initial,
         ObjIntConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (int i) -> next.accept(initial.test(n), i);
     }
 
@@ -2479,6 +2981,8 @@ public final class Z {
         LongPredicate initial,
         ObjLongConsumer<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n1) -> (long n2) -> next.accept(initial.test(n1), n2);
     }
 
@@ -2486,6 +2990,8 @@ public final class Z {
         LongPredicate initial,
         BinaryOperator<Boolean> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (boolean b) -> next.apply(initial.test(n), b);
     }
 
@@ -2606,6 +3112,8 @@ public final class Z {
         BooleanSupplier initial,
         BiFunction<Boolean, A, B> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.apply(initial.getAsBoolean(), a);
     }
 
@@ -2613,6 +3121,8 @@ public final class Z {
         BooleanSupplier initial,
         BooleanToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return () -> next.applyAsDouble(initial.getAsBoolean());
     }
 
@@ -2620,6 +3130,8 @@ public final class Z {
         BooleanSupplier initial,
         ToDoubleBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsDouble(initial.getAsBoolean(), a);
     }
 
@@ -2627,6 +3139,8 @@ public final class Z {
         BooleanSupplier initial,
         BooleanToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return () -> next.applyAsInt(initial.getAsBoolean());
     }
 
@@ -2634,6 +3148,8 @@ public final class Z {
         BooleanSupplier initial,
         ToIntBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsInt(initial.getAsBoolean(), a);
     }
 
@@ -2641,6 +3157,8 @@ public final class Z {
         BooleanSupplier initial,
         BooleanToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return () -> next.applyAsLong(initial.getAsBoolean());
     }
 
@@ -2648,6 +3166,8 @@ public final class Z {
         BooleanSupplier initial,
         ToLongBiFunction<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.applyAsLong(initial.getAsBoolean(), a);
     }
 
@@ -2655,6 +3175,8 @@ public final class Z {
         BooleanSupplier initial,
         BooleanPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return () -> next.test(initial.getAsBoolean());
     }
 
@@ -2662,10 +3184,14 @@ public final class Z {
         BooleanSupplier initial,
         BiPredicate<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.test(initial.getAsBoolean(), a);
     }
 
     public static Operator fuse(BooleanSupplier initial, BooleanConsumer next) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return () -> next.accept(initial.getAsBoolean());
     }
 
@@ -2673,6 +3199,8 @@ public final class Z {
         BooleanSupplier initial,
         BiConsumer<Boolean, A> next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> next.accept(initial.getAsBoolean(), a);
     }
 
@@ -2831,6 +3359,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsInt(initial.applyAsDouble(d));
     }
 
@@ -2838,6 +3368,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsLong(initial.applyAsDouble(d));
     }
 
@@ -2845,6 +3377,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.test(initial.applyAsDouble(d));
     }
 
@@ -2852,6 +3386,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.accept(initial.applyAsDouble(d));
     }
 
@@ -2859,6 +3395,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) -> next.applyAsDouble(initial.applyAsDouble(d));
     }
 
@@ -2866,6 +3404,8 @@ public final class Z {
         DoubleUnaryOperator initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.applyAsDouble(initial.applyAsDouble(d), d2);
     }
@@ -2883,6 +3423,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.applyAsInt(initial.applyAsDouble(d, d2));
     }
@@ -2891,6 +3433,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.applyAsLong(initial.applyAsDouble(d, d2));
     }
@@ -2899,6 +3443,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoublePredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.test(initial.applyAsDouble(d, d2));
     }
@@ -2907,6 +3453,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.accept(initial.applyAsDouble(d, d2));
     }
@@ -2915,6 +3463,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) -> next.applyAsDouble(initial.applyAsDouble(d, d2));
     }
@@ -2923,6 +3473,8 @@ public final class Z {
         DoubleBinaryOperator initial,
         DoubleBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (double d) ->
             (double d2) ->
                 (double d3) ->
@@ -2942,6 +3494,8 @@ public final class Z {
         IntUnaryOperator initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsDouble(initial.applyAsInt(i));
     }
 
@@ -2949,6 +3503,8 @@ public final class Z {
         IntUnaryOperator initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsLong(initial.applyAsInt(i));
     }
 
@@ -2956,10 +3512,14 @@ public final class Z {
         IntUnaryOperator initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.test(initial.applyAsInt(i));
     }
 
     public static IntConsumer fuse(IntUnaryOperator initial, IntConsumer next) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.accept(initial.applyAsInt(i));
     }
 
@@ -2967,6 +3527,8 @@ public final class Z {
         IntUnaryOperator initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> next.applyAsInt(initial.applyAsInt(i));
     }
 
@@ -2974,6 +3536,8 @@ public final class Z {
         IntUnaryOperator initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (int i2) -> next.applyAsInt(initial.applyAsInt(i), i2);
     }
@@ -2991,6 +3555,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (int i2) -> next.applyAsDouble(initial.applyAsInt(i, i2));
     }
@@ -2999,6 +3565,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntToLongFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (int i2) -> next.applyAsLong(initial.applyAsInt(i, i2));
     }
@@ -3007,6 +3575,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (int i2) -> next.test(initial.applyAsInt(i, i2));
     }
 
@@ -3014,6 +3584,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) -> (int i2) -> next.accept(initial.applyAsInt(i, i2));
     }
 
@@ -3021,6 +3593,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (int i2) -> next.applyAsInt(initial.applyAsInt(i, i2));
     }
@@ -3029,6 +3603,8 @@ public final class Z {
         IntBinaryOperator initial,
         IntBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (int i) ->
             (int i2) ->
                 (int i3) -> next.applyAsInt(initial.applyAsInt(i, i2), i3);
@@ -3047,6 +3623,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsDouble(initial.applyAsLong(n));
     }
 
@@ -3054,6 +3632,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsInt(initial.applyAsLong(n));
     }
 
@@ -3061,6 +3641,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.test(initial.applyAsLong(n));
     }
 
@@ -3068,6 +3650,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.accept(initial.applyAsLong(n));
     }
 
@@ -3075,6 +3659,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> next.applyAsLong(initial.applyAsLong(n));
     }
 
@@ -3082,6 +3668,8 @@ public final class Z {
         LongUnaryOperator initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (long n2) -> next.applyAsLong(initial.applyAsLong(n), n2);
     }
@@ -3099,6 +3687,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongToDoubleFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (long n2) -> next.applyAsDouble(initial.applyAsLong(n, n2));
     }
@@ -3107,6 +3697,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongToIntFunction next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (long n2) -> next.applyAsInt(initial.applyAsLong(n, n2));
     }
@@ -3115,6 +3707,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongPredicate next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (long n2) -> next.test(initial.applyAsLong(n, n2));
     }
 
@@ -3122,6 +3716,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongConsumer next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) -> (long n2) -> next.accept(initial.applyAsLong(n, n2));
     }
 
@@ -3129,6 +3725,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongUnaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (long n2) -> next.applyAsLong(initial.applyAsLong(n, n2));
     }
@@ -3137,6 +3735,8 @@ public final class Z {
         LongBinaryOperator initial,
         LongBinaryOperator next
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (long n) ->
             (long n2) ->
                 (long n3) -> next.applyAsLong(initial.applyAsLong(n, n2), n3);
@@ -3904,6 +4504,8 @@ public final class Z {
           Function<C, D>>>
         split3(TriFunction<A, B, C, D> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) ->
             initial.apply(a, b, c);
     }
@@ -3924,6 +4526,8 @@ public final class Z {
            Function<D, E>>>>
         split4(QuadFunction<A, B, C, D, E> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) ->
             initial.apply(a, b, c, d);
     }
@@ -3946,6 +4550,8 @@ public final class Z {
             Function<E, F>>>>>
         split5(QuinFunction<A, B, C, D, E, F> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) ->
             initial.apply(a, b, c, d, e);
     }
@@ -3970,6 +4576,8 @@ public final class Z {
              Function<F, G>>>>>>
         split6(SexFunction<A, B, C, D, E, F, G> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
             initial.apply(a, b, c, d, e, f);
     }
@@ -3996,6 +4604,8 @@ public final class Z {
               Function<G, H>>>>>>>
         split7(SeptFunction<A, B, C, D, E, F, G, H> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) ->
             initial.apply(a, b, c, d, e, f, g);
     }
@@ -4024,6 +4634,8 @@ public final class Z {
                Function<H, I>>>>>>>>
         split8(OctFunction<A, B, C, D, E, F, G, H, I> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) ->
             initial.apply(a, b, c, d, e, f, g, h);
     }
@@ -4054,6 +4666,8 @@ public final class Z {
                 Function<I, J>>>>>>>>>
         split9(NonFunction<A, B, C, D, E, F, G, H, I, J> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) ->
             initial.apply(a, b, c, d, e, f, g, h, i);
     }
@@ -4086,6 +4700,8 @@ public final class Z {
                  Function<J, K>>>>>>>>>>
         split10(DecFunction<A, B, C, D, E, F, G, H, I, J, K> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) -> (G g) -> (H h) -> (I i) -> (J j) ->
             initial.apply(a, b, c, d, e, f, g, h, i, j);
     }
@@ -4120,6 +4736,8 @@ public final class Z {
                   Function<K, L>>>>>>>>>>>
         split11(UndecFunction<A, B, C, D, E, F, G, H, I, J, K, L> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
                 (G g) -> (H h) -> (I i) -> (J j) -> (K k) ->
                  initial.apply(a, b, c, d, e, f, g, h, i, j, k);
@@ -4157,6 +4775,8 @@ public final class Z {
                    Function<L, M>>>>>>>>>>>>
         split12(DodecFunction<A, B, C, D, E, F, G, H, I, J, K, L, M> initial)
     {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (B b) -> (C c) -> (D d) -> (E e) -> (F f) ->
                 (G g) -> (H h) -> (I i) -> (J j) -> (K k) -> (L l) ->
                  initial.apply(a, b, c, d, e, f, g, h, i, j, k, l);
@@ -4233,6 +4853,8 @@ public final class Z {
     public static <A> Function<A, DoubleConsumer> splitObjDoubleConsumer(
         ObjDoubleConsumer<A> initial
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (double d) -> initial.accept(a, d);
     }
 
@@ -4245,6 +4867,8 @@ public final class Z {
     public static <A> Function<A, IntConsumer> splitObjIntConsumer(
         ObjIntConsumer<A> initial
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (int i) -> initial.accept(a, i);
     }
 
@@ -4257,6 +4881,8 @@ public final class Z {
     public static <A> Function<A, LongConsumer> splitObjLongConsumer(
         ObjLongConsumer<A> initial
     ) {
+        // TODO: Defer to Combine.WithDoubleTo[ETC]
+        // return Z.with(initial).fuse(next);
         return (A a) -> (long n) -> initial.accept(a, n);
     }
 
@@ -4306,6 +4932,8 @@ public final class Z {
             Function<A,
              Function<B, C>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b) ->
             curried.apply(a).apply(b); 
     }
@@ -4318,6 +4946,8 @@ public final class Z {
              Function<B,
               Function<C, D>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c) ->
             curried.apply(a).apply(b).apply(c); 
     }
@@ -4331,6 +4961,8 @@ public final class Z {
               Function<C,
                Function<D, E>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d) ->
             curried.apply(a).apply(b).apply(c).apply(d); 
     }
@@ -4345,6 +4977,8 @@ public final class Z {
                Function<D,
                 Function<E, F>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e);
     }
@@ -4360,6 +4994,8 @@ public final class Z {
                 Function<E,
                  Function<F, G>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f);
     }
@@ -4376,6 +5012,8 @@ public final class Z {
                  Function<F,
                   Function<G, H>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g);
     }
@@ -4393,6 +5031,8 @@ public final class Z {
                   Function<G,
                    Function<H, I>>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g, H h) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h);
     }
@@ -4411,6 +5051,8 @@ public final class Z {
                    Function<H,
                     Function<I, J>>>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g, H h, I i) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i);
     }
@@ -4430,6 +5072,8 @@ public final class Z {
                     Function<I,
                      Function<J, K>>>>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j);
     }
@@ -4450,6 +5094,8 @@ public final class Z {
                      Function<J,
                       Function<K, L>>>>>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j).apply(k);
     }
@@ -4471,6 +5117,8 @@ public final class Z {
                       Function<K,
                        Function<L, M>>>>>>>>>>>> curried)
     {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).fusing(next).resolveWide();
         return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k, L l) ->
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j).apply(k).apply(l);
     }
@@ -4509,6 +5157,8 @@ public final class Z {
         Consumer<A> initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) -> {
             initial.accept(a);
             return next.getAsBoolean();
@@ -4520,6 +5170,8 @@ public final class Z {
         Consumer<A> initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) -> {
             initial.accept(a);
             return next.getAsDouble();
@@ -4531,6 +5183,8 @@ public final class Z {
         Consumer<A> initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) -> {
             initial.accept(a);
             return next.getAsInt();
@@ -4542,6 +5196,8 @@ public final class Z {
         Consumer<A> initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) -> {
             initial.accept(a);
             return next.getAsLong();
@@ -4550,6 +5206,8 @@ public final class Z {
 
     @Evil
     public static <A> Consumer<A> absorb(Consumer<A> initial, Operator next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) -> {
             initial.accept(a);
             next.run();
@@ -4571,6 +5229,8 @@ public final class Z {
         BiConsumer<A, B> initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (B b) -> {
                 initial.accept(a, b);
@@ -4583,6 +5243,8 @@ public final class Z {
         BiConsumer<A, B> initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (B b) -> {
                 initial.accept(a, b);
@@ -4595,6 +5257,8 @@ public final class Z {
         BiConsumer<A, B> initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (B b) -> {
                 initial.accept(a, b);
@@ -4607,6 +5271,8 @@ public final class Z {
         BiConsumer<A, B> initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (B b) -> {
                 initial.accept(a, b);
@@ -4619,6 +5285,8 @@ public final class Z {
         BiConsumer<A, B> initial,
         Operator next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (B b) -> {
                 initial.accept(a, b);
@@ -4633,6 +5301,8 @@ public final class Z {
         DoubleConsumer initial,
         Supplier<A> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             return next.get();
@@ -4644,6 +5314,8 @@ public final class Z {
         DoubleConsumer initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             return next.getAsBoolean();
@@ -4655,6 +5327,8 @@ public final class Z {
         DoubleConsumer initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             return next.getAsDouble();
@@ -4666,6 +5340,8 @@ public final class Z {
         DoubleConsumer initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             return next.getAsInt();
@@ -4677,6 +5353,8 @@ public final class Z {
         DoubleConsumer initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             return next.getAsLong();
@@ -4685,6 +5363,8 @@ public final class Z {
 
     @Evil
     public static DoubleConsumer absorb(DoubleConsumer initial, Operator next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (double d) -> {
             initial.accept(d);
             next.run();
@@ -4698,6 +5378,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         Supplier<B> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4710,6 +5392,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4722,6 +5406,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4734,6 +5420,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4746,6 +5434,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4758,6 +5448,8 @@ public final class Z {
         ObjDoubleConsumer<A> initial,
         Operator next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (double d) -> {
                 initial.accept(a, d);
@@ -4772,6 +5464,8 @@ public final class Z {
         IntConsumer initial,
         Supplier<A> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             return next.get();
@@ -4783,6 +5477,8 @@ public final class Z {
         IntConsumer initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             return next.getAsBoolean();
@@ -4794,6 +5490,8 @@ public final class Z {
         IntConsumer initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             return next.getAsDouble();
@@ -4805,6 +5503,8 @@ public final class Z {
         IntConsumer initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             return next.getAsInt();
@@ -4816,6 +5516,8 @@ public final class Z {
         IntConsumer initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             return next.getAsLong();
@@ -4824,6 +5526,8 @@ public final class Z {
 
     @Evil
     public static IntConsumer absorb(IntConsumer initial, Operator next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (int i) -> {
             initial.accept(i);
             next.run();
@@ -4837,6 +5541,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         Supplier<B> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4849,6 +5555,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4861,6 +5569,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4873,6 +5583,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4885,6 +5597,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4897,6 +5611,8 @@ public final class Z {
         ObjIntConsumer<A> initial,
         Operator next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (int i) -> {
                 initial.accept(a, i);
@@ -4911,6 +5627,8 @@ public final class Z {
         LongConsumer initial,
         Supplier<A> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             return next.get();
@@ -4922,6 +5640,8 @@ public final class Z {
         LongConsumer initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             return next.getAsBoolean();
@@ -4933,6 +5653,8 @@ public final class Z {
         LongConsumer initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             return next.getAsDouble();
@@ -4944,6 +5666,8 @@ public final class Z {
         LongConsumer initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             return next.getAsInt();
@@ -4955,6 +5679,8 @@ public final class Z {
         LongConsumer initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             return next.getAsLong();
@@ -4963,6 +5689,8 @@ public final class Z {
 
     @Evil
     public static LongConsumer absorb(LongConsumer initial, Operator next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (long n) -> {
             initial.accept(n);
             next.run();
@@ -4976,6 +5704,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         Supplier<B> next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -4988,6 +5718,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -5000,6 +5732,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         DoubleSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -5012,6 +5746,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         IntSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -5024,6 +5760,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         LongSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -5036,6 +5774,8 @@ public final class Z {
         ObjLongConsumer<A> initial,
         Operator next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return (A a) ->
             (long n) -> {
                 initial.accept(a, n);
@@ -5047,6 +5787,8 @@ public final class Z {
 
     @Evil
     public static <A> Supplier<A> absorb(Operator initial, Supplier<A> next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             return next.get();
@@ -5058,6 +5800,8 @@ public final class Z {
         Operator initial,
         BooleanSupplier next
     ) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             return next.getAsBoolean();
@@ -5066,6 +5810,8 @@ public final class Z {
 
     @Evil
     public static DoubleSupplier absorb(Operator initial, DoubleSupplier next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             return next.getAsDouble();
@@ -5074,6 +5820,8 @@ public final class Z {
 
     @Evil
     public static IntSupplier absorb(Operator initial, IntSupplier next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             return next.getAsInt();
@@ -5082,6 +5830,8 @@ public final class Z {
 
     @Evil
     public static LongSupplier absorb(Operator initial, LongSupplier next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             return next.getAsLong();
@@ -5090,6 +5840,8 @@ public final class Z {
 
     @Evil
     public static Operator absorb(Operator initial, Operator next) {
+        // TODO: Defer to Combine.With[ETC]
+        // return Z.with(initial).absorb(next);
         return () -> {
             initial.run();
             next.run();
