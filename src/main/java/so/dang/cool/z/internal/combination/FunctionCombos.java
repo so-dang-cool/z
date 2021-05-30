@@ -89,30 +89,30 @@ interface FunctionCombos<A, B> {
 
     public default <C, D> Function<A, D> fuseBiFunction(
         BiFunction<B, C, D> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.apply(resolve().apply(a), input2);
+        return (A a) -> next.apply(resolve().apply(a), secondArg);
     }
 
     public default <C, D> Function<A, D> fuse(
         BiFunction<B, C, D> next,
-        C input2
+        C secondArg
     ) {
-        return fuseBiFunction(next, input2);
+        return fuseBiFunction(next, secondArg);
     }
 
     public default <C, D> WithFunction<A, D> fusingBiFunction(
         BiFunction<B, C, D> next,
-        C input2
+        C secondArg
     ) {
-        return WithFunction.of(fuseBiFunction(next, input2));
+        return WithFunction.of(fuseBiFunction(next, secondArg));
     }
 
     public default <C, D> WithFunction<A, D> fusing(
         BiFunction<B, C, D> next,
-        C input2
+        C secondArg
     ) {
-        return fusingBiFunction(next, input2);
+        return fusingBiFunction(next, secondArg);
     }
 
     /* Function<A, B> -> DoubleFunction<B> */
@@ -167,30 +167,30 @@ interface FunctionCombos<A, B> {
 
     public default <C> ToDoubleFunction<A> fuseToDoubleBiFunction(
         ToDoubleBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.applyAsDouble(resolve().apply(a), input2);
+        return (A a) -> next.applyAsDouble(resolve().apply(a), secondArg);
     }
 
     public default <C> ToDoubleFunction<A> fuse(
         ToDoubleBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fuseToDoubleBiFunction(next, input2);
+        return fuseToDoubleBiFunction(next, secondArg);
     }
 
     public default <C> WithToDoubleFunction<A> fusingToDoubleBiFunction(
         ToDoubleBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return WithToDoubleFunction.of(fuseToDoubleBiFunction(next, input2));
+        return WithToDoubleFunction.of(fuseToDoubleBiFunction(next, secondArg));
     }
 
     public default <C> WithToDoubleFunction<A> fusing(
         ToDoubleBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fusingToDoubleBiFunction(next, input2);
+        return fusingToDoubleBiFunction(next, secondArg);
     }
 
     /* Function<A, B> -> ToIntFunction<B> */
@@ -243,30 +243,30 @@ interface FunctionCombos<A, B> {
 
     public default <C> ToIntFunction<A> fuseToIntBiFunction(
         ToIntBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.applyAsInt(resolve().apply(a), input2);
+        return (A a) -> next.applyAsInt(resolve().apply(a), secondArg);
     }
 
     public default <C> ToIntFunction<A> fuse(
         ToIntBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fuseToIntBiFunction(next, input2);
+        return fuseToIntBiFunction(next, secondArg);
     }
 
     public default <C> WithToIntFunction<A> fusingToIntBiFunction(
         ToIntBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return WithToIntFunction.of(fuseToIntBiFunction(next, input2));
+        return WithToIntFunction.of(fuseToIntBiFunction(next, secondArg));
     }
 
     public default <C> WithToIntFunction<A> fusing(
         ToIntBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fusingToIntBiFunction(next, input2);
+        return fusingToIntBiFunction(next, secondArg);
     }
 
     /* Function<A, B> -> ToLongFunction<B> */
@@ -321,30 +321,30 @@ interface FunctionCombos<A, B> {
 
     public default <C> ToLongFunction<A> fuseToLongBiFunction(
         ToLongBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.applyAsLong(resolve().apply(a), input2);
+        return (A a) -> next.applyAsLong(resolve().apply(a), secondArg);
     }
 
     public default <C> ToLongFunction<A> fuse(
         ToLongBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fuseToLongBiFunction(next, input2);
+        return fuseToLongBiFunction(next, secondArg);
     }
 
     public default <C> WithToLongFunction<A> fusingToLongBiFunction(
         ToLongBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return WithToLongFunction.of(fuseToLongBiFunction(next, input2));
+        return WithToLongFunction.of(fuseToLongBiFunction(next, secondArg));
     }
 
     public default <C> WithToLongFunction<A> fusing(
         ToLongBiFunction<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fusingToLongBiFunction(next, input2);
+        return fusingToLongBiFunction(next, secondArg);
     }
 
     /* Function<A, B> -> Predicate<B> */
@@ -393,27 +393,27 @@ interface FunctionCombos<A, B> {
 
     public default <C> Predicate<A> fuseBiPredicate(
         BiPredicate<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.test(resolve().apply(a), input2);
+        return (A a) -> next.test(resolve().apply(a), secondArg);
     }
 
-    public default <C> Predicate<A> fuse(BiPredicate<B, C> next, C input2) {
-        return fuseBiPredicate(next, input2);
+    public default <C> Predicate<A> fuse(BiPredicate<B, C> next, C secondArg) {
+        return fuseBiPredicate(next, secondArg);
     }
 
     public default <C> WithPredicate<A> fusingBiPredicate(
         BiPredicate<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return WithPredicate.of(fuseBiPredicate(next, input2));
+        return WithPredicate.of(fuseBiPredicate(next, secondArg));
     }
 
     public default <C> WithPredicate<A> fusing(
         BiPredicate<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return fusingBiPredicate(next, input2);
+        return fusingBiPredicate(next, secondArg);
     }
 
     /* Function<A, B> -> Consumer<B> */
@@ -460,24 +460,24 @@ interface FunctionCombos<A, B> {
 
     public default <C> Consumer<A> fuseBiConsumer(
         BiConsumer<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return (A a) -> next.accept(resolve().apply(a), input2);
+        return (A a) -> next.accept(resolve().apply(a), secondArg);
     }
 
-    public default <C> Consumer<A> fuse(BiConsumer<B, C> next, C input2) {
-        return fuseBiConsumer(next, input2);
+    public default <C> Consumer<A> fuse(BiConsumer<B, C> next, C secondArg) {
+        return fuseBiConsumer(next, secondArg);
     }
 
     public default <C> WithConsumer<A> fusingBiConsumer(
         BiConsumer<B, C> next,
-        C input2
+        C secondArg
     ) {
-        return WithConsumer.of(fuseBiConsumer(next, input2));
+        return WithConsumer.of(fuseBiConsumer(next, secondArg));
     }
 
-    public default <C> WithConsumer<A> fusing(BiConsumer<B, C> next, C input2) {
-        return fusingBiConsumer(next, input2);
+    public default <C> WithConsumer<A> fusing(BiConsumer<B, C> next, C secondArg) {
+        return fusingBiConsumer(next, secondArg);
     }
 
     /* Function<A, B> -> ObjDoubleConsumer<B> */
@@ -680,24 +680,24 @@ interface FunctionCombos<A, B> {
 
     public default Function<A, B> fuseBinaryOperator(
         BinaryOperator<B> next,
-        B input2
+        B secondArg
     ) {
-        return (A a) -> next.apply(resolve().apply(a), input2);
+        return (A a) -> next.apply(resolve().apply(a), secondArg);
     }
 
-    public default Function<A, B> fuse(BinaryOperator<B> next, B input2) {
-        return fuseBinaryOperator(next, input2);
+    public default Function<A, B> fuse(BinaryOperator<B> next, B secondArg) {
+        return fuseBinaryOperator(next, secondArg);
     }
 
     public default WithFunction<A, B> fusingBinaryOperator(
         BinaryOperator<B> next,
-        B input2
+        B secondArg
     ) {
-        return WithFunction.of(fuseBinaryOperator(next, input2));
+        return WithFunction.of(fuseBinaryOperator(next, secondArg));
     }
 
-    public default WithFunction<A, B> fusing(BinaryOperator<B> next, B input2) {
-        return fusingBinaryOperator(next, input2);
+    public default WithFunction<A, B> fusing(BinaryOperator<B> next, B secondArg) {
+        return fusingBinaryOperator(next, secondArg);
     }
     /* TODO: Function<A, B> -> [Multi]Function<B...> */
 }
