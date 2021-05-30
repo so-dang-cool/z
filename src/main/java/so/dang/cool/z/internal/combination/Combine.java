@@ -543,7 +543,8 @@ public abstract class Combine<A, Fn> {
 
     @Evil
     public static final class WithConsumer<A>
-        extends Combine<Void, Consumer<A>> {
+        extends Combine<Void, Consumer<A>>
+        implements ConsumerCombos<A> {
 
         private final transient Consumer<A> initial;
 
@@ -558,33 +559,6 @@ public abstract class Combine<A, Fn> {
         @Override
         public Consumer<A> resolve() {
             return initial;
-        }
-
-        /* Consumer<A> -> Function<B, C> [TODO? And etc?] */
-
-        /* Consumer<A> -> Supplier<B> */
-
-        @Evil
-        public <B> Function<A, B> absorbSupplier(Supplier<B> next) {
-            return (A a) -> {
-                initial.accept(a);
-                return next.get();
-            };
-        }
-
-        @Evil
-        public <B> Function<A, B> absorb(Supplier<B> next) {
-            return absorbSupplier(next);
-        }
-
-        @Evil
-        public <B> WithFunction<A, B> absorbingSupplier(Supplier<B> next) {
-            return WithFunction.of(absorbSupplier(next));
-        }
-
-        @Evil
-        public <B> WithFunction<A, B> absorbing(Supplier<B> next) {
-            return absorbingSupplier(next);
         }
     }
 

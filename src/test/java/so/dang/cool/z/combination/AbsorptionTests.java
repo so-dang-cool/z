@@ -143,6 +143,57 @@ public class AbsorptionTests {
 
     @Evil
     @Test
+    void cns_to_fn() {
+        synchronized (consumedStringA) {
+            consumedStringA = "";
+
+            assertEquals(
+                "goodbye",
+                Z.absorb(saveStringA, trim).apply(" hello ").apply(" goodbye ")
+            );
+            assertEquals(" hello ", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void cns_to_fn_deep() {
+        synchronized (consumedStringA) {
+            consumedStringA = "";
+
+            assertEquals(
+                "goodbye",
+                Z
+                    .with(saveStringA)
+                    .absorb(trim)
+                    .apply(" hello ")
+                    .apply(" goodbye ")
+            );
+            assertEquals(" hello ", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
+    void cns_to_fn_deeper() {
+        synchronized (consumedStringA) {
+            consumedStringA = "";
+
+            assertEquals(
+                "goodbye",
+                Z
+                    .with(saveStringA)
+                    .absorbing(trim)
+                    .resolve()
+                    .apply(" hello ")
+                    .apply(" goodbye ")
+            );
+            assertEquals(" hello ", consumedStringA);
+        }
+    }
+
+    @Evil
+    @Test
     void cns_to_sup() {
         synchronized (consumedStringA) {
             consumedStringA = "";

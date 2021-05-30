@@ -5145,6 +5145,14 @@ public final class Z {
     /* Consumer */
 
     @Evil
+    public static <A, B, C> Function<A, Function<B, C>> absorb(
+        Consumer<A> initial,
+        Function<B, C> next
+    ) {
+        return Z.with(initial).absorb(next);
+    }
+
+    @Evil
     public static <A, B> Function<A, B> absorb(
         Consumer<A> initial,
         Supplier<B> next
