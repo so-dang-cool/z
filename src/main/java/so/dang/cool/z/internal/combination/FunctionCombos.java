@@ -476,7 +476,10 @@ interface FunctionCombos<A, B> {
         return WithConsumer.of(fuseBiConsumer(next, secondArg));
     }
 
-    public default <C> WithConsumer<A> fusing(BiConsumer<B, C> next, C secondArg) {
+    public default <C> WithConsumer<A> fusing(
+        BiConsumer<B, C> next,
+        C secondArg
+    ) {
         return fusingBiConsumer(next, secondArg);
     }
 
@@ -696,7 +699,10 @@ interface FunctionCombos<A, B> {
         return WithFunction.of(fuseBinaryOperator(next, secondArg));
     }
 
-    public default WithFunction<A, B> fusing(BinaryOperator<B> next, B secondArg) {
+    public default WithFunction<A, B> fusing(
+        BinaryOperator<B> next,
+        B secondArg
+    ) {
         return fusingBinaryOperator(next, secondArg);
     }
     /* TODO: Function<A, B> -> [Multi]Function<B...> */
