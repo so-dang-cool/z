@@ -320,7 +320,8 @@ public abstract class Combine<A, Fn> {
     }
 
     public static final class WithIntFunction<A>
-        extends Combine<A, IntFunction<A>> {
+        extends Combine<A, IntFunction<A>>
+        implements IntFunctionCombos<A> {
 
         private final transient IntFunction<A> initial;
 
@@ -336,28 +337,11 @@ public abstract class Combine<A, Fn> {
         public IntFunction<A> resolve() {
             return initial;
         }
-
-        /* IntFunction<A> -> Function<A,B> */
-
-        public <B> IntFunction<B> fuseFunction(Function<A, B> next) {
-            return (int i) -> next.apply(initial.apply(i));
-        }
-
-        public <B> IntFunction<B> fuse(Function<A, B> next) {
-            return fuseFunction(next);
-        }
-
-        public <B> WithIntFunction<B> fusingFunction(Function<A, B> next) {
-            return WithIntFunction.of(fuseFunction(next));
-        }
-
-        public <B> WithIntFunction<B> fusing(Function<A, B> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithIntToDoubleFunction
-        extends Combine<Integer, IntToDoubleFunction> {
+        extends Combine<Integer, IntToDoubleFunction>
+        implements IntToDoubleFunctionCombos {
 
         private final transient IntToDoubleFunction initial;
 
@@ -373,28 +357,11 @@ public abstract class Combine<A, Fn> {
         public IntToDoubleFunction resolve() {
             return initial;
         }
-
-        /* IntToDoubleFunction -> DoubleFunction<A> */
-
-        public <A> IntFunction<A> fuseFunction(DoubleFunction<A> next) {
-            return (int i) -> next.apply(initial.applyAsDouble(i));
-        }
-
-        public <A> IntFunction<A> fuse(DoubleFunction<A> next) {
-            return fuseFunction(next);
-        }
-
-        public <A> WithIntFunction<A> fusingFunction(DoubleFunction<A> next) {
-            return WithIntFunction.of(fuseFunction(next));
-        }
-
-        public <A> WithIntFunction<A> fusing(DoubleFunction<A> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithIntToLongFunction
-        extends Combine<Long, IntToLongFunction> {
+        extends Combine<Long, IntToLongFunction>
+        implements IntToLongFunctionCombos {
 
         private final transient IntToLongFunction initial;
 
@@ -410,28 +377,11 @@ public abstract class Combine<A, Fn> {
         public IntToLongFunction resolve() {
             return initial;
         }
-
-        /* IntToLongFunction -> LongFunction<A> */
-
-        public <A> IntFunction<A> fuseFunction(LongFunction<A> next) {
-            return (int i) -> next.apply(initial.applyAsLong(i));
-        }
-
-        public <A> IntFunction<A> fuse(LongFunction<A> next) {
-            return fuseFunction(next);
-        }
-
-        public <A> WithIntFunction<A> fusingFunction(LongFunction<A> next) {
-            return WithIntFunction.of(fuseFunction(next));
-        }
-
-        public <A> WithIntFunction<A> fusing(LongFunction<A> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithToIntFunction<A>
-        extends Combine<Integer, ToIntFunction<A>> {
+        extends Combine<Integer, ToIntFunction<A>>
+        implements ToIntFunctionCombos<A> {
 
         private final transient ToIntFunction<A> initial;
 
@@ -447,28 +397,11 @@ public abstract class Combine<A, Fn> {
         public ToIntFunction<A> resolve() {
             return initial;
         }
-
-        /* ToIntFunction<A> -> IntFunction<B> */
-
-        public <B> Function<A, B> fuseIntFunction(IntFunction<B> next) {
-            return (A a) -> next.apply(initial.applyAsInt(a));
-        }
-
-        public <B> Function<A, B> fuse(IntFunction<B> next) {
-            return fuseIntFunction(next);
-        }
-
-        public <B> WithFunction<A, B> fusingIntFunction(IntFunction<B> next) {
-            return WithFunction.of(fuseIntFunction(next));
-        }
-
-        public <B> WithFunction<A, B> fusing(IntFunction<B> next) {
-            return fusingIntFunction(next);
-        }
     }
 
     public static final class WithToIntBiFunction<A, B>
-        extends Combine<Integer, Function<A, ToIntFunction<B>>> {
+        extends Combine<Integer, Function<A, ToIntFunction<B>>>
+        implements ToIntBiFunctionCombos<A, B> {
 
         private final transient ToIntBiFunction<A, B> initial;
 
@@ -494,32 +427,11 @@ public abstract class Combine<A, Fn> {
         public Function<A, ToIntFunction<B>> resolve() {
             return (A a) -> (B b) -> initial.applyAsInt(a, b);
         }
-
-        /* ToIntBiFunction<A, B> -> IntFunction<C> */
-
-        public <C> Function<A, Function<B, C>> fuseIntFunction(
-            IntFunction<C> next
-        ) {
-            return (A a) -> (B b) -> next.apply(initial.applyAsInt(a, b));
-        }
-
-        public <C> Function<A, Function<B, C>> fuse(IntFunction<C> next) {
-            return fuseIntFunction(next);
-        }
-
-        public <C> WithBiFunction<A, B, C> fusingIntFunction(
-            IntFunction<C> next
-        ) {
-            return WithBiFunction.of(fuseIntFunction(next));
-        }
-
-        public <C> WithBiFunction<A, B, C> fusing(IntFunction<C> next) {
-            return fusingIntFunction(next);
-        }
     }
 
     public static final class WithLongFunction<A>
-        extends Combine<A, LongFunction<A>> {
+        extends Combine<A, LongFunction<A>>
+        implements LongFunctionCombos<A> {
 
         private final transient LongFunction<A> initial;
 
@@ -535,28 +447,11 @@ public abstract class Combine<A, Fn> {
         public LongFunction<A> resolve() {
             return initial;
         }
-
-        /* LongFunction<A> -> Function<A,B> */
-
-        public <B> LongFunction<B> fuseFunction(Function<A, B> next) {
-            return (long n) -> next.apply(initial.apply(n));
-        }
-
-        public <B> LongFunction<B> fuse(Function<A, B> next) {
-            return fuseFunction(next);
-        }
-
-        public <B> WithLongFunction<B> fusingFunction(Function<A, B> next) {
-            return WithLongFunction.of(fuseFunction(next));
-        }
-
-        public <B> WithLongFunction<B> fusing(Function<A, B> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithLongToDoubleFunction
-        extends Combine<Long, LongToDoubleFunction> {
+        extends Combine<Long, LongToDoubleFunction>
+        implements LongToDoubleFunctionCombos {
 
         private final transient LongToDoubleFunction initial;
 
@@ -574,28 +469,11 @@ public abstract class Combine<A, Fn> {
         public LongToDoubleFunction resolve() {
             return initial;
         }
-
-        /* LongToDoubleFunction -> DoubleFunction<A> */
-
-        public <A> LongFunction<A> fuseFunction(DoubleFunction<A> next) {
-            return (long n) -> next.apply(initial.applyAsDouble(n));
-        }
-
-        public <A> LongFunction<A> fuse(DoubleFunction<A> next) {
-            return fuseFunction(next);
-        }
-
-        public <A> WithLongFunction<A> fusingFunction(DoubleFunction<A> next) {
-            return WithLongFunction.of(fuseFunction(next));
-        }
-
-        public <A> WithLongFunction<A> fusing(DoubleFunction<A> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithLongToIntFunction
-        extends Combine<Long, LongToIntFunction> {
+        extends Combine<Long, LongToIntFunction>
+        implements LongToIntFunctionCombos {
 
         private final transient LongToIntFunction initial;
 
@@ -611,28 +489,11 @@ public abstract class Combine<A, Fn> {
         public LongToIntFunction resolve() {
             return initial;
         }
-
-        /* LongToIntFunction -> IntFunction<A> */
-
-        public <A> LongFunction<A> fuseFunction(IntFunction<A> next) {
-            return (long n) -> next.apply(initial.applyAsInt(n));
-        }
-
-        public <A> LongFunction<A> fuse(IntFunction<A> next) {
-            return fuseFunction(next);
-        }
-
-        public <A> WithLongFunction<A> fusingFunction(IntFunction<A> next) {
-            return WithLongFunction.of(fuseFunction(next));
-        }
-
-        public <A> WithLongFunction<A> fusing(IntFunction<A> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithToLongFunction<A>
-        extends Combine<Long, ToLongFunction<A>> {
+        extends Combine<Long, ToLongFunction<A>>
+        implements ToLongFunctionCombos<A> {
 
         private final transient ToLongFunction<A> initial;
 
@@ -648,28 +509,11 @@ public abstract class Combine<A, Fn> {
         public ToLongFunction<A> resolve() {
             return initial;
         }
-
-        /* ToLongFunction<A> -> LongFunction<B> */
-
-        public <B> Function<A, B> fuseLongFunction(LongFunction<B> next) {
-            return (A a) -> next.apply(initial.applyAsLong(a));
-        }
-
-        public <B> Function<A, B> fuse(LongFunction<B> next) {
-            return fuseLongFunction(next);
-        }
-
-        public <B> WithFunction<A, B> fusingLongFunction(LongFunction<B> next) {
-            return WithFunction.of(fuseLongFunction(next));
-        }
-
-        public <B> WithFunction<A, B> fusing(LongFunction<B> next) {
-            return fusingLongFunction(next);
-        }
     }
 
     public static final class WithToLongBiFunction<A, B>
-        extends Combine<Long, Function<A, ToLongFunction<B>>> {
+        extends Combine<Long, Function<A, ToLongFunction<B>>>
+        implements ToLongBiFunctionCombos<A, B> {
 
         private final transient ToLongBiFunction<A, B> initial;
 
@@ -694,28 +538,6 @@ public abstract class Combine<A, Fn> {
         @Override
         public Function<A, ToLongFunction<B>> resolve() {
             return (A a) -> (B b) -> initial.applyAsLong(a, b);
-        }
-
-        /* ToLongBiFunction<A, B> -> LongFunction<C> */
-
-        public <C> Function<A, Function<B, C>> fuseLongFunction(
-            LongFunction<C> next
-        ) {
-            return (A a) -> (B b) -> next.apply(initial.applyAsLong(a, b));
-        }
-
-        public <C> Function<A, Function<B, C>> fuse(LongFunction<C> next) {
-            return fuseLongFunction(next);
-        }
-
-        public <C> WithBiFunction<A, B, C> fusingLongFunction(
-            LongFunction<C> next
-        ) {
-            return WithBiFunction.of(fuseLongFunction(next));
-        }
-
-        public <C> WithBiFunction<A, B, C> fusing(LongFunction<C> next) {
-            return fusingLongFunction(next);
         }
     }
 
