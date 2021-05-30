@@ -87,16 +87,9 @@ public abstract class Combine<A, Fn> {
         }
     }
 
-    /*
-        BiFunction<A, B, C> -> BiFunction<C, D, E>
-        = Function<A, Function<B, Function<D, E>>>
-
-        Function<A, B> -> BiFunction<B, C, D>
-        = Function<A, Function<C, D>>
-    */
-
     public static final class WithBiFunction<A, B, C>
-        extends Combine<C, Function<A, Function<B, C>>> {
+        extends Combine<C, Function<A, Function<B, C>>>
+        implements BiFunctionCombos<A, B, C> {
 
         private final transient BiFunction<A, B, C> initial;
 
@@ -122,30 +115,11 @@ public abstract class Combine<A, Fn> {
         public Function<A, Function<B, C>> resolve() {
             return (A a) -> (B b) -> initial.apply(a, b);
         }
-
-        /* BiFunction<A, B, C> -> Function<C, D> */
-
-        public <D> Function<A, Function<B, D>> fuseFunction(
-            Function<C, D> next
-        ) {
-            return (A a) -> (B b) -> next.apply(initial.apply(a, b));
-        }
-
-        public <D> Function<A, Function<B, D>> fuse(Function<C, D> next) {
-            return fuseFunction(next);
-        }
-
-        public <D> WithBiFunction<A, B, D> fusingFunction(Function<C, D> next) {
-            return WithBiFunction.of(fuseFunction(next));
-        }
-
-        public <D> WithBiFunction<A, B, D> fusing(Function<C, D> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithBooleanFunction<A>
-        extends Combine<A, BooleanFunction<A>> {
+        extends Combine<A, BooleanFunction<A>>
+        implements BooleanFunctionCombos<A> {
 
         private final transient BooleanFunction<A> initial;
 
@@ -163,28 +137,11 @@ public abstract class Combine<A, Fn> {
         public BooleanFunction<A> resolve() {
             return initial;
         }
-
-        /* BooleanFunction<A> -> Function<A,B> */
-
-        public <B> BooleanFunction<B> fuseFunction(Function<A, B> next) {
-            return (boolean b) -> next.apply(initial.apply(b));
-        }
-
-        public <B> BooleanFunction<B> fuse(Function<A, B> next) {
-            return fuseFunction(next);
-        }
-
-        public <B> WithBooleanFunction<B> fusingFunction(Function<A, B> next) {
-            return WithBooleanFunction.of(fuseFunction(next));
-        }
-
-        public <B> WithBooleanFunction<B> fusing(Function<A, B> next) {
-            return fusingFunction(next);
-        }
     }
 
     public static final class WithBooleanToDoubleFunction
-        extends Combine<Double, BooleanToDoubleFunction> {
+        extends Combine<Double, BooleanToDoubleFunction>
+        implements BooleanToDoubleFunctionCombos {
 
         private final transient BooleanToDoubleFunction initial;
 
@@ -202,32 +159,11 @@ public abstract class Combine<A, Fn> {
         public BooleanToDoubleFunction resolve() {
             return initial;
         }
-
-        /* BooleanToDoubleFunction<A> -> DoubleFunction<B> */
-
-        public <A> BooleanFunction<A> fuseDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return (boolean b) -> next.apply(initial.applyAsDouble(b));
-        }
-
-        public <A> BooleanFunction<A> fuse(DoubleFunction<A> next) {
-            return fuseDoubleFunction(next);
-        }
-
-        public <A> WithBooleanFunction<A> fusingDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return WithBooleanFunction.of(fuseDoubleFunction(next));
-        }
-
-        public <A> WithBooleanFunction<A> fusing(DoubleFunction<A> next) {
-            return fusingDoubleFunction(next);
-        }
     }
 
     public static final class WithBooleanToIntFunction
-        extends Combine<Integer, BooleanToIntFunction> {
+        extends Combine<Integer, BooleanToIntFunction>
+        implements BooleanToIntFunctionCombos {
 
         private final transient BooleanToIntFunction initial;
 
@@ -245,30 +181,11 @@ public abstract class Combine<A, Fn> {
         public BooleanToIntFunction resolve() {
             return initial;
         }
-
-        /* BooleanToIntFunction<A> -> IntFunction<B> */
-
-        public <A> BooleanFunction<A> fuseIntFunction(IntFunction<A> next) {
-            return (boolean b) -> next.apply(initial.applyAsInt(b));
-        }
-
-        public <A> BooleanFunction<A> fuse(IntFunction<A> next) {
-            return fuseIntFunction(next);
-        }
-
-        public <A> WithBooleanFunction<A> fusingIntFunction(
-            IntFunction<A> next
-        ) {
-            return WithBooleanFunction.of(fuseIntFunction(next));
-        }
-
-        public <A> WithBooleanFunction<A> fusing(IntFunction<A> next) {
-            return fusingIntFunction(next);
-        }
     }
 
     public static final class WithBooleanToLongFunction
-        extends Combine<Long, BooleanToLongFunction> {
+        extends Combine<Long, BooleanToLongFunction>
+        implements BooleanToLongFunctionCombos {
 
         private final transient BooleanToLongFunction initial;
 
@@ -285,26 +202,6 @@ public abstract class Combine<A, Fn> {
         @Override
         public BooleanToLongFunction resolve() {
             return initial;
-        }
-
-        /* BooleanToLongFunction<A> -> LongFunction<B> */
-
-        public <A> BooleanFunction<A> fuseLongFunction(LongFunction<A> next) {
-            return (boolean b) -> next.apply(initial.applyAsLong(b));
-        }
-
-        public <A> BooleanFunction<A> fuse(LongFunction<A> next) {
-            return fuseLongFunction(next);
-        }
-
-        public <A> WithBooleanFunction<A> fusingLongFunction(
-            LongFunction<A> next
-        ) {
-            return WithBooleanFunction.of(fuseLongFunction(next));
-        }
-
-        public <A> WithBooleanFunction<A> fusing(LongFunction<A> next) {
-            return fusingLongFunction(next);
         }
     }
 
