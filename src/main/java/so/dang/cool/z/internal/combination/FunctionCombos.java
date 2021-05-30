@@ -37,7 +37,7 @@ import so.dang.cool.z.internal.combination.Combine.WithToIntFunction;
 import so.dang.cool.z.internal.combination.Combine.WithToLongBiFunction;
 import so.dang.cool.z.internal.combination.Combine.WithToLongFunction;
 
-interface CombineWithFunction<A, B> {
+interface FunctionCombos<A, B> {
     Function<A, B> resolve();
 
     /* Function<A, B> -> Function<B, C> */

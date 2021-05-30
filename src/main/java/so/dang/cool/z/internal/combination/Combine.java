@@ -69,7 +69,7 @@ public abstract class Combine<A, Fn> {
 
     public static class WithFunction<A, B>
         extends Combine<B, Function<A, B>>
-        implements CombineWithFunction<A, B> {
+        implements FunctionCombos<A, B> {
 
         private final transient Function<A, B> initial;
 
