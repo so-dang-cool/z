@@ -89,6 +89,24 @@ public final class Z {
         return (A a) -> a;
     }
 
+    /**
+     * Flip the order of the arguments of a BiFunction.
+     */
+    public static <A, B, C> BiFunction<B, A, C> flip(
+        BiFunction<A, B, C> initial
+    ) {
+        return (B b, A a) -> initial.apply(a, b);
+    }
+
+    /**
+     * Flip the order of the first two arguments of a curried Function.
+     */
+    public static <A, B, C> Function<B, Function<A, C>> flip(
+        Function<A, Function<B, C>> initial
+    ) {
+        return (B b) -> (A a) -> initial.apply(a).apply(b);
+    }
+
     // ┏┓
     // ┏━━━━┓
     // ┏━━━━━━━━┓
