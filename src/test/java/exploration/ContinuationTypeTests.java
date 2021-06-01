@@ -137,9 +137,9 @@ abstract class Continue {
 
         Start(Function<A, B> fn) { this.fn = fn; }
         
-        Function<A, NEXT> resolve() {
-            return a -> fn.apply(a);
-        }
+        // Function<A, NEXT> resolve() {
+        //     return a -> fn.apply(a);
+        // }
     }
 
     class Middle<A, B, NEXT> {
