@@ -4,17 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
 import org.junit.jupiter.api.Test;
-
 import so.dang.cool.z.Z;
 
 public class ComputationTypeTests {
+
     @Test
     void test1() {
-        Comp<Function<String, String>> comp =
-            Comp.of((String s) -> s.toLowerCase())
-                .and((String s) -> s.trim());
+        Comp<Function<String, String>> comp = Comp
+            .of((String s) -> s.toLowerCase())
+            .and((String s) -> s.trim());
 
         assertEquals("hello", comp.resolve().apply("HELLO"));
     }
@@ -23,8 +22,7 @@ public class ComputationTypeTests {
     void test2() {
         BiFunction<String, String, String> concat = String::concat;
 
-        Comp<Function<String, Function<String, String>>> comp =
-            Comp.of(concat);
+        Comp<Function<String, Function<String, String>>> comp = Comp.of(concat);
 
         assertEquals("no way", comp.resolve().apply("no ").apply("way"));
     }
@@ -32,7 +30,6 @@ public class ComputationTypeTests {
     @Test
     void test3() {
         BiFunction<String, String, String> concat = String::concat;
-
         // Comp<Function<String, Function<String, String>>> comp =
         //     Comp.of(concat)
         //         .and(concat);
@@ -54,6 +51,7 @@ abstract class Comp<Fn> {
     }
 
     static class OfFunction<A, B> extends Comp<Function<A, B>> {
+
         final Function<A, B> initial;
 
         OfFunction(Function<A, B> initial) {
@@ -83,7 +81,9 @@ abstract class Comp<Fn> {
     //     }
     // }
 
-    static class OfCurriedFunction<A, B, C> extends Comp<Function<A, Function<B, C>>> {
+    static class OfCurriedFunction<A, B, C>
+        extends Comp<Function<A, Function<B, C>>> {
+
         final Function<A, Function<B, C>> initial;
 
         OfCurriedFunction(Function<A, Function<B, C>> initial) {
