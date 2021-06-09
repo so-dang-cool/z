@@ -1,5 +1,7 @@
 # Z
 
+<img align="left" src="https://github.com/hiljusti/z/raw/core/img/logo.png">
+
 **Z is a Java library for exciting and fearless function combination.**
 
 [![Maven Central](https://img.shields.io/maven-central/v/so.dang.cool/z.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22so.dang.cool%22%20AND%20a:%22z%22)
@@ -12,7 +14,7 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
 
-<img align="left" src="https://github.com/hiljusti/z/raw/core/img/logo.png">
+---
 
 Unlock your functional programming potential with these combination techniques:
 
