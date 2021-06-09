@@ -26,6 +26,55 @@ import so.dang.cool.z.function.Operator;
 public class UsageExamples {
 
     @Test
+    public void example_fusion() {
+        var internedTrim = Z.fuse(String::trim, String::intern);
+
+        assertEquals("hello", internedTrim.apply(" hello "));
+
+        // Protip: Interned strings can use == directly.
+        assertTrue("hello" == internedTrim.apply(" hello "));
+    }
+
+    @Test
+    public void example_fission() {
+        var concat = Z.split(String::concat);
+
+        assertEquals("hotpot", concat.apply("hot").apply("pot"));
+
+        // Protip: "Curried" functions can be partially applied.
+        var goodSomething = concat.apply("pre");
+
+        assertEquals("prefix", goodSomething.apply("fix"));
+        assertEquals("presume", goodSomething.apply("sume"));
+    }
+
+    @Test
+    public void example_assimilation() {
+        var checkoutMessage = Z.assimilate2(
+            (String item) ->
+                (String name) -> String.format("Enjoy your %s, %s!", item, name)
+        );
+
+        assertEquals(
+            "Enjoy your bike, Alice!",
+            checkoutMessage.apply("bike", "Alice")
+        );
+    }
+
+    @Test
+    public void example_absorption() {
+        var heroes = new ArrayList<>(List.of("joker"));
+
+        var emptiedHeroes = Z.absorb(heroes::clear, () -> heroes);
+
+        assertEquals(List.of(), emptiedHeroes.get());
+
+        heroes.add("twoface");
+        emptiedHeroes.get().add("batman");
+        assertEquals(List.of("batman"), heroes);
+    }
+
+    @Test
     public void ascii_sum_plain_java() {
         var asciiSum =
             ((Function<IntStream, Integer>) IntStream::sum).compose(

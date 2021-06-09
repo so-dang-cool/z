@@ -1,8 +1,6 @@
-# Z
-
 <img align="left" src="https://github.com/hiljusti/z/raw/core/img/logo.png">
 
-**Z is a Java library for exciting and fearless function combination.**
+**Fearless function combination in Java**
 
 [![Maven Central](https://img.shields.io/maven-central/v/so.dang.cool/z.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22so.dang.cool%22%20AND%20a:%22z%22)
 [![Javadoc](https://javadoc.io/badge2/so.dang.cool/z/javadoc.svg)](https://javadoc.io/doc/so.dang.cool/z)
@@ -14,21 +12,89 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
 
----
+# Techniques
 
 Unlock your functional programming potential with these combination techniques:
 
-1. Fusion: `Z.fuse(fn1, fn2)` Combine two functions.
-1. Fission - `Z.split(fn)` Split a multiargs function into a curried form.
-1. Assimilation - `Z.assimilate2(curriedFn)` Flatten a curried function into a
-    multiargs function.
-1. Absorption - `Z.absorb(fn1, fn2)` Unnaturally combine two functions.
-1. Super Fusion - `Z.with(fn1).fusing(fn2).[...].fuse(fnN)` Combine _N_
-    functions.
-    - **Experimental:** This feature is still in active development, but will
-    be stable in future versions.
+## Fusion
 
-## Z is lean and principled
+`Z.fuse(fn1, fn2)` Combine two functions.
+
+```
+var internedTrim = Z.fuse(String::trim, String::intern);
+
+assertEquals("hello", internedTrim.apply(" hello "));
+
+// Bonus: Interned strings can use == directly.
+assertTrue("hello" == internedTrim.apply(" hello "));
+```
+
+## Fission
+
+`Z.split(fn)` Split a multiargs function into a curried form.
+
+```
+var concat = Z.split(String::concat);
+
+assertEquals("hotpot", concat.apply("hot").apply("pot"));
+
+// Protip: "Curried" functions can be partially applied.
+var goodSomething = concat.apply("pre");
+
+assertEquals("prefix", goodSomething.apply("fix"));
+assertEquals("presume", goodSomething.apply("sume"));
+```
+
+## Assimilation
+
+`Z.assimilate[N](curriedFn)` Flatten a curried function into a multiargs function.
+
+```
+var checkoutMessage = Z.assimilate2(
+    (String item) ->
+        (String name) -> String.format("Enjoy your %s, %s!", item, name)
+);
+
+assertEquals(
+    "Enjoy your bike, Alice!",
+    checkoutMessage.apply("bike", "Alice")
+);
+```
+
+## Absorption
+
+`Z.absorb(fn1, fn2)` Unnaturally combine two functions.
+
+_This is an **evil** technique. It's provided as a tool to control evil problems, not to encourage evil code._
+
+```
+var heroes = new ArrayList<>(List.of("joker"));
+
+var emptiedHeroes = Z.absorb(heroes::clear, () -> heroes);
+
+assertEquals(List.of(), emptiedHeroes.get());
+
+heroes.add("twoface");
+emptiedHeroes.get().add("batman");
+assertEquals(List.of("batman"), heroes);
+```
+
+## Super Fusion
+
+`Z.with(var or fn1).fusing(fn2).[...].fuse(fn[N])` Combine _N_ functions.
+
+_This is an **experimental** technique. It's still in active development and may miss some combinations until future versions._
+
+```
+var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
+    .fusingFunction(Pattern::compile)
+    .fusing(Pattern::matcher)
+    .fuse(Matcher::matches);
+
+assertTrue(isLocalHost.test("https://localhost:443"));
+```
+
+# Z is lean and predictable
 
 1. Z only provides function combinators
 1. Z will never need other dependencies
@@ -36,7 +102,7 @@ Unlock your functional programming potential with these combination techniques:
 1. Techniques with the potential to cause problems are annotated as `@Evil`;
     choose your path wisely...
 
-## Z gives succinct, precise function combination
+## Comparisons and advantages
 
 Z fusion
 
@@ -80,35 +146,4 @@ Some advantages of Z here:
     conventions that already exist. A `Predicate` will have a `test` method, a
     `Consumer` will have an `accept` method, etc.
 
-## Z can handle complex combinations
-
-Z
-
-```
-var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
-    .fusingFunction(Pattern::compile)
-    .fusing(Pattern::matcher)
-    .fuse(Matcher::matches);
-
-isLocalHost.test("https://localhost:443");
-```
-
-Plain Java
-
-```
-Predicate<String> isLocalHost = (String s) ->
-    Pattern.compile("https?://localhost(:\\d+)?(/\\S*)?")
-        .matcher(s)
-        .matches();
-
-isLocalHost.test("https://localhost:443");
-```
-
-Z lets you perform sophisticated combinations with:
-
-* Static functions
-* Instance methods
-* Selection among many kinds of overloaded functions
-* Almost any function you can throw at it
-
-The above examples and more can be found in [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java)
+_These and more examples can be found in the [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java) in the project's tests._
