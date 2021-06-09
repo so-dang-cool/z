@@ -46,6 +46,12 @@ public class UsageExamples {
 
         assertEquals("prefix", goodSomething.apply("fix"));
         assertEquals("presume", goodSomething.apply("sume"));
+
+        // Protip: Z also has a "flip" function to change order.
+        var fixedSomething = Z.flip(concat).apply("fix");
+
+        assertEquals("prefix", fixedSomething.apply("pre"));
+        assertEquals("suffix", fixedSomething.apply("suf"));
     }
 
     @Test

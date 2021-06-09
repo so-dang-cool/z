@@ -20,12 +20,12 @@ Unlock your functional programming potential with these combination techniques:
 
 `Z.fuse(fn1, fn2)` Combine two functions.
 
-```
+```java
 var internedTrim = Z.fuse(String::trim, String::intern);
 
 assertEquals("hello", internedTrim.apply(" hello "));
 
-// Bonus: Interned strings can use == directly.
+// Protip: Interned strings can use == directly.
 assertTrue("hello" == internedTrim.apply(" hello "));
 ```
 
@@ -33,7 +33,7 @@ assertTrue("hello" == internedTrim.apply(" hello "));
 
 `Z.split(fn)` Split a multiargs function into a curried form.
 
-```
+```java
 var concat = Z.split(String::concat);
 
 assertEquals("hotpot", concat.apply("hot").apply("pot"));
@@ -43,13 +43,19 @@ var goodSomething = concat.apply("pre");
 
 assertEquals("prefix", goodSomething.apply("fix"));
 assertEquals("presume", goodSomething.apply("sume"));
+
+// Protip: Z also has a "flip" function to change order.
+var fixedSomething = Z.flip(concat).apply("fix");
+
+assertEquals("prefix", fixedSomething.apply("pre"));
+assertEquals("suffix", fixedSomething.apply("suf"));
 ```
 
 ## Assimilation
 
 `Z.assimilate[N](curriedFn)` Flatten a curried function into a multiargs function.
 
-```
+```java
 var checkoutMessage = Z.assimilate2(
     (String item) ->
         (String name) -> String.format("Enjoy your %s, %s!", item, name)
@@ -67,7 +73,7 @@ assertEquals(
 
 _This is an **evil** technique. It's provided as a tool to control evil problems, not to encourage evil code._
 
-```
+```java
 var heroes = new ArrayList<>(List.of("joker"));
 
 var emptiedHeroes = Z.absorb(heroes::clear, () -> heroes);
@@ -85,7 +91,7 @@ assertEquals(List.of("batman"), heroes);
 
 _This is an **experimental** technique. It's still in active development and may miss some combinations until future versions._
 
-```
+```java
 var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
     .fusingFunction(Pattern::compile)
     .fusing(Pattern::matcher)
