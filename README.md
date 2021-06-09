@@ -12,6 +12,8 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
 
+<img align="left" src="https://github.com/hiljusti/z/raw/core/img/logo.png">
+
 Unlock your functional programming potential with these combination techniques:
 
 1. Fusion: `Z.fuse(fn1, fn2)` Combine two functions.
