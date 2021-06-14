@@ -423,6 +423,39 @@ public class AbsorptionTests {
                 );
                 assertEquals("hei", consumedStringB);
                 assertEquals("hej", consumedStringC);
+
+                /* deep */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    true,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorb(getBooleanTrue)
+                        .apply("hei")
+                        .test("hej")
+                );
+                assertEquals("hei", consumedStringB);
+                assertEquals("hej", consumedStringC);
+
+                /* deeper */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    true,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorbing(getBooleanTrue)
+                        .resolve()
+                        .apply("hei")
+                        .test("hej")
+                );
+                assertEquals("hei", consumedStringB);
+                assertEquals("hej", consumedStringC);
             }
         }
     }
@@ -441,6 +474,39 @@ public class AbsorptionTests {
                         .absorb(saveStringsBandC, getDouble)
                         .apply("buenas")
                         .applyAsDouble("dias")
+                );
+                assertEquals("buenas", consumedStringB);
+                assertEquals("dias", consumedStringC);
+
+                /* deep */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedDouble,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorb(getDouble)
+                        .apply("buenas")
+                        .applyAsDouble("dias")
+                );
+                assertEquals("buenas", consumedStringB);
+                assertEquals("dias", consumedStringC);
+
+                /* deeper */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedDouble,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorbing(getDouble)
+                        .resolve()
+                        .apply("buenas")
+                        .apply("dias")
                 );
                 assertEquals("buenas", consumedStringB);
                 assertEquals("dias", consumedStringC);
@@ -465,6 +531,39 @@ public class AbsorptionTests {
                 );
                 assertEquals("안녕", consumedStringB);
                 assertEquals("하세요", consumedStringC);
+
+                /* deep */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedInt,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorb(getInt)
+                        .apply("안녕")
+                        .applyAsInt("하세요")
+                );
+                assertEquals("안녕", consumedStringB);
+                assertEquals("하세요", consumedStringC);
+
+                /* deeper */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedInt,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorbing(getInt)
+                        .resolve()
+                        .apply("안녕")
+                        .apply("하세요")
+                );
+                assertEquals("안녕", consumedStringB);
+                assertEquals("하세요", consumedStringC);
             }
         }
     }
@@ -486,6 +585,39 @@ public class AbsorptionTests {
                 );
                 assertEquals("ça", consumedStringB);
                 assertEquals("va", consumedStringC);
+
+                /* deep */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedLong,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorb(getLong)
+                        .apply("ça")
+                        .applyAsLong("va")
+                );
+                assertEquals("ça", consumedStringB);
+                assertEquals("va", consumedStringC);
+
+                /* deeper */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    suppliedLong,
+                    Z
+                        .with(saveStringsBandC)
+                        .absorbing(getLong)
+                        .resolve()
+                        .apply("ça")
+                        .apply("va")
+                );
+                assertEquals("ça", consumedStringB);
+                assertEquals("va", consumedStringC);
             }
         }
     }
@@ -502,6 +634,39 @@ public class AbsorptionTests {
 
                     Z
                         .absorb(saveStringsBandC, doOperation)
+                        .apply("...")
+                        .accept("!!!");
+
+                    assertEquals("...", consumedStringB);
+                    assertEquals("!!!", consumedStringC);
+                    assertTrue(wasOperated);
+
+                    /* deep */
+
+                    consumedStringB = "";
+                    consumedStringC = "";
+                    wasOperated = false;
+
+                    Z
+                        .with(saveStringsBandC)
+                        .absorb(doOperation)
+                        .apply("...")
+                        .accept("!!!");
+
+                    assertEquals("...", consumedStringB);
+                    assertEquals("!!!", consumedStringC);
+                    assertTrue(wasOperated);
+
+                    /* deeper */
+
+                    consumedStringB = "";
+                    consumedStringC = "";
+                    wasOperated = false;
+
+                    Z
+                        .with(saveStringsBandC)
+                        .absorbing(doOperation)
+                        .resolve()
                         .apply("...")
                         .accept("!!!");
 

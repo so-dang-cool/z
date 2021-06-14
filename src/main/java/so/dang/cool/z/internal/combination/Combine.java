@@ -778,6 +778,14 @@ public abstract class Combine<A, Fn> {
             return new WithBiPredicate<>(initial);
         }
 
+        public static <A, B> WithBiPredicate<A, B> of(
+            Function<A, Predicate<B>> initial
+        ) {
+            return new WithBiPredicate<>(
+                (A a, B b) -> initial.apply(a).test(b)
+            );
+        }
+
         @Override
         public Function<A, Predicate<B>> resolve() {
             return (A a) -> (B b) -> initial.test(a, b);

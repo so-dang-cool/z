@@ -5255,13 +5255,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         BooleanSupplier next
     ) {
-        // TODO: Defer to Combine.With[ETC]
-        // return Z.with(initial).absorb(next);
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                return next.getAsBoolean();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
@@ -5269,13 +5263,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         DoubleSupplier next
     ) {
-        // TODO: Defer to Combine.With[ETC]
-        // return Z.with(initial).absorb(next);
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                return next.getAsDouble();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
@@ -5283,13 +5271,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         IntSupplier next
     ) {
-        // TODO: Defer to Combine.With[ETC]
-        // return Z.with(initial).absorb(next);
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                return next.getAsInt();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
@@ -5297,13 +5279,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         LongSupplier next
     ) {
-        // TODO: Defer to Combine.With[ETC]
-        // return Z.with(initial).absorb(next);
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                return next.getAsLong();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     @Evil
@@ -5311,13 +5287,7 @@ public final class Z {
         BiConsumer<A, B> initial,
         Operator next
     ) {
-        // TODO: Defer to Combine.With[ETC]
-        // return Z.with(initial).absorb(next);
-        return (A a) ->
-            (B b) -> {
-                initial.accept(a, b);
-                next.run();
-            };
+        return Z.with(initial).absorb(next);
     }
 
     /* DoubleConsumer */
