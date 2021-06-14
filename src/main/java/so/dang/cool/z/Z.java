@@ -540,129 +540,98 @@ public final class Z {
         BiFunction<A, B, C> initial,
         BiFunction<C, D, E> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> (D d) -> next.apply(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToDoubleFunction<B>> fuse(
         BiFunction<A, B, C> initial,
         ToDoubleFunction<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> next.applyAsDouble(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, ToDoubleFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToDoubleBiFunction<C, D> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) ->
-            (B b) -> (D d) -> next.applyAsDouble(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToIntFunction<B>> fuse(
         BiFunction<A, B, C> initial,
         ToIntFunction<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> next.applyAsInt(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, ToIntFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToIntBiFunction<C, D> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) ->
-            (B b) -> (D d) -> next.applyAsInt(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, ToLongFunction<B>> fuse(
         BiFunction<A, B, C> initial,
         ToLongFunction<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> next.applyAsLong(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, ToLongFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToLongBiFunction<C, D> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) ->
-            (B b) -> (D d) -> next.applyAsLong(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, Predicate<B>> fuse(
         BiFunction<A, B, C> initial,
         Predicate<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> next.test(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, Predicate<D>>> fuse(
         BiFunction<A, B, C> initial,
         BiPredicate<C, D> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> (D d) -> next.test(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C> Function<A, Consumer<B>> fuse(
         BiFunction<A, B, C> initial,
         Consumer<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> next.accept(initial.apply(a, b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, Consumer<D>>> fuse(
         BiFunction<A, B, C> initial,
         BiConsumer<C, D> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) -> (B b) -> (D d) -> next.accept(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, DoubleConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjDoubleConsumer<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) ->
-            (B b) -> (double d) -> next.accept(initial.apply(a, b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, IntConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjIntConsumer<C> next
     ) {
-        return (A a) -> (B b) -> (int i) -> next.accept(initial.apply(a, b), i);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B, C, D> Function<A, Function<B, LongConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjLongConsumer<C> next
     ) {
-        // TODO: Defer to Combine.WithBiFunction
-        // return Z.with(initial).fuse(next);
-        return (A a) ->
-            (B b) -> (long n) -> next.accept(initial.apply(a, b), n);
+        return Z.with(initial).fuse(next);
     }
 
     /* BooleanFunction */
