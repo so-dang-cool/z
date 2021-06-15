@@ -647,128 +647,98 @@ public final class Z {
         BooleanFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) -> (B b2) -> next.apply(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanToDoubleFunction fuse(
         BooleanFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> next.applyAsDouble(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<ToDoubleFunction<B>> fuse(
         BooleanFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) ->
-            (B b2) -> next.applyAsDouble(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanToIntFunction fuse(
         BooleanFunction<A> initial,
         ToIntFunction<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> next.applyAsInt(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<ToIntFunction<B>> fuse(
         BooleanFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) -> (B b2) -> next.applyAsInt(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanToLongFunction fuse(
         BooleanFunction<A> initial,
         ToLongFunction<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> next.applyAsLong(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<ToLongFunction<B>> fuse(
         BooleanFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) ->
-            (B b2) -> next.applyAsLong(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanPredicate fuse(
         BooleanFunction<A> initial,
         Predicate<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> next.test(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<Predicate<B>> fuse(
         BooleanFunction<A> initial,
         BiPredicate<A, B> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) -> (B b2) -> next.test(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanConsumer fuse(
         BooleanFunction<A> initial,
         Consumer<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> next.accept(initial.apply(b));
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> BooleanFunction<Consumer<B>> fuse(
         BooleanFunction<A> initial,
         BiConsumer<A, B> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b1) -> (B b2) -> next.accept(initial.apply(b1), b2);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanFunction<DoubleConsumer> fuse(
         BooleanFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> (double d) -> next.accept(initial.apply(b), d);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanFunction<IntConsumer> fuse(
         BooleanFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> (int i) -> next.accept(initial.apply(b), i);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A> BooleanFunction<LongConsumer> fuse(
         BooleanFunction<A> initial,
         ObjLongConsumer<A> next
     ) {
-        // TODO: Defer to Combine.WithBooleanFunction
-        // return Z.with(initial).fuse(next);
-        return (boolean b) -> (long n) -> next.accept(initial.apply(b), n);
+        return Z.with(initial).fuse(next);
     }
 
     /* BooleanToDoubleFunction */
