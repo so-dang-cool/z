@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -44,70 +45,165 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_bifn() {
-        assertEquals("1.0", Z.fuse(intToString, concat).apply(1).apply(".0"));
+        Stream
+            .of(
+                Z.fuse(intToString, concat),
+                Z.with(intToString).fuse(concat)
+                //Z.with(intToString).fusing(concat).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals("1.0", fusion.apply(1).apply(".0"))
+            );
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(concat, ".0"),
+                Z.with(intToString).fusing(concat, ".0").resolve()
+            )
+            .forEach(fusion -> assertEquals("1.0", fusion.apply(1)));
     }
 
     @Test
     void intFn_to_toDblFn() {
-        assertEquals(1.0, Z.fuse(intToString, stringToDouble).applyAsDouble(1));
+        Stream
+            .of(
+                Z.fuse(intToString, stringToDouble),
+                Z.with(intToString).fuse(stringToDouble),
+                Z.with(intToString).fusing(stringToDouble).resolve()
+            )
+            .forEach(fusion -> assertEquals(1, fusion.applyAsDouble(1)));
     }
 
     @Test
-    void intFn_to_toDblBin() {
-        assertEquals(
-            3.0,
-            Z
-                .fuse(intToString, addStringsAsDouble)
-                .apply(1)
-                .applyAsDouble("2.0")
-        );
+    void intFn_to_toDblBifn() {
+        Stream
+            .of(
+                Z.fuse(intToString, addStringsAsDouble),
+                Z.with(intToString).fuse(addStringsAsDouble)
+                //Z.with(intToString).fusing(addStringsAsDouble).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals(3, fusion.apply(1).applyAsDouble("2"))
+            );
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(addStringsAsDouble, "2"),
+                Z.with(intToString).fusing(addStringsAsDouble, "2").resolve()
+            )
+            .forEach(fusion -> assertEquals(3, fusion.applyAsDouble(1)));
     }
 
     @Test
-    void intFn_to_toInt() {
-        assertEquals(1, Z.fuse(intToString, stringToInt).applyAsInt(1));
+    void intFn_to_toIntFn() {
+        Stream
+            .of(
+                Z.fuse(intToString, stringToInt),
+                Z.with(intToString).fuse(stringToInt),
+                Z.with(intToString).fusing(stringToInt).resolve()
+            )
+            .forEach(fusion -> assertEquals(1, fusion.applyAsInt(1)));
     }
 
     @Test
     void intFn_to_toIntBifn() {
-        assertEquals(
-            3,
-            Z.fuse(intToString, addStringsAsInt).apply(1).applyAsInt("2")
-        );
+        Stream
+            .of(
+                Z.fuse(intToString, addStringsAsInt),
+                Z.with(intToString).fuse(addStringsAsInt)
+                //Z.with(intToString).fusing(addStringsAsInt).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals(3, fusion.apply(1).applyAsInt("2"))
+            );
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(addStringsAsInt, "2"),
+                Z.with(intToString).fusing(addStringsAsInt, "2").resolve()
+            )
+            .forEach(fusion -> assertEquals(3, fusion.applyAsInt(1)));
     }
 
     @Test
-    void intFn_to_toLongFn() {
-        assertEquals(1L, Z.fuse(intToString, stringToLong).applyAsLong(1));
+    void intFn_to_toLong() {
+        Stream
+            .of(
+                Z.fuse(intToString, stringToLong),
+                Z.with(intToString).fuse(stringToLong),
+                Z.with(intToString).fusing(stringToLong).resolve()
+            )
+            .forEach(fusion -> assertEquals(1L, fusion.applyAsLong(1)));
     }
 
     @Test
     void intFn_to_toLongBifn() {
-        assertEquals(
-            3L,
-            Z.fuse(intToString, addStringsAsLong).apply(1).applyAsLong("2")
-        );
+        Stream
+            .of(
+                Z.fuse(intToString, addStringsAsLong),
+                Z.with(intToString).fuse(addStringsAsLong)
+                //Z.with(intToString).fusing(addStringsAsLong).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals(3L, fusion.apply(1).applyAsLong("2"))
+            );
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(addStringsAsLong, "2"),
+                Z.with(intToString).fusing(addStringsAsLong, "2").resolve()
+            )
+            .forEach(fusion -> assertEquals(3L, fusion.applyAsLong(1)));
     }
 
     @Test
     void intFn_to_pred() {
-        assertFalse(Z.fuse(intToString, isEmpty).test(1));
+        Stream
+            .of(
+                Z.fuse(intToString, isEmpty),
+                Z.with(intToString).fuse(isEmpty),
+                Z.with(intToString).fusing(isEmpty).resolve()
+            )
+            .forEach(fusion -> assertFalse(fusion.test(1)));
     }
 
     @Test
     void intFn_to_bipred() {
-        assertTrue(Z.fuse(intToString, startsWith).apply(11).test("1"));
+        Stream
+            .of(
+                Z.fuse(intToString, startsWith),
+                Z.with(intToString).fuse(startsWith)
+                // Z.with(intToString).fusing(startsWith).resolve()
+            )
+            .forEach(fusion -> assertTrue(fusion.apply(1).test("1")));
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(startsWith, "1"),
+                Z.with(intToString).fusing(startsWith, "1").resolve()
+            )
+            .forEach(fusion -> assertTrue(fusion.test(1)));
     }
 
     @Evil
     @Test
     void intFn_to_cns() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.fuse(intToString, saveStringA),
+                    Z.with(intToString).fuse(saveStringA),
+                    Z.with(intToString).fusing(saveStringA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            Z.fuse(intToString, saveStringA).accept(123);
+                        fusion.accept(2);
 
-            assertEquals("123", consumedStringA);
+                        assertEquals("2", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -116,16 +212,45 @@ public class IntFunctionFusionTests {
     void intFn_to_bicns() {
         synchronized (consumedStringB) {
             synchronized (consumedStringC) {
-                consumedStringB = "";
-                consumedStringC = "";
+                Stream
+                    .of(
+                        Z.fuse(intToString, saveStringsBandC),
+                        Z.with(intToString).fuse(saveStringsBandC)
+                        //Z.with(intToString).fusing(saveStringsBandC).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
 
-                Z
-                    .fuse(intToString, saveStringsBandC)
-                    .apply(34)
-                    .accept("thirty four");
+                            fusion.apply(3).accept("two and a half");
 
-                assertEquals("34", consumedStringB);
-                assertEquals("thirty four", consumedStringC);
+                            assertEquals("3", consumedStringB);
+                            assertEquals("two and a half", consumedStringC);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z
+                            .with(intToString)
+                            .fuse(saveStringsBandC, "two and a half"),
+                        Z
+                            .with(intToString)
+                            .fusing(saveStringsBandC, "two and a half")
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
+
+                            fusion.accept(3);
+
+                            assertEquals("3", consumedStringB);
+                            assertEquals("two and a half", consumedStringC);
+                        }
+                    );
             }
         }
     }
@@ -135,13 +260,43 @@ public class IntFunctionFusionTests {
     void intFn_to_objDblCns() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.fuse(intToString, saveStringDDoubleB),
+                        Z.with(intToString).fuse(saveStringDDoubleB)
+                        // Z.with(intToString).fusing(saveStringDDoubleB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                Z.fuse(intToString, saveStringDDoubleB).apply(45).accept(4.5);
+                            fusion.apply(4).accept(5.0);
 
-                assertEquals("45", consumedStringD);
-                assertEquals(4.5, consumedDoubleB);
+                            assertEquals("4", consumedStringD);
+                            assertEquals(5.0, consumedDoubleB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(intToString).fuse(saveStringDDoubleB, 5.0),
+                        Z
+                            .with(intToString)
+                            .fusing(saveStringDDoubleB, 5.0)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
+
+                            fusion.accept(4);
+
+                            assertEquals("4", consumedStringD);
+                            assertEquals(5.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -151,13 +306,40 @@ public class IntFunctionFusionTests {
     void intFn_to_objIntCns() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.fuse(intToString, saveStringEIntB),
+                        Z.with(intToString).fuse(saveStringEIntB)
+                        // Z.with(intToString).fusing(saveStringEIntB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                Z.fuse(intToString, saveStringEIntB).apply(56).accept(67);
+                            fusion.apply(8).accept(8);
 
-                assertEquals("56", consumedStringE);
-                assertEquals(67, consumedIntB);
+                            assertEquals("8", consumedStringE);
+                            assertEquals(8, consumedIntB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(intToString).fuse(saveStringEIntB, 8),
+                        Z.with(intToString).fusing(saveStringEIntB, 8).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
+
+                            fusion.accept(8);
+
+                            assertEquals("8", consumedStringE);
+                            assertEquals(8, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -167,27 +349,75 @@ public class IntFunctionFusionTests {
     void intFn_to_objLongCns() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.fuse(intToString, saveStringFLongB),
+                        Z.with(intToString).fuse(saveStringFLongB)
+                        // Z.with(intToString).fusing(saveStringFLongB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                Z.fuse(intToString, saveStringFLongB).apply(78).accept(89L);
+                            fusion.apply(6).accept(6L);
 
-                assertEquals("78", consumedStringF);
-                assertEquals(89L, consumedLongB);
+                            assertEquals("6", consumedStringF);
+                            assertEquals(6L, consumedLongB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(intToString).fuse(saveStringFLongB, 6L),
+                        Z
+                            .with(intToString)
+                            .fusing(saveStringFLongB, 6L)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
+
+                            fusion.accept(6);
+
+                            assertEquals("6", consumedStringF);
+                            assertEquals(6L, consumedLongB);
+                        }
+                    );
             }
         }
     }
 
     @Test
     void intFn_to_unop() {
-        assertEquals("10?", Z.fuse(intToString, addQuestionMark).apply(10));
+        Stream
+            .of(
+                Z.fuse(intToString, addQuestionMark),
+                Z.with(intToString).fuse(addQuestionMark),
+                Z.with(intToString).fusing(addQuestionMark).resolve()
+            )
+            .forEach(fusion -> assertEquals("10?", fusion.apply(10)));
     }
 
     @Test
     void intFn_to_biop() {
-        assertEquals(
-            "same-ish",
-            Z.fuse(intToString, relation).apply(234).apply("234")
-        );
+        Stream
+            .of(
+                Z.fuse(intToString, relation),
+                Z.with(intToString).fuse(relation)
+                // Z.with(intToString).fusing(relation).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals("same-ish", fusion.apply(11).apply("11"))
+            );
+
+        Stream
+            .of(
+                Z.with(intToString).fuse(relation, "11"),
+                Z.with(intToString).fusing(relation, "11").resolve()
+            )
+            .forEach(fusion -> assertEquals("same-ish", fusion.apply(11)));
     }
 }

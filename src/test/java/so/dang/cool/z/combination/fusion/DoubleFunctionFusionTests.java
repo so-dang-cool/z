@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -51,88 +52,175 @@ public class DoubleFunctionFusionTests {
 
     @Test
     void dblFn_to_bifn() {
-        assertEquals(
-            "1.0.0",
-            Z.fuse(doubleToString, concat).apply(1.0).apply(".0")
-        );
+        Stream
+            .of(
+                Z.fuse(doubleToString, concat),
+                Z.with(doubleToString).fuse(concat)
+                //Z.with(doubleToString).fusing(concat).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals("1.0.0", fusion.apply(1.0).apply(".0"))
+            );
+
+        Stream
+            .of(
+                Z.with(doubleToString).fuse(concat, ".0"),
+                Z.with(doubleToString).fusing(concat, ".0").resolve()
+            )
+            .forEach(fusion -> assertEquals("1.0.0", fusion.apply(1.0)));
     }
 
     @Test
     void dblFn_to_toDblFn() {
-        assertEquals(
-            1.0,
-            Z.fuse(doubleToString, stringToDouble).applyAsDouble(1.0)
-        );
+        Stream
+            .of(
+                Z.fuse(doubleToString, stringToDouble),
+                Z.with(doubleToString).fuse(stringToDouble),
+                Z.with(doubleToString).fusing(stringToDouble).resolve()
+            )
+            .forEach(fusion -> assertEquals(1.0, fusion.applyAsDouble(1.0)));
     }
 
     @Test
-    void dblFn_to_toDblBin() {
-        assertEquals(
-            3.0,
-            Z
-                .fuse(doubleToString, addStringsAsDouble)
-                .apply(1.0)
-                .applyAsDouble("2.0")
-        );
+    void dblFn_to_toDblBifn() {
+        Stream
+            .of(
+                Z.fuse(doubleToString, addStringsAsDouble),
+                Z.with(doubleToString).fuse(addStringsAsDouble)
+                //Z.with(doubleToString).fusing(addStringsAsDouble).resolve()
+            )
+            .forEach(
+                fusion ->
+                    assertEquals(3.0, fusion.apply(1.0).applyAsDouble("2.0"))
+            );
+
+        Stream
+            .of(
+                Z.with(doubleToString).fuse(addStringsAsDouble, "2.0"),
+                Z
+                    .with(doubleToString)
+                    .fusing(addStringsAsDouble, "2.0")
+                    .resolve()
+            )
+            .forEach(fusion -> assertEquals(3.0, fusion.applyAsDouble(1.0)));
     }
 
     @Test
     void dblFn_to_toInt() {
-        assertEquals(
-            1,
-            Z.fuse(doubleFloorToString, stringToInt).applyAsInt(1.0)
-        );
+        Stream
+            .of(
+                Z.fuse(doubleFloorToString, stringToInt),
+                Z.with(doubleFloorToString).fuse(stringToInt),
+                Z.with(doubleFloorToString).fusing(stringToInt).resolve()
+            )
+            .forEach(fusion -> assertEquals(1, fusion.applyAsInt(1.0)));
     }
 
     @Test
     void dblFn_to_toIntBifn() {
-        assertEquals(
-            3,
-            Z
-                .fuse(doubleFloorToString, addStringsAsInt)
-                .apply(1.0)
-                .applyAsInt("2")
-        );
+        Stream
+            .of(
+                Z.fuse(doubleFloorToString, addStringsAsInt),
+                Z.with(doubleFloorToString).fuse(addStringsAsInt)
+                //Z.with(doubleFloorToString).fusing(addStringsAsInt).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals(3, fusion.apply(1.0).applyAsInt("2"))
+            );
+
+        Stream
+            .of(
+                Z.with(doubleFloorToString).fuse(addStringsAsInt, "2"),
+                Z
+                    .with(doubleFloorToString)
+                    .fusing(addStringsAsInt, "2")
+                    .resolve()
+            )
+            .forEach(fusion -> assertEquals(3, fusion.applyAsInt(1.0)));
     }
 
     @Test
     void dblFn_to_toLongFn() {
-        assertEquals(
-            1L,
-            Z.fuse(doubleFloorToString, stringToLong).applyAsLong(1.0)
-        );
+        Stream
+            .of(
+                Z.fuse(doubleFloorToString, stringToLong),
+                Z.with(doubleFloorToString).fuse(stringToLong),
+                Z.with(doubleFloorToString).fusing(stringToLong).resolve()
+            )
+            .forEach(fusion -> assertEquals(1L, fusion.applyAsLong(1.0)));
     }
 
     @Test
     void dblFn_to_toLongBifn() {
-        assertEquals(
-            3L,
-            Z
-                .fuse(doubleFloorToString, addStringsAsLong)
-                .apply(1.0)
-                .applyAsLong("2")
-        );
+        Stream
+            .of(
+                Z.fuse(doubleFloorToString, addStringsAsLong),
+                Z.with(doubleFloorToString).fuse(addStringsAsLong)
+                //Z.with(doubleFloorToString).fusing(addStringsAsLong).resolve()
+            )
+            .forEach(
+                fusion -> assertEquals(3L, fusion.apply(1.0).applyAsLong("2"))
+            );
+
+        Stream
+            .of(
+                Z.with(doubleFloorToString).fuse(addStringsAsLong, "2"),
+                Z
+                    .with(doubleFloorToString)
+                    .fusing(addStringsAsLong, "2")
+                    .resolve()
+            )
+            .forEach(fusion -> assertEquals(3L, fusion.applyAsLong(1.0)));
     }
 
     @Test
     void dblFn_to_pred() {
-        assertFalse(Z.fuse(doubleToString, isEmpty).test(1.0));
+        Stream
+            .of(
+                Z.fuse(doubleToString, isEmpty),
+                Z.with(doubleToString).fuse(isEmpty),
+                Z.with(doubleToString).fusing(isEmpty).resolve()
+            )
+            .forEach(fusion -> assertFalse(fusion.test(1.0)));
     }
 
     @Test
     void dblFn_to_bipred() {
-        assertTrue(Z.fuse(doubleToString, startsWith).apply(1.0).test("1"));
+        Stream
+            .of(
+                Z.fuse(doubleToString, startsWith),
+                Z.with(doubleToString).fuse(startsWith)
+                // Z.with(doubleToString).fusing(startsWith).resolve()
+            )
+            .forEach(fusion -> assertTrue(fusion.apply(1.0).test("1")));
+
+        Stream
+            .of(
+                Z.with(doubleToString).fuse(startsWith, "1"),
+                Z.with(doubleToString).fusing(startsWith, "1").resolve()
+            )
+            .forEach(fusion -> assertTrue(fusion.test(1.0)));
     }
 
     @Evil
     @Test
     void dblFn_to_cns() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.fuse(doubleToString, saveStringA),
+                    Z.with(doubleToString).fuse(saveStringA),
+                    Z.with(doubleToString).fusing(saveStringA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            Z.fuse(doubleToString, saveStringA).accept(1.5);
+                        fusion.accept(1.5);
 
-            assertEquals("1.5", consumedStringA);
+                        assertEquals("1.5", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -141,16 +229,45 @@ public class DoubleFunctionFusionTests {
     void dblFn_to_bicns() {
         synchronized (consumedStringB) {
             synchronized (consumedStringC) {
-                consumedStringB = "";
-                consumedStringC = "";
+                Stream
+                    .of(
+                        Z.fuse(doubleToString, saveStringsBandC),
+                        Z.with(doubleToString).fuse(saveStringsBandC)
+                        //Z.with(doubleToString).fusing(saveStringsBandC).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
 
-                Z
-                    .fuse(doubleToString, saveStringsBandC)
-                    .apply(2.5)
-                    .accept("two and a half");
+                            fusion.apply(2.5).accept("two and a half");
 
-                assertEquals("2.5", consumedStringB);
-                assertEquals("two and a half", consumedStringC);
+                            assertEquals("2.5", consumedStringB);
+                            assertEquals("two and a half", consumedStringC);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z
+                            .with(doubleToString)
+                            .fuse(saveStringsBandC, "two and a half"),
+                        Z
+                            .with(doubleToString)
+                            .fusing(saveStringsBandC, "two and a half")
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
+
+                            fusion.accept(2.5);
+
+                            assertEquals("2.5", consumedStringB);
+                            assertEquals("two and a half", consumedStringC);
+                        }
+                    );
             }
         }
     }
@@ -160,16 +277,43 @@ public class DoubleFunctionFusionTests {
     void dblFn_to_objDblCns() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.fuse(doubleToString, saveStringDDoubleB),
+                        Z.with(doubleToString).fuse(saveStringDDoubleB)
+                        // Z.with(doubleToString).fusing(saveStringDDoubleB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                Z
-                    .fuse(doubleToString, saveStringDDoubleB)
-                    .apply(3.5)
-                    .accept(4.5);
+                            fusion.apply(3.5).accept(4.5);
 
-                assertEquals("3.5", consumedStringD);
-                assertEquals(4.5, consumedDoubleB);
+                            assertEquals("3.5", consumedStringD);
+                            assertEquals(4.5, consumedDoubleB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(doubleToString).fuse(saveStringDDoubleB, 4.5),
+                        Z
+                            .with(doubleToString)
+                            .fusing(saveStringDDoubleB, 4.5)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
+
+                            fusion.accept(3.5);
+
+                            assertEquals("3.5", consumedStringD);
+                            assertEquals(4.5, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -179,13 +323,43 @@ public class DoubleFunctionFusionTests {
     void dblFn_to_objIntCns() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.fuse(doubleToString, saveStringEIntB),
+                        Z.with(doubleToString).fuse(saveStringEIntB)
+                        // Z.with(doubleToString).fusing(saveStringEIntB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                Z.fuse(doubleToString, saveStringEIntB).apply(5.5).accept(6);
+                            fusion.apply(5.5).accept(6);
 
-                assertEquals("5.5", consumedStringE);
-                assertEquals(6, consumedIntB);
+                            assertEquals("5.5", consumedStringE);
+                            assertEquals(6, consumedIntB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(doubleToString).fuse(saveStringEIntB, 6),
+                        Z
+                            .with(doubleToString)
+                            .fusing(saveStringEIntB, 6)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
+
+                            fusion.accept(5.5);
+
+                            assertEquals("5.5", consumedStringE);
+                            assertEquals(6, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -195,30 +369,76 @@ public class DoubleFunctionFusionTests {
     void dblFn_to_objLongCns() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.fuse(doubleToString, saveStringFLongB),
+                        Z.with(doubleToString).fuse(saveStringFLongB)
+                        // Z.with(doubleToString).fusing(saveStringFLongB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                Z.fuse(doubleToString, saveStringFLongB).apply(7.5).accept(8);
+                            fusion.apply(7.5).accept(8);
 
-                assertEquals("7.5", consumedStringF);
-                assertEquals(8, consumedLongB);
+                            assertEquals("7.5", consumedStringF);
+                            assertEquals(8, consumedLongB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(doubleToString).fuse(saveStringFLongB, 8),
+                        Z
+                            .with(doubleToString)
+                            .fusing(saveStringFLongB, 8)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
+
+                            fusion.accept(7.5);
+
+                            assertEquals("7.5", consumedStringF);
+                            assertEquals(8, consumedLongB);
+                        }
+                    );
             }
         }
     }
 
     @Test
     void dblFn_to_unop() {
-        assertEquals(
-            "9.5?",
-            Z.fuse(doubleToString, addQuestionMark).apply(9.5)
-        );
+        Stream
+            .of(
+                Z.fuse(doubleToString, addQuestionMark),
+                Z.with(doubleToString).fuse(addQuestionMark),
+                Z.with(doubleToString).fusing(addQuestionMark).resolve()
+            )
+            .forEach(fusion -> assertEquals("9.5?", fusion.apply(9.5)));
     }
 
     @Test
     void dblFn_to_biop() {
-        assertEquals(
-            "same-ish",
-            Z.fuse(doubleToString, relation).apply(10.5).apply("10.5")
-        );
+        Stream
+            .of(
+                Z.fuse(doubleToString, relation),
+                Z.with(doubleToString).fuse(relation)
+                // Z.with(doubleToString).fusing(relation).resolve()
+            )
+            .forEach(
+                fusion ->
+                    assertEquals("same-ish", fusion.apply(10.5).apply("10.5"))
+            );
+
+        Stream
+            .of(
+                Z.with(doubleToString).fuse(relation, "10.5"),
+                Z.with(doubleToString).fusing(relation, "10.5").resolve()
+            )
+            .forEach(fusion -> assertEquals("same-ish", fusion.apply(10.5)));
     }
 }
