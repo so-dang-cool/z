@@ -152,7 +152,7 @@ public final class Z {
     }
 
     public static <A> IntSupplier fuseObject(A initial, ToIntFunction<A> next) {
-        return () -> next.applyAsInt(initial);
+        return Z.with(initial).fuse(next);
     }
 
     public static <A, B> ToIntFunction<B> fuseObject(
