@@ -37,7 +37,7 @@ interface BooleanSupplierCombos {
     public default <A> WithSupplier<A> fusingBooleanFunction(
         BooleanFunction<A> next
     ) {
-        return WithSupplier.of(fuse(next));
+        return WithSupplier.of(fuseBooleanFunction(next));
     }
 
     public default <A> WithSupplier<A> fusing(BooleanFunction<A> next) {
@@ -46,64 +46,68 @@ interface BooleanSupplierCombos {
 
     /* BooleanSupplier -> BooleanToDoubleFunction */
 
-    public default DoubleSupplier fuseToDoubleFunction(
+    public default DoubleSupplier fuseBooleanToDoubleFunction(
         BooleanToDoubleFunction next
     ) {
         return () -> next.applyAsDouble(resolve().getAsBoolean());
     }
 
     public default DoubleSupplier fuse(BooleanToDoubleFunction next) {
-        return fuseToDoubleFunction(next);
+        return fuseBooleanToDoubleFunction(next);
     }
 
-    public default WithDoubleSupplier fusingToDoubleFunction(
+    public default WithDoubleSupplier fusingBooleanToDoubleFunction(
         BooleanToDoubleFunction next
     ) {
-        return WithDoubleSupplier.of(fuse(next));
+        return WithDoubleSupplier.of(fuseBooleanToDoubleFunction(next));
     }
 
     public default WithDoubleSupplier fusing(BooleanToDoubleFunction next) {
-        return fusingToDoubleFunction(next);
+        return fusingBooleanToDoubleFunction(next);
     }
 
     /* BooleanSupplier -> BooleanToIntFunction */
 
-    public default IntSupplier fuseToIntFunction(BooleanToIntFunction next) {
+    public default IntSupplier fuseBooleanToIntFunction(
+        BooleanToIntFunction next
+    ) {
         return () -> next.applyAsInt(resolve().getAsBoolean());
     }
 
     public default IntSupplier fuse(BooleanToIntFunction next) {
-        return fuseToIntFunction(next);
+        return fuseBooleanToIntFunction(next);
     }
 
-    public default WithIntSupplier fusingToIntFunction(
+    public default WithIntSupplier fusingBooleanToIntFunction(
         BooleanToIntFunction next
     ) {
-        return WithIntSupplier.of(fuse(next));
+        return WithIntSupplier.of(fuseBooleanToIntFunction(next));
     }
 
     public default WithIntSupplier fusing(BooleanToIntFunction next) {
-        return fusingToIntFunction(next);
+        return fusingBooleanToIntFunction(next);
     }
 
     /* BooleanSupplier -> BooleanToLongFunction */
 
-    public default LongSupplier fuseToLongFunction(BooleanToLongFunction next) {
+    public default LongSupplier fuseBooleanToLongFunction(
+        BooleanToLongFunction next
+    ) {
         return () -> next.applyAsLong(resolve().getAsBoolean());
     }
 
     public default LongSupplier fuse(BooleanToLongFunction next) {
-        return fuseToLongFunction(next);
+        return fuseBooleanToLongFunction(next);
     }
 
-    public default WithLongSupplier fusingToLongFunction(
+    public default WithLongSupplier fusingBooleanToLongFunction(
         BooleanToLongFunction next
     ) {
         return WithLongSupplier.of(fuse(next));
     }
 
     public default WithLongSupplier fusing(BooleanToLongFunction next) {
-        return fusingToLongFunction(next);
+        return fusingBooleanToLongFunction(next);
     }
 
     /* BooleanSupplier -> BooleanPredicate */
