@@ -25,22 +25,24 @@ interface IntToDoubleFunctionCombos {
 
     /* IntToDoubleFunction -> DoubleFunction<A> */
 
-    public default <A> IntFunction<A> fuseFunction(DoubleFunction<A> next) {
+    public default <A> IntFunction<A> fuseDoubleFunction(
+        DoubleFunction<A> next
+    ) {
         return (int i) -> next.apply(resolve().applyAsDouble(i));
     }
 
     public default <A> IntFunction<A> fuse(DoubleFunction<A> next) {
-        return fuseFunction(next);
+        return fuseDoubleFunction(next);
     }
 
-    public default <A> WithIntFunction<A> fusingFunction(
+    public default <A> WithIntFunction<A> fusingDoubleFunction(
         DoubleFunction<A> next
     ) {
-        return WithIntFunction.of(fuseFunction(next));
+        return WithIntFunction.of(fuseDoubleFunction(next));
     }
 
     public default <A> WithIntFunction<A> fusing(DoubleFunction<A> next) {
-        return fusingFunction(next);
+        return fusingDoubleFunction(next);
     }
 
     /* IntToDoubleFunction -> DoubleToIntFunction */
