@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -13,68 +14,129 @@ public class IntToDoubleFunctionFusionTests {
     @Test
     void intToDbl() {
         assertEquals(2.0, intToDouble.applyAsDouble(2));
-    }
 
-    @Test
-    void intToDbl_deep() {
         assertEquals(2.0, Z.with(intToDouble).resolve().applyAsDouble(2));
     }
 
     @Test
     void intToDbl_to_dblFn() {
-        assertEquals("1.0", Z.fuse(intToDouble, doubleToString).apply(1));
-    }
-
-    @Test
-    void intToDbl_to_dblFn_deep() {
-        assertEquals("1.0", Z.with(intToDouble).fuse(doubleToString).apply(1));
-    }
-
-    @Test
-    void intToDbl_to_dblFn_deeper() {
-        assertEquals(
-            "1.0",
-            Z.with(intToDouble).fusing(doubleToString).resolve().apply(1)
-        );
+        Stream
+            .of(
+                Z.fuse(intToDouble, doubleToString),
+                Z.with(intToDouble).fuse(doubleToString),
+                Z.with(intToDouble).fusing(doubleToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("1.0", fusion.apply(1));
+                }
+            );
     }
 
     @Test
     void intToDbl_to_dblToInt() {
-        assertEquals(2, Z.fuse(intToDouble, doubleToInt).applyAsInt(2));
+        Stream
+            .of(
+                Z.fuse(intToDouble, doubleToInt),
+                Z.with(intToDouble).fuse(doubleToInt),
+                Z.with(intToDouble).fusing(doubleToInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2, fusion.applyAsInt(2));
+                }
+            );
     }
 
     @Test
     void intToDbl_to_dblToLong() {
-        assertEquals(3L, Z.fuse(intToDouble, doubleToLong).applyAsLong(3));
+        Stream
+            .of(
+                Z.fuse(intToDouble, doubleToLong),
+                Z.with(intToDouble).fuse(doubleToLong),
+                Z.with(intToDouble).fusing(doubleToLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.applyAsLong(3));
+                }
+            );
     }
 
     @Test
     void intToDbl_to_dblPred() {
-        assertTrue(Z.fuse(intToDouble, isDoubleOne).test(1));
+        Stream
+            .of(
+                Z.fuse(intToDouble, isDoubleOne),
+                Z.with(intToDouble).fuse(isDoubleOne),
+                Z.with(intToDouble).fusing(isDoubleOne).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.test(1));
+                }
+            );
     }
 
     @Evil
     @Test
     void intToDbl_to_dblCns() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.fuse(intToDouble, saveDoubleA),
+                    Z.with(intToDouble).fuse(saveDoubleA),
+                    Z.with(intToDouble).fusing(saveDoubleA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            Z.fuse(intToDouble, saveDoubleA).accept(1);
+                        fusion.accept(1);
 
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
     @Test
     void intToDbl_to_dblUnop() {
-        assertEquals(2.0, Z.fuse(intToDouble, addOneToDouble).applyAsDouble(1));
+        Stream
+            .of(
+                Z.fuse(intToDouble, addOneToDouble),
+                Z.with(intToDouble).fuse(addOneToDouble),
+                Z.with(intToDouble).fusing(addOneToDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2.0, fusion.applyAsDouble(1));
+                }
+            );
     }
 
     @Test
     void intToDbl_to_dblBiop() {
-        assertEquals(
-            1.5,
-            Z.fuse(intToDouble, addDoubles).apply(1).applyAsDouble(0.5)
-        );
+        Stream
+            .of(
+                Z.fuse(intToDouble, addDoubles),
+                Z.with(intToDouble).fuse(addDoubles)
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.5, fusion.apply(1).applyAsDouble(0.5));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(intToDouble).fuse(addDoubles, 0.5),
+                Z.with(intToDouble).fusing(addDoubles, 0.5).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.5, fusion.applyAsDouble(1));
+                }
+            );
     }
 }

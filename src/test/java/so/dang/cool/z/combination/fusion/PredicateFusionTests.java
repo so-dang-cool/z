@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -14,177 +15,103 @@ public class PredicateFusionTests {
     @Test
     void pred() {
         assertTrue(isEmpty.test(""));
-    }
-
-    @Test
-    void pred_deep() {
         assertTrue(Z.with(isEmpty).resolve().test(""));
     }
 
     @Test
-    void pred_to_bifn() {
-        assertEquals("HI", Z.fuse(isEmpty, maybeToUpper).apply("").apply("hi"));
-    }
-
-    @Test
     void pred_to_boolFn() {
-        assertEquals("true", Z.fuse(isEmpty, booleanToString).apply(""));
-    }
-
-    @Test
-    void pred_to_boolFn_deep() {
-        assertEquals("true", Z.with(isEmpty).fuse(booleanToString).apply(""));
-    }
-
-    @Test
-    void pred_to_boolFn_deeper() {
-        assertEquals(
-            "true",
-            Z.with(isEmpty).fusing(booleanToString).resolve().apply("")
-        );
+        Stream
+            .of(
+                Z.fuse(isEmpty, booleanToString),
+                Z.with(isEmpty).fuse(booleanToString),
+                Z.with(isEmpty).fusing(booleanToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("true", fusion.apply(""));
+                }
+            );
     }
 
     @Test
     void pred_to_toDblFn() {
-        assertEquals(1.0, Z.fuse(isEmpty, maybeOneAsDouble).applyAsDouble(""));
-    }
-
-    @Test
-    void pred_to_toDblBifn() {
-        assertEquals(
-            2.0,
-            Z
-                .fuse(isEmpty, maybeAddOneToStringAsDouble)
-                .apply("")
-                .applyAsDouble("1.0")
-        );
+        Stream
+            .of(
+                Z.fuse(isEmpty, maybeOneAsDouble),
+                Z.with(isEmpty).fuse(maybeOneAsDouble),
+                Z.with(isEmpty).fusing(maybeOneAsDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.0, fusion.applyAsDouble(""));
+                }
+            );
     }
 
     @Test
     void pred_to_toIntFn() {
-        assertEquals(2, Z.fuse(isEmpty, maybeTwoAsInt).applyAsInt(""));
-    }
-
-    @Test
-    void pred_to_toIntBifn() {
-        assertEquals(
-            3,
-            Z.fuse(isEmpty, maybeAddTwoToStringAsInt).apply("").applyAsInt("1")
-        );
+        Stream
+            .of(
+                Z.fuse(isEmpty, maybeTwoAsInt),
+                Z.with(isEmpty).fuse(maybeTwoAsInt),
+                Z.with(isEmpty).fusing(maybeTwoAsInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2, fusion.applyAsInt(""));
+                }
+            );
     }
 
     @Test
     void pred_to_toLongFn() {
-        assertEquals(3L, Z.fuse(isEmpty, maybeThreeAsLong).applyAsLong(""));
+        Stream
+            .of(
+                Z.fuse(isEmpty, maybeThreeAsLong),
+                Z.with(isEmpty).fuse(maybeThreeAsLong),
+                Z.with(isEmpty).fusing(maybeThreeAsLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.applyAsLong(""));
+                }
+            );
     }
 
     @Test
-    void pred_to_toLongBifn() {
-        assertEquals(
-            4L,
-            Z
-                .fuse(isEmpty, maybeAddThreeToStringAsLong)
-                .apply("")
-                .applyAsLong("1")
-        );
-    }
-
-    @Test
-    void pred_to_pred() {
-        assertFalse(Z.fuse(isEmpty, not).test(""));
-    }
-
-    @Test
-    void pred_to_bipred() {
-        assertTrue(Z.fuse(isEmpty, maybeNotFromString).apply("").test("false"));
+    void pred_to_boolPred() {
+        Stream
+            .of(
+                Z.fuse(isEmpty, not),
+                Z.with(isEmpty).fuse(not),
+                Z.with(isEmpty).fusing(not).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertFalse(fusion.test(""));
+                }
+            );
     }
 
     @Evil
     @Test
     void pred_to_cns() {
         synchronized (consumedBooleanA) {
-            consumedBooleanA = false;
+            Stream
+                .of(
+                    Z.fuse(isEmpty, saveBooleanA),
+                    Z.with(isEmpty).fuse(saveBooleanA),
+                    Z.with(isEmpty).fusing(saveBooleanA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
 
-            Z.fuse(isEmpty, saveBooleanA).accept("");
+                        fusion.accept("");
 
-            assertTrue(consumedBooleanA);
+                        assertTrue(consumedBooleanA);
+                    }
+                );
         }
-    }
-
-    @Evil
-    @Test
-    void pred_to_bicns() {
-        synchronized (consumedBooleanB) {
-            synchronized (consumedStringG) {
-                consumedBooleanB = false;
-                consumedStringG = "";
-
-                Z
-                    .fuse(isEmpty, saveBooleanBAndStringG)
-                    .apply("")
-                    .accept("yolo");
-
-                assertTrue(consumedBooleanB);
-                assertEquals("yolo", consumedStringG);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void pred_to_objDblCns() {
-        synchronized (consumedBooleanC) {
-            synchronized (consumedDoubleC) {
-                consumedBooleanC = false;
-                consumedDoubleC = 0.0;
-
-                Z.fuse(isEmpty, saveBooleanCDoubleC).apply("").accept(5.0);
-
-                assertTrue(consumedBooleanC);
-                assertEquals(5.0, consumedDoubleC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void pred_to_objIntCns() {
-        synchronized (consumedBooleanD) {
-            synchronized (consumedIntC) {
-                consumedBooleanD = false;
-                consumedIntC = 0;
-
-                Z.fuse(isEmpty, saveBooleanDIntC).apply("").accept(6);
-
-                assertTrue(consumedBooleanD);
-                assertEquals(6, consumedIntC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void pred_to_objLongFn() {
-        synchronized (consumedBooleanE) {
-            synchronized (consumedLongC) {
-                consumedBooleanE = false;
-                consumedLongC = 0L;
-
-                Z.fuse(isEmpty, saveBooleanELongC).apply("").accept(7L);
-
-                assertTrue(consumedBooleanE);
-                assertEquals(7L, consumedLongC);
-            }
-        }
-    }
-
-    @Test
-    void pred_to_toUnop() {
-        assertTrue(Z.fuse(isEmpty, booleanId).test(""));
-    }
-
-    @Test
-    void pred_to_toBiop() {
-        assertTrue(Z.fuse(isEmpty, maybeNot).apply("").test(false));
     }
 }

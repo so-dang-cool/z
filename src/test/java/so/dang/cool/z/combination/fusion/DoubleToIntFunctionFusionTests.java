@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -13,65 +14,126 @@ public class DoubleToIntFunctionFusionTests {
     @Test
     void dblToInt() {
         assertEquals(1, doubleToInt.applyAsInt(1.0));
-    }
 
-    @Test
-    void dblToInt_deep() {
         assertEquals(1, Z.with(doubleToInt).resolve().applyAsInt(1.0));
     }
 
     @Test
     void dblToInt_to_intFn() {
-        assertEquals("1", Z.fuse(doubleToInt, intToString).apply(1.1));
-    }
-
-    @Test
-    void dblToInt_to_intFn_deep() {
-        assertEquals("1", Z.with(doubleToInt).fuse(intToString).apply(1.1));
-    }
-
-    @Test
-    void dblToInt_to_intFn_deeper() {
-        assertEquals(
-            "1",
-            Z.with(doubleToInt).fusing(intToString).resolve().apply(1.1)
-        );
+        Stream
+            .of(
+                Z.fuse(doubleToInt, intToString),
+                Z.with(doubleToInt).fuse(intToString),
+                Z.with(doubleToInt).fusing(intToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("1", fusion.apply(1.1));
+                }
+            );
     }
 
     @Test
     void dblToInt_to_intToDbl() {
-        assertEquals(1.0, Z.fuse(doubleToInt, intToDouble).applyAsDouble(1.2));
+        Stream
+            .of(
+                Z.fuse(doubleToInt, intToDouble),
+                Z.with(doubleToInt).fuse(intToDouble),
+                Z.with(doubleToInt).fusing(intToDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.0, fusion.applyAsDouble(1.2));
+                }
+            );
     }
 
     @Test
     void dblToInt_to_intToLong() {
-        assertEquals(1L, Z.fuse(doubleToInt, intToLong).applyAsLong(1.3));
+        Stream
+            .of(
+                Z.fuse(doubleToInt, intToLong),
+                Z.with(doubleToInt).fuse(intToLong),
+                Z.with(doubleToInt).fusing(intToLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1L, fusion.applyAsLong(1.3));
+                }
+            );
     }
 
     @Test
     void dblToInt_to_intPred() {
-        assertTrue(Z.fuse(doubleToInt, isIntTwo).test(2.1));
+        Stream
+            .of(
+                Z.fuse(doubleToInt, isIntTwo),
+                Z.with(doubleToInt).fuse(isIntTwo),
+                Z.with(doubleToInt).fusing(isIntTwo).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.test(2.1));
+                }
+            );
     }
 
     @Evil
     @Test
     void dblToInt_to_intCns() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.fuse(doubleToInt, saveIntA),
+                    Z.with(doubleToInt).fuse(saveIntA),
+                    Z.with(doubleToInt).fusing(saveIntA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            Z.fuse(doubleToInt, saveIntA).accept(2.2);
+                        fusion.accept(2.2);
 
-            assertEquals(2, consumedIntA);
+                        assertEquals(2, consumedIntA);
+                    }
+                );
         }
     }
 
     @Test
     void dblToInt_to_intUnop() {
-        assertEquals(4, Z.fuse(doubleToInt, addTwoToInt).applyAsInt(2.3));
+        Stream
+            .of(
+                Z.fuse(doubleToInt, addTwoToInt),
+                Z.with(doubleToInt).fuse(addTwoToInt),
+                Z.with(doubleToInt).fusing(addTwoToInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(4, fusion.applyAsInt(2.3));
+                }
+            );
     }
 
     @Test
     void dblToInt_to_intBiop() {
-        assertEquals(5, Z.fuse(doubleToInt, addInts).apply(2.4).applyAsInt(3));
+        Stream
+            .of(Z.fuse(doubleToInt, addInts), Z.with(doubleToInt).fuse(addInts))
+            .forEach(
+                fusion -> {
+                    assertEquals(5, fusion.apply(2.4).applyAsInt(3));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(doubleToInt).fuse(addInts, 3),
+                Z.with(doubleToInt).fusing(addInts, 3).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(5, fusion.applyAsInt(2.4));
+                }
+            );
     }
 }

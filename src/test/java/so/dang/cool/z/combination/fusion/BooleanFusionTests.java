@@ -17,11 +17,6 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_bifn() {
-        assertEquals("HI", Z.fuse(true, maybeToUpper).apply("hi"));
-    }
-
-    @Test
     void boolean_to_boolFn() {
         assertEquals("true", Z.fuse(true, booleanToString).get());
     }
@@ -45,21 +40,8 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_toDblBifn() {
-        assertEquals(
-            3.0,
-            Z.fuse(true, maybeAddOneToStringAsDouble).applyAsDouble("2.0")
-        );
-    }
-
-    @Test
     void boolean_to_boolToIntFn() {
         assertEquals(2, Z.fuse(true, maybeTwoAsInt).getAsInt());
-    }
-
-    @Test
-    void boolean_to_toIntBifn() {
-        assertEquals(4, Z.fuse(true, maybeAddTwoToStringAsInt).applyAsInt("2"));
     }
 
     @Test
@@ -68,21 +50,8 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_toLongBifn() {
-        assertEquals(
-            7L,
-            Z.fuse(true, maybeAddThreeToStringAsLong).applyAsLong("4")
-        );
-    }
-
-    @Test
     void boolean_to_pred() {
         assertFalse(Z.fuse(true, not).getAsBoolean());
-    }
-
-    @Test
-    void boolean_to_bipred() {
-        assertTrue(Z.fuse(true, maybeNotFromString).test("false"));
     }
 
     @Evil
@@ -94,22 +63,6 @@ public class BooleanFusionTests {
             Z.fuse(true, saveBooleanA).run();
 
             assertTrue(consumedBooleanA);
-        }
-    }
-
-    @Evil
-    @Test
-    void boolean_to_bicns() {
-        synchronized (consumedBooleanB) {
-            synchronized (consumedStringG) {
-                consumedBooleanB = false;
-                consumedStringG = "";
-
-                Z.fuse(true, saveBooleanBAndStringG).accept("z");
-
-                assertTrue(consumedBooleanB);
-                assertEquals("z", consumedStringG);
-            }
         }
     }
 

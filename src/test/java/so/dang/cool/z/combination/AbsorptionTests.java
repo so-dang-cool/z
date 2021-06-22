@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -242,13 +243,20 @@ public class AbsorptionTests {
     @Test
     void cns_to_boolSup() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.absorb(saveStringA, getBooleanTrue),
+                    Z.with(saveStringA).absorb(getBooleanTrue),
+                    Z.with(saveStringA).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            assertEquals(
-                true,
-                Z.absorb(saveStringA, getBooleanTrue).test("salut")
-            );
-            assertEquals("salut", consumedStringA);
+                        assertEquals(true, fusion.test("salut"));
+                        assertEquals("salut", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -256,13 +264,23 @@ public class AbsorptionTests {
     @Test
     void cns_to_dblSup() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.absorb(saveStringA, getDouble),
+                    Z.with(saveStringA).absorb(getDouble),
+                    Z.with(saveStringA).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            assertEquals(
-                suppliedDouble,
-                Z.absorb(saveStringA, getDouble).applyAsDouble("hola")
-            );
-            assertEquals("hola", consumedStringA);
+                        assertEquals(
+                            suppliedDouble,
+                            fusion.applyAsDouble("hola")
+                        );
+                        assertEquals("hola", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -270,13 +288,23 @@ public class AbsorptionTests {
     @Test
     void cns_to_intSup() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.absorb(saveStringA, getInt),
+                    Z.with(saveStringA).absorb(getInt),
+                    Z.with(saveStringA).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            assertEquals(
-                suppliedInt,
-                Z.absorb(saveStringA, getInt).applyAsInt("안녕하세요")
-            );
-            assertEquals("안녕하세요", consumedStringA);
+                        assertEquals(
+                            suppliedInt,
+                            fusion.applyAsInt("안녕하세요")
+                        );
+                        assertEquals("안녕하세요", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -284,13 +312,23 @@ public class AbsorptionTests {
     @Test
     void cns_to_longSup() {
         synchronized (consumedStringA) {
-            consumedStringA = "";
+            Stream
+                .of(
+                    Z.absorb(saveStringA, getLong),
+                    Z.with(saveStringA).absorb(getLong),
+                    Z.with(saveStringA).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedStringA = "";
 
-            assertEquals(
-                suppliedLong,
-                Z.absorb(saveStringA, getLong).applyAsLong("kamusta")
-            );
-            assertEquals("kamusta", consumedStringA);
+                        assertEquals(
+                            suppliedLong,
+                            fusion.applyAsLong("kamusta")
+                        );
+                        assertEquals("kamusta", consumedStringA);
+                    }
+                );
         }
     }
 
@@ -299,13 +337,23 @@ public class AbsorptionTests {
     void cns_to_op() {
         synchronized (consumedStringA) {
             synchronized (wasOperated) {
-                consumedStringA = "";
-                wasOperated = false;
+                Stream
+                    .of(
+                        Z.absorb(saveStringA, doOperation),
+                        Z.with(saveStringA).absorb(doOperation),
+                        Z.with(saveStringA).absorbing(doOperation).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringA = "";
+                            wasOperated = false;
 
-                Z.absorb(saveStringA, doOperation).accept("merhaba");
+                            fusion.accept("merhaba");
 
-                assertEquals("merhaba", consumedStringA);
-                assertTrue(wasOperated);
+                            assertEquals("merhaba", consumedStringA);
+                            assertTrue(wasOperated);
+                        }
+                    );
             }
         }
     }
@@ -680,15 +728,156 @@ public class AbsorptionTests {
 
     @Evil
     @Test
+    void boolCns_to_sup() {
+        synchronized (consumedBooleanA) {
+            Stream
+                .of(
+                    Z.absorb(saveBooleanA, getString),
+                    Z.with(saveBooleanA).absorb(getString),
+                    Z.with(saveBooleanA).absorbing(getString).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
+
+                        assertEquals(suppliedString, fusion.apply(true));
+                        assertEquals(true, consumedBooleanA);
+                    }
+                );
+        }
+    }
+
+    @Evil
+    @Test
+    void boolCns_to_boolSup() {
+        synchronized (consumedBooleanA) {
+            Stream
+                .of(
+                    Z.absorb(saveBooleanA, getBooleanTrue),
+                    Z.with(saveBooleanA).absorb(getBooleanTrue),
+                    Z.with(saveBooleanA).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
+
+                        assertEquals(true, fusion.test(true));
+                        assertEquals(true, consumedBooleanA);
+                    }
+                );
+        }
+    }
+
+    @Evil
+    @Test
+    void boolCns_to_dblSup() {
+        synchronized (consumedBooleanA) {
+            Stream
+                .of(
+                    Z.absorb(saveBooleanA, getDouble),
+                    Z.with(saveBooleanA).absorb(getDouble),
+                    Z.with(saveBooleanA).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
+
+                        assertEquals(
+                            suppliedDouble,
+                            fusion.applyAsDouble(true)
+                        );
+                        assertEquals(true, consumedBooleanA);
+                    }
+                );
+        }
+    }
+
+    @Evil
+    @Test
+    void boolCns_to_intSup() {
+        synchronized (consumedBooleanA) {
+            Stream
+                .of(
+                    Z.absorb(saveBooleanA, getInt),
+                    Z.with(saveBooleanA).absorb(getInt),
+                    Z.with(saveBooleanA).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
+
+                        assertEquals(suppliedInt, fusion.applyAsInt(true));
+                        assertEquals(true, consumedBooleanA);
+                    }
+                );
+        }
+    }
+
+    @Evil
+    @Test
+    void boolCns_to_longSup() {
+        synchronized (consumedBooleanA) {
+            Stream
+                .of(
+                    Z.absorb(saveBooleanA, getLong),
+                    Z.with(saveBooleanA).absorb(getLong),
+                    Z.with(saveBooleanA).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
+
+                        assertEquals(suppliedLong, fusion.applyAsLong(true));
+                        assertEquals(true, consumedBooleanA);
+                    }
+                );
+        }
+    }
+
+    @Evil
+    @Test
+    void boolCns_to_op() {
+        synchronized (consumedBooleanA) {
+            synchronized (wasOperated) {
+                Stream
+                    .of(
+                        Z.absorb(saveBooleanA, doOperation),
+                        Z.with(saveBooleanA).absorb(doOperation),
+                        Z.with(saveBooleanA).absorbing(doOperation).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedBooleanA = false;
+                            wasOperated = false;
+
+                            fusion.accept(true);
+
+                            assertEquals(true, consumedBooleanA);
+                            assertTrue(wasOperated);
+                        }
+                    );
+            }
+        }
+    }
+
+    @Evil
+    @Test
     void dblCns_to_sup() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.absorb(saveDoubleA, getString),
+                    Z.with(saveDoubleA).absorb(getString),
+                    Z.with(saveDoubleA).absorbing(getString).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            assertEquals(
-                suppliedString,
-                Z.absorb(saveDoubleA, getString).apply(1.0)
-            );
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(suppliedString, fusion.apply(1.0));
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
@@ -696,10 +885,20 @@ public class AbsorptionTests {
     @Test
     void dblCns_to_boolSup() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.absorb(saveDoubleA, getBooleanTrue),
+                    Z.with(saveDoubleA).absorb(getBooleanTrue),
+                    Z.with(saveDoubleA).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            assertEquals(true, Z.absorb(saveDoubleA, getBooleanTrue).test(1.0));
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(true, fusion.test(1.0));
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
@@ -707,13 +906,20 @@ public class AbsorptionTests {
     @Test
     void dblCns_to_dblSup() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.absorb(saveDoubleA, getDouble),
+                    Z.with(saveDoubleA).absorb(getDouble),
+                    Z.with(saveDoubleA).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            assertEquals(
-                suppliedDouble,
-                Z.absorb(saveDoubleA, getDouble).applyAsDouble(1.0)
-            );
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(suppliedDouble, fusion.applyAsDouble(1.0));
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
@@ -721,13 +927,20 @@ public class AbsorptionTests {
     @Test
     void dblCns_to_intSup() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.absorb(saveDoubleA, getInt),
+                    Z.with(saveDoubleA).absorb(getInt),
+                    Z.with(saveDoubleA).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            assertEquals(
-                suppliedInt,
-                Z.absorb(saveDoubleA, getInt).applyAsInt(1.0)
-            );
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(suppliedInt, fusion.applyAsInt(1.0));
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
@@ -735,13 +948,20 @@ public class AbsorptionTests {
     @Test
     void dblCns_to_longSup() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.absorb(saveDoubleA, getLong),
+                    Z.with(saveDoubleA).absorb(getLong),
+                    Z.with(saveDoubleA).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            assertEquals(
-                suppliedLong,
-                Z.absorb(saveDoubleA, getLong).applyAsLong(1.0)
-            );
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(suppliedLong, fusion.applyAsLong(1.0));
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
@@ -750,13 +970,23 @@ public class AbsorptionTests {
     void dblCns_to_op() {
         synchronized (consumedDoubleA) {
             synchronized (wasOperated) {
-                consumedDoubleA = 0.0;
-                wasOperated = false;
+                Stream
+                    .of(
+                        Z.absorb(saveDoubleA, doOperation),
+                        Z.with(saveDoubleA).absorb(doOperation),
+                        Z.with(saveDoubleA).absorbing(doOperation).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedDoubleA = 0.0;
+                            wasOperated = false;
 
-                Z.absorb(saveDoubleA, doOperation).accept(1.0);
+                            fusion.accept(1.0);
 
-                assertEquals(1.0, consumedDoubleA);
-                assertTrue(wasOperated);
+                            assertEquals(1.0, consumedDoubleA);
+                            assertTrue(wasOperated);
+                        }
+                    );
             }
         }
     }
@@ -766,18 +996,24 @@ public class AbsorptionTests {
     void objDblCns_to_sup() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringDDoubleB, getString),
+                        Z.with(saveStringDDoubleB).absorb(getString)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                assertEquals(
-                    suppliedString,
-                    Z
-                        .absorb(saveStringDDoubleB, getString)
-                        .apply("yo")
-                        .apply(1.0)
-                );
-                assertEquals("yo", consumedStringD);
-                assertEquals(1.0, consumedDoubleB);
+                            assertEquals(
+                                suppliedString,
+                                fusion.apply("yo").apply(1.0)
+                            );
+                            assertEquals("yo", consumedStringD);
+                            assertEquals(1.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -787,18 +1023,21 @@ public class AbsorptionTests {
     void objDblCns_to_boolSup() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringDDoubleB, getBooleanTrue),
+                        Z.with(saveStringDDoubleB).absorb(getBooleanTrue)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                assertEquals(
-                    true,
-                    Z
-                        .absorb(saveStringDDoubleB, getBooleanTrue)
-                        .apply("yo")
-                        .test(1.0)
-                );
-                assertEquals("yo", consumedStringD);
-                assertEquals(1.0, consumedDoubleB);
+                            assertEquals(true, fusion.apply("yo").test(1.0));
+                            assertEquals("yo", consumedStringD);
+                            assertEquals(1.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -808,18 +1047,24 @@ public class AbsorptionTests {
     void objDblCns_to_dblSup() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringDDoubleB, getDouble),
+                        Z.with(saveStringDDoubleB).absorb(getDouble)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                assertEquals(
-                    suppliedDouble,
-                    Z
-                        .absorb(saveStringDDoubleB, getDouble)
-                        .apply("yo")
-                        .applyAsDouble(1.0)
-                );
-                assertEquals("yo", consumedStringD);
-                assertEquals(1.0, consumedDoubleB);
+                            assertEquals(
+                                suppliedDouble,
+                                fusion.apply("yo").applyAsDouble(1.0)
+                            );
+                            assertEquals("yo", consumedStringD);
+                            assertEquals(1.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -829,18 +1074,24 @@ public class AbsorptionTests {
     void objDblCns_to_intSup() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringDDoubleB, getInt),
+                        Z.with(saveStringDDoubleB).absorb(getInt)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                assertEquals(
-                    suppliedInt,
-                    Z
-                        .absorb(saveStringDDoubleB, getInt)
-                        .apply("yo")
-                        .applyAsInt(1.0)
-                );
-                assertEquals("yo", consumedStringD);
-                assertEquals(1.0, consumedDoubleB);
+                            assertEquals(
+                                suppliedInt,
+                                fusion.apply("yo").applyAsInt(1.0)
+                            );
+                            assertEquals("yo", consumedStringD);
+                            assertEquals(1.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -850,18 +1101,24 @@ public class AbsorptionTests {
     void objDblCns_to_longSup() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringDDoubleB, getLong),
+                        Z.with(saveStringDDoubleB).absorb(getLong)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                assertEquals(
-                    suppliedLong,
-                    Z
-                        .absorb(saveStringDDoubleB, getLong)
-                        .apply("yo")
-                        .applyAsLong(1.0)
-                );
-                assertEquals("yo", consumedStringD);
-                assertEquals(1.0, consumedDoubleB);
+                            assertEquals(
+                                suppliedLong,
+                                fusion.apply("yo").applyAsLong(1.0)
+                            );
+                            assertEquals("yo", consumedStringD);
+                            assertEquals(1.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -872,18 +1129,28 @@ public class AbsorptionTests {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
                 synchronized (wasOperated) {
-                    consumedStringD = "";
-                    consumedDoubleB = 0.0;
-                    wasOperated = false;
+                    Stream
+                        .of(
+                            Z.absorb(saveStringDDoubleB, doOperation),
+                            Z.with(saveStringDDoubleB).absorb(doOperation),
+                            Z
+                                .with(saveStringDDoubleB)
+                                .absorbing(doOperation)
+                                .resolve()
+                        )
+                        .forEach(
+                            fusion -> {
+                                consumedStringD = "";
+                                consumedDoubleB = 0.0;
+                                wasOperated = false;
 
-                    Z
-                        .absorb(saveStringDDoubleB, doOperation)
-                        .apply("yo")
-                        .accept(1.0);
+                                fusion.apply("yo").accept(1.0);
 
-                    assertEquals("yo", consumedStringD);
-                    assertEquals(1.0, consumedDoubleB);
-                    assertTrue(wasOperated);
+                                assertEquals("yo", consumedStringD);
+                                assertEquals(1.0, consumedDoubleB);
+                                assertTrue(wasOperated);
+                            }
+                        );
                 }
             }
         }
@@ -893,13 +1160,20 @@ public class AbsorptionTests {
     @Test
     void intCns_to_sup() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.absorb(saveIntA, getString),
+                    Z.with(saveIntA).absorb(getString),
+                    Z.with(saveIntA).absorbing(getString).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            assertEquals(
-                suppliedString,
-                Z.absorb(saveIntA, getString).apply(1)
-            );
-            assertEquals(1, consumedIntA);
+                        assertEquals(suppliedString, fusion.apply(1));
+                        assertEquals(1, consumedIntA);
+                    }
+                );
         }
     }
 
@@ -907,10 +1181,20 @@ public class AbsorptionTests {
     @Test
     void intCns_to_boolSup() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.absorb(saveIntA, getBooleanTrue),
+                    Z.with(saveIntA).absorb(getBooleanTrue),
+                    Z.with(saveIntA).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            assertEquals(true, Z.absorb(saveIntA, getBooleanTrue).test(1));
-            assertEquals(1, consumedIntA);
+                        assertEquals(true, fusion.test(1));
+                        assertEquals(1, consumedIntA);
+                    }
+                );
         }
     }
 
@@ -918,13 +1202,20 @@ public class AbsorptionTests {
     @Test
     void intCns_to_dblSup() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.absorb(saveIntA, getDouble),
+                    Z.with(saveIntA).absorb(getDouble),
+                    Z.with(saveIntA).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            assertEquals(
-                suppliedDouble,
-                Z.absorb(saveIntA, getDouble).applyAsDouble(1)
-            );
-            assertEquals(1, consumedIntA);
+                        assertEquals(suppliedDouble, fusion.applyAsDouble(1));
+                        assertEquals(1, consumedIntA);
+                    }
+                );
         }
     }
 
@@ -932,10 +1223,20 @@ public class AbsorptionTests {
     @Test
     void intCns_to_intSup() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.absorb(saveIntA, getInt),
+                    Z.with(saveIntA).absorb(getInt),
+                    Z.with(saveIntA).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            assertEquals(suppliedInt, Z.absorb(saveIntA, getInt).applyAsInt(1));
-            assertEquals(1, consumedIntA);
+                        assertEquals(suppliedInt, fusion.applyAsInt(1));
+                        assertEquals(1, consumedIntA);
+                    }
+                );
         }
     }
 
@@ -943,13 +1244,20 @@ public class AbsorptionTests {
     @Test
     void intCns_to_longSup() {
         synchronized (consumedIntA) {
-            consumedIntA = 0;
+            Stream
+                .of(
+                    Z.absorb(saveIntA, getLong),
+                    Z.with(saveIntA).absorb(getLong),
+                    Z.with(saveIntA).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedIntA = 0;
 
-            assertEquals(
-                suppliedLong,
-                Z.absorb(saveIntA, getLong).applyAsLong(1)
-            );
-            assertEquals(1, consumedIntA);
+                        assertEquals(suppliedLong, fusion.applyAsLong(1));
+                        assertEquals(1, consumedIntA);
+                    }
+                );
         }
     }
 
@@ -958,13 +1266,23 @@ public class AbsorptionTests {
     void intCns_to_op() {
         synchronized (consumedIntA) {
             synchronized (wasOperated) {
-                consumedIntA = 0;
-                wasOperated = false;
+                Stream
+                    .of(
+                        Z.absorb(saveIntA, doOperation),
+                        Z.with(saveIntA).absorb(doOperation),
+                        Z.with(saveIntA).absorbing(doOperation).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedIntA = 0;
+                            wasOperated = false;
 
-                Z.absorb(saveIntA, doOperation).accept(1);
+                            fusion.accept(1);
 
-                assertEquals(1, consumedIntA);
-                assertTrue(wasOperated);
+                            assertEquals(1, consumedIntA);
+                            assertTrue(wasOperated);
+                        }
+                    );
             }
         }
     }
@@ -974,15 +1292,24 @@ public class AbsorptionTests {
     void objIntCns_to_sup() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringEIntB, getString),
+                        Z.with(saveStringEIntB).absorb(getString)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                assertEquals(
-                    suppliedString,
-                    Z.absorb(saveStringEIntB, getString).apply("yo").apply(1)
-                );
-                assertEquals("yo", consumedStringE);
-                assertEquals(1, consumedIntB);
+                            assertEquals(
+                                suppliedString,
+                                fusion.apply("yo").apply(1)
+                            );
+                            assertEquals("yo", consumedStringE);
+                            assertEquals(1, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -992,18 +1319,21 @@ public class AbsorptionTests {
     void objIntCns_to_boolSup() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringEIntB, getBooleanTrue),
+                        Z.with(saveStringEIntB).absorb(getBooleanTrue)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                assertEquals(
-                    true,
-                    Z
-                        .absorb(saveStringEIntB, getBooleanTrue)
-                        .apply("yo")
-                        .test(1)
-                );
-                assertEquals("yo", consumedStringE);
-                assertEquals(1, consumedIntB);
+                            assertEquals(true, fusion.apply("yo").test(1));
+                            assertEquals("yo", consumedStringE);
+                            assertEquals(1, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -1013,18 +1343,24 @@ public class AbsorptionTests {
     void objIntCns_to_dblSup() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringEIntB, getDouble),
+                        Z.with(saveStringEIntB).absorb(getDouble)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                assertEquals(
-                    suppliedDouble,
-                    Z
-                        .absorb(saveStringEIntB, getDouble)
-                        .apply("yo")
-                        .applyAsDouble(1)
-                );
-                assertEquals("yo", consumedStringE);
-                assertEquals(1, consumedIntB);
+                            assertEquals(
+                                suppliedDouble,
+                                fusion.apply("yo").applyAsDouble(1)
+                            );
+                            assertEquals("yo", consumedStringE);
+                            assertEquals(1, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -1034,15 +1370,24 @@ public class AbsorptionTests {
     void objIntCns_to_intSup() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringEIntB, getInt),
+                        Z.with(saveStringEIntB).absorb(getInt)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                assertEquals(
-                    suppliedInt,
-                    Z.absorb(saveStringEIntB, getInt).apply("yo").applyAsInt(1)
-                );
-                assertEquals("yo", consumedStringE);
-                assertEquals(1, consumedIntB);
+                            assertEquals(
+                                suppliedInt,
+                                fusion.apply("yo").applyAsInt(1)
+                            );
+                            assertEquals("yo", consumedStringE);
+                            assertEquals(1, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -1052,18 +1397,24 @@ public class AbsorptionTests {
     void objIntCns_to_longSup() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
+                Stream
+                    .of(
+                        Z.absorb(saveStringEIntB, getLong),
+                        Z.with(saveStringEIntB).absorb(getLong)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                assertEquals(
-                    suppliedLong,
-                    Z
-                        .absorb(saveStringEIntB, getLong)
-                        .apply("yo")
-                        .applyAsLong(1)
-                );
-                assertEquals("yo", consumedStringE);
-                assertEquals(1, consumedIntB);
+                            assertEquals(
+                                suppliedLong,
+                                fusion.apply("yo").applyAsLong(1)
+                            );
+                            assertEquals("yo", consumedStringE);
+                            assertEquals(1, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -1074,18 +1425,28 @@ public class AbsorptionTests {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
                 synchronized (wasOperated) {
-                    consumedStringE = "";
-                    consumedIntB = 0;
-                    wasOperated = false;
+                    Stream
+                        .of(
+                            Z.absorb(saveStringEIntB, doOperation),
+                            Z.with(saveStringEIntB).absorb(doOperation),
+                            Z
+                                .with(saveStringEIntB)
+                                .absorbing(doOperation)
+                                .resolve()
+                        )
+                        .forEach(
+                            fusion -> {
+                                consumedStringE = "";
+                                consumedIntB = 0;
+                                wasOperated = false;
 
-                    Z
-                        .absorb(saveStringEIntB, doOperation)
-                        .apply("yo")
-                        .accept(1);
+                                fusion.apply("yo").accept(1);
 
-                    assertEquals("yo", consumedStringE);
-                    assertEquals(1, consumedIntB);
-                    assertTrue(wasOperated);
+                                assertEquals("yo", consumedStringE);
+                                assertEquals(1, consumedIntB);
+                                assertTrue(wasOperated);
+                            }
+                        );
                 }
             }
         }
@@ -1095,13 +1456,20 @@ public class AbsorptionTests {
     @Test
     void longCns_to_sup() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.absorb(saveLongA, getString),
+                    Z.with(saveLongA).absorb(getString),
+                    Z.with(saveLongA).absorbing(getString).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            assertEquals(
-                suppliedString,
-                Z.absorb(saveLongA, getString).apply(1L)
-            );
-            assertEquals(1L, consumedLongA);
+                        assertEquals(suppliedString, fusion.apply(1L));
+                        assertEquals(1L, consumedLongA);
+                    }
+                );
         }
     }
 
@@ -1109,10 +1477,20 @@ public class AbsorptionTests {
     @Test
     void longCns_to_boolSup() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.absorb(saveLongA, getBooleanTrue),
+                    Z.with(saveLongA).absorb(getBooleanTrue),
+                    Z.with(saveLongA).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            assertEquals(true, Z.absorb(saveLongA, getBooleanTrue).test(1L));
-            assertEquals(1L, consumedLongA);
+                        assertEquals(true, fusion.test(1L));
+                        assertEquals(1L, consumedLongA);
+                    }
+                );
         }
     }
 
@@ -1120,13 +1498,20 @@ public class AbsorptionTests {
     @Test
     void longCns_to_dblSup() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.absorb(saveLongA, getDouble),
+                    Z.with(saveLongA).absorb(getDouble),
+                    Z.with(saveLongA).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            assertEquals(
-                suppliedDouble,
-                Z.absorb(saveLongA, getDouble).applyAsDouble(1L)
-            );
-            assertEquals(1L, consumedLongA);
+                        assertEquals(suppliedDouble, fusion.applyAsDouble(1L));
+                        assertEquals(1L, consumedLongA);
+                    }
+                );
         }
     }
 
@@ -1134,13 +1519,20 @@ public class AbsorptionTests {
     @Test
     void longCns_to_intSup() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.absorb(saveLongA, getInt),
+                    Z.with(saveLongA).absorb(getInt),
+                    Z.with(saveLongA).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            assertEquals(
-                suppliedInt,
-                Z.absorb(saveLongA, getInt).applyAsInt(1L)
-            );
-            assertEquals(1L, consumedLongA);
+                        assertEquals(suppliedInt, fusion.applyAsInt(1L));
+                        assertEquals(1L, consumedLongA);
+                    }
+                );
         }
     }
 
@@ -1148,13 +1540,20 @@ public class AbsorptionTests {
     @Test
     void longCns_to_longSup() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.absorb(saveLongA, getLong),
+                    Z.with(saveLongA).absorb(getLong),
+                    Z.with(saveLongA).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            assertEquals(
-                suppliedLong,
-                Z.absorb(saveLongA, getLong).applyAsLong(1L)
-            );
-            assertEquals(1L, consumedLongA);
+                        assertEquals(suppliedLong, fusion.applyAsLong(1L));
+                        assertEquals(1L, consumedLongA);
+                    }
+                );
         }
     }
 
@@ -1163,13 +1562,23 @@ public class AbsorptionTests {
     void longCns_to_op() {
         synchronized (consumedLongA) {
             synchronized (wasOperated) {
-                consumedLongA = 0L;
-                wasOperated = false;
+                Stream
+                    .of(
+                        Z.absorb(saveLongA, doOperation),
+                        Z.with(saveLongA).absorb(doOperation),
+                        Z.with(saveLongA).absorbing(doOperation).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedLongA = 0L;
+                            wasOperated = false;
 
-                Z.absorb(saveLongA, doOperation).accept(1L);
+                            fusion.accept(1L);
 
-                assertEquals(1L, consumedLongA);
-                assertTrue(wasOperated);
+                            assertEquals(1L, consumedLongA);
+                            assertTrue(wasOperated);
+                        }
+                    );
             }
         }
     }
@@ -1179,15 +1588,24 @@ public class AbsorptionTests {
     void objLongCns_to_sup() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.absorb(saveStringFLongB, getString),
+                        Z.with(saveStringFLongB).absorb(getString)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                assertEquals(
-                    suppliedString,
-                    Z.absorb(saveStringFLongB, getString).apply("yo").apply(1L)
-                );
-                assertEquals("yo", consumedStringF);
-                assertEquals(1L, consumedLongB);
+                            assertEquals(
+                                suppliedString,
+                                fusion.apply("yo").apply(1L)
+                            );
+                            assertEquals("yo", consumedStringF);
+                            assertEquals(1L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -1197,18 +1615,21 @@ public class AbsorptionTests {
     void objLongCns_to_boolSup() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.absorb(saveStringFLongB, getBooleanTrue),
+                        Z.with(saveStringFLongB).absorb(getBooleanTrue)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                assertEquals(
-                    true,
-                    Z
-                        .absorb(saveStringFLongB, getBooleanTrue)
-                        .apply("yo")
-                        .test(1L)
-                );
-                assertEquals("yo", consumedStringF);
-                assertEquals(1L, consumedLongB);
+                            assertEquals(true, fusion.apply("yo").test(1L));
+                            assertEquals("yo", consumedStringF);
+                            assertEquals(1L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -1218,18 +1639,24 @@ public class AbsorptionTests {
     void objLongCns_to_dblSup() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.absorb(saveStringFLongB, getDouble),
+                        Z.with(saveStringFLongB).absorb(getDouble)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                assertEquals(
-                    suppliedDouble,
-                    Z
-                        .absorb(saveStringFLongB, getDouble)
-                        .apply("yo")
-                        .applyAsDouble(1L)
-                );
-                assertEquals("yo", consumedStringF);
-                assertEquals(1L, consumedLongB);
+                            assertEquals(
+                                suppliedDouble,
+                                fusion.apply("yo").applyAsDouble(1L)
+                            );
+                            assertEquals("yo", consumedStringF);
+                            assertEquals(1L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -1239,18 +1666,24 @@ public class AbsorptionTests {
     void objLongCns_to_intSup() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.absorb(saveStringFLongB, getInt),
+                        Z.with(saveStringFLongB).absorb(getInt)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                assertEquals(
-                    suppliedInt,
-                    Z
-                        .absorb(saveStringFLongB, getInt)
-                        .apply("yo")
-                        .applyAsInt(1L)
-                );
-                assertEquals("yo", consumedStringF);
-                assertEquals(1L, consumedLongB);
+                            assertEquals(
+                                suppliedInt,
+                                fusion.apply("yo").applyAsInt(1L)
+                            );
+                            assertEquals("yo", consumedStringF);
+                            assertEquals(1L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -1260,18 +1693,24 @@ public class AbsorptionTests {
     void objLongCns_to_longSup() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
+                Stream
+                    .of(
+                        Z.absorb(saveStringFLongB, getLong),
+                        Z.with(saveStringFLongB).absorb(getLong)
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                assertEquals(
-                    suppliedLong,
-                    Z
-                        .absorb(saveStringFLongB, getLong)
-                        .apply("yo")
-                        .applyAsLong(1L)
-                );
-                assertEquals("yo", consumedStringF);
-                assertEquals(1L, consumedLongB);
+                            assertEquals(
+                                suppliedLong,
+                                fusion.apply("yo").applyAsLong(1L)
+                            );
+                            assertEquals("yo", consumedStringF);
+                            assertEquals(1L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -1282,36 +1721,51 @@ public class AbsorptionTests {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
                 synchronized (wasOperated) {
-                    consumedStringF = "";
-                    consumedLongB = 0L;
-                    wasOperated = false;
+                    Stream
+                        .of(
+                            Z.absorb(saveStringFLongB, doOperation),
+                            Z.with(saveStringFLongB).absorb(doOperation),
+                            Z
+                                .with(saveStringFLongB)
+                                .absorbing(doOperation)
+                                .resolve()
+                        )
+                        .forEach(
+                            fusion -> {
+                                consumedStringF = "";
+                                consumedLongB = 0L;
+                                wasOperated = false;
 
-                    Z
-                        .absorb(saveStringFLongB, doOperation)
-                        .apply("yo")
-                        .accept(1L);
+                                fusion.apply("yo").accept(1L);
 
-                    assertEquals("yo", consumedStringF);
-                    assertEquals(1L, consumedLongB);
-                    assertTrue(wasOperated);
+                                assertEquals("yo", consumedStringF);
+                                assertEquals(1L, consumedLongB);
+                                assertTrue(wasOperated);
+                            }
+                        );
                 }
             }
         }
     }
 
-    // TODO: <Operator>
-
     @Evil
     @Test
     void op_to_sup() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, getString),
+                    Z.with(doOperation).absorb(getString),
+                    Z.with(doOperation).absorbing(getString).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            assertEquals(
-                suppliedString,
-                Z.absorb(doOperation, getString).get()
-            );
-            assertTrue(wasOperated);
+                        assertEquals(suppliedString, fusion.get());
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 
@@ -1319,13 +1773,20 @@ public class AbsorptionTests {
     @Test
     void op_to_boolSup() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, getBooleanTrue),
+                    Z.with(doOperation).absorb(getBooleanTrue),
+                    Z.with(doOperation).absorbing(getBooleanTrue).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            assertEquals(
-                true,
-                Z.absorb(doOperation, getBooleanTrue).getAsBoolean()
-            );
-            assertTrue(wasOperated);
+                        assertEquals(true, fusion.getAsBoolean());
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 
@@ -1333,13 +1794,20 @@ public class AbsorptionTests {
     @Test
     void op_to_dblSup() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, getDouble),
+                    Z.with(doOperation).absorb(getDouble),
+                    Z.with(doOperation).absorbing(getDouble).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            assertEquals(
-                suppliedDouble,
-                Z.absorb(doOperation, getDouble).getAsDouble()
-            );
-            assertTrue(wasOperated);
+                        assertEquals(suppliedDouble, fusion.getAsDouble());
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 
@@ -1347,10 +1815,20 @@ public class AbsorptionTests {
     @Test
     void op_to_intSup() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, getInt),
+                    Z.with(doOperation).absorb(getInt),
+                    Z.with(doOperation).absorbing(getInt).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            assertEquals(suppliedInt, Z.absorb(doOperation, getInt).getAsInt());
-            assertTrue(wasOperated);
+                        assertEquals(suppliedInt, fusion.getAsInt());
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 
@@ -1358,13 +1836,20 @@ public class AbsorptionTests {
     @Test
     void op_to_longSup() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, getLong),
+                    Z.with(doOperation).absorb(getLong),
+                    Z.with(doOperation).absorbing(getLong).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            assertEquals(
-                suppliedLong,
-                Z.absorb(doOperation, getLong).getAsLong()
-            );
-            assertTrue(wasOperated);
+                        assertEquals(suppliedLong, fusion.getAsLong());
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 
@@ -1372,11 +1857,21 @@ public class AbsorptionTests {
     @Test
     void op_to_op() {
         synchronized (wasOperated) {
-            wasOperated = false;
+            Stream
+                .of(
+                    Z.absorb(doOperation, doOperation),
+                    Z.with(doOperation).absorb(doOperation),
+                    Z.with(doOperation).absorbing(doOperation).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        wasOperated = false;
 
-            Z.absorb(doOperation, doOperation).run();
+                        fusion.run();
 
-            assertTrue(wasOperated);
+                        assertTrue(wasOperated);
+                    }
+                );
         }
     }
 }

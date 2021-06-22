@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -13,10 +14,7 @@ public class BooleanToDoubleFunctionFusionTests {
     @Test
     void boolToDbl() {
         assertEquals(1.0, maybeOneAsDouble.applyAsDouble(true));
-    }
 
-    @Test
-    void boolToDbl_deep() {
         assertEquals(
             1.0,
             Z.with(maybeOneAsDouble).resolve().applyAsDouble(true)
@@ -25,75 +23,123 @@ public class BooleanToDoubleFunctionFusionTests {
 
     @Test
     void boolToDbl_to_dblFn() {
-        assertEquals(
-            "1.0",
-            Z.fuse(maybeOneAsDouble, doubleToString).apply(true)
-        );
-    }
-
-    @Test
-    void boolToDbl_to_dblFn_deep() {
-        assertEquals(
-            "1.0",
-            Z.with(maybeOneAsDouble).fuse(doubleToString).apply(true)
-        );
-    }
-
-    @Test
-    void boolToDbl_to_dblFn_deeper() {
-        assertEquals(
-            "1.0",
-            Z
-                .with(maybeOneAsDouble)
-                .fusing(doubleToString)
-                .resolve()
-                .apply(true)
-        );
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, doubleToString),
+                Z.with(maybeOneAsDouble).fuse(doubleToString),
+                Z.with(maybeOneAsDouble).fusing(doubleToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("1.0", fusion.apply(true));
+                }
+            );
     }
 
     @Test
     void boolToDbl_to_dblToInt() {
-        assertEquals(1, Z.fuse(maybeOneAsDouble, doubleToInt).applyAsInt(true));
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, doubleToInt),
+                Z.with(maybeOneAsDouble).fuse(doubleToInt),
+                Z.with(maybeOneAsDouble).fusing(doubleToInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1, fusion.applyAsInt(true));
+                }
+            );
     }
 
     @Test
     void boolToDbl_to_dblToLong() {
-        assertEquals(
-            1L,
-            Z.fuse(maybeOneAsDouble, doubleToLong).applyAsLong(true)
-        );
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, doubleToLong),
+                Z.with(maybeOneAsDouble).fuse(doubleToLong),
+                Z.with(maybeOneAsDouble).fusing(doubleToLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1L, fusion.applyAsLong(true));
+                }
+            );
     }
 
     @Test
     void boolToDbl_to_dblPred() {
-        assertTrue(Z.fuse(maybeOneAsDouble, isDoubleOne).test(true));
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, isDoubleOne),
+                Z.with(maybeOneAsDouble).fuse(isDoubleOne),
+                Z.with(maybeOneAsDouble).fusing(isDoubleOne).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.test(true));
+                }
+            );
     }
 
     @Evil
     @Test
     void boolToDbl_to_dblCns() {
         synchronized (consumedDoubleA) {
-            consumedDoubleA = 0.0;
+            Stream
+                .of(
+                    Z.fuse(maybeOneAsDouble, saveDoubleA),
+                    Z.with(maybeOneAsDouble).fuse(saveDoubleA),
+                    Z.with(maybeOneAsDouble).fusing(saveDoubleA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedDoubleA = 0.0;
 
-            Z.fuse(maybeOneAsDouble, saveDoubleA).accept(true);
+                        fusion.accept(true);
 
-            assertEquals(1.0, consumedDoubleA);
+                        assertEquals(1.0, consumedDoubleA);
+                    }
+                );
         }
     }
 
     @Test
     void boolToDbl_to_dblUnop() {
-        assertEquals(
-            2.0,
-            Z.fuse(maybeOneAsDouble, addOneToDouble).applyAsDouble(true)
-        );
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, addOneToDouble),
+                Z.with(maybeOneAsDouble).fuse(addOneToDouble),
+                Z.with(maybeOneAsDouble).fusing(addOneToDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2.0, fusion.applyAsDouble(true));
+                }
+            );
     }
 
     @Test
     void boolToDbl_to_dblBiop() {
-        assertEquals(
-            1.5,
-            Z.fuse(maybeOneAsDouble, addDoubles).apply(true).applyAsDouble(0.5)
-        );
+        Stream
+            .of(
+                Z.fuse(maybeOneAsDouble, addDoubles),
+                Z.with(maybeOneAsDouble).fuse(addDoubles)
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.5, fusion.apply(true).applyAsDouble(0.5));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(maybeOneAsDouble).fuse(addDoubles, 0.5),
+                Z.with(maybeOneAsDouble).fusing(addDoubles, 0.5).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.5, fusion.applyAsDouble(true));
+                }
+            );
     }
 }

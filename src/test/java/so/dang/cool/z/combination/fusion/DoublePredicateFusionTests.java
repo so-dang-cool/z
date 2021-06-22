@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -14,194 +15,104 @@ public class DoublePredicateFusionTests {
     @Test
     void dblPred() {
         assertTrue(isDoubleOne.test(1.0));
-    }
 
-    @Test
-    void dblPred_deep() {
         assertTrue(Z.with(isDoubleOne).resolve().test(1.0));
     }
 
     @Test
-    void dblPred_to_bifn() {
-        assertEquals(
-            "HI",
-            Z.fuse(isDoubleOne, maybeToUpper).apply(1.0).apply("hi")
-        );
-    }
-
-    @Test
     void dblPred_to_boolFn() {
-        assertEquals("true", Z.fuse(isDoubleOne, booleanToString).apply(1.0));
+        Stream
+            .of(
+                Z.fuse(isDoubleOne, booleanToString),
+                Z.with(isDoubleOne).fuse(booleanToString),
+                Z.with(isDoubleOne).fusing(booleanToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("true", fusion.apply(1.0));
+                }
+            );
     }
 
     @Test
-    void dblPred_to_boolFn_deep() {
-        assertEquals(
-            "true",
-            Z.with(isDoubleOne).fuse(booleanToString).apply(1.0)
-        );
-    }
-
-    @Test
-    void dblPred_to_boolFn_deeper() {
-        assertEquals(
-            "true",
-            Z.with(isDoubleOne).fusing(booleanToString).resolve().apply(1.0)
-        );
-    }
-
-    @Test
-    void dblPred_to_toDblFn() {
-        assertEquals(
-            1.0,
-            Z.fuse(isDoubleOne, maybeOneAsDouble).applyAsDouble(1.0)
-        );
-    }
-
-    @Test
-    void dblPred_to_toDblBifn() {
-        assertEquals(
-            2.0,
-            Z
-                .fuse(isDoubleOne, maybeAddOneToStringAsDouble)
-                .apply(1.0)
-                .applyAsDouble("1.0")
-        );
+    void dblPred_to_boolToDblFn() {
+        Stream
+            .of(
+                Z.fuse(isDoubleOne, maybeOneAsDouble),
+                Z.with(isDoubleOne).fuse(maybeOneAsDouble),
+                Z.with(isDoubleOne).fusing(maybeOneAsDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.0, fusion.applyAsDouble(1.0));
+                }
+            );
     }
 
     @Test
     void dblPred_to_toIntFn() {
-        assertEquals(2, Z.fuse(isDoubleOne, maybeTwoAsInt).applyAsInt(1.0));
-    }
-
-    @Test
-    void dblPred_to_toIntBifn() {
-        assertEquals(
-            3,
-            Z
-                .fuse(isDoubleOne, maybeAddTwoToStringAsInt)
-                .apply(1.0)
-                .applyAsInt("1")
-        );
+        Stream
+            .of(
+                Z.fuse(isDoubleOne, maybeTwoAsInt),
+                Z.with(isDoubleOne).fuse(maybeTwoAsInt),
+                Z.with(isDoubleOne).fusing(maybeTwoAsInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2, fusion.applyAsInt(1.0));
+                }
+            );
     }
 
     @Test
     void dblPred_to_toLongFn() {
-        assertEquals(
-            3L,
-            Z.fuse(isDoubleOne, maybeThreeAsLong).applyAsLong(1.0)
-        );
+        Stream
+            .of(
+                Z.fuse(isDoubleOne, maybeThreeAsLong),
+                Z.with(isDoubleOne).fuse(maybeThreeAsLong),
+                Z.with(isDoubleOne).fusing(maybeThreeAsLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.applyAsLong(1.0));
+                }
+            );
     }
 
     @Test
-    void dblPred_to_toLongBifn() {
-        assertEquals(
-            4L,
-            Z
-                .fuse(isDoubleOne, maybeAddThreeToStringAsLong)
-                .apply(1.0)
-                .applyAsLong("1")
-        );
-    }
-
-    @Test
-    void dblPred_to_pred() {
-        assertFalse(Z.fuse(isDoubleOne, not).test(1.0));
-    }
-
-    @Test
-    void dblPred_to_bipred() {
-        assertTrue(
-            Z.fuse(isDoubleOne, maybeNotFromString).apply(1.0).test("false")
-        );
+    void dblPred_to_boolPred() {
+        Stream
+            .of(
+                Z.fuse(isDoubleOne, not),
+                Z.with(isDoubleOne).fuse(not),
+                Z.with(isDoubleOne).fusing(not).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertFalse(fusion.test(1.0));
+                }
+            );
     }
 
     @Evil
     @Test
     void dblPred_to_cns() {
         synchronized (consumedBooleanA) {
-            consumedBooleanA = false;
+            Stream
+                .of(
+                    Z.fuse(isDoubleOne, saveBooleanA),
+                    Z.with(isDoubleOne).fuse(saveBooleanA),
+                    Z.with(isDoubleOne).fusing(saveBooleanA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedBooleanA = false;
 
-            Z.fuse(isDoubleOne, saveBooleanA).accept(1.0);
+                        fusion.accept(1.0);
 
-            assertTrue(consumedBooleanA);
+                        assertTrue(consumedBooleanA);
+                    }
+                );
         }
-    }
-
-    @Evil
-    @Test
-    void dblPred_to_bicns() {
-        synchronized (consumedBooleanB) {
-            synchronized (consumedStringG) {
-                consumedBooleanB = false;
-                consumedStringG = "";
-
-                Z
-                    .fuse(isDoubleOne, saveBooleanBAndStringG)
-                    .apply(1.0)
-                    .accept("yolo");
-
-                assertTrue(consumedBooleanB);
-                assertEquals("yolo", consumedStringG);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void dblPred_to_objDblCns() {
-        synchronized (consumedBooleanC) {
-            synchronized (consumedDoubleC) {
-                consumedBooleanC = false;
-                consumedDoubleC = 0.0;
-
-                Z.fuse(isDoubleOne, saveBooleanCDoubleC).apply(1.0).accept(5.0);
-
-                assertTrue(consumedBooleanC);
-                assertEquals(5.0, consumedDoubleC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void dblPred_to_objIntCns() {
-        synchronized (consumedBooleanD) {
-            synchronized (consumedIntC) {
-                consumedBooleanD = false;
-                consumedIntC = 0;
-
-                Z.fuse(isDoubleOne, saveBooleanDIntC).apply(1.0).accept(6);
-
-                assertTrue(consumedBooleanD);
-                assertEquals(6, consumedIntC);
-            }
-        }
-    }
-
-    @Evil
-    @Test
-    void dblPred_to_objLongFn() {
-        synchronized (consumedBooleanE) {
-            synchronized (consumedLongC) {
-                consumedBooleanE = false;
-                consumedLongC = 0L;
-
-                Z.fuse(isDoubleOne, saveBooleanELongC).apply(1.0).accept(7L);
-
-                assertTrue(consumedBooleanE);
-                assertEquals(7L, consumedLongC);
-            }
-        }
-    }
-
-    @Test
-    void dblPred_to_toUnop() {
-        assertTrue(Z.fuse(isDoubleOne, booleanId).test(1.0));
-    }
-
-    @Test
-    void dblPred_to_toBiop() {
-        assertTrue(Z.fuse(isDoubleOne, maybeNot).apply(1.0).test(false));
     }
 }

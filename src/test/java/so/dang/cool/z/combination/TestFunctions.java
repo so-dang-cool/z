@@ -104,8 +104,6 @@ public final class TestFunctions {
     public static Function<String, String> addExclamationMark = s ->
         s.concat("!");
     public static BiFunction<String, String, String> concat = String::concat;
-    public static BiFunction<Boolean, String, String> maybeToUpper = (b, s) ->
-        b ? s.toUpperCase() : s;
     public static BooleanFunction<String> booleanToString = String::valueOf;
     public static BooleanFunction<String> maybeOneAsString = b -> b ? "1" : "";
     public static BooleanToDoubleFunction maybeOneAsDouble = b -> b ? 1.0 : 0.0;
@@ -119,30 +117,20 @@ public final class TestFunctions {
     public static ToDoubleFunction<String> stringToDouble = Double::parseDouble;
     public static ToDoubleBiFunction<String, String> addStringsAsDouble = (a, b) ->
         Double.parseDouble(a) + Double.parseDouble(b);
-    public static ToDoubleBiFunction<Boolean, String> maybeAddOneToStringAsDouble = (b, s) ->
-        Double.parseDouble(s) + (b ? 1.0 : 0.0);
     public static IntFunction<String> intToString = String::valueOf;
     public static IntToDoubleFunction intToDouble = i -> (double) i;
     public static IntToLongFunction intToLong = i -> (long) i;
     public static ToIntFunction<String> stringToInt = Integer::parseInt;
     public static ToIntBiFunction<String, String> addStringsAsInt = (a, b) ->
         Integer.parseInt(a) + Integer.parseInt(b);
-    public static ToIntBiFunction<Boolean, String> maybeAddTwoToStringAsInt = (b, s) ->
-        Integer.parseInt(s) + (b ? 2 : 0);
     public static LongFunction<String> longToString = String::valueOf;
     public static LongToDoubleFunction longToDouble = n -> (double) n;
     public static LongToIntFunction longToInt = n -> (int) n;
     public static ToLongFunction<String> stringToLong = Long::parseLong;
     public static ToLongBiFunction<String, String> addStringsAsLong = (a, b) ->
         Long.parseLong(a) + Long.parseLong(b);
-    public static ToLongBiFunction<Boolean, String> maybeAddThreeToStringAsLong = (b, s) ->
-        Long.parseLong(s) + (b ? 3L : 0);
     public static Predicate<String> isEmpty = String::isEmpty;
     public static BiPredicate<String, String> startsWith = String::startsWith;
-    public static BiPredicate<Boolean, String> maybeNotFromString = (b, s) -> {
-        boolean b2 = Boolean.parseBoolean(s);
-        return b ? !b2 : b2;
-    };
     public static BooleanPredicate booleanId = b -> b;
     public static BooleanPredicate not = b -> !b;
     public static DoublePredicate isDoubleOne = d ->
@@ -154,10 +142,6 @@ public final class TestFunctions {
         consumedStringB = b;
         consumedStringC = c;
     };
-    public static BiConsumer<Boolean, String> saveBooleanBAndStringG = (b, g) -> {
-        consumedBooleanB = b;
-        consumedStringG = g;
-    };
     public static BooleanConsumer saveBooleanA = b -> consumedBooleanA = b;
     public static BooleanConsumer saveBooleanF = b -> consumedBooleanF = b;
     public static DoubleConsumer saveDoubleA = a -> consumedDoubleA = a;
@@ -165,27 +149,15 @@ public final class TestFunctions {
         consumedStringD = d;
         consumedDoubleB = b;
     };
-    public static ObjDoubleConsumer<Boolean> saveBooleanCDoubleC = (b, d) -> {
-        consumedBooleanC = b;
-        consumedDoubleC = d;
-    };
     public static IntConsumer saveIntA = a -> consumedIntA = a;
     public static ObjIntConsumer<String> saveStringEIntB = (e, b) -> {
         consumedStringE = e;
         consumedIntB = b;
     };
-    public static ObjIntConsumer<Boolean> saveBooleanDIntC = (d, c) -> {
-        consumedBooleanD = d;
-        consumedIntC = c;
-    };
     public static LongConsumer saveLongA = a -> consumedLongA = a;
     public static ObjLongConsumer<String> saveStringFLongB = (f, b) -> {
         consumedStringF = f;
         consumedLongB = b;
-    };
-    public static ObjLongConsumer<Boolean> saveBooleanELongC = (e, c) -> {
-        consumedBooleanE = e;
-        consumedLongC = c;
     };
     public static Supplier<String> getString = () -> suppliedString;
     public static BooleanSupplier getBooleanTrue = () -> true;
@@ -199,7 +171,6 @@ public final class TestFunctions {
         a.equalsIgnoreCase(b) ? "same-ish" : "different";
     public static BinaryOperator<String> concatAndAddTrailingZero = (a, b) ->
         a.concat(b).concat("0");
-    public static BinaryOperator<Boolean> maybeNot = (a, b) -> a ? !b : b;
     public static DoubleUnaryOperator addOneToDouble = d -> d + 1.0;
     public static DoubleBinaryOperator addDoubles = (d1, d2) -> d1 + d2;
     public static IntUnaryOperator addTwoToInt = i -> i + 2;

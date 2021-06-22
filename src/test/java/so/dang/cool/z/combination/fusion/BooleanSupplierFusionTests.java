@@ -18,19 +18,6 @@ public class BooleanSupplierFusionTests {
     }
 
     @Test
-    void boolSup_to_bifn() {
-        assertEquals("HI", Z.fuse(getBooleanTrue, maybeToUpper).apply("hi"));
-        assertEquals(
-            "HI",
-            Z.with(getBooleanTrue).fuse(maybeToUpper).apply("hi")
-        );
-        assertEquals(
-            "HI",
-            Z.with(getBooleanTrue).fusing(maybeToUpper).resolve().apply("hi")
-        );
-    }
-
-    @Test
     void boolSup_to_boolFn() {
         assertEquals("true", Z.fuse(getBooleanTrue, booleanToString).get());
         assertEquals(
@@ -64,60 +51,12 @@ public class BooleanSupplierFusionTests {
     }
 
     @Test
-    void boolSup_to_toDblBifn() {
-        assertEquals(
-            3.0,
-            Z
-                .fuse(getBooleanTrue, maybeAddOneToStringAsDouble)
-                .applyAsDouble("2.0")
-        );
-        assertEquals(
-            3.0,
-            Z
-                .with(getBooleanTrue)
-                .fuse(maybeAddOneToStringAsDouble)
-                .applyAsDouble("2.0")
-        );
-        assertEquals(
-            3.0,
-            Z
-                .with(getBooleanTrue)
-                .fusing(maybeAddOneToStringAsDouble)
-                .resolve()
-                .applyAsDouble("2.0")
-        );
-    }
-
-    @Test
     void boolSup_to_toIntFn() {
         assertEquals(2, Z.fuse(getBooleanTrue, maybeTwoAsInt).getAsInt());
         assertEquals(2, Z.with(getBooleanTrue).fuse(maybeTwoAsInt).getAsInt());
         assertEquals(
             2,
             Z.with(getBooleanTrue).fusing(maybeTwoAsInt).resolve().getAsInt()
-        );
-    }
-
-    @Test
-    void boolSup_to_toIntBifn() {
-        assertEquals(
-            4,
-            Z.fuse(getBooleanTrue, maybeAddTwoToStringAsInt).applyAsInt("2")
-        );
-        assertEquals(
-            4,
-            Z
-                .with(getBooleanTrue)
-                .fuse(maybeAddTwoToStringAsInt)
-                .applyAsInt("2")
-        );
-        assertEquals(
-            4,
-            Z
-                .with(getBooleanTrue)
-                .fusing(maybeAddTwoToStringAsInt)
-                .resolve()
-                .applyAsInt("2")
         );
     }
 
@@ -139,49 +78,11 @@ public class BooleanSupplierFusionTests {
     }
 
     @Test
-    void boolSup_to_toLongBifn() {
-        assertEquals(
-            7L,
-            Z.fuse(getBooleanTrue, maybeAddThreeToStringAsLong).applyAsLong("4")
-        );
-        assertEquals(
-            7L,
-            Z
-                .with(getBooleanTrue)
-                .fuse(maybeAddThreeToStringAsLong)
-                .applyAsLong("4")
-        );
-        assertEquals(
-            7L,
-            Z
-                .with(getBooleanTrue)
-                .fusing(maybeAddThreeToStringAsLong)
-                .resolve()
-                .applyAsLong("4")
-        );
-    }
-
-    @Test
     void boolSup_to_pred() {
         assertFalse(Z.fuse(getBooleanTrue, not).getAsBoolean());
         assertFalse(Z.with(getBooleanTrue).fuse(not).getAsBoolean());
         assertFalse(
             Z.with(getBooleanTrue).fusing(not).resolve().getAsBoolean()
-        );
-    }
-
-    @Test
-    void boolSup_to_bipred() {
-        assertTrue(Z.fuse(getBooleanTrue, maybeNotFromString).test("false"));
-        assertTrue(
-            Z.with(getBooleanTrue).fuse(maybeNotFromString).test("false")
-        );
-        assertTrue(
-            Z
-                .with(getBooleanTrue)
-                .fusing(maybeNotFromString)
-                .resolve()
-                .test("false")
         );
     }
 
@@ -196,28 +97,6 @@ public class BooleanSupplierFusionTests {
             Z.with(getBooleanTrue).fusing(saveBooleanA).resolve().run();
 
             assertTrue(consumedBooleanA);
-        }
-    }
-
-    @Evil
-    @Test
-    void boolSup_to_bicns() {
-        synchronized (consumedBooleanB) {
-            synchronized (consumedStringG) {
-                consumedBooleanB = false;
-                consumedStringG = "";
-
-                Z.fuse(getBooleanTrue, saveBooleanBAndStringG).accept("z");
-                Z.with(getBooleanTrue).fuse(saveBooleanBAndStringG).accept("z");
-                Z
-                    .with(getBooleanTrue)
-                    .fusing(saveBooleanBAndStringG)
-                    .resolve()
-                    .accept("z");
-
-                assertTrue(consumedBooleanB);
-                assertEquals("z", consumedStringG);
-            }
         }
     }
 

@@ -650,6 +650,14 @@ public abstract class Combine<A, Fn> {
             return new WithObjDoubleConsumer<>(initial);
         }
 
+        public static <A> WithObjDoubleConsumer<A> of(
+            Function<A, DoubleConsumer> initial
+        ) {
+            return new WithObjDoubleConsumer<>(
+                (A a, double d) -> initial.apply(a).accept(d)
+            );
+        }
+
         @Override
         public Function<A, DoubleConsumer> resolve() {
             return (A a) -> (double d) -> initial.accept(a, d);
@@ -692,9 +700,17 @@ public abstract class Combine<A, Fn> {
             return new WithObjIntConsumer<>(initial);
         }
 
+        public static <A> WithObjIntConsumer<A> of(
+            Function<A, IntConsumer> initial
+        ) {
+            return new WithObjIntConsumer<>(
+                (A a, int i) -> initial.apply(a).accept(i)
+            );
+        }
+
         @Override
         public Function<A, IntConsumer> resolve() {
-            return (A a) -> (int n) -> initial.accept(a, n);
+            return (A a) -> (int i) -> initial.accept(a, i);
         }
     }
 
@@ -734,6 +750,14 @@ public abstract class Combine<A, Fn> {
             ObjLongConsumer<A> initial
         ) {
             return new WithObjLongConsumer<>(initial);
+        }
+
+        public static <A> WithObjLongConsumer<A> of(
+            Function<A, LongConsumer> initial
+        ) {
+            return new WithObjLongConsumer<>(
+                (A a, long n) -> initial.apply(a).accept(n)
+            );
         }
 
         @Override
@@ -893,7 +917,8 @@ public abstract class Combine<A, Fn> {
     }
 
     public static final class WithBooleanSupplier
-        extends Combine<Boolean, BooleanSupplier> {
+        extends Combine<Boolean, BooleanSupplier>
+        implements BooleanSupplierCombos {
 
         private final transient BooleanSupplier initial;
 
@@ -909,266 +934,11 @@ public abstract class Combine<A, Fn> {
         public BooleanSupplier resolve() {
             return initial;
         }
-
-        /* BooleanSupplier -> BooleanFunction<A> */
-
-        public <A> Supplier<A> fuseBooleanFunction(BooleanFunction<A> next) {
-            return () -> next.apply(resolve().getAsBoolean());
-        }
-
-        public <A> Supplier<A> fuse(BooleanFunction<A> next) {
-            return fuseBooleanFunction(next);
-        }
-
-        public <A> WithSupplier<A> fusingBooleanFunction(
-            BooleanFunction<A> next
-        ) {
-            return WithSupplier.of(fuse(next));
-        }
-
-        public <A> WithSupplier<A> fusing(BooleanFunction<A> next) {
-            return fusingBooleanFunction(next);
-        }
-
-        /* BooleanSupplier -> BiFunction<Boolean, A, B> */
-
-        public <A, B> Function<A, B> fuseBiFunction(
-            BiFunction<Boolean, A, B> next
-        ) {
-            return (A a) -> next.apply(initial.getAsBoolean(), a);
-        }
-
-        public <A, B> Function<A, B> fuse(BiFunction<Boolean, A, B> next) {
-            return fuseBiFunction(next);
-        }
-
-        public <A, B> WithFunction<A, B> fusingBiFunction(
-            BiFunction<Boolean, A, B> next
-        ) {
-            return WithFunction.of(fuse(next));
-        }
-
-        public <A, B> WithFunction<A, B> fusing(
-            BiFunction<Boolean, A, B> next
-        ) {
-            return fusingBiFunction(next);
-        }
-
-        /* BooleanSupplier -> BooleanToDoubleFunction */
-
-        public DoubleSupplier fuseToDoubleFunction(
-            BooleanToDoubleFunction next
-        ) {
-            return () -> next.applyAsDouble(initial.getAsBoolean());
-        }
-
-        public DoubleSupplier fuse(BooleanToDoubleFunction next) {
-            return fuseToDoubleFunction(next);
-        }
-
-        public WithDoubleSupplier fusingToDoubleFunction(
-            BooleanToDoubleFunction next
-        ) {
-            return WithDoubleSupplier.of(fuse(next));
-        }
-
-        public WithDoubleSupplier fusing(BooleanToDoubleFunction next) {
-            return fusingToDoubleFunction(next);
-        }
-
-        /* BooleanSupplier -> ToDoubleBiFunction<Boolean, A> */
-
-        public <A> ToDoubleFunction<A> fuseToDoubleBiFunction(
-            ToDoubleBiFunction<Boolean, A> next
-        ) {
-            return (A a) -> next.applyAsDouble(initial.getAsBoolean(), a);
-        }
-
-        public <A> ToDoubleFunction<A> fuse(
-            ToDoubleBiFunction<Boolean, A> next
-        ) {
-            return fuseToDoubleBiFunction(next);
-        }
-
-        public <A> WithToDoubleFunction<A> fusingToDoubleBiFunction(
-            ToDoubleBiFunction<Boolean, A> next
-        ) {
-            return WithToDoubleFunction.of(fuseToDoubleBiFunction(next));
-        }
-
-        public <A> WithToDoubleFunction<A> fusing(
-            ToDoubleBiFunction<Boolean, A> next
-        ) {
-            return fusingToDoubleBiFunction(next);
-        }
-
-        /* BooleanSupplier -> BooleanToIntFunction */
-
-        public IntSupplier fuseToIntFunction(BooleanToIntFunction next) {
-            return () -> next.applyAsInt(initial.getAsBoolean());
-        }
-
-        public IntSupplier fuse(BooleanToIntFunction next) {
-            return fuseToIntFunction(next);
-        }
-
-        public WithIntSupplier fusingToIntFunction(BooleanToIntFunction next) {
-            return WithIntSupplier.of(fuse(next));
-        }
-
-        public WithIntSupplier fusing(BooleanToIntFunction next) {
-            return fusingToIntFunction(next);
-        }
-
-        /* BooleanSupplier -> ToIntBiFunction<Boolean, A> */
-
-        public <A> ToIntFunction<A> fuseToIntBiFunction(
-            ToIntBiFunction<Boolean, A> next
-        ) {
-            return (A a) -> next.applyAsInt(initial.getAsBoolean(), a);
-        }
-
-        public <A> ToIntFunction<A> fuse(ToIntBiFunction<Boolean, A> next) {
-            return fuseToIntBiFunction(next);
-        }
-
-        public <A> WithToIntFunction<A> fusingToIntBiFunction(
-            ToIntBiFunction<Boolean, A> next
-        ) {
-            return WithToIntFunction.of(fuseToIntBiFunction(next));
-        }
-
-        public <A> WithToIntFunction<A> fusing(
-            ToIntBiFunction<Boolean, A> next
-        ) {
-            return fusingToIntBiFunction(next);
-        }
-
-        /* BooleanSupplier -> BooleanToLongFunction */
-
-        public LongSupplier fuseToLongFunction(BooleanToLongFunction next) {
-            return () -> next.applyAsLong(initial.getAsBoolean());
-        }
-
-        public LongSupplier fuse(BooleanToLongFunction next) {
-            return fuseToLongFunction(next);
-        }
-
-        public WithLongSupplier fusingToLongFunction(
-            BooleanToLongFunction next
-        ) {
-            return WithLongSupplier.of(fuse(next));
-        }
-
-        public WithLongSupplier fusing(BooleanToLongFunction next) {
-            return fusingToLongFunction(next);
-        }
-
-        /* BooleanSupplier -> ToLongBiFunction<Boolean, A> */
-
-        public <A> ToLongFunction<A> fuseToLongBiFunction(
-            ToLongBiFunction<Boolean, A> next
-        ) {
-            return (A a) -> next.applyAsLong(initial.getAsBoolean(), a);
-        }
-
-        public <A> ToLongFunction<A> fuse(ToLongBiFunction<Boolean, A> next) {
-            return fuseToLongBiFunction(next);
-        }
-
-        public <A> WithToLongFunction<A> fusingToLongBiFunction(
-            ToLongBiFunction<Boolean, A> next
-        ) {
-            return WithToLongFunction.of(fuseToLongBiFunction(next));
-        }
-
-        public <A> WithToLongFunction<A> fusing(
-            ToLongBiFunction<Boolean, A> next
-        ) {
-            return fusingToLongBiFunction(next);
-        }
-
-        /* BooleanSupplier -> BooleanPredicate */
-
-        public BooleanSupplier fuseBooleanPredicate(BooleanPredicate next) {
-            return () -> next.test(initial.getAsBoolean());
-        }
-
-        public BooleanSupplier fuse(BooleanPredicate next) {
-            return fuseBooleanPredicate(next);
-        }
-
-        public WithBooleanSupplier fusingBooleanPredicate(
-            BooleanPredicate next
-        ) {
-            return WithBooleanSupplier.of(fuse(next));
-        }
-
-        public WithBooleanSupplier fusing(BooleanPredicate next) {
-            return fusingBooleanPredicate(next);
-        }
-
-        /* BooleanSupplier -> BiPredicate<Boolean, A> */
-
-        public <A> Predicate<A> fuseBiPredicate(BiPredicate<Boolean, A> next) {
-            return (A a) -> next.test(initial.getAsBoolean(), a);
-        }
-
-        public <A> Predicate<A> fuse(BiPredicate<Boolean, A> next) {
-            return fuseBiPredicate(next);
-        }
-
-        public <A> WithPredicate<A> fusingBiPredicate(
-            BiPredicate<Boolean, A> next
-        ) {
-            return WithPredicate.of(fuseBiPredicate(next));
-        }
-
-        public <A> WithPredicate<A> fusing(BiPredicate<Boolean, A> next) {
-            return fusingBiPredicate(next);
-        }
-
-        /* BooleanSupplier -> BooleanConsumer */
-
-        public Operator fuseBiPredicate(BooleanConsumer next) {
-            return () -> next.accept(initial.getAsBoolean());
-        }
-
-        public Operator fuse(BooleanConsumer next) {
-            return fuseBiPredicate(next);
-        }
-
-        public WithOperator fusingBiPredicate(BooleanConsumer next) {
-            return WithOperator.of(fuseBiPredicate(next));
-        }
-
-        public WithOperator fusing(BooleanConsumer next) {
-            return fusingBiPredicate(next);
-        }
-
-        /* BooleanSupplier -> BiConsumer<Boolean, A> */
-
-        public <A> Consumer<A> fuseBiConsumer(BiConsumer<Boolean, A> next) {
-            return (A a) -> next.accept(initial.getAsBoolean(), a);
-        }
-
-        public <A> Consumer<A> fuse(BiConsumer<Boolean, A> next) {
-            return fuseBiConsumer(next);
-        }
-
-        public <A> WithConsumer<A> fusingBiConsumer(
-            BiConsumer<Boolean, A> next
-        ) {
-            return WithConsumer.of(fuseBiConsumer(next));
-        }
-
-        public <A> WithConsumer<A> fusing(BiConsumer<Boolean, A> next) {
-            return fusingBiConsumer(next);
-        }
     }
 
     public static final class WithDoubleSupplier
-        extends Combine<Double, DoubleSupplier> {
+        extends Combine<Double, DoubleSupplier>
+        implements DoubleSupplierCombos {
 
         private final transient DoubleSupplier initial;
 
@@ -1184,152 +954,11 @@ public abstract class Combine<A, Fn> {
         public DoubleSupplier resolve() {
             return initial;
         }
-
-        /* DoubleSupplier -> DoubleFunction<A> */
-
-        public <A> Supplier<A> fuseDoubleFunction(DoubleFunction<A> next) {
-            return () -> next.apply(initial.getAsDouble());
-        }
-
-        public <A> Supplier<A> fuse(DoubleFunction<A> next) {
-            return fuseDoubleFunction(next);
-        }
-
-        public <A> WithSupplier<A> fusingDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return WithSupplier.of(fuse(next));
-        }
-
-        public <A> WithSupplier<A> fusing(DoubleFunction<A> next) {
-            return fusingDoubleFunction(next);
-        }
-
-        /* DoubleSupplier -> DoubleToIntFunction */
-
-        public IntSupplier fuseDoubleToIntFunction(DoubleToIntFunction next) {
-            return () -> next.applyAsInt(initial.getAsDouble());
-        }
-
-        public IntSupplier fuse(DoubleToIntFunction next) {
-            return fuseDoubleToIntFunction(next);
-        }
-
-        public WithIntSupplier fusingDoubleToIntFunction(
-            DoubleToIntFunction next
-        ) {
-            return WithIntSupplier.of(fuse(next));
-        }
-
-        public WithIntSupplier fusing(DoubleToIntFunction next) {
-            return fusingDoubleToIntFunction(next);
-        }
-
-        /* DoubleSupplier -> DoubleToLongFunction */
-
-        public LongSupplier fuseDoubleToLongFunction(
-            DoubleToLongFunction next
-        ) {
-            return () -> next.applyAsLong(initial.getAsDouble());
-        }
-
-        public LongSupplier fuse(DoubleToLongFunction next) {
-            return fuseDoubleToLongFunction(next);
-        }
-
-        public WithLongSupplier fusingDoubleToLongFunction(
-            DoubleToLongFunction next
-        ) {
-            return WithLongSupplier.of(fuse(next));
-        }
-
-        public WithLongSupplier fusing(DoubleToLongFunction next) {
-            return fusingDoubleToLongFunction(next);
-        }
-
-        /* DoubleSupplier -> DoublePredicate */
-
-        public BooleanSupplier fuseDoublePredicate(DoublePredicate next) {
-            return () -> next.test(initial.getAsDouble());
-        }
-
-        public BooleanSupplier fuse(DoublePredicate next) {
-            return fuseDoublePredicate(next);
-        }
-
-        public WithBooleanSupplier fusingDoublePredicate(DoublePredicate next) {
-            return WithBooleanSupplier.of(fuse(next));
-        }
-
-        public WithBooleanSupplier fusing(DoublePredicate next) {
-            return fusingDoublePredicate(next);
-        }
-
-        /* DoubleSupplier -> DoubleConsumer */
-
-        public Operator fuseDoubleConsumer(DoubleConsumer next) {
-            return () -> next.accept(initial.getAsDouble());
-        }
-
-        public Operator fuse(DoubleConsumer next) {
-            return fuseDoubleConsumer(next);
-        }
-
-        public WithOperator fusingDoubleConsumer(DoubleConsumer next) {
-            return WithOperator.of(fuse(next));
-        }
-
-        public WithOperator fusing(DoubleConsumer next) {
-            return fusingDoubleConsumer(next);
-        }
-
-        /* DoubleSupplier -> DoubleUnaryOperator */
-
-        public DoubleSupplier fuseDoubleUnaryOperator(
-            DoubleUnaryOperator next
-        ) {
-            return () -> next.applyAsDouble(initial.getAsDouble());
-        }
-
-        public DoubleSupplier fuse(DoubleUnaryOperator next) {
-            return fuseDoubleUnaryOperator(next);
-        }
-
-        public WithDoubleSupplier fusingDoubleUnaryOperator(
-            DoubleUnaryOperator next
-        ) {
-            return WithDoubleSupplier.of(fuse(next));
-        }
-
-        public WithDoubleSupplier fusing(DoubleUnaryOperator next) {
-            return fusingDoubleUnaryOperator(next);
-        }
-
-        /* DoubleSupplier -> DoubleBinaryOperator */
-
-        public DoubleUnaryOperator fuseDoubleBinaryOperator(
-            DoubleBinaryOperator next
-        ) {
-            return (double d) -> next.applyAsDouble(initial.getAsDouble(), d);
-        }
-
-        public DoubleUnaryOperator fuse(DoubleBinaryOperator next) {
-            return fuseDoubleBinaryOperator(next);
-        }
-
-        public WithDoubleUnaryOperator fusingDoubleBinaryOperator(
-            DoubleBinaryOperator next
-        ) {
-            return WithDoubleUnaryOperator.of(fuse(next));
-        }
-
-        public WithDoubleUnaryOperator fusing(DoubleBinaryOperator next) {
-            return fusingDoubleBinaryOperator(next);
-        }
     }
 
     public static final class WithIntSupplier
-        extends Combine<Integer, IntSupplier> {
+        extends Combine<Integer, IntSupplier>
+        implements IntSupplierCombos {
 
         private final transient IntSupplier initial;
 
@@ -1345,144 +974,11 @@ public abstract class Combine<A, Fn> {
         public IntSupplier resolve() {
             return initial;
         }
-
-        /* IntSupplier -> IntFunction<A> */
-
-        public <A> Supplier<A> fuseIntFunction(IntFunction<A> next) {
-            return () -> next.apply(initial.getAsInt());
-        }
-
-        public <A> Supplier<A> fuse(IntFunction<A> next) {
-            return fuseIntFunction(next);
-        }
-
-        public <A> WithSupplier<A> fusingIntFunction(IntFunction<A> next) {
-            return WithSupplier.of(fuse(next));
-        }
-
-        public <A> WithSupplier<A> fusing(IntFunction<A> next) {
-            return fusingIntFunction(next);
-        }
-
-        /* IntSupplier -> IntToDoubleFunction */
-
-        public DoubleSupplier fuseIntToDoubleFunction(
-            IntToDoubleFunction next
-        ) {
-            return () -> next.applyAsDouble(initial.getAsInt());
-        }
-
-        public DoubleSupplier fuse(IntToDoubleFunction next) {
-            return fuseIntToDoubleFunction(next);
-        }
-
-        public WithDoubleSupplier fusingIntToDoubleFunction(
-            IntToDoubleFunction next
-        ) {
-            return WithDoubleSupplier.of(fuse(next));
-        }
-
-        public WithDoubleSupplier fusing(IntToDoubleFunction next) {
-            return fusingIntToDoubleFunction(next);
-        }
-
-        /* IntSupplier -> IntToLongFunction */
-
-        public LongSupplier fuseIntToLongFunction(IntToLongFunction next) {
-            return () -> next.applyAsLong(initial.getAsInt());
-        }
-
-        public LongSupplier fuse(IntToLongFunction next) {
-            return fuseIntToLongFunction(next);
-        }
-
-        public WithLongSupplier fusingIntToLongFunction(
-            IntToLongFunction next
-        ) {
-            return WithLongSupplier.of(fuse(next));
-        }
-
-        public WithLongSupplier fusing(IntToLongFunction next) {
-            return fusingIntToLongFunction(next);
-        }
-
-        /* IntSupplier -> IntPredicate */
-
-        public BooleanSupplier fuseIntPredicate(IntPredicate next) {
-            return () -> next.test(initial.getAsInt());
-        }
-
-        public BooleanSupplier fuse(IntPredicate next) {
-            return fuseIntPredicate(next);
-        }
-
-        public WithBooleanSupplier fusingIntPredicate(IntPredicate next) {
-            return WithBooleanSupplier.of(fuse(next));
-        }
-
-        public WithBooleanSupplier fusing(IntPredicate next) {
-            return fusingIntPredicate(next);
-        }
-
-        /* IntSupplier -> IntConsumer */
-
-        public Operator fuseIntConsumer(IntConsumer next) {
-            return () -> next.accept(initial.getAsInt());
-        }
-
-        public Operator fuse(IntConsumer next) {
-            return fuseIntConsumer(next);
-        }
-
-        public WithOperator fusingIntConsumer(IntConsumer next) {
-            return WithOperator.of(fuse(next));
-        }
-
-        public WithOperator fusing(IntConsumer next) {
-            return fusingIntConsumer(next);
-        }
-
-        /* IntSupplier -> IntUnaryOperator */
-
-        public IntSupplier fuseIntUnaryOperator(IntUnaryOperator next) {
-            return () -> next.applyAsInt(initial.getAsInt());
-        }
-
-        public IntSupplier fuse(IntUnaryOperator next) {
-            return fuseIntUnaryOperator(next);
-        }
-
-        public WithIntSupplier fusingIntUnaryOperator(IntUnaryOperator next) {
-            return WithIntSupplier.of(fuse(next));
-        }
-
-        public WithIntSupplier fusing(IntUnaryOperator next) {
-            return fusingIntUnaryOperator(next);
-        }
-
-        /* IntSupplier -> IntBinaryOperator */
-
-        public IntUnaryOperator fuseIntBinaryOperator(IntBinaryOperator next) {
-            return (int i) -> next.applyAsInt(initial.getAsInt(), i);
-        }
-
-        public IntUnaryOperator fuse(IntBinaryOperator next) {
-            return fuseIntBinaryOperator(next);
-        }
-
-        public WithIntUnaryOperator fusingIntBinaryOperator(
-            IntBinaryOperator next
-        ) {
-            return WithIntUnaryOperator.of(fuse(next));
-        }
-
-        public WithIntUnaryOperator fusing(IntBinaryOperator next) {
-            return fusingIntBinaryOperator(next);
-        }
     }
 
     public static final class WithLongSupplier
-        extends Combine<Long, LongSupplier> {
+        extends Combine<Long, LongSupplier>
+        implements LongSupplierCombos {
 
         private final transient LongSupplier initial;
 
@@ -1498,145 +994,11 @@ public abstract class Combine<A, Fn> {
         public LongSupplier resolve() {
             return initial;
         }
-
-        /* LongSupplier -> LongFunction<A> */
-
-        public <A> Supplier<A> fuseFunction(LongFunction<A> next) {
-            return () -> next.apply(resolve().getAsLong());
-        }
-
-        public <A> Supplier<A> fuse(LongFunction<A> next) {
-            return fuseFunction(next);
-        }
-
-        public <A> WithSupplier<A> fusingFunction(LongFunction<A> next) {
-            return WithSupplier.of(fuse(next));
-        }
-
-        public <A> WithSupplier<A> fusing(LongFunction<A> next) {
-            return fusingFunction(next);
-        }
-
-        /* LongSupplier -> LongToDoubleFunction */
-
-        public DoubleSupplier fuseLongToDoubleFunction(
-            LongToDoubleFunction next
-        ) {
-            return () -> next.applyAsDouble(initial.getAsLong());
-        }
-
-        public DoubleSupplier fuse(LongToDoubleFunction next) {
-            return fuseLongToDoubleFunction(next);
-        }
-
-        public WithDoubleSupplier fusingLongToDoubleFunction(
-            LongToDoubleFunction next
-        ) {
-            return WithDoubleSupplier.of(fuse(next));
-        }
-
-        public WithDoubleSupplier fusing(LongToDoubleFunction next) {
-            return fusingLongToDoubleFunction(next);
-        }
-
-        /* LongSupplier -> LongToIntFunction */
-
-        public IntSupplier fuseLongToIntFunction(LongToIntFunction next) {
-            return () -> next.applyAsInt(initial.getAsLong());
-        }
-
-        public IntSupplier fuse(LongToIntFunction next) {
-            return fuseLongToIntFunction(next);
-        }
-
-        public WithIntSupplier fusingLongToIntFunction(LongToIntFunction next) {
-            return WithIntSupplier.of(fuse(next));
-        }
-
-        public WithIntSupplier fusing(LongToIntFunction next) {
-            return fusingLongToIntFunction(next);
-        }
-
-        /* LongSupplier -> LongPredicate */
-
-        public BooleanSupplier fuseLongPredicate(LongPredicate next) {
-            return () -> next.test(initial.getAsLong());
-        }
-
-        public BooleanSupplier fuse(LongPredicate next) {
-            return fuseLongPredicate(next);
-        }
-
-        public WithBooleanSupplier fusingLongPredicate(LongPredicate next) {
-            return WithBooleanSupplier.of(fuse(next));
-        }
-
-        public WithBooleanSupplier fusing(LongPredicate next) {
-            return fusingLongPredicate(next);
-        }
-
-        /* LongSupplier -> LongConsumer */
-
-        public Operator fuseLongConsumer(LongConsumer next) {
-            return () -> next.accept(initial.getAsLong());
-        }
-
-        public Operator fuse(LongConsumer next) {
-            return fuseLongConsumer(next);
-        }
-
-        public WithOperator fusingLongConsumer(LongConsumer next) {
-            return WithOperator.of(fuse(next));
-        }
-
-        public WithOperator fusing(LongConsumer next) {
-            return fusingLongConsumer(next);
-        }
-
-        /* LongSupplier -> LongUnaryOperator */
-
-        public LongSupplier fuseLongUnaryOperator(LongUnaryOperator next) {
-            return () -> next.applyAsLong(initial.getAsLong());
-        }
-
-        public LongSupplier fuse(LongUnaryOperator next) {
-            return fuseLongUnaryOperator(next);
-        }
-
-        public WithLongSupplier fusingLongUnaryOperator(
-            LongUnaryOperator next
-        ) {
-            return WithLongSupplier.of(fuse(next));
-        }
-
-        public WithLongSupplier fusing(LongUnaryOperator next) {
-            return fusingLongUnaryOperator(next);
-        }
-
-        /* LongSupplier -> LongBinaryOperator */
-
-        public LongUnaryOperator fuseLongBinaryOperator(
-            LongBinaryOperator next
-        ) {
-            return (long n) -> next.applyAsLong(initial.getAsLong(), n);
-        }
-
-        public LongUnaryOperator fuse(LongBinaryOperator next) {
-            return fuseLongBinaryOperator(next);
-        }
-
-        public WithLongUnaryOperator fusingLongBinaryOperator(
-            LongBinaryOperator next
-        ) {
-            return WithLongUnaryOperator.of(fuse(next));
-        }
-
-        public WithLongUnaryOperator fusing(LongBinaryOperator next) {
-            return fusingLongBinaryOperator(next);
-        }
     }
 
-    public static final class WithOperator extends Combine<Void, Operator> {
+    public static final class WithOperator
+        extends Combine<Void, Operator>
+        implements OperatorCombos {
 
         private final transient Operator initial;
 
@@ -1755,7 +1117,8 @@ public abstract class Combine<A, Fn> {
     }
 
     public static final class WithDoubleUnaryOperator
-        extends Combine<Double, DoubleUnaryOperator> {
+        extends Combine<Double, DoubleUnaryOperator>
+        implements DoubleUnaryOperatorCombos {
 
         private final transient DoubleUnaryOperator initial;
 
@@ -1773,32 +1136,11 @@ public abstract class Combine<A, Fn> {
         public DoubleUnaryOperator resolve() {
             return initial;
         }
-
-        /* DoubleUnaryOperator -> DoubleFunction<A> */
-
-        public <A> DoubleFunction<A> fuseDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return (double d) -> next.apply(resolve().applyAsDouble(d));
-        }
-
-        public <A> DoubleFunction<A> fuse(DoubleFunction<A> next) {
-            return fuseDoubleFunction(next);
-        }
-
-        public <A> WithDoubleFunction<A> fusingDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return WithDoubleFunction.of(fuseDoubleFunction(next));
-        }
-
-        public <A> WithDoubleFunction<A> fusing(DoubleFunction<A> next) {
-            return fusingDoubleFunction(next);
-        }
     }
 
     public static final class WithDoubleBinaryOperator
-        extends Combine<Double, DoubleFunction<DoubleUnaryOperator>> {
+        extends Combine<Double, DoubleFunction<DoubleUnaryOperator>>
+        implements DoubleBinaryOperatorCombos {
 
         private final transient DoubleBinaryOperator initial;
 
@@ -1806,36 +1148,29 @@ public abstract class Combine<A, Fn> {
             this.initial = Objects.requireNonNull(initial);
         }
 
-        public static <A> WithDoubleBinaryOperator of(
+        public static WithDoubleBinaryOperator of(
             DoubleBinaryOperator initial
         ) {
             return new WithDoubleBinaryOperator(initial);
+        }
+
+        public static WithDoubleBinaryOperator of(
+            DoubleFunction<DoubleUnaryOperator> initial
+        ) {
+            return new WithDoubleBinaryOperator(
+                (double d1, double d2) -> initial.apply(d1).applyAsDouble(d2)
+            );
         }
 
         @Override
         public DoubleFunction<DoubleUnaryOperator> resolve() {
             return (double d1) -> (double d2) -> initial.applyAsDouble(d1, d2);
         }
-
-        /* DoubleBinaryOperator -> DoubleFunction<A> */
-
-        public <A> DoubleFunction<DoubleFunction<A>> fuseDoubleFunction(
-            DoubleFunction<A> next
-        ) {
-            return (double d) ->
-                (double d2) -> next.apply(initial.applyAsDouble(d, d2));
-        }
-
-        public <A> DoubleFunction<DoubleFunction<A>> fuse(
-            DoubleFunction<A> next
-        ) {
-            return fuseDoubleFunction(next);
-        }
-        // TODO: "fusing" -- Need better currying support or DoubleBiFunction functional interface?
     }
 
     public static final class WithIntUnaryOperator
-        extends Combine<Integer, IntUnaryOperator> {
+        extends Combine<Integer, IntUnaryOperator>
+        implements IntUnaryOperatorCombos {
 
         private final transient IntUnaryOperator initial;
 
@@ -1851,28 +1186,11 @@ public abstract class Combine<A, Fn> {
         public IntUnaryOperator resolve() {
             return initial;
         }
-
-        /* IntUnaryOperator -> IntFunction<A> */
-
-        public <A> IntFunction<A> fuseIntFunction(IntFunction<A> next) {
-            return (int i) -> next.apply(resolve().applyAsInt(i));
-        }
-
-        public <A> IntFunction<A> fuse(IntFunction<A> next) {
-            return fuseIntFunction(next);
-        }
-
-        public <A> WithIntFunction<A> fusingIntFunction(IntFunction<A> next) {
-            return WithIntFunction.of(fuseIntFunction(next));
-        }
-
-        public <A> WithIntFunction<A> fusing(IntFunction<A> next) {
-            return fusingIntFunction(next);
-        }
     }
 
     public static final class WithIntBinaryOperator
-        extends Combine<Integer, IntFunction<IntUnaryOperator>> {
+        extends Combine<Integer, IntFunction<IntUnaryOperator>>
+        implements IntBinaryOperatorCombos {
 
         private final transient IntBinaryOperator initial;
 
@@ -1884,27 +1202,23 @@ public abstract class Combine<A, Fn> {
             return new WithIntBinaryOperator(initial);
         }
 
+        public static WithIntBinaryOperator of(
+            IntFunction<IntUnaryOperator> initial
+        ) {
+            return new WithIntBinaryOperator(
+                (int i1, int i2) -> initial.apply(i1).applyAsInt(i2)
+            );
+        }
+
         @Override
         public IntFunction<IntUnaryOperator> resolve() {
             return (int i1) -> (int i2) -> initial.applyAsInt(i1, i2);
         }
-
-        /* IntBinaryOperator -> IntFunction<A> */
-
-        public <A> IntFunction<IntFunction<A>> fuseIntFunction(
-            IntFunction<A> next
-        ) {
-            return (int i) -> (int i2) -> next.apply(initial.applyAsInt(i, i2));
-        }
-
-        public <A> IntFunction<IntFunction<A>> fuse(IntFunction<A> next) {
-            return fuseIntFunction(next);
-        }
-        // TODO: "fusing" -- Need better currying support or IntBiFunction functional interface?
     }
 
     public static final class WithLongUnaryOperator
-        extends Combine<Long, LongUnaryOperator> {
+        extends Combine<Long, LongUnaryOperator>
+        implements LongUnaryOperatorCombos {
 
         private final transient LongUnaryOperator initial;
 
@@ -1920,30 +1234,11 @@ public abstract class Combine<A, Fn> {
         public LongUnaryOperator resolve() {
             return initial;
         }
-
-        /* LongUnaryOperator -> LongFunction<A> */
-
-        public <A> LongFunction<A> fuseLongFunction(LongFunction<A> next) {
-            return (long n) -> next.apply(resolve().applyAsLong(n));
-        }
-
-        public <A> LongFunction<A> fuse(LongFunction<A> next) {
-            return fuseLongFunction(next);
-        }
-
-        public <A> WithLongFunction<A> fusingLongFunction(
-            LongFunction<A> next
-        ) {
-            return WithLongFunction.of(fuseLongFunction(next));
-        }
-
-        public <A> WithLongFunction<A> fusing(LongFunction<A> next) {
-            return fusingLongFunction(next);
-        }
     }
 
     public static final class WithLongBinaryOperator
-        extends Combine<Long, LongFunction<LongUnaryOperator>> {
+        extends Combine<Long, LongFunction<LongUnaryOperator>>
+        implements LongBinaryOperatorCombos {
 
         private final transient LongBinaryOperator initial;
 
@@ -1957,23 +1252,17 @@ public abstract class Combine<A, Fn> {
             return new WithLongBinaryOperator(initial);
         }
 
+        public static <A> WithLongBinaryOperator of(
+            LongFunction<LongUnaryOperator> initial
+        ) {
+            return new WithLongBinaryOperator(
+                (long n1, long n2) -> initial.apply(n1).applyAsLong(n2)
+            );
+        }
+
         @Override
         public LongFunction<LongUnaryOperator> resolve() {
             return (long n1) -> (long n2) -> initial.applyAsLong(n1, n2);
         }
-
-        /* LongBinaryOperator -> LongFunction<A> */
-
-        public <A> LongFunction<LongFunction<A>> fuseLongFunction(
-            LongFunction<A> next
-        ) {
-            return (long n) ->
-                (long n2) -> next.apply(initial.applyAsLong(n, n2));
-        }
-
-        public <A> LongFunction<LongFunction<A>> fuse(LongFunction<A> next) {
-            return fuseLongFunction(next);
-        }
-        // TODO: "fusing" -- Need better currying support or LongBiFunction functional interface?
     }
 }

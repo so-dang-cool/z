@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -13,71 +14,129 @@ public class ToLongFunctionFusionTests {
     @Test
     void toLongFn() {
         assertEquals(3L, stringToLong.applyAsLong("3"));
-    }
 
-    @Test
-    void toLongFn_deep() {
         assertEquals(3L, Z.with(stringToLong).resolve().applyAsLong("3"));
     }
 
     @Test
     void toLongFn_to_longFn() {
-        assertEquals("1", Z.fuse(stringToLong, longToString).apply("1"));
-    }
-
-    @Test
-    void toLongFn_to_longFn_deep() {
-        assertEquals("1", Z.with(stringToLong).fuse(longToString).apply("1"));
-    }
-
-    @Test
-    void toLongFn_to_longFn_deeper() {
-        assertEquals(
-            "1",
-            Z.with(stringToLong).fusing(longToString).resolve().apply("1")
-        );
+        Stream
+            .of(
+                Z.fuse(stringToLong, longToString),
+                Z.with(stringToLong).fuse(longToString),
+                Z.with(stringToLong).fusing(longToString).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("1", fusion.apply("1"));
+                }
+            );
     }
 
     @Test
     void toLongFn_to_longToDbl() {
-        assertEquals(
-            1.0,
-            Z.fuse(stringToLong, longToDouble).applyAsDouble("1")
-        );
+        Stream
+            .of(
+                Z.fuse(stringToLong, longToDouble),
+                Z.with(stringToLong).fuse(longToDouble),
+                Z.with(stringToLong).fusing(longToDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1.0, fusion.applyAsDouble("1"));
+                }
+            );
     }
 
     @Test
     void toLongFn_to_longToInt() {
-        assertEquals(1L, Z.fuse(stringToLong, longToInt).applyAsInt("1"));
+        Stream
+            .of(
+                Z.fuse(stringToLong, longToInt),
+                Z.with(stringToLong).fuse(longToInt),
+                Z.with(stringToLong).fusing(longToInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(1L, fusion.applyAsInt("1"));
+                }
+            );
     }
 
     @Test
     void toLongFn_to_longPred() {
-        assertTrue(Z.fuse(stringToLong, isLongThree).test("3"));
+        Stream
+            .of(
+                Z.fuse(stringToLong, isLongThree),
+                Z.with(stringToLong).fuse(isLongThree),
+                Z.with(stringToLong).fusing(isLongThree).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.test("3"));
+                }
+            );
     }
 
     @Evil
     @Test
     void toLongFn_to_longCns() {
         synchronized (consumedLongA) {
-            consumedLongA = 0L;
+            Stream
+                .of(
+                    Z.fuse(stringToLong, saveLongA),
+                    Z.with(stringToLong).fuse(saveLongA),
+                    Z.with(stringToLong).fusing(saveLongA).resolve()
+                )
+                .forEach(
+                    fusion -> {
+                        consumedLongA = 0L;
 
-            Z.fuse(stringToLong, saveLongA).accept("5");
+                        fusion.accept("5");
 
-            assertEquals(5L, consumedLongA);
+                        assertEquals(5L, consumedLongA);
+                    }
+                );
         }
     }
 
     @Test
     void toLongFn_to_longUnop() {
-        assertEquals(9L, Z.fuse(stringToLong, addThreeToLong).applyAsLong("6"));
+        Stream
+            .of(
+                Z.fuse(stringToLong, addThreeToLong),
+                Z.with(stringToLong).fuse(addThreeToLong),
+                Z.with(stringToLong).fusing(addThreeToLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(9L, fusion.applyAsLong("6"));
+                }
+            );
     }
 
     @Test
     void toLongFn_to_longBiop() {
-        assertEquals(
-            3L,
-            Z.fuse(stringToLong, addLongs).apply("1").applyAsLong(2L)
-        );
+        Stream
+            .of(
+                Z.fuse(stringToLong, addLongs),
+                Z.with(stringToLong).fuse(addLongs)
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.apply("1").applyAsLong(2L));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(stringToLong).fuse(addLongs, 2L),
+                Z.with(stringToLong).fusing(addLongs, 2L).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.applyAsLong("1"));
+                }
+            );
     }
 }

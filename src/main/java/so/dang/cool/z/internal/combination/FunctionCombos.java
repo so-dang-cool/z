@@ -20,7 +20,6 @@ import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
-import so.dang.cool.z.Z;
 import so.dang.cool.z.internal.combination.Combine.WithBiConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithBiFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBiPredicate;
@@ -75,8 +74,7 @@ interface FunctionCombos<A, B> {
     public default <C, D> WithBiFunction<A, C, D> fusingBiFunction(
         BiFunction<B, C, D> next
     ) {
-        // TODO: Need a currying combinator?
-        return WithBiFunction.of(Z.assimilate2(fuseBiFunction(next)));
+        return WithBiFunction.of(fuseBiFunction(next));
     }
 
     public default <C, D> WithBiFunction<A, C, D> fusing(
