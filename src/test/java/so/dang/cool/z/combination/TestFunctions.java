@@ -177,151 +177,55 @@ public final class TestFunctions {
     public static IntBinaryOperator addInts = (i1, i2) -> i1 + i2;
     public static LongUnaryOperator addThreeToLong = n -> n + 3L;
     public static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
-    public static BiFunction<String, String, String> concat2 = (a, b) ->
-        concatVariableStrings(a, b);
-    public static TriFunction<String, String, String, String> concat3 = (a, b, c) ->
-        concatVariableStrings(a, b, c);
-    public static QuadFunction<String, String, String, String, String> concat4 = (a, b, c, d) ->
-        concatVariableStrings(a, b, c, d);
-    public static QuinFunction<String, String, String, String, String, String> concat5 = (a, b, c, d, e) ->
-        concatVariableStrings(a, b, c, d, e);
-    public static SexFunction<String, String, String, String, String, String, String> concat6 = (a, b, c, d, e, f) ->
-        concatVariableStrings(a, b, c, d, e, f);
-    public static SeptFunction<String, String, String, String, String, String, String, String> concat7 = (a, b, c, d, e, f, g) ->
-        concatVariableStrings(a, b, c, d, e, f, g);
-    public static OctFunction<String, String, String, String, String, String, String, String, String> concat8 = (a, b, c, d, e, f, g, h) ->
-        concatVariableStrings(a, b, c, d, e, f, g, h);
-    public static NonFunction<String, String, String, String, String, String, String, String, String, String> concat9 = (a, b, c, d, e, f, g, h, i) ->
-        concatVariableStrings(a, b, c, d, e, f, g, h, i);
-    public static DecFunction<String, String, String, String, String, String, String, String, String, String, String> concat10 = (a, b, c, d, e, f, g, h, i, j) ->
-        concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
-    public static UndecFunction<String, String, String, String, String, String, String, String, String, String, String, String> concat11 = (a, b, c, d, e, f, g, h, i, j, k) ->
-        concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
-    public static DodecFunction<String, String, String, String, String, String, String, String, String, String, String, String, String> concat12 = (a, b, c, d, e, f, g, h, i, j, k, l) ->
-        concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
-    public static Function<String, Function<String, String>> curriedConcat2 = a ->
-        b -> concatVariableStrings(a, b);
-    public static Function<String, Function<String, Function<String, String>>> curriedConcat3 = a ->
-        b -> c -> concatVariableStrings(a, b, c);
-    public static Function<String, Function<String, Function<String, Function<String, String>>>> curriedConcat4 = a ->
-        b -> c -> d -> concatVariableStrings(a, b, c, d);
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>> curriedConcat5 = a ->
-        b -> c -> d -> e -> concatVariableStrings(a, b, c, d, e);
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>> curriedConcat6 = a ->
-        b -> c -> d -> e -> f -> concatVariableStrings(a, b, c, d, e, f);
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>> curriedConcat7 = a ->
-        b ->
-            c -> d -> e -> f -> g -> concatVariableStrings(a, b, c, d, e, f, g);
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>> curriedConcat8 = a ->
-        b ->
-            c ->
-                d ->
-                    e ->
-                        f ->
-                            g ->
-                                h ->
-                                    concatVariableStrings(
-                                        a,
-                                        b,
-                                        c,
-                                        d,
-                                        e,
-                                        f,
-                                        g,
-                                        h
-                                    );
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>> curriedConcat9 = a ->
-        b ->
-            c ->
-                d ->
-                    e ->
-                        f ->
-                            g ->
-                                h ->
-                                    i ->
-                                        concatVariableStrings(
-                                            a,
-                                            b,
-                                            c,
-                                            d,
-                                            e,
-                                            f,
-                                            g,
-                                            h,
-                                            i
-                                        );
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>> curriedConcat10 = a ->
-        b ->
-            c ->
-                d ->
-                    e ->
-                        f ->
-                            g ->
-                                h ->
-                                    i ->
-                                        j ->
-                                            concatVariableStrings(
-                                                a,
-                                                b,
-                                                c,
-                                                d,
-                                                e,
-                                                f,
-                                                g,
-                                                h,
-                                                i,
-                                                j
-                                            );
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>> curriedConcat11 = a ->
-        b ->
-            c ->
-                d ->
-                    e ->
-                        f ->
-                            g ->
-                                h ->
-                                    i ->
-                                        j ->
-                                            k ->
-                                                concatVariableStrings(
-                                                    a,
-                                                    b,
-                                                    c,
-                                                    d,
-                                                    e,
-                                                    f,
-                                                    g,
-                                                    h,
-                                                    i,
-                                                    j,
-                                                    k
-                                                );
-    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>>> curriedConcat12 = a ->
-        b ->
-            c ->
-                d ->
-                    e ->
-                        f ->
-                            g ->
-                                h ->
-                                    i ->
-                                        j ->
-                                            k ->
-                                                l ->
-                                                    concatVariableStrings(
-                                                        a,
-                                                        b,
-                                                        c,
-                                                        d,
-                                                        e,
-                                                        f,
-                                                        g,
-                                                        h,
-                                                        i,
-                                                        j,
-                                                        k,
-                                                        l
-                                                    );
+
+    // autofmt:off
+
+    public static BiFunction<String, String, String> concat2 =
+        (a, b) -> concatVariableStrings(a, b);
+    public static TriFunction<String, String, String, String> concat3 =
+        (a, b, c) -> concatVariableStrings(a, b, c);
+    public static QuadFunction<String, String, String, String, String> concat4 =
+        (a, b, c, d) -> concatVariableStrings(a, b, c, d);
+    public static QuinFunction<String, String, String, String, String, String> concat5 =
+        (a, b, c, d, e) -> concatVariableStrings(a, b, c, d, e);
+    public static SexFunction<String, String, String, String, String, String, String> concat6 =
+        (a, b, c, d, e, f) -> concatVariableStrings(a, b, c, d, e, f);
+    public static SeptFunction<String, String, String, String, String, String, String, String> concat7 =
+        (a, b, c, d, e, f, g) -> concatVariableStrings(a, b, c, d, e, f, g);
+    public static OctFunction<String, String, String, String, String, String, String, String, String> concat8 =
+        (a, b, c, d, e, f, g, h) -> concatVariableStrings(a, b, c, d, e, f, g, h);
+    public static NonFunction<String, String, String, String, String, String, String, String, String, String> concat9 =
+        (a, b, c, d, e, f, g, h, i) -> concatVariableStrings(a, b, c, d, e, f, g, h, i);
+    public static DecFunction<String, String, String, String, String, String, String, String, String, String, String> concat10 =
+        (a, b, c, d, e, f, g, h, i, j) -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
+    public static UndecFunction<String, String, String, String, String, String, String, String, String, String, String, String> concat11 =
+        (a, b, c, d, e, f, g, h, i, j, k) -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
+    public static DodecFunction<String, String, String, String, String, String, String, String, String, String, String, String, String> concat12 =
+        (a, b, c, d, e, f, g, h, i, j, k, l) -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
+    public static Function<String, Function<String, String>> curriedConcat2 =
+        a -> b -> concatVariableStrings(a, b);
+    public static Function<String, Function<String, Function<String, String>>> curriedConcat3 =
+        a -> b -> c -> concatVariableStrings(a, b, c);
+    public static Function<String, Function<String, Function<String, Function<String, String>>>> curriedConcat4 =
+        a -> b -> c -> d -> concatVariableStrings(a, b, c, d);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>> curriedConcat5 =
+        a -> b -> c -> d -> e -> concatVariableStrings(a, b, c, d, e);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>> curriedConcat6 =
+        a -> b -> c -> d -> e -> f -> concatVariableStrings(a, b, c, d, e, f);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>> curriedConcat7 =
+        a -> b -> c -> d -> e -> f -> g -> concatVariableStrings(a, b, c, d, e, f, g);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>> curriedConcat8 =
+        a -> b -> c -> d -> e -> f -> g -> h -> concatVariableStrings(a, b, c, d, e, f, g, h);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>> curriedConcat9 =
+        a -> b -> c -> d -> e -> f -> g -> h -> i -> concatVariableStrings(a, b, c, d, e, f, g, h, i);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>> curriedConcat10 =
+        a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>> curriedConcat11 =
+        a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
+    public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>>> curriedConcat12 =
+        a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j,k,  l);
+
+    // autofmt:on
 
     private static String concatVariableStrings(String... strings) {
         return Stream.of(strings).reduce(String::concat).get();
