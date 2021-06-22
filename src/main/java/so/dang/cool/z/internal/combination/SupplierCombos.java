@@ -86,6 +86,34 @@ interface SupplierCombos<A> {
         return fusingBiFunction(next);
     }
 
+    public default <B, C> Supplier<C> fuseBiFunction(
+        BiFunction<A, B, C> next,
+        B secondArg
+    ) {
+        return () -> next.apply(resolve().get(), secondArg);
+    }
+
+    public default <B, C> Supplier<C> fuse(
+        BiFunction<A, B, C> next,
+        B secondArg
+    ) {
+        return fuseBiFunction(next, secondArg);
+    }
+
+    public default <B, C> WithSupplier<C> fusingBiFunction(
+        BiFunction<A, B, C> next,
+        B secondArg
+    ) {
+        return WithSupplier.of(fuseBiFunction(next, secondArg));
+    }
+
+    public default <B, C> WithSupplier<C> fusing(
+        BiFunction<A, B, C> next,
+        B secondArg
+    ) {
+        return fusingBiFunction(next, secondArg);
+    }
+
     /* Supplier<A> -> ToDoubleFunction<A> */
 
     public default DoubleSupplier fuseToDoubleFunction(
@@ -132,6 +160,34 @@ interface SupplierCombos<A> {
         return fusingToDoubleBiFunction(next);
     }
 
+    public default <B> DoubleSupplier fuseToDoubleBiFunction(
+        ToDoubleBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return () -> next.applyAsDouble(resolve().get(), secondArg);
+    }
+
+    public default <B> DoubleSupplier fuse(
+        ToDoubleBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fuseToDoubleBiFunction(next, secondArg);
+    }
+
+    public default <B> WithDoubleSupplier fusingToDoubleBiFunction(
+        ToDoubleBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return WithDoubleSupplier.of(fuseToDoubleBiFunction(next, secondArg));
+    }
+
+    public default <B> WithDoubleSupplier fusing(
+        ToDoubleBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fusingToDoubleBiFunction(next, secondArg);
+    }
+
     /* Supplier<A> -> ToIntFunction<A> */
 
     public default IntSupplier fuseToIntFunction(ToIntFunction<A> next) {
@@ -170,6 +226,34 @@ interface SupplierCombos<A> {
 
     public default <B> WithToIntFunction<B> fusing(ToIntBiFunction<A, B> next) {
         return fusingToIntBiFunction(next);
+    }
+
+    public default <B> IntSupplier fuseToIntBiFunction(
+        ToIntBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return () -> next.applyAsInt(resolve().get(), secondArg);
+    }
+
+    public default <B> IntSupplier fuse(
+        ToIntBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fuseToIntBiFunction(next, secondArg);
+    }
+
+    public default <B> WithIntSupplier fusingToIntBiFunction(
+        ToIntBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return WithIntSupplier.of(fuseToIntBiFunction(next, secondArg));
+    }
+
+    public default <B> WithIntSupplier fusing(
+        ToIntBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fusingToIntBiFunction(next, secondArg);
     }
 
     /* Supplier<A> -> ToLongFunction<A> */
@@ -216,6 +300,34 @@ interface SupplierCombos<A> {
         return fusingToLongBiFunction(next);
     }
 
+    public default <B> LongSupplier fuseToLongBiFunction(
+        ToLongBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return () -> next.applyAsLong(resolve().get(), secondArg);
+    }
+
+    public default <B> LongSupplier fuse(
+        ToLongBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fuseToLongBiFunction(next, secondArg);
+    }
+
+    public default <B> WithLongSupplier fusingToLongBiFunction(
+        ToLongBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return WithLongSupplier.of(fuseToLongBiFunction(next, secondArg));
+    }
+
+    public default <B> WithLongSupplier fusing(
+        ToLongBiFunction<A, B> next,
+        B secondArg
+    ) {
+        return fusingToLongBiFunction(next, secondArg);
+    }
+
     /* Supplier<A> -> Predicate<A> */
 
     public default BooleanSupplier fusePredicate(Predicate<A> next) {
@@ -254,6 +366,34 @@ interface SupplierCombos<A> {
         return fusingBiPredicate(next);
     }
 
+    public default <B> BooleanSupplier fuseBiPredicate(
+        BiPredicate<A, B> next,
+        B secondArg
+    ) {
+        return () -> next.test(resolve().get(), secondArg);
+    }
+
+    public default <B> BooleanSupplier fuse(
+        BiPredicate<A, B> next,
+        B secondArg
+    ) {
+        return fuseBiPredicate(next, secondArg);
+    }
+
+    public default <B> WithBooleanSupplier fusingBiPredicate(
+        BiPredicate<A, B> next,
+        B secondArg
+    ) {
+        return WithBooleanSupplier.of(fuseBiPredicate(next, secondArg));
+    }
+
+    public default <B> WithBooleanSupplier fusing(
+        BiPredicate<A, B> next,
+        B secondArg
+    ) {
+        return fusingBiPredicate(next, secondArg);
+    }
+
     /* Supplier<A> -> Consumer<A> */
 
     public default Operator fuseConsumer(Consumer<A> next) {
@@ -290,6 +430,28 @@ interface SupplierCombos<A> {
         return fusingBiConsumer(next);
     }
 
+    public default <B> Operator fuseBiConsumer(
+        BiConsumer<A, B> next,
+        B secondArg
+    ) {
+        return () -> next.accept(resolve().get(), secondArg);
+    }
+
+    public default <B> Operator fuse(BiConsumer<A, B> next, B secondArg) {
+        return fuseBiConsumer(next, secondArg);
+    }
+
+    public default <B> WithOperator fusingBiConsumer(
+        BiConsumer<A, B> next,
+        B secondArg
+    ) {
+        return WithOperator.of(fuseBiConsumer(next, secondArg));
+    }
+
+    public default <B> WithOperator fusing(BiConsumer<A, B> next, B secondArg) {
+        return fusingBiConsumer(next, secondArg);
+    }
+
     /* Supplier<A> -> ObjDoubleConsumer<A, B> */
 
     public default DoubleConsumer fuseObjDoubleConsumer(
@@ -312,6 +474,31 @@ interface SupplierCombos<A> {
         return fusingObjDoubleConsumer(next);
     }
 
+    public default Operator fuseObjDoubleConsumer(
+        ObjDoubleConsumer<A> next,
+        double secondArg
+    ) {
+        return () -> next.accept(resolve().get(), secondArg);
+    }
+
+    public default Operator fuse(ObjDoubleConsumer<A> next, double secondArg) {
+        return fuseObjDoubleConsumer(next, secondArg);
+    }
+
+    public default WithOperator fusingObjDoubleConsumer(
+        ObjDoubleConsumer<A> next,
+        double secondArg
+    ) {
+        return WithOperator.of(fuseObjDoubleConsumer(next, secondArg));
+    }
+
+    public default WithOperator fusing(
+        ObjDoubleConsumer<A> next,
+        double secondArg
+    ) {
+        return fusingObjDoubleConsumer(next, secondArg);
+    }
+
     /* Supplier<A> -> ObjIntConsumer<A, B> */
 
     public default IntConsumer fuseObjIntConsumer(ObjIntConsumer<A> next) {
@@ -332,6 +519,28 @@ interface SupplierCombos<A> {
         return fusingObjIntConsumer(next);
     }
 
+    public default Operator fuseObjIntConsumer(
+        ObjIntConsumer<A> next,
+        int secondArg
+    ) {
+        return () -> next.accept(resolve().get(), secondArg);
+    }
+
+    public default Operator fuse(ObjIntConsumer<A> next, int secondArg) {
+        return fuseObjIntConsumer(next, secondArg);
+    }
+
+    public default WithOperator fusingObjIntConsumer(
+        ObjIntConsumer<A> next,
+        int secondArg
+    ) {
+        return WithOperator.of(fuseObjIntConsumer(next, secondArg));
+    }
+
+    public default WithOperator fusing(ObjIntConsumer<A> next, int secondArg) {
+        return fusingObjIntConsumer(next, secondArg);
+    }
+
     /* Supplier<A> -> ObjLongConsumer<A, B> */
 
     public default LongConsumer fuseObjLongConsumer(ObjLongConsumer<A> next) {
@@ -350,6 +559,31 @@ interface SupplierCombos<A> {
 
     public default WithLongConsumer fusing(ObjLongConsumer<A> next) {
         return fusingObjLongConsumer(next);
+    }
+
+    public default Operator fuseObjLongConsumer(
+        ObjLongConsumer<A> next,
+        long secondArg
+    ) {
+        return () -> next.accept(resolve().get(), secondArg);
+    }
+
+    public default Operator fuse(ObjLongConsumer<A> next, long secondArg) {
+        return fuseObjLongConsumer(next, secondArg);
+    }
+
+    public default WithOperator fusingObjLongConsumer(
+        ObjLongConsumer<A> next,
+        long secondArg
+    ) {
+        return WithOperator.of(fuseObjLongConsumer(next, secondArg));
+    }
+
+    public default WithOperator fusing(
+        ObjLongConsumer<A> next,
+        long secondArg
+    ) {
+        return fusingObjLongConsumer(next, secondArg);
     }
 
     /* Supplier<A> -> UnaryOperator<A> */
@@ -388,5 +622,27 @@ interface SupplierCombos<A> {
 
     public default WithUnaryOperator<A> fusing(BinaryOperator<A> next) {
         return fusingBinaryOperator(next);
+    }
+
+    public default Supplier<A> fuseBinaryOperator(
+        BinaryOperator<A> next,
+        A secondArg
+    ) {
+        return () -> next.apply(resolve().get(), secondArg);
+    }
+
+    public default Supplier<A> fuse(BinaryOperator<A> next, A secondArg) {
+        return fuseBinaryOperator(next, secondArg);
+    }
+
+    public default WithSupplier<A> fusingBinaryOperator(
+        BinaryOperator<A> next,
+        A secondArg
+    ) {
+        return WithSupplier.of(fuseBinaryOperator(next, secondArg));
+    }
+
+    public default WithSupplier<A> fusing(BinaryOperator<A> next, A secondArg) {
+        return fusingBinaryOperator(next, secondArg);
     }
 }

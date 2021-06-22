@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -35,12 +37,20 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_bifn() {
-        assertEquals("Z!", Z.fuse(getString, concat).apply("!"));
-        assertEquals("Z!", Z.with(getString).fuse(concat).apply("!"));
-        assertEquals(
-            "Z!",
-            Z.with(getString).fusing(concat).resolve().apply("!")
-        );
+        Stream
+            .of(
+                Z.fuse(getString, concat),
+                Z.with(getString).fuse(concat),
+                Z.with(getString).fusing(concat).resolve()
+            )
+            .forEach(fusion -> assertEquals("Z!", fusion.apply("!")));
+
+        Stream
+            .of(
+                Z.with(getString).fuse(concat, "!"),
+                Z.with(getString).fusing(concat, "!").resolve()
+            )
+            .forEach(fusion -> assertEquals("Z!", fusion.get()));
     }
 
     @Test
@@ -58,22 +68,30 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_toDblBifn() {
-        assertEquals(
-            2.0,
-            Z.fuse(() -> "1.0", addStringsAsDouble).applyAsDouble("1.0")
-        );
-        assertEquals(
-            2.0,
-            Z.with(() -> "1.0").fuse(addStringsAsDouble).applyAsDouble("1.0")
-        );
-        assertEquals(
-            2.0,
-            Z
-                .with(() -> "1.0")
-                .fusing(addStringsAsDouble)
-                .resolve()
-                .applyAsDouble("1.0")
-        );
+        Supplier<String> doubleOne = () -> "1.0";
+
+        Stream
+            .of(
+                Z.fuse(doubleOne, addStringsAsDouble),
+                Z.with(doubleOne).fuse(addStringsAsDouble),
+                Z.with(doubleOne).fusing(addStringsAsDouble).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2.5, fusion.applyAsDouble("1.5"));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(doubleOne).fuse(addStringsAsDouble, "1.5"),
+                Z.with(doubleOne).fusing(addStringsAsDouble, "1.5").resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(2.5, fusion.getAsDouble());
+                }
+            );
     }
 
     @Test
@@ -88,15 +106,30 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_toIntBifn() {
-        assertEquals(2, Z.fuse(() -> "1", addStringsAsInt).applyAsInt("1"));
-        assertEquals(
-            2,
-            Z.with(() -> "1").fuse(addStringsAsInt).applyAsInt("1")
-        );
-        assertEquals(
-            2,
-            Z.with(() -> "1").fusing(addStringsAsInt).resolve().applyAsInt("1")
-        );
+        Supplier<String> intOne = () -> "1";
+
+        Stream
+            .of(
+                Z.fuse(intOne, addStringsAsInt),
+                Z.with(intOne).fuse(addStringsAsInt),
+                Z.with(intOne).fusing(addStringsAsInt).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3, fusion.applyAsInt("2"));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(intOne).fuse(addStringsAsInt, "2"),
+                Z.with(intOne).fusing(addStringsAsInt, "2").resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3, fusion.getAsInt());
+                }
+            );
     }
 
     @Test
@@ -111,19 +144,30 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_toLongBifn() {
-        assertEquals(2L, Z.fuse(() -> "1", addStringsAsLong).applyAsLong("1"));
-        assertEquals(
-            2L,
-            Z.with(() -> "1").fuse(addStringsAsLong).applyAsLong("1")
-        );
-        assertEquals(
-            2L,
-            Z
-                .with(() -> "1")
-                .fusing(addStringsAsLong)
-                .resolve()
-                .applyAsLong("1")
-        );
+        Supplier<String> intOne = () -> "1";
+
+        Stream
+            .of(
+                Z.fuse(intOne, addStringsAsLong),
+                Z.with(intOne).fuse(addStringsAsLong),
+                Z.with(intOne).fusing(addStringsAsLong).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.applyAsLong("2"));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(intOne).fuse(addStringsAsLong, "2"),
+                Z.with(intOne).fusing(addStringsAsLong, "2").resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3L, fusion.getAsLong());
+                }
+            );
     }
 
     @Test
@@ -135,9 +179,28 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_bipred() {
-        assertTrue(Z.fuse(getString, startsWith).test("Z"));
-        assertTrue(Z.with(getString).fuse(startsWith).test("Z"));
-        assertTrue(Z.with(getString).fusing(startsWith).resolve().test("Z"));
+        Stream
+            .of(
+                Z.fuse(getString, startsWith),
+                Z.with(getString).fuse(startsWith),
+                Z.with(getString).fusing(startsWith).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.test("Z"));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(getString).fuse(startsWith, "Z"),
+                Z.with(getString).fusing(startsWith, "Z").resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertTrue(fusion.getAsBoolean());
+                }
+            );
     }
 
     @Evil
@@ -163,27 +226,43 @@ public class SupplierFusionTests {
     void sup_to_bicns() {
         synchronized (consumedStringB) {
             synchronized (consumedStringC) {
-                consumedStringB = "";
-                consumedStringC = "";
-                Z.fuse(getString, saveStringsBandC).accept("z");
-                assertEquals(suppliedString, consumedStringB);
-                assertEquals("z", consumedStringC);
+                Stream
+                    .of(
+                        Z.fuse(getString, saveStringsBandC),
+                        Z.with(getString).fuse(saveStringsBandC),
+                        Z.with(getString).fusing(saveStringsBandC).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
 
-                consumedStringB = "";
-                consumedStringC = "";
-                Z.with(getString).fuse(saveStringsBandC).accept("z");
-                assertEquals(suppliedString, consumedStringB);
-                assertEquals("z", consumedStringC);
+                            fusion.accept("z");
 
-                consumedStringB = "";
-                consumedStringC = "";
-                Z
-                    .with(getString)
-                    .fusing(saveStringsBandC)
-                    .resolve()
-                    .accept("z");
-                assertEquals(suppliedString, consumedStringB);
-                assertEquals("z", consumedStringC);
+                            assertEquals(suppliedString, consumedStringB);
+                            assertEquals("z", consumedStringC);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(getString).fuse(saveStringsBandC, "z"),
+                        Z
+                            .with(getString)
+                            .fusing(saveStringsBandC, "z")
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringB = "";
+                            consumedStringC = "";
+
+                            fusion.run();
+
+                            assertEquals(suppliedString, consumedStringB);
+                            assertEquals("z", consumedStringC);
+                        }
+                    );
             }
         }
     }
@@ -193,27 +272,43 @@ public class SupplierFusionTests {
     void sup_to_objDblCns() {
         synchronized (consumedStringD) {
             synchronized (consumedDoubleB) {
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
-                Z.fuse(getString, saveStringDDoubleB).accept(5.0);
-                assertEquals(suppliedString, consumedStringD);
-                assertEquals(5.0, consumedDoubleB);
+                Stream
+                    .of(
+                        Z.fuse(getString, saveStringDDoubleB),
+                        Z.with(getString).fuse(saveStringDDoubleB),
+                        Z.with(getString).fusing(saveStringDDoubleB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
 
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
-                Z.with(getString).fuse(saveStringDDoubleB).accept(5.0);
-                assertEquals(suppliedString, consumedStringD);
-                assertEquals(5.0, consumedDoubleB);
+                            fusion.accept(5.0);
 
-                consumedStringD = "";
-                consumedDoubleB = 0.0;
-                Z
-                    .with(getString)
-                    .fusing(saveStringDDoubleB)
-                    .resolve()
-                    .accept(5.0);
-                assertEquals(suppliedString, consumedStringD);
-                assertEquals(5.0, consumedDoubleB);
+                            assertEquals(suppliedString, consumedStringD);
+                            assertEquals(5.0, consumedDoubleB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(getString).fuse(saveStringDDoubleB, 5.0),
+                        Z
+                            .with(getString)
+                            .fusing(saveStringDDoubleB, 5.0)
+                            .resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringD = "";
+                            consumedDoubleB = 0.0;
+
+                            fusion.run();
+
+                            assertEquals(suppliedString, consumedStringD);
+                            assertEquals(5.0, consumedDoubleB);
+                        }
+                    );
             }
         }
     }
@@ -223,23 +318,40 @@ public class SupplierFusionTests {
     void sup_to_objIntCns() {
         synchronized (consumedStringE) {
             synchronized (consumedIntB) {
-                consumedStringE = "";
-                consumedIntB = 0;
-                Z.fuse(getString, saveStringEIntB).accept(6);
-                assertEquals(suppliedString, consumedStringE);
-                assertEquals(6, consumedIntB);
+                Stream
+                    .of(
+                        Z.fuse(getString, saveStringEIntB),
+                        Z.with(getString).fuse(saveStringEIntB),
+                        Z.with(getString).fusing(saveStringEIntB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
 
-                consumedStringE = "";
-                consumedIntB = 0;
-                Z.with(getString).fuse(saveStringEIntB).accept(6);
-                assertEquals(suppliedString, consumedStringE);
-                assertEquals(6, consumedIntB);
+                            fusion.accept(6);
 
-                consumedStringE = "";
-                consumedIntB = 0;
-                Z.with(getString).fusing(saveStringEIntB).resolve().accept(6);
-                assertEquals(suppliedString, consumedStringE);
-                assertEquals(6, consumedIntB);
+                            assertEquals(suppliedString, consumedStringE);
+                            assertEquals(6, consumedIntB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(getString).fuse(saveStringEIntB, 6),
+                        Z.with(getString).fusing(saveStringEIntB, 6).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringE = "";
+                            consumedIntB = 0;
+
+                            fusion.run();
+
+                            assertEquals(suppliedString, consumedStringE);
+                            assertEquals(6, consumedIntB);
+                        }
+                    );
             }
         }
     }
@@ -249,23 +361,40 @@ public class SupplierFusionTests {
     void sup_to_objLongFn() {
         synchronized (consumedStringF) {
             synchronized (consumedLongB) {
-                consumedStringF = "";
-                consumedLongB = 0L;
-                Z.fuse(getString, saveStringFLongB).accept(7L);
-                assertEquals(suppliedString, consumedStringF);
-                assertEquals(7L, consumedLongB);
+                Stream
+                    .of(
+                        Z.fuse(getString, saveStringFLongB),
+                        Z.with(getString).fuse(saveStringFLongB),
+                        Z.with(getString).fusing(saveStringFLongB).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
 
-                consumedStringF = "";
-                consumedLongB = 0L;
-                Z.with(getString).fuse(saveStringFLongB).accept(7L);
-                assertEquals(suppliedString, consumedStringF);
-                assertEquals(7L, consumedLongB);
+                            fusion.accept(7L);
 
-                consumedStringF = "";
-                consumedLongB = 0L;
-                Z.with(getString).fusing(saveStringFLongB).resolve().accept(7L);
-                assertEquals(suppliedString, consumedStringF);
-                assertEquals(7L, consumedLongB);
+                            assertEquals(suppliedString, consumedStringF);
+                            assertEquals(7L, consumedLongB);
+                        }
+                    );
+
+                Stream
+                    .of(
+                        Z.with(getString).fuse(saveStringFLongB, 7L),
+                        Z.with(getString).fusing(saveStringFLongB, 7L).resolve()
+                    )
+                    .forEach(
+                        fusion -> {
+                            consumedStringF = "";
+                            consumedLongB = 0L;
+
+                            fusion.run();
+
+                            assertEquals(suppliedString, consumedStringF);
+                            assertEquals(7L, consumedLongB);
+                        }
+                    );
             }
         }
     }
@@ -282,11 +411,27 @@ public class SupplierFusionTests {
 
     @Test
     void sup_to_toBiop() {
-        assertEquals("same-ish", Z.fuse(getString, relation).apply("z"));
-        assertEquals("same-ish", Z.with(getString).fuse(relation).apply("z"));
-        assertEquals(
-            "same-ish",
-            Z.with(getString).fusing(relation).resolve().apply("z")
-        );
+        Stream
+            .of(
+                Z.fuse(getString, relation),
+                Z.with(getString).fuse(relation),
+                Z.with(getString).fusing(relation).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("same-ish", fusion.apply("z"));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(getString).fuse(relation, "z"),
+                Z.with(getString).fusing(relation, "z").resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals("same-ish", fusion.get());
+                }
+            );
     }
 }
