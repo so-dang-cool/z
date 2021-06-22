@@ -25,20 +25,20 @@ interface LongToIntFunctionCombos {
 
     /* LongToIntFunction -> IntFunction<A> */
 
-    public default <A> LongFunction<A> fuseFunction(IntFunction<A> next) {
+    public default <A> LongFunction<A> fuseIntFunction(IntFunction<A> next) {
         return (long n) -> next.apply(resolve().applyAsInt(n));
     }
 
     public default <A> LongFunction<A> fuse(IntFunction<A> next) {
-        return fuseFunction(next);
+        return fuseIntFunction(next);
     }
 
-    public default <A> WithLongFunction<A> fusingFunction(IntFunction<A> next) {
-        return WithLongFunction.of(fuseFunction(next));
+    public default <A> WithLongFunction<A> fusingIntFunction(IntFunction<A> next) {
+        return WithLongFunction.of(fuseIntFunction(next));
     }
 
     public default <A> WithLongFunction<A> fusing(IntFunction<A> next) {
-        return fusingFunction(next);
+        return fusingIntFunction(next);
     }
 
     /* LongToIntFunction -> IntToDoubleFunction */
