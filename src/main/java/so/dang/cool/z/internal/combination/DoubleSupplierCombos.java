@@ -169,4 +169,32 @@ interface DoubleSupplierCombos {
     public default WithDoubleUnaryOperator fusing(DoubleBinaryOperator next) {
         return fusingDoubleBinaryOperator(next);
     }
+
+    public default DoubleSupplier fuseDoubleBinaryOperator(
+        DoubleBinaryOperator next,
+        double secondArg
+    ) {
+        return () -> next.applyAsDouble(resolve().getAsDouble(), secondArg);
+    }
+
+    public default DoubleSupplier fuse(
+        DoubleBinaryOperator next,
+        double secondArg
+    ) {
+        return fuseDoubleBinaryOperator(next, secondArg);
+    }
+
+    public default WithDoubleSupplier fusingDoubleBinaryOperator(
+        DoubleBinaryOperator next,
+        double secondArg
+    ) {
+        return WithDoubleSupplier.of(fuse(next, secondArg));
+    }
+
+    public default WithDoubleSupplier fusing(
+        DoubleBinaryOperator next,
+        double secondArg
+    ) {
+        return fusingDoubleBinaryOperator(next, secondArg);
+    }
 }

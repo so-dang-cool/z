@@ -161,4 +161,29 @@ interface IntSupplierCombos {
     public default WithIntUnaryOperator fusing(IntBinaryOperator next) {
         return fusingIntBinaryOperator(next);
     }
+
+    public default IntSupplier fuseIntBinaryOperator(
+        IntBinaryOperator next,
+        int secondArg
+    ) {
+        return () -> next.applyAsInt(resolve().getAsInt(), secondArg);
+    }
+
+    public default IntSupplier fuse(IntBinaryOperator next, int secondArg) {
+        return fuseIntBinaryOperator(next, secondArg);
+    }
+
+    public default WithIntSupplier fusingIntBinaryOperator(
+        IntBinaryOperator next,
+        int secondArg
+    ) {
+        return WithIntSupplier.of(fuse(next, secondArg));
+    }
+
+    public default WithIntSupplier fusing(
+        IntBinaryOperator next,
+        int secondArg
+    ) {
+        return fusingIntBinaryOperator(next, secondArg);
+    }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -76,8 +77,27 @@ public class IntSupplierFusionTests {
 
     @Test
     void intSup_to_intBiop() {
-        assertEquals(4, Z.fuse(getInt, addInts).applyAsInt(2));
-        assertEquals(4, Z.with(getInt).fuse(addInts).applyAsInt(2));
-        assertEquals(4, Z.with(getInt).fusing(addInts).resolve().applyAsInt(2));
+        Stream
+            .of(
+                Z.fuse(getInt, addInts),
+                Z.with(getInt).fuse(addInts),
+                Z.with(getInt).fusing(addInts).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(4, fusion.applyAsInt(2));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(getInt).fuse(addInts, 2),
+                Z.with(getInt).fusing(addInts, 2).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(4, fusion.getAsInt());
+                }
+            );
     }
 }

@@ -33,7 +33,9 @@ interface LongToIntFunctionCombos {
         return fuseIntFunction(next);
     }
 
-    public default <A> WithLongFunction<A> fusingIntFunction(IntFunction<A> next) {
+    public default <A> WithLongFunction<A> fusingIntFunction(
+        IntFunction<A> next
+    ) {
         return WithLongFunction.of(fuseIntFunction(next));
     }
 

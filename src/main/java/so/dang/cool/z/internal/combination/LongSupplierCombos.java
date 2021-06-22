@@ -163,4 +163,29 @@ interface LongSupplierCombos {
     public default WithLongUnaryOperator fusing(LongBinaryOperator next) {
         return fusingLongBinaryOperator(next);
     }
+
+    public default LongSupplier fuseLongBinaryOperator(
+        LongBinaryOperator next,
+        long secondArg
+    ) {
+        return () -> next.applyAsLong(resolve().getAsLong(), secondArg);
+    }
+
+    public default LongSupplier fuse(LongBinaryOperator next, long secondArg) {
+        return fuseLongBinaryOperator(next, secondArg);
+    }
+
+    public default WithLongSupplier fusingLongBinaryOperator(
+        LongBinaryOperator next,
+        long secondArg
+    ) {
+        return WithLongSupplier.of(fuse(next, secondArg));
+    }
+
+    public default WithLongSupplier fusing(
+        LongBinaryOperator next,
+        long secondArg
+    ) {
+        return fusingLongBinaryOperator(next, secondArg);
+    }
 }

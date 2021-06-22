@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -75,11 +76,27 @@ public class LongSupplierFusionTests {
 
     @Test
     void longSup_to_longBiop() {
-        assertEquals(5, Z.fuse(getLong, addLongs).applyAsLong(2L));
-        assertEquals(5, Z.with(getLong).fuse(addLongs).applyAsLong(2L));
-        assertEquals(
-            5,
-            Z.with(getLong).fusing(addLongs).resolve().applyAsLong(2L)
-        );
+        Stream
+            .of(
+                Z.fuse(getLong, addLongs),
+                Z.with(getLong).fuse(addLongs),
+                Z.with(getLong).fusing(addLongs).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(5, fusion.applyAsLong(2L));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(getLong).fuse(addLongs, 2L),
+                Z.with(getLong).fusing(addLongs, 2L).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(5, fusion.getAsLong());
+                }
+            );
     }
 }

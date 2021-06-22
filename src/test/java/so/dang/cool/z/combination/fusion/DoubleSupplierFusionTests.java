@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -81,14 +82,27 @@ public class DoubleSupplierFusionTests {
 
     @Test
     void dblSup_to_dblBiop() {
-        assertEquals(3.0, Z.fuse(getDouble, addDoubles).applyAsDouble(2.0));
-        assertEquals(
-            3.0,
-            Z.with(getDouble).fuse(addDoubles).applyAsDouble(2.0)
-        );
-        assertEquals(
-            3.0,
-            Z.with(getDouble).fusing(addDoubles).resolve().applyAsDouble(2.0)
-        );
+        Stream
+            .of(
+                Z.fuse(getDouble, addDoubles),
+                Z.with(getDouble).fuse(addDoubles),
+                Z.with(getDouble).fusing(addDoubles).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3.5, fusion.applyAsDouble(2.5));
+                }
+            );
+
+        Stream
+            .of(
+                Z.with(getDouble).fuse(addDoubles, 2.5),
+                Z.with(getDouble).fusing(addDoubles, 2.5).resolve()
+            )
+            .forEach(
+                fusion -> {
+                    assertEquals(3.5, fusion.getAsDouble());
+                }
+            );
     }
 }

@@ -25,22 +25,24 @@ interface LongToDoubleFunctionCombos {
 
     /* LongToDoubleFunction -> DoubleFunction<A> */
 
-    public default <A> LongFunction<A> fuseFunction(DoubleFunction<A> next) {
+    public default <A> LongFunction<A> fuseDoubleFunction(
+        DoubleFunction<A> next
+    ) {
         return (long n) -> next.apply(resolve().applyAsDouble(n));
     }
 
     public default <A> LongFunction<A> fuse(DoubleFunction<A> next) {
-        return fuseFunction(next);
+        return fuseDoubleFunction(next);
     }
 
-    public default <A> WithLongFunction<A> fusingFunction(
+    public default <A> WithLongFunction<A> fusingDoubleFunction(
         DoubleFunction<A> next
     ) {
-        return WithLongFunction.of(fuseFunction(next));
+        return WithLongFunction.of(fuseDoubleFunction(next));
     }
 
     public default <A> WithLongFunction<A> fusing(DoubleFunction<A> next) {
-        return fusingFunction(next);
+        return fusingDoubleFunction(next);
     }
 
     /* LongToDoubleFunction -> DoubleToLongFunction */
