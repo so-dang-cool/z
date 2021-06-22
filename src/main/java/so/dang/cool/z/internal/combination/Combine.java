@@ -45,7 +45,6 @@ import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 import so.dang.cool.z.annotation.Evil;
-import so.dang.cool.z.annotation.Experimental;
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
 import so.dang.cool.z.function.BooleanPredicate;
@@ -57,7 +56,6 @@ import so.dang.cool.z.function.Operator;
 /**
  * Deep fusions involving many functions.
  */
-@Experimental
 public abstract class Combine<A, Fn> {
 
     private Combine() {}
@@ -996,6 +994,7 @@ public abstract class Combine<A, Fn> {
         }
     }
 
+    @Evil
     public static final class WithOperator
         extends Combine<Void, Operator>
         implements OperatorCombos {
