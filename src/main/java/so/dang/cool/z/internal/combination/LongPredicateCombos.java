@@ -114,22 +114,22 @@ interface LongPredicateCombos {
 
     /* LongPredicate -> BooleanPredicate */
 
-    public default LongPredicate fuseLongPredicate(BooleanPredicate next) {
+    public default LongPredicate fuseBooleanPredicate(BooleanPredicate next) {
         return (long n) -> next.test(resolve().test(n));
     }
 
     public default LongPredicate fuse(BooleanPredicate next) {
-        return fuseLongPredicate(next);
+        return fuseBooleanPredicate(next);
     }
 
-    public default WithLongPredicate fusingLongPredicate(
+    public default WithLongPredicate fusingBooleanPredicate(
         BooleanPredicate next
     ) {
-        return WithLongPredicate.of(fuseLongPredicate(next));
+        return WithLongPredicate.of(fuseBooleanPredicate(next));
     }
 
     public default WithLongPredicate fusing(BooleanPredicate next) {
-        return fusingLongPredicate(next);
+        return fusingBooleanPredicate(next);
     }
 
     /* LongPredicate -> BooleanConsumer */
