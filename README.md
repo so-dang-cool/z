@@ -89,8 +89,6 @@ assertEquals(List.of("batman"), heroes);
 
 `Z.with(var or fn1).fusing(fn2).[...].fuse(fn[N])` Combine _N_ functions.
 
-_This is an **experimental** technique. It's still in active development and may miss some combinations until future versions._
-
 ```java
 var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
     .fusingFunction(Pattern::compile)

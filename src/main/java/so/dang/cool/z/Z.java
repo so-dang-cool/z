@@ -44,7 +44,6 @@ import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 import so.dang.cool.z.annotation.Evil;
-import so.dang.cool.z.annotation.Experimental;
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
 import so.dang.cool.z.function.BooleanPredicate;
@@ -2654,414 +2653,351 @@ public final class Z {
     // ┃                                          ┃
     // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-    @Experimental
     public static <A> Combine.WithFunction<A, A> withClass(Class<A> clazz) {
         return Combine.WithFunction.of(Z.id(clazz));
     }
 
-    @Experimental
     public static <A> Combine.WithFunction<A, A> with(Class<A> clazz) {
         return withClass(clazz);
     }
 
-    @Experimental
     public static <A> Combine.WithSupplier<A> withObject(A initial) {
         return Combine.WithSupplier.of(() -> initial);
     }
 
-    @Experimental
     public static <A> Combine.WithSupplier<A> with(A initial) {
         return withObject(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanSupplier with(boolean initial) {
         return Combine.WithBooleanSupplier.of(() -> initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleSupplier with(double initial) {
         return Combine.WithDoubleSupplier.of(() -> initial);
     }
 
-    @Experimental
     public static Combine.WithIntSupplier with(int initial) {
         return Combine.WithIntSupplier.of(() -> initial);
     }
 
-    @Experimental
     public static Combine.WithLongSupplier with(long initial) {
         return Combine.WithLongSupplier.of(() -> initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithFunction<A, B> withFunction(
         Function<A, B> initial
     ) {
         return Combine.WithFunction.of(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithFunction<A, B> with(
         Function<A, B> initial
     ) {
         return withFunction(initial);
     }
 
-    @Experimental
     public static <A, B, C> Combine.WithBiFunction<A, B, C> withBiFunction(
         BiFunction<A, B, C> initial
     ) {
         return Combine.WithBiFunction.of(initial);
     }
 
-    @Experimental
     public static <A, B, C> Combine.WithBiFunction<A, B, C> with(
         BiFunction<A, B, C> initial
     ) {
         return withBiFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBooleanFunction<A> withBooleanFunction(
         BooleanFunction<A> initial
     ) {
         return Combine.WithBooleanFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBooleanFunction<A> with(
         BooleanFunction<A> initial
     ) {
         return withBooleanFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanToDoubleFunction withBooleanToDoubleFunction(
         BooleanToDoubleFunction initial
     ) {
         return Combine.WithBooleanToDoubleFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanToDoubleFunction with(
         BooleanToDoubleFunction initial
     ) {
         return withBooleanToDoubleFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanToLongFunction withBooleanToLongFunction(
         BooleanToLongFunction initial
     ) {
         return Combine.WithBooleanToLongFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanToLongFunction with(
         BooleanToLongFunction initial
     ) {
         return withBooleanToLongFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBooleanToIntFunction withBooleanToIntFunction(
         BooleanToIntFunction initial
     ) {
         return Combine.WithBooleanToIntFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBooleanToIntFunction with(
         BooleanToIntFunction initial
     ) {
         return withBooleanToIntFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleFunction<A> withDoubleFunction(
         DoubleFunction<A> initial
     ) {
         return Combine.WithDoubleFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleFunction<A> with(
         DoubleFunction<A> initial
     ) {
         return withDoubleFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleToIntFunction withDoubleToIntFunction(
         DoubleToIntFunction initial
     ) {
         return Combine.WithDoubleToIntFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleToIntFunction with(
         DoubleToIntFunction initial
     ) {
         return withDoubleToIntFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleToLongFunction withDoubleToLongFunction(
         DoubleToLongFunction initial
     ) {
         return Combine.WithDoubleToLongFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithDoubleToLongFunction with(
         DoubleToLongFunction initial
     ) {
         return withDoubleToLongFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToDoubleFunction<A> withToDoubleFunction(
         ToDoubleFunction<A> initial
     ) {
         return Combine.WithToDoubleFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToDoubleFunction<A> with(
         ToDoubleFunction<A> initial
     ) {
         return withToDoubleFunction(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToDoubleBiFunction<A, B> withToDoubleBiFunction(
         ToDoubleBiFunction<A, B> initial
     ) {
         return Combine.WithToDoubleBiFunction.of(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToDoubleBiFunction<A, B> with(
         ToDoubleBiFunction<A, B> initial
     ) {
         return withToDoubleBiFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithIntFunction<A> withIntFunction(
         IntFunction<A> initial
     ) {
         return Combine.WithIntFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithIntFunction<A> with(IntFunction<A> initial) {
         return withIntFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithIntToDoubleFunction withIntToDoubleFunction(
         IntToDoubleFunction initial
     ) {
         return Combine.WithIntToDoubleFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntToDoubleFunction with(
         IntToDoubleFunction initial
     ) {
         return withIntToDoubleFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithIntToLongFunction withIntToLongFunction(
         IntToLongFunction initial
     ) {
         return Combine.WithIntToLongFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntToLongFunction with(
         IntToLongFunction initial
     ) {
         return withIntToLongFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToIntFunction<A> withToIntFunction(
         ToIntFunction<A> initial
     ) {
         return Combine.WithToIntFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToIntFunction<A> with(
         ToIntFunction<A> initial
     ) {
         return withToIntFunction(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToIntBiFunction<A, B> withToIntBiFunction(
         ToIntBiFunction<A, B> initial
     ) {
         return Combine.WithToIntBiFunction.of(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToIntBiFunction<A, B> with(
         ToIntBiFunction<A, B> initial
     ) {
         return withToIntBiFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithLongFunction<A> withLongFunction(
         LongFunction<A> initial
     ) {
         return Combine.WithLongFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithLongFunction<A> with(
         LongFunction<A> initial
     ) {
         return withLongFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithLongToDoubleFunction withLongToDoubleFunction(
         LongToDoubleFunction initial
     ) {
         return Combine.WithLongToDoubleFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongToDoubleFunction with(
         LongToDoubleFunction initial
     ) {
         return withLongToDoubleFunction(initial);
     }
 
-    @Experimental
     public static Combine.WithLongToIntFunction withLongToIntFunction(
         LongToIntFunction initial
     ) {
         return Combine.WithLongToIntFunction.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongToIntFunction with(
         LongToIntFunction initial
     ) {
         return withLongToIntFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToLongFunction<A> withToLongFunction(
         ToLongFunction<A> initial
     ) {
         return Combine.WithToLongFunction.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithToLongFunction<A> with(
         ToLongFunction<A> initial
     ) {
         return withToLongFunction(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToLongBiFunction<A, B> withToLongBiFunction(
         ToLongBiFunction<A, B> initial
     ) {
         return Combine.WithToLongBiFunction.of(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithToLongBiFunction<A, B> with(
         ToLongBiFunction<A, B> initial
     ) {
         return withToLongBiFunction(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithPredicate<A> withPredicate(
         Predicate<A> initial
     ) {
         return Combine.WithPredicate.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithPredicate<A> with(Predicate<A> initial) {
         return withPredicate(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithBiPredicate<A, B> withBiPredicate(
         BiPredicate<A, B> initial
     ) {
         return Combine.WithBiPredicate.of(initial);
     }
 
-    @Experimental
     public static <A, B> Combine.WithBiPredicate<A, B> with(
         BiPredicate<A, B> initial
     ) {
         return withBiPredicate(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanPredicate withBooleanPredicate(
         BooleanPredicate initial
     ) {
         return Combine.WithBooleanPredicate.of(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanPredicate with(BooleanPredicate initial) {
         return withBooleanPredicate(initial);
     }
 
-    @Experimental
     public static Combine.WithDoublePredicate withDoublePredicate(
         DoublePredicate initial
     ) {
         return Combine.WithDoublePredicate.of(initial);
     }
 
-    @Experimental
     public static Combine.WithDoublePredicate with(DoublePredicate initial) {
         return withDoublePredicate(initial);
     }
 
-    @Experimental
     public static Combine.WithIntPredicate withIntPredicate(
         IntPredicate initial
     ) {
         return Combine.WithIntPredicate.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntPredicate with(IntPredicate initial) {
         return withIntPredicate(initial);
     }
 
-    @Experimental
     public static Combine.WithLongPredicate withLongPredicate(
         LongPredicate initial
     ) {
         return Combine.WithLongPredicate.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongPredicate with(LongPredicate initial) {
         return withLongPredicate(initial);
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithConsumer<A> withConsumer(
         Consumer<A> initial
     ) {
@@ -3069,13 +3005,11 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithConsumer<A> with(Consumer<A> initial) {
         return withConsumer(initial);
     }
 
     @Evil
-    @Experimental
     public static <A, B> Combine.WithBiConsumer<A, B> withBiConsumer(
         BiConsumer<A, B> initial
     ) {
@@ -3083,7 +3017,6 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static <A, B> Combine.WithBiConsumer<A, B> with(
         BiConsumer<A, B> initial
     ) {
@@ -3091,7 +3024,6 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithBooleanConsumer withBooleanConsumer(
         BooleanConsumer initial
     ) {
@@ -3099,13 +3031,11 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithBooleanConsumer with(BooleanConsumer initial) {
         return withBooleanConsumer(initial);
     }
 
     @Evil
-    @Experimental
     public static Combine.WithDoubleConsumer withDoubleConsumer(
         DoubleConsumer initial
     ) {
@@ -3113,13 +3043,11 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithDoubleConsumer with(DoubleConsumer initial) {
         return withDoubleConsumer(initial);
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjDoubleConsumer<A> withObjDoubleConsumer(
         ObjDoubleConsumer<A> initial
     ) {
@@ -3127,7 +3055,6 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjDoubleConsumer<A> with(
         ObjDoubleConsumer<A> initial
     ) {
@@ -3135,19 +3062,16 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithIntConsumer withIntConsumer(IntConsumer initial) {
         return Combine.WithIntConsumer.of(initial);
     }
 
     @Evil
-    @Experimental
     public static Combine.WithIntConsumer with(IntConsumer initial) {
         return withIntConsumer(initial);
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjIntConsumer<A> withObjIntConsumer(
         ObjIntConsumer<A> initial
     ) {
@@ -3155,7 +3079,6 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjIntConsumer<A> with(
         ObjIntConsumer<A> initial
     ) {
@@ -3163,7 +3086,6 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithLongConsumer withLongConsumer(
         LongConsumer initial
     ) {
@@ -3171,13 +3093,11 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static Combine.WithLongConsumer with(LongConsumer initial) {
         return withLongConsumer(initial);
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjLongConsumer<A> withObjLongConsumer(
         ObjLongConsumer<A> initial
     ) {
@@ -3185,185 +3105,156 @@ public final class Z {
     }
 
     @Evil
-    @Experimental
     public static <A> Combine.WithObjLongConsumer<A> with(
         ObjLongConsumer<A> initial
     ) {
         return withObjLongConsumer(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithSupplier<A> withSupplier(
         Supplier<A> initial
     ) {
         return Combine.WithSupplier.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithSupplier<A> with(Supplier<A> initial) {
         return withSupplier(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanSupplier withBooleanSupplier(
         BooleanSupplier initial
     ) {
         return Combine.WithBooleanSupplier.of(initial);
     }
 
-    @Experimental
     public static Combine.WithBooleanSupplier with(BooleanSupplier initial) {
         return withBooleanSupplier(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleSupplier withDoubleSupplier(
         DoubleSupplier initial
     ) {
         return Combine.WithDoubleSupplier.of(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleSupplier with(DoubleSupplier initial) {
         return withDoubleSupplier(initial);
     }
 
-    @Experimental
     public static Combine.WithIntSupplier withIntSupplier(IntSupplier initial) {
         return Combine.WithIntSupplier.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntSupplier with(IntSupplier initial) {
         return withIntSupplier(initial);
     }
 
-    @Experimental
     public static Combine.WithLongSupplier withLongSupplier(
         LongSupplier initial
     ) {
         return Combine.WithLongSupplier.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongSupplier with(LongSupplier initial) {
         return withLongSupplier(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithUnaryOperator<A> withUnaryOperator(
         UnaryOperator<A> initial
     ) {
         return Combine.WithUnaryOperator.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithUnaryOperator<A> with(
         UnaryOperator<A> initial
     ) {
         return withUnaryOperator(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBinaryOperator<A> withBinaryOperator(
         BinaryOperator<A> initial
     ) {
         return Combine.WithBinaryOperator.of(initial);
     }
 
-    @Experimental
     public static <A> Combine.WithBinaryOperator<A> with(
         BinaryOperator<A> initial
     ) {
         return withBinaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleUnaryOperator withDoubleUnaryOperator(
         DoubleUnaryOperator initial
     ) {
         return Combine.WithDoubleUnaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleUnaryOperator with(
         DoubleUnaryOperator initial
     ) {
         return withDoubleUnaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithOperator withOperator(Operator initial) {
         return Combine.WithOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithOperator with(Operator initial) {
         return withOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleBinaryOperator withDoubleBinaryOperator(
         DoubleBinaryOperator initial
     ) {
         return Combine.WithDoubleBinaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithDoubleBinaryOperator with(
         DoubleBinaryOperator initial
     ) {
         return withDoubleBinaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithIntUnaryOperator withIntUnaryOperator(
         IntUnaryOperator initial
     ) {
         return Combine.WithIntUnaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntUnaryOperator with(IntUnaryOperator initial) {
         return withIntUnaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithIntBinaryOperator withIntBinaryOperator(
         IntBinaryOperator initial
     ) {
         return Combine.WithIntBinaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithIntBinaryOperator with(
         IntBinaryOperator initial
     ) {
         return withIntBinaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithLongUnaryOperator withLongUnaryOperator(
         LongUnaryOperator initial
     ) {
         return Combine.WithLongUnaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongUnaryOperator with(
         LongUnaryOperator initial
     ) {
         return withLongUnaryOperator(initial);
     }
 
-    @Experimental
     public static Combine.WithLongBinaryOperator withLongBinaryOperator(
         LongBinaryOperator initial
     ) {
         return Combine.WithLongBinaryOperator.of(initial);
     }
 
-    @Experimental
     public static Combine.WithLongBinaryOperator with(
         LongBinaryOperator initial
     ) {
