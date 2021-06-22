@@ -161,7 +161,7 @@ interface FunctionCombos<A, B> {
         return fusingToDoubleBiFunction(next);
     }
 
-    /* Function<A, B> -> ToDoubleBiFunction<B>, B */
+    /* Function<A, B> -> ToDoubleBiFunction<B, C>, C */
 
     public default <C> ToDoubleFunction<A> fuseToDoubleBiFunction(
         ToDoubleBiFunction<B, C> next,
@@ -237,7 +237,7 @@ interface FunctionCombos<A, B> {
         return fusingToIntBiFunction(next);
     }
 
-    /* Function<A, B> -> ToIntBiFunction<B>, B */
+    /* Function<A, B> -> ToIntBiFunction<B, C>, C */
 
     public default <C> ToIntFunction<A> fuseToIntBiFunction(
         ToIntBiFunction<B, C> next,
@@ -315,7 +315,7 @@ interface FunctionCombos<A, B> {
         return fusingToLongBiFunction(next);
     }
 
-    /* Function<A, B> -> ToLongBiFunction<B>, B */
+    /* Function<A, B> -> ToLongBiFunction<B, C>, C */
 
     public default <C> ToLongFunction<A> fuseToLongBiFunction(
         ToLongBiFunction<B, C> next,
@@ -667,7 +667,9 @@ interface FunctionCombos<A, B> {
     public default WithBiFunction<A, B, B> fusingBinaryOperator(
         BinaryOperator<B> next
     ) {
-        // TODO: simplify with currying
+        // Required - It's not possible for WithBifunction::of to accept both
+        // Function<A, Function<B, C>> and Function<A, UnaryOperator<B>> because
+        // They have the same erasure.
         return WithBiFunction.of(
             (A a, B b) -> next.apply(resolve().apply(a), b)
         );
@@ -677,7 +679,7 @@ interface FunctionCombos<A, B> {
         return fusingBinaryOperator(next);
     }
 
-    /* Function<A, B> -> BinaryOperator<B> */
+    /* Function<A, B> -> BinaryOperator<B>, B */
 
     public default Function<A, B> fuseBinaryOperator(
         BinaryOperator<B> next,
@@ -703,5 +705,4 @@ interface FunctionCombos<A, B> {
     ) {
         return fusingBinaryOperator(next, secondArg);
     }
-    /* TODO: Function<A, B> -> [Multi]Function<B...> */
 }
