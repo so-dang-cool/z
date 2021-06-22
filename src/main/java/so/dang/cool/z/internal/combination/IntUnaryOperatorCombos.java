@@ -7,6 +7,7 @@ import java.util.function.IntPredicate;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
+import so.dang.cool.z.internal.combination.Combine.WithIntBinaryOperator;
 import so.dang.cool.z.internal.combination.Combine.WithIntConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithIntFunction;
 import so.dang.cool.z.internal.combination.Combine.WithIntPredicate;
@@ -152,8 +153,15 @@ interface IntUnaryOperatorCombos {
         return fuseIntBinaryOperator(next);
     }
 
-    // TODO: Implement with currying
-    // fusingIntBinaryOperator(IntBinaryOperator next) { ... }
+    public default WithIntBinaryOperator fusingIntBinaryOperator(
+        IntBinaryOperator next
+    ) {
+        return WithIntBinaryOperator.of(fuseIntBinaryOperator(next));
+    }
+
+    public default WithIntBinaryOperator fusing(IntBinaryOperator next) {
+        return fusingIntBinaryOperator(next);
+    }
 
     public default IntUnaryOperator fuseIntBinaryOperator(
         IntBinaryOperator next,

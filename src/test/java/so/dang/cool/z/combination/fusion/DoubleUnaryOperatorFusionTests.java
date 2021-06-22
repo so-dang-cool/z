@@ -120,7 +120,8 @@ public class DoubleUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addOneToDouble, addDoubles),
-                Z.with(addOneToDouble).fuse(addDoubles)
+                Z.with(addOneToDouble).fuse(addDoubles),
+                Z.with(addOneToDouble).fusing(addDoubles).resolve()
             )
             .forEach(
                 fusion -> {

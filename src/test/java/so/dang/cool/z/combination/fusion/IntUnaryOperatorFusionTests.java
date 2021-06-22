@@ -118,7 +118,11 @@ public class IntUnaryOperatorFusionTests {
     @Test
     void intUnop_to_intBiop() {
         Stream
-            .of(Z.fuse(addTwoToInt, addInts), Z.with(addTwoToInt).fuse(addInts))
+            .of(
+                Z.fuse(addTwoToInt, addInts),
+                Z.with(addTwoToInt).fuse(addInts),
+                Z.with(addTwoToInt).fusing(addInts).resolve()
+            )
             .forEach(
                 fusion -> {
                     assertEquals(3, fusion.apply(0).applyAsInt(1));

@@ -7,6 +7,7 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
+import so.dang.cool.z.internal.combination.Combine.WithDoubleBinaryOperator;
 import so.dang.cool.z.internal.combination.Combine.WithDoubleConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithDoubleFunction;
 import so.dang.cool.z.internal.combination.Combine.WithDoublePredicate;
@@ -160,8 +161,15 @@ interface DoubleUnaryOperatorCombos {
         return fuseDoubleBinaryOperator(next);
     }
 
-    // TODO: Implement with currying
-    // fusingDoubleBinaryOperator(DoubleBinaryOperator next) { ... }
+    public default WithDoubleBinaryOperator fusingDoubleBinaryOperator(
+        DoubleBinaryOperator next
+    ) {
+        return WithDoubleBinaryOperator.of(fuseDoubleBinaryOperator(next));
+    }
+
+    public default WithDoubleBinaryOperator fusing(DoubleBinaryOperator next) {
+        return fusingDoubleBinaryOperator(next);
+    }
 
     public default DoubleUnaryOperator fuseDoubleBinaryOperator(
         DoubleBinaryOperator next,

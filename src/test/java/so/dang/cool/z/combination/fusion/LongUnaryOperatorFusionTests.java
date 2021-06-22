@@ -120,7 +120,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, addLongs),
-                Z.with(addThreeToLong).fuse(addLongs)
+                Z.with(addThreeToLong).fuse(addLongs),
+                Z.with(addThreeToLong).fusing(addLongs).resolve()
             )
             .forEach(
                 fusion -> {

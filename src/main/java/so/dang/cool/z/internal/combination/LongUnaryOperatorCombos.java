@@ -7,6 +7,7 @@ import java.util.function.LongPredicate;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
+import so.dang.cool.z.internal.combination.Combine.WithLongBinaryOperator;
 import so.dang.cool.z.internal.combination.Combine.WithLongConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithLongFunction;
 import so.dang.cool.z.internal.combination.Combine.WithLongPredicate;
@@ -154,8 +155,15 @@ interface LongUnaryOperatorCombos {
         return fuseLongBinaryOperator(next);
     }
 
-    // TODO: Implement with currying
-    // fusingLongBinaryOperator(LongBinaryOperator next) { ... }
+    public default WithLongBinaryOperator fusingLongBinaryOperator(
+        LongBinaryOperator next
+    ) {
+        return WithLongBinaryOperator.of(fuseLongBinaryOperator(next));
+    }
+
+    public default WithLongBinaryOperator fusing(LongBinaryOperator next) {
+        return fusingLongBinaryOperator(next);
+    }
 
     public default LongUnaryOperator fuseLongBinaryOperator(
         LongBinaryOperator next,
