@@ -114,20 +114,22 @@ interface IntPredicateCombos {
 
     /* IntPredicate -> BooleanPredicate */
 
-    public default IntPredicate fuseIntPredicate(BooleanPredicate next) {
+    public default IntPredicate fuseBooleanPredicate(BooleanPredicate next) {
         return (int i) -> next.test(resolve().test(i));
     }
 
     public default IntPredicate fuse(BooleanPredicate next) {
-        return fuseIntPredicate(next);
+        return fuseBooleanPredicate(next);
     }
 
-    public default WithIntPredicate fusingIntPredicate(BooleanPredicate next) {
-        return WithIntPredicate.of(fuseIntPredicate(next));
+    public default WithIntPredicate fusingBooleanPredicate(
+        BooleanPredicate next
+    ) {
+        return WithIntPredicate.of(fuseBooleanPredicate(next));
     }
 
     public default WithIntPredicate fusing(BooleanPredicate next) {
-        return fusingIntPredicate(next);
+        return fusingBooleanPredicate(next);
     }
 
     /* IntPredicate -> BooleanConsumer */
