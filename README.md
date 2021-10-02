@@ -6,11 +6,11 @@
 [![Javadoc](https://javadoc.io/badge2/so.dang.cool/z/javadoc.svg)](https://javadoc.io/doc/so.dang.cool/z)
 ![License](https://img.shields.io/github/license/hiljusti/z)
 
-[![codecov](https://codecov.io/gh/hiljusti/z/branch/core/graph/badge.svg?token=CF80PDSXUB)](https://codecov.io/gh/hiljusti/z)
-![dependency count](https://img.shields.io/badge/dependencies-0-blue)
-![jar size](https://img.shields.io/badge/jar_size-243_kB-blue)
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
+[![codecov](https://codecov.io/gh/hiljusti/z/branch/core/graph/badge.svg?token=CF80PDSXUB)](https://codecov.io/gh/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
+![jar size](https://img.shields.io/badge/jar_size-243_kB-blue)
+![dependency count](https://img.shields.io/badge/dependencies-0-blue)
 
 # Techniques
 
