@@ -211,8 +211,8 @@ public class UsageExamples {
     public void complex_regex_example() {
         var isLocalHost = Z
             .with("https?://localhost(:\\d+)?(/\\S*)?")
-            .fusingFunction(Pattern::compile)
-            .fusing(Pattern::matcher)
+            .fuseFunction(Pattern::compile)
+            .fuse(Pattern::matcher)
             .fuse(Matcher::matches);
 
         assertFalse(isLocalHost.test("invalid"));

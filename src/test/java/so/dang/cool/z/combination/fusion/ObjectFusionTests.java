@@ -54,14 +54,6 @@ public class ObjectFusionTests {
     }
 
     @Test
-    void object_to_fn_deeper() {
-        assertEquals(
-            suppliedString.toLowerCase(),
-            Z.with("Z").fusing(toLower).get()
-        );
-    }
-
-    @Test
     void object_to_bifn() {
         assertEquals("Z!", Z.fuseObject("Z", concat).apply("!"));
     }

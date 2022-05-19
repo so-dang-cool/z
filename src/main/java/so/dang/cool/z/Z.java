@@ -62,6 +62,23 @@ import so.dang.cool.z.function.SexFunction;
 import so.dang.cool.z.function.TriFunction;
 import so.dang.cool.z.function.UndecFunction;
 import so.dang.cool.z.internal.combination.Combine;
+import so.dang.cool.z.internal.combination.Combine.WithBiFunction;
+import so.dang.cool.z.internal.combination.Combine.WithBooleanSupplier;
+import so.dang.cool.z.internal.combination.Combine.WithConsumer;
+import so.dang.cool.z.internal.combination.Combine.WithDoubleConsumer;
+import so.dang.cool.z.internal.combination.Combine.WithDoubleSupplier;
+import so.dang.cool.z.internal.combination.Combine.WithFunction;
+import so.dang.cool.z.internal.combination.Combine.WithIntConsumer;
+import so.dang.cool.z.internal.combination.Combine.WithIntSupplier;
+import so.dang.cool.z.internal.combination.Combine.WithLongConsumer;
+import so.dang.cool.z.internal.combination.Combine.WithLongSupplier;
+import so.dang.cool.z.internal.combination.Combine.WithOperator;
+import so.dang.cool.z.internal.combination.Combine.WithPredicate;
+import so.dang.cool.z.internal.combination.Combine.WithSupplier;
+import so.dang.cool.z.internal.combination.Combine.WithToDoubleFunction;
+import so.dang.cool.z.internal.combination.Combine.WithToIntFunction;
+import so.dang.cool.z.internal.combination.Combine.WithToLongFunction;
+import so.dang.cool.z.internal.combination.Combine.WithUnaryOperator;
 
 /**
  * A collection of techniques for combining or manipulating Java functions.
@@ -122,107 +139,107 @@ public final class Z {
 
     /* Object */
 
-    public static <A, B> Supplier<B> fuseObject(
+    public static <A, B> WithSupplier<B> fuseObject(
         A initial,
         Function<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<B, C> fuseObject(
+    public static <A, B, C> WithFunction<B, C> fuseObject(
         A initial,
         BiFunction<A, B, C> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> DoubleSupplier fuseObject(
+    public static <A> WithDoubleSupplier fuseObject(
         A initial,
         ToDoubleFunction<A> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B> ToDoubleFunction<B> fuseObject(
+    public static <A, B> WithToDoubleFunction<B> fuseObject(
         A initial,
         ToDoubleBiFunction<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> IntSupplier fuseObject(A initial, ToIntFunction<A> next) {
+    public static <A> WithIntSupplier fuseObject(A initial, ToIntFunction<A> next) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B> ToIntFunction<B> fuseObject(
+    public static <A, B> WithToIntFunction<B> fuseObject(
         A initial,
         ToIntBiFunction<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> LongSupplier fuseObject(
+    public static <A> WithLongSupplier fuseObject(
         A initial,
         ToLongFunction<A> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B> ToLongFunction<B> fuseObject(
+    public static <A, B> WithToLongFunction<B> fuseObject(
         A initial,
         ToLongBiFunction<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> BooleanSupplier fuseObject(A initial, Predicate<A> next) {
+    public static <A> WithBooleanSupplier fuseObject(A initial, Predicate<A> next) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B> Predicate<B> fuseObject(
+    public static <A, B> WithPredicate<B> fuseObject(
         A initial,
         BiPredicate<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> Operator fuseObject(A initial, Consumer<A> next) {
+    public static <A> WithOperator fuseObject(A initial, Consumer<A> next) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A, B> Consumer<B> fuseObject(
+    public static <A, B> WithConsumer<B> fuseObject(
         A initial,
         BiConsumer<A, B> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> DoubleConsumer fuseObject(
+    public static <A> WithDoubleConsumer fuseObject(
         A initial,
         ObjDoubleConsumer<A> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> IntConsumer fuseObject(
+    public static <A> WithIntConsumer fuseObject(
         A initial,
         ObjIntConsumer<A> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> LongConsumer fuseObject(
+    public static <A> WithLongConsumer fuseObject(
         A initial,
         ObjLongConsumer<A> next
     ) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> Supplier<A> fuseObject(A initial, UnaryOperator<A> next) {
+    public static <A> WithSupplier<A> fuseObject(A initial, UnaryOperator<A> next) {
         return Z.with(initial).fuse(next);
     }
 
-    public static <A> UnaryOperator<A> fuseObject(
+    public static <A> WithUnaryOperator<A> fuseObject(
         A initial,
         BinaryOperator<A> next
     ) {
