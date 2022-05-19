@@ -225,11 +225,11 @@ public class UsageExamples {
 
         var addSevenWs = Z
             .with(addW)
-            .fusing(addW)
-            .fusing(addW)
-            .fusing(addW)
-            .fusing(addW)
-            .fusing(addW)
+            .fuse(addW)
+            .fuse(addW)
+            .fuse(addW)
+            .fuse(addW)
+            .fuse(addW)
             .fuse(addW);
 
         assertEquals("うはｗｗｗｗｗｗｗ", addSevenWs.apply("うは"));

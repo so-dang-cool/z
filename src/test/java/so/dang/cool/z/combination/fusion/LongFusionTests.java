@@ -26,11 +26,6 @@ public class LongFusionTests {
     }
 
     @Test
-    void long_to_longFn_deeper() {
-        assertEquals("3", Z.with(3L).fusing(longToString).get());
-    }
-
-    @Test
     void long_to_longToDbl() {
         assertEquals(3.0, Z.fuse(3L, longToDouble).getAsDouble());
     }

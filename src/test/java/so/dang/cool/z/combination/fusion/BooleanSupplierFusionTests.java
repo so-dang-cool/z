@@ -24,10 +24,6 @@ public class BooleanSupplierFusionTests {
             "true",
             Z.with(getBooleanTrue).fuse(booleanToString).get()
         );
-        assertEquals(
-            "true",
-            Z.with(getBooleanTrue).fusing(booleanToString).get()
-        );
     }
 
     @Test
@@ -40,20 +36,12 @@ public class BooleanSupplierFusionTests {
             1.0,
             Z.with(getBooleanTrue).fuse(maybeOneAsDouble).getAsDouble()
         );
-        assertEquals(
-            1.0,
-            Z.with(getBooleanTrue).fusing(maybeOneAsDouble).getAsDouble()
-        );
     }
 
     @Test
     void boolSup_to_toIntFn() {
         assertEquals(2, Z.fuse(getBooleanTrue, maybeTwoAsInt).getAsInt());
         assertEquals(2, Z.with(getBooleanTrue).fuse(maybeTwoAsInt).getAsInt());
-        assertEquals(
-            2,
-            Z.with(getBooleanTrue).fusing(maybeTwoAsInt).getAsInt()
-        );
     }
 
     @Test
@@ -63,17 +51,12 @@ public class BooleanSupplierFusionTests {
             3L,
             Z.with(getBooleanTrue).fuse(maybeThreeAsLong).getAsLong()
         );
-        assertEquals(
-            3L,
-            Z.with(getBooleanTrue).fusing(maybeThreeAsLong).getAsLong()
-        );
     }
 
     @Test
     void boolSup_to_pred() {
         assertFalse(Z.fuse(getBooleanTrue, not).getAsBoolean());
         assertFalse(Z.with(getBooleanTrue).fuse(not).getAsBoolean());
-        assertFalse(Z.with(getBooleanTrue).fusing(not).getAsBoolean());
     }
 
     @Evil
@@ -84,7 +67,6 @@ public class BooleanSupplierFusionTests {
 
             Z.fuse(getBooleanTrue, saveBooleanA).run();
             Z.with(getBooleanTrue).fuse(saveBooleanA).run();
-            Z.with(getBooleanTrue).fusing(saveBooleanA).run();
 
             assertTrue(consumedBooleanA);
         }
@@ -94,6 +76,5 @@ public class BooleanSupplierFusionTests {
     void boolSup_to_toUnop() {
         assertTrue(Z.fuse(getBooleanTrue, booleanId).getAsBoolean());
         assertTrue(Z.with(getBooleanTrue).fuse(booleanId).getAsBoolean());
-        assertTrue(Z.with(getBooleanTrue).fusing(booleanId).getAsBoolean());
     }
 }

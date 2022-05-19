@@ -1,6 +1,5 @@
 package so.dang.cool.z.internal.combination;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
@@ -9,10 +8,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.IntSupplier;
-import java.util.function.LongSupplier;
-import java.util.function.Supplier;
-import so.dang.cool.z.function.Operator;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanSupplier;
 import so.dang.cool.z.internal.combination.Combine.WithDoubleSupplier;
 import so.dang.cool.z.internal.combination.Combine.WithDoubleUnaryOperator;
@@ -26,175 +21,107 @@ interface DoubleSupplierCombos {
 
     /* DoubleSupplier -> DoubleFunction<A> */
 
-    public default <A> Supplier<A> fuseDoubleFunction(DoubleFunction<A> next) {
-        return () -> next.apply(resolve().getAsDouble());
-    }
-
-    public default <A> Supplier<A> fuse(DoubleFunction<A> next) {
-        return fuseDoubleFunction(next);
-    }
-
-    public default <A> WithSupplier<A> fusingDoubleFunction(
+    public default <A> WithSupplier<A> fuseDoubleFunction(
         DoubleFunction<A> next
     ) {
-        return WithSupplier.of(fuse(next));
+        return WithSupplier.of(() -> next.apply(resolve().getAsDouble()));
     }
 
-    public default <A> WithSupplier<A> fusing(DoubleFunction<A> next) {
-        return fusingDoubleFunction(next);
+    public default <A> WithSupplier<A> fuse(DoubleFunction<A> next) {
+        return fuseDoubleFunction(next);
     }
 
     /* DoubleSupplier -> DoubleToIntFunction */
 
-    public default IntSupplier fuseDoubleToIntFunction(
+    public default WithIntSupplier fuseDoubleToIntFunction(
         DoubleToIntFunction next
     ) {
-        return () -> next.applyAsInt(resolve().getAsDouble());
+        return WithIntSupplier.of(
+            () -> next.applyAsInt(resolve().getAsDouble())
+        );
     }
 
-    public default IntSupplier fuse(DoubleToIntFunction next) {
+    public default WithIntSupplier fuse(DoubleToIntFunction next) {
         return fuseDoubleToIntFunction(next);
-    }
-
-    public default WithIntSupplier fusingDoubleToIntFunction(
-        DoubleToIntFunction next
-    ) {
-        return WithIntSupplier.of(fuse(next));
-    }
-
-    public default WithIntSupplier fusing(DoubleToIntFunction next) {
-        return fusingDoubleToIntFunction(next);
     }
 
     /* DoubleSupplier -> DoubleToLongFunction */
 
-    public default LongSupplier fuseDoubleToLongFunction(
+    public default WithLongSupplier fuseDoubleToLongFunction(
         DoubleToLongFunction next
     ) {
-        return () -> next.applyAsLong(resolve().getAsDouble());
+        return WithLongSupplier.of(
+            () -> next.applyAsLong(resolve().getAsDouble())
+        );
     }
 
-    public default LongSupplier fuse(DoubleToLongFunction next) {
+    public default WithLongSupplier fuse(DoubleToLongFunction next) {
         return fuseDoubleToLongFunction(next);
-    }
-
-    public default WithLongSupplier fusingDoubleToLongFunction(
-        DoubleToLongFunction next
-    ) {
-        return WithLongSupplier.of(fuse(next));
-    }
-
-    public default WithLongSupplier fusing(DoubleToLongFunction next) {
-        return fusingDoubleToLongFunction(next);
     }
 
     /* DoubleSupplier -> DoublePredicate */
 
-    public default BooleanSupplier fuseDoublePredicate(DoublePredicate next) {
-        return () -> next.test(resolve().getAsDouble());
-    }
-
-    public default BooleanSupplier fuse(DoublePredicate next) {
-        return fuseDoublePredicate(next);
-    }
-
-    public default WithBooleanSupplier fusingDoublePredicate(
+    public default WithBooleanSupplier fuseDoublePredicate(
         DoublePredicate next
     ) {
-        return WithBooleanSupplier.of(fuse(next));
+        return WithBooleanSupplier.of(() -> next.test(resolve().getAsDouble()));
     }
 
-    public default WithBooleanSupplier fusing(DoublePredicate next) {
-        return fusingDoublePredicate(next);
+    public default WithBooleanSupplier fuse(DoublePredicate next) {
+        return fuseDoublePredicate(next);
     }
 
     /* DoubleSupplier -> DoubleConsumer */
 
-    public default Operator fuseDoubleConsumer(DoubleConsumer next) {
-        return () -> next.accept(resolve().getAsDouble());
+    public default WithOperator fuseDoubleConsumer(DoubleConsumer next) {
+        return WithOperator.of(() -> next.accept(resolve().getAsDouble()));
     }
 
-    public default Operator fuse(DoubleConsumer next) {
+    public default WithOperator fuse(DoubleConsumer next) {
         return fuseDoubleConsumer(next);
-    }
-
-    public default WithOperator fusingDoubleConsumer(DoubleConsumer next) {
-        return WithOperator.of(fuse(next));
-    }
-
-    public default WithOperator fusing(DoubleConsumer next) {
-        return fusingDoubleConsumer(next);
     }
 
     /* DoubleSupplier -> DoubleUnaryOperator */
 
-    public default DoubleSupplier fuseDoubleUnaryOperator(
+    public default WithDoubleSupplier fuseDoubleUnaryOperator(
         DoubleUnaryOperator next
     ) {
-        return () -> next.applyAsDouble(resolve().getAsDouble());
+        return WithDoubleSupplier.of(
+            () -> next.applyAsDouble(resolve().getAsDouble())
+        );
     }
 
-    public default DoubleSupplier fuse(DoubleUnaryOperator next) {
+    public default WithDoubleSupplier fuse(DoubleUnaryOperator next) {
         return fuseDoubleUnaryOperator(next);
-    }
-
-    public default WithDoubleSupplier fusingDoubleUnaryOperator(
-        DoubleUnaryOperator next
-    ) {
-        return WithDoubleSupplier.of(fuse(next));
-    }
-
-    public default WithDoubleSupplier fusing(DoubleUnaryOperator next) {
-        return fusingDoubleUnaryOperator(next);
     }
 
     /* DoubleSupplier -> DoubleBinaryOperator */
 
-    public default DoubleUnaryOperator fuseDoubleBinaryOperator(
+    public default WithDoubleUnaryOperator fuseDoubleBinaryOperator(
         DoubleBinaryOperator next
     ) {
-        return (double d) -> next.applyAsDouble(resolve().getAsDouble(), d);
+        return WithDoubleUnaryOperator.of(
+            (double d) -> next.applyAsDouble(resolve().getAsDouble(), d)
+        );
     }
 
-    public default DoubleUnaryOperator fuse(DoubleBinaryOperator next) {
+    public default WithDoubleUnaryOperator fuse(DoubleBinaryOperator next) {
         return fuseDoubleBinaryOperator(next);
     }
 
-    public default WithDoubleUnaryOperator fusingDoubleBinaryOperator(
-        DoubleBinaryOperator next
-    ) {
-        return WithDoubleUnaryOperator.of(fuse(next));
-    }
-
-    public default WithDoubleUnaryOperator fusing(DoubleBinaryOperator next) {
-        return fusingDoubleBinaryOperator(next);
-    }
-
-    public default DoubleSupplier fuseDoubleBinaryOperator(
+    public default WithDoubleSupplier fuseDoubleBinaryOperator(
         DoubleBinaryOperator next,
         double secondArg
     ) {
-        return () -> next.applyAsDouble(resolve().getAsDouble(), secondArg);
+        return WithDoubleSupplier.of(
+            () -> next.applyAsDouble(resolve().getAsDouble(), secondArg)
+        );
     }
 
-    public default DoubleSupplier fuse(
+    public default WithDoubleSupplier fuse(
         DoubleBinaryOperator next,
         double secondArg
     ) {
         return fuseDoubleBinaryOperator(next, secondArg);
-    }
-
-    public default WithDoubleSupplier fusingDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return WithDoubleSupplier.of(fuse(next, secondArg));
-    }
-
-    public default WithDoubleSupplier fusing(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fusingDoubleBinaryOperator(next, secondArg);
     }
 }

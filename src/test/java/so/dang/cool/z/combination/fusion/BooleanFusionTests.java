@@ -27,11 +27,6 @@ public class BooleanFusionTests {
     }
 
     @Test
-    void boolean_to_boolFn_deeper() {
-        assertEquals("true", Z.with(true).fusing(booleanToString).get());
-    }
-
-    @Test
     void boolean_to_boolToDblFn() {
         assertEquals(1.0, Z.fuse(true, maybeOneAsDouble).getAsDouble());
     }

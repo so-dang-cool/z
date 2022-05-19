@@ -25,14 +25,6 @@ public class ObjectFusionTests {
     }
 
     @Test
-    void class_to_fn_deeper() {
-        assertEquals(
-            suppliedString.toLowerCase(),
-            Z.with(String.class).fusing(toLower).apply("Z")
-        );
-    }
-
-    @Test
     void object_deep() {
         assertEquals("hi", Z.with("hi").get());
     }

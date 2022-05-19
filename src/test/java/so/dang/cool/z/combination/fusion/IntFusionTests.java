@@ -26,11 +26,6 @@ public class IntFusionTests {
     }
 
     @Test
-    void int_to_intFn_deeper() {
-        assertEquals("2", Z.with(2).fusing(intToString).get());
-    }
-
-    @Test
     void int_to_intToDbl() {
         assertEquals(2.0, Z.fuse(2, intToDouble).getAsDouble());
     }
