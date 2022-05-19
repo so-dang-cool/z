@@ -434,6 +434,18 @@ public final class Z {
 
     /* Function */
 
+    public static <A, B> Combine.WithFunction<A, B> fuseFunction(
+        Function<A, B> initial
+    ) {
+        return Combine.WithFunction.of(initial);
+    }
+
+    public static <A, B> Combine.WithFunction<A, B> fuse(
+        Function<A, B> initial
+    ) {
+        return fuseFunction(initial);
+    }
+
     public static <A, B, C> Combine.WithFunction<A, C> fuse(
         Function<A, B> initial,
         Function<B, C> next
@@ -555,7 +567,19 @@ public final class Z {
 
     /* BiFunction */
 
-    // TODO: "fusing" and "with" cleanup starts here!
+    public static <A, B, C> Combine.WithBiFunction<A, B, C> fuseBiFunction(
+        BiFunction<A, B, C> initial
+    ) {
+        return Combine.WithBiFunction.of(initial);
+    }
+
+    public static <A, B, C> Combine.WithBiFunction<A, B, C> fuse(
+        BiFunction<A, B, C> initial
+    ) {
+        return fuseBiFunction(initial);
+    }
+
+    // TODO: "fusing" and "With[Etc]" cleanup starts here!
     public static <A, B, C, D> Function<A, Function<B, D>> fuse(
         BiFunction<A, B, C> initial,
         Function<C, D> next
@@ -662,6 +686,18 @@ public final class Z {
     }
 
     /* BooleanFunction */
+
+    public static <A> Combine.WithBooleanFunction<A> fuseBooleanFunction(
+        BooleanFunction<A> initial
+    ) {
+        return Combine.WithBooleanFunction.of(initial);
+    }
+
+    public static <A> Combine.WithBooleanFunction<A> fuse(
+        BooleanFunction<A> initial
+    ) {
+        return fuseBooleanFunction(initial);
+    }
 
     public static <A, B> BooleanFunction<B> fuse(
         BooleanFunction<A> initial,
@@ -770,6 +806,18 @@ public final class Z {
 
     /* BooleanToDoubleFunction */
 
+    public static Combine.WithBooleanToDoubleFunction fuseBooleanToDoubleFunction(
+        BooleanToDoubleFunction initial
+    ) {
+        return Combine.WithBooleanToDoubleFunction.of(initial);
+    }
+
+    public static Combine.WithBooleanToDoubleFunction fuse(
+        BooleanToDoubleFunction initial
+    ) {
+        return fuseBooleanToDoubleFunction(initial);
+    }
+
     public static <A> BooleanFunction<A> fuse(
         BooleanToDoubleFunction initial,
         DoubleFunction<A> next
@@ -820,6 +868,18 @@ public final class Z {
     }
 
     /* BooleanToIntFunction */
+
+    public static <A> Combine.WithBooleanToIntFunction fuseBooleanToIntFunction(
+        BooleanToIntFunction initial
+    ) {
+        return Combine.WithBooleanToIntFunction.of(initial);
+    }
+
+    public static <A> Combine.WithBooleanToIntFunction fuse(
+        BooleanToIntFunction initial
+    ) {
+        return fuseBooleanToIntFunction(initial);
+    }
 
     public static <A> BooleanFunction<A> fuse(
         BooleanToIntFunction initial,
@@ -872,6 +932,18 @@ public final class Z {
 
     /* BooleanToLongFunction */
 
+    public static Combine.WithBooleanToLongFunction fuseBooleanToLongFunction(
+        BooleanToLongFunction initial
+    ) {
+        return Combine.WithBooleanToLongFunction.of(initial);
+    }
+
+    public static Combine.WithBooleanToLongFunction fuse(
+        BooleanToLongFunction initial
+    ) {
+        return fuseBooleanToLongFunction(initial);
+    }
+
     public static <A> BooleanFunction<A> fuse(
         BooleanToLongFunction initial,
         LongFunction<A> next
@@ -923,102 +995,114 @@ public final class Z {
 
     /* DoubleFunction */
 
+    public static <A> Combine.WithDoubleFunction<A> fuseDoubleFunction(
+        DoubleFunction<A> initial
+    ) {
+        return Combine.WithDoubleFunction.of(initial);
+    }
+
+    public static <A> Combine.WithDoubleFunction<A> fuse(
+        DoubleFunction<A> initial
+    ) {
+        return fuseDoubleFunction(initial);
+    }
+
     public static <A, B> DoubleFunction<B> fuse(
         DoubleFunction<A> initial,
         Function<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B, C> DoubleFunction<Function<B, C>> fuse(
         DoubleFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleUnaryOperator fuse(
         DoubleFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<ToDoubleFunction<B>> fuse(
         DoubleFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleToIntFunction fuse(
         DoubleFunction<A> initial,
         ToIntFunction<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<ToIntFunction<B>> fuse(
         DoubleFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleToLongFunction fuse(
         DoubleFunction<A> initial,
         ToLongFunction<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<ToLongFunction<B>> fuse(
         DoubleFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoublePredicate fuse(
         DoubleFunction<A> initial,
         Predicate<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<Predicate<B>> fuse(
         DoubleFunction<A> initial,
         BiPredicate<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleConsumer fuse(
         DoubleFunction<A> initial,
         Consumer<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A, B> DoubleFunction<Consumer<B>> fuse(
         DoubleFunction<A> initial,
         BiConsumer<A, B> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleFunction<DoubleConsumer> fuse(
         DoubleFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleFunction<IntConsumer> fuse(
         DoubleFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
-        return Z.with(initial).fuse(next);
+        return Z.fuse(initial).fuse(next);
     }
 
     public static <A> DoubleFunction<LongConsumer> fuse(
@@ -1029,6 +1113,18 @@ public final class Z {
     }
 
     /* DoubleToIntFunction */
+
+    public static <A> Combine.WithDoubleToIntFunction fuseDoubleToIntFunction(
+        DoubleToIntFunction initial
+    ) {
+        return Combine.WithDoubleToIntFunction.of(initial);
+    }
+
+    public static <A> Combine.WithDoubleToIntFunction fuse(
+        DoubleToIntFunction initial
+    ) {
+        return fuseDoubleToIntFunction(initial);
+    }
 
     public static <A> DoubleFunction<A> fuse(
         DoubleToIntFunction initial,
@@ -1081,6 +1177,18 @@ public final class Z {
 
     /* DoubleToLongFunction */
 
+    public static <A> Combine.WithDoubleToLongFunction fuseDoubleToLongFunction(
+        DoubleToLongFunction initial
+    ) {
+        return Combine.WithDoubleToLongFunction.of(initial);
+    }
+
+    public static <A> Combine.WithDoubleToLongFunction fuse(
+        DoubleToLongFunction initial
+    ) {
+        return fuseDoubleToLongFunction(initial);
+    }
+
     public static <A> DoubleFunction<A> fuse(
         DoubleToLongFunction initial,
         LongFunction<A> next
@@ -1131,6 +1239,18 @@ public final class Z {
     }
 
     /* ToDoubleFunction */
+
+    public static <A> Combine.WithToDoubleFunction<A> fuseToDoubleFunction(
+        ToDoubleFunction<A> initial
+    ) {
+        return Combine.WithToDoubleFunction.of(initial);
+    }
+
+    public static <A> Combine.WithToDoubleFunction<A> fuse(
+        ToDoubleFunction<A> initial
+    ) {
+        return fuseToDoubleFunction(initial);
+    }
 
     public static <A, B> Function<A, B> fuse(
         ToDoubleFunction<A> initial,
@@ -1183,6 +1303,18 @@ public final class Z {
 
     /* ToDoubleBiFunction */
 
+    public static <A, B> Combine.WithToDoubleBiFunction<A, B> fuseToDoubleBiFunction(
+        ToDoubleBiFunction<A, B> initial
+    ) {
+        return Combine.WithToDoubleBiFunction.of(initial);
+    }
+
+    public static <A, B> Combine.WithToDoubleBiFunction<A, B> fuse(
+        ToDoubleBiFunction<A, B> initial
+    ) {
+        return fuseToDoubleBiFunction(initial);
+    }
+
     public static <A, B, C> Function<A, Function<B, C>> fuse(
         ToDoubleBiFunction<A, B> initial,
         DoubleFunction<C> next
@@ -1233,6 +1365,16 @@ public final class Z {
     }
 
     /* IntFunction */
+
+    public static <A> Combine.WithIntFunction<A> fuseIntFunction(
+        IntFunction<A> initial
+    ) {
+        return Combine.WithIntFunction.of(initial);
+    }
+
+    public static <A> Combine.WithIntFunction<A> fuse(IntFunction<A> initial) {
+        return fuseIntFunction(initial);
+    }
 
     public static <A, B> IntFunction<B> fuse(
         IntFunction<A> initial,
@@ -1341,6 +1483,18 @@ public final class Z {
 
     /* IntToDoubleFunction */
 
+    public static Combine.WithIntToDoubleFunction fuseIntToDoubleFunction(
+        IntToDoubleFunction initial
+    ) {
+        return Combine.WithIntToDoubleFunction.of(initial);
+    }
+
+    public static Combine.WithIntToDoubleFunction fuse(
+        IntToDoubleFunction initial
+    ) {
+        return fuseIntToDoubleFunction(initial);
+    }
+
     public static <A> IntFunction<A> fuse(
         IntToDoubleFunction initial,
         DoubleFunction<A> next
@@ -1391,6 +1545,18 @@ public final class Z {
     }
 
     /* IntToLongFunction */
+
+    public static Combine.WithIntToLongFunction fuseIntToLongFunction(
+        IntToLongFunction initial
+    ) {
+        return Combine.WithIntToLongFunction.of(initial);
+    }
+
+    public static Combine.WithIntToLongFunction fuse(
+        IntToLongFunction initial
+    ) {
+        return fuseIntToLongFunction(initial);
+    }
 
     public static <A> IntFunction<A> fuse(
         IntToLongFunction initial,
@@ -1443,6 +1609,18 @@ public final class Z {
 
     /* ToIntFunction */
 
+    public static <A> Combine.WithToIntFunction<A> fuseToIntFunction(
+        ToIntFunction<A> initial
+    ) {
+        return Combine.WithToIntFunction.of(initial);
+    }
+
+    public static <A> Combine.WithToIntFunction<A> fuse(
+        ToIntFunction<A> initial
+    ) {
+        return fuseToIntFunction(initial);
+    }
+
     public static <A, B> Function<A, B> fuse(
         ToIntFunction<A> initial,
         IntFunction<B> next
@@ -1494,6 +1672,18 @@ public final class Z {
 
     /* ToIntBiFunction */
 
+    public static <A, B> Combine.WithToIntBiFunction<A, B> fuseToIntBiFunction(
+        ToIntBiFunction<A, B> initial
+    ) {
+        return Combine.WithToIntBiFunction.of(initial);
+    }
+
+    public static <A, B> Combine.WithToIntBiFunction<A, B> fuse(
+        ToIntBiFunction<A, B> initial
+    ) {
+        return fuseToIntBiFunction(initial);
+    }
+
     public static <A, B, C> Function<A, Function<B, C>> fuse(
         ToIntBiFunction<A, B> initial,
         IntFunction<C> next
@@ -1544,6 +1734,18 @@ public final class Z {
     }
 
     /* LongFunction */
+
+    public static <A> Combine.WithLongFunction<A> fuseLongFunction(
+        LongFunction<A> initial
+    ) {
+        return Combine.WithLongFunction.of(initial);
+    }
+
+    public static <A> Combine.WithLongFunction<A> fuse(
+        LongFunction<A> initial
+    ) {
+        return fuseLongFunction(initial);
+    }
 
     public static <A, B> LongFunction<B> fuse(
         LongFunction<A> initial,
@@ -1652,6 +1854,18 @@ public final class Z {
 
     /* LongToDoubleFunction */
 
+    public static Combine.WithLongToDoubleFunction fuseLongToDoubleFunction(
+        LongToDoubleFunction initial
+    ) {
+        return Combine.WithLongToDoubleFunction.of(initial);
+    }
+
+    public static Combine.WithLongToDoubleFunction fuse(
+        LongToDoubleFunction initial
+    ) {
+        return fuseLongToDoubleFunction(initial);
+    }
+
     public static <A> LongFunction<A> fuse(
         LongToDoubleFunction initial,
         DoubleFunction<A> next
@@ -1702,6 +1916,18 @@ public final class Z {
     }
 
     /* LongToIntFunction */
+
+    public static Combine.WithLongToIntFunction fuseLongToIntFunction(
+        LongToIntFunction initial
+    ) {
+        return Combine.WithLongToIntFunction.of(initial);
+    }
+
+    public static Combine.WithLongToIntFunction fuse(
+        LongToIntFunction initial
+    ) {
+        return fuseLongToIntFunction(initial);
+    }
 
     public static <A> LongFunction<A> fuse(
         LongToIntFunction initial,
@@ -1754,6 +1980,18 @@ public final class Z {
 
     /* ToLongFunction */
 
+    public static <A> Combine.WithToLongFunction<A> fuseToLongFunction(
+        ToLongFunction<A> initial
+    ) {
+        return Combine.WithToLongFunction.of(initial);
+    }
+
+    public static <A> Combine.WithToLongFunction<A> fuse(
+        ToLongFunction<A> initial
+    ) {
+        return fuseToLongFunction(initial);
+    }
+
     public static <A, B> Function<A, B> fuse(
         ToLongFunction<A> initial,
         LongFunction<B> next
@@ -1804,6 +2042,18 @@ public final class Z {
     }
 
     /* ToLongBiFunction */
+
+    public static <A, B> Combine.WithToLongBiFunction<A, B> fuseToLongBiFunction(
+        ToLongBiFunction<A, B> initial
+    ) {
+        return Combine.WithToLongBiFunction.of(initial);
+    }
+
+    public static <A, B> Combine.WithToLongBiFunction<A, B> fuse(
+        ToLongBiFunction<A, B> initial
+    ) {
+        return fuseToLongBiFunction(initial);
+    }
 
     public static <A, B, C> Function<A, Function<B, C>> fuse(
         ToLongBiFunction<A, B> initial,
@@ -1856,6 +2106,16 @@ public final class Z {
 
     /* Predicate */
 
+    public static <A> Combine.WithPredicate<A> fusePredicate(
+        Predicate<A> initial
+    ) {
+        return Combine.WithPredicate.of(initial);
+    }
+
+    public static <A> Combine.WithPredicate<A> fuse(Predicate<A> initial) {
+        return fusePredicate(initial);
+    }
+
     public static <A, B> Function<A, B> fuse(
         Predicate<A> initial,
         BooleanFunction<B> next
@@ -1899,6 +2159,18 @@ public final class Z {
     }
 
     /* <BiPredicate> */
+
+    public static <A, B> Combine.WithBiPredicate<A, B> fuseBiPredicate(
+        BiPredicate<A, B> initial
+    ) {
+        return Combine.WithBiPredicate.of(initial);
+    }
+
+    public static <A, B> Combine.WithBiPredicate<A, B> fuse(
+        BiPredicate<A, B> initial
+    ) {
+        return fuseBiPredicate(initial);
+    }
 
     public static <A, B, C> Function<A, Function<B, C>> fuse(
         BiPredicate<A, B> initial,
@@ -1944,6 +2216,16 @@ public final class Z {
 
     /* BooleanPredicate */
 
+    public static Combine.WithBooleanPredicate fuseBooleanPredicate(
+        BooleanPredicate initial
+    ) {
+        return Combine.WithBooleanPredicate.of(initial);
+    }
+
+    public static Combine.WithBooleanPredicate fuse(BooleanPredicate initial) {
+        return fuseBooleanPredicate(initial);
+    }
+
     public static <A> BooleanFunction<A> fuse(
         BooleanPredicate initial,
         BooleanFunction<A> next
@@ -1987,6 +2269,16 @@ public final class Z {
     }
 
     /* <DoublePredicate> */
+
+    public static Combine.WithDoublePredicate fuseDoublePredicate(
+        DoublePredicate initial
+    ) {
+        return Combine.WithDoublePredicate.of(initial);
+    }
+
+    public static Combine.WithDoublePredicate fuse(DoublePredicate initial) {
+        return fuseDoublePredicate(initial);
+    }
 
     public static <A> DoubleFunction<A> fuse(
         DoublePredicate initial,
@@ -2032,6 +2324,16 @@ public final class Z {
 
     /* IntPredicate */
 
+    public static Combine.WithIntPredicate fuseIntPredicate(
+        IntPredicate initial
+    ) {
+        return Combine.WithIntPredicate.of(initial);
+    }
+
+    public static Combine.WithIntPredicate fuse(IntPredicate initial) {
+        return fuseIntPredicate(initial);
+    }
+
     public static <A> IntFunction<A> fuse(
         IntPredicate initial,
         BooleanFunction<A> next
@@ -2072,6 +2374,16 @@ public final class Z {
     }
 
     /* LongPredicate */
+
+    public static Combine.WithLongPredicate fuseLongPredicate(
+        LongPredicate initial
+    ) {
+        return Combine.WithLongPredicate.of(initial);
+    }
+
+    public static Combine.WithLongPredicate fuse(LongPredicate initial) {
+        return fuseLongPredicate(initial);
+    }
 
     public static <A> LongFunction<A> fuse(
         LongPredicate initial,
@@ -2116,6 +2428,16 @@ public final class Z {
     }
 
     /* Supplier */
+
+    public static <A> Combine.WithSupplier<A> fuseSupplier(
+        Supplier<A> initial
+    ) {
+        return Combine.WithSupplier.of(initial);
+    }
+
+    public static <A> Combine.WithSupplier<A> fuse(Supplier<A> initial) {
+        return fuseSupplier(initial);
+    }
 
     public static <A, B> Supplier<B> fuse(
         Supplier<A> initial,
@@ -2221,6 +2543,16 @@ public final class Z {
 
     /* BooleanSupplier */
 
+    public static Combine.WithBooleanSupplier fuseBooleanSupplier(
+        BooleanSupplier initial
+    ) {
+        return Combine.WithBooleanSupplier.of(initial);
+    }
+
+    public static Combine.WithBooleanSupplier fuse(BooleanSupplier initial) {
+        return fuseBooleanSupplier(initial);
+    }
+
     public static <A> Supplier<A> fuse(
         BooleanSupplier initial,
         BooleanFunction<A> next
@@ -2261,6 +2593,16 @@ public final class Z {
     }
 
     /* DoubleSupplier */
+
+    public static Combine.WithDoubleSupplier fuseDoubleSupplier(
+        DoubleSupplier initial
+    ) {
+        return Combine.WithDoubleSupplier.of(initial);
+    }
+
+    public static Combine.WithDoubleSupplier fuse(DoubleSupplier initial) {
+        return fuseDoubleSupplier(initial);
+    }
 
     public static <A> Supplier<A> fuse(
         DoubleSupplier initial,
@@ -2310,6 +2652,14 @@ public final class Z {
 
     /* IntSupplier */
 
+    public static Combine.WithIntSupplier fuseIntSupplier(IntSupplier initial) {
+        return Combine.WithIntSupplier.of(initial);
+    }
+
+    public static Combine.WithIntSupplier fuse(IntSupplier initial) {
+        return fuseIntSupplier(initial);
+    }
+
     public static <A> Supplier<A> fuse(
         IntSupplier initial,
         IntFunction<A> next
@@ -2351,6 +2701,16 @@ public final class Z {
     }
 
     /* LongSupplier */
+
+    public static Combine.WithLongSupplier fuseLongSupplier(
+        LongSupplier initial
+    ) {
+        return Combine.WithLongSupplier.of(initial);
+    }
+
+    public static Combine.WithLongSupplier fuse(LongSupplier initial) {
+        return fuseLongSupplier(initial);
+    }
 
     public static <A> Supplier<A> fuse(
         LongSupplier initial,
@@ -2398,11 +2758,47 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    /* UnaryOperator [SKIPPED] Overlap with Function<A, A> (Erasure applies) */
+    /* UnaryOperator [Much SKIPPED] Overlap with Function<A, A> (Erasure applies) */
 
-    /* BinaryOperator [SKIPPED] Overlap with BiFunction<A, A, A> (Erasure applies) */
+    public static <A> Combine.WithUnaryOperator<A> fuseUnaryOperator(
+        UnaryOperator<A> initial
+    ) {
+        return Combine.WithUnaryOperator.of(initial);
+    }
+
+    public static <A> Combine.WithUnaryOperator<A> fuse(
+        UnaryOperator<A> initial
+    ) {
+        return fuseUnaryOperator(initial);
+    }
+
+    /* BinaryOperator [Much SKIPPED] Overlap with BiFunction<A, A, A> (Erasure applies) */
+
+    public static <A> Combine.WithBinaryOperator<A> fuseBinaryOperator(
+        BinaryOperator<A> initial
+    ) {
+        return Combine.WithBinaryOperator.of(initial);
+    }
+
+    public static <A> Combine.WithBinaryOperator<A> fuse(
+        BinaryOperator<A> initial
+    ) {
+        return fuseBinaryOperator(initial);
+    }
 
     /* DoubleUnaryOperator */
+
+    public static Combine.WithDoubleUnaryOperator fuseDoubleUnaryOperator(
+        DoubleUnaryOperator initial
+    ) {
+        return Combine.WithDoubleUnaryOperator.of(initial);
+    }
+
+    public static Combine.WithDoubleUnaryOperator fuse(
+        DoubleUnaryOperator initial
+    ) {
+        return fuseDoubleUnaryOperator(initial);
+    }
 
     public static <A> DoubleFunction<A> fuse(
         DoubleUnaryOperator initial,
@@ -2455,6 +2851,18 @@ public final class Z {
 
     /* DoubleBinaryOperator */
 
+    public static Combine.WithDoubleBinaryOperator fuseDoubleBinaryOperator(
+        DoubleBinaryOperator initial
+    ) {
+        return Combine.WithDoubleBinaryOperator.of(initial);
+    }
+
+    public static Combine.WithDoubleBinaryOperator fuse(
+        DoubleBinaryOperator initial
+    ) {
+        return fuseDoubleBinaryOperator(initial);
+    }
+
     public static <A> DoubleFunction<DoubleFunction<A>> fuse(
         DoubleBinaryOperator initial,
         DoubleFunction<A> next
@@ -2506,6 +2914,16 @@ public final class Z {
 
     /* IntUnaryOperator */
 
+    public static Combine.WithIntUnaryOperator fuseIntUnaryOperator(
+        IntUnaryOperator initial
+    ) {
+        return Combine.WithIntUnaryOperator.of(initial);
+    }
+
+    public static Combine.WithIntUnaryOperator fuse(IntUnaryOperator initial) {
+        return fuseIntUnaryOperator(initial);
+    }
+
     public static <A> IntFunction<A> fuse(
         IntUnaryOperator initial,
         IntFunction<A> next
@@ -2553,6 +2971,18 @@ public final class Z {
     }
 
     /* IntBinaryOperator */
+
+    public static Combine.WithIntBinaryOperator fuseIntBinaryOperator(
+        IntBinaryOperator initial
+    ) {
+        return Combine.WithIntBinaryOperator.of(initial);
+    }
+
+    public static Combine.WithIntBinaryOperator fuse(
+        IntBinaryOperator initial
+    ) {
+        return fuseIntBinaryOperator(initial);
+    }
 
     public static <A> IntFunction<IntFunction<A>> fuse(
         IntBinaryOperator initial,
@@ -2605,6 +3035,18 @@ public final class Z {
 
     /* LongUnaryOperator */
 
+    public static Combine.WithLongUnaryOperator fuseLongUnaryOperator(
+        LongUnaryOperator initial
+    ) {
+        return Combine.WithLongUnaryOperator.of(initial);
+    }
+
+    public static Combine.WithLongUnaryOperator fuse(
+        LongUnaryOperator initial
+    ) {
+        return fuseLongUnaryOperator(initial);
+    }
+
     public static <A> LongFunction<A> fuse(
         LongUnaryOperator initial,
         LongFunction<A> next
@@ -2655,6 +3097,18 @@ public final class Z {
     }
 
     /* LongBinaryOperator */
+
+    public static Combine.WithLongBinaryOperator fuseLongBinaryOperator(
+        LongBinaryOperator initial
+    ) {
+        return Combine.WithLongBinaryOperator.of(initial);
+    }
+
+    public static Combine.WithLongBinaryOperator fuse(
+        LongBinaryOperator initial
+    ) {
+        return fuseLongBinaryOperator(initial);
+    }
 
     public static <A> LongFunction<LongFunction<A>> fuse(
         LongBinaryOperator initial,
@@ -2753,582 +3207,6 @@ public final class Z {
 
     public static Combine.WithLongSupplier with(long initial) {
         return Combine.WithLongSupplier.of(() -> initial);
-    }
-
-    public static <A, B> Combine.WithFunction<A, B> fuseFunction(
-        Function<A, B> initial
-    ) {
-        return Combine.WithFunction.of(initial);
-    }
-
-    public static <A, B> Combine.WithFunction<A, B> fuse(
-        Function<A, B> initial
-    ) {
-        return fuseFunction(initial);
-    }
-
-    public static <A, B, C> Combine.WithBiFunction<A, B, C> fuseBiFunction(
-        BiFunction<A, B, C> initial
-    ) {
-        return Combine.WithBiFunction.of(initial);
-    }
-
-    public static <A, B, C> Combine.WithBiFunction<A, B, C> fuse(
-        BiFunction<A, B, C> initial
-    ) {
-        return fuseBiFunction(initial);
-    }
-
-    public static <A> Combine.WithBooleanFunction<A> fuseBooleanFunction(
-        BooleanFunction<A> initial
-    ) {
-        return Combine.WithBooleanFunction.of(initial);
-    }
-
-    public static <A> Combine.WithBooleanFunction<A> fuse(
-        BooleanFunction<A> initial
-    ) {
-        return fuseBooleanFunction(initial);
-    }
-
-    public static Combine.WithBooleanToDoubleFunction fuseBooleanToDoubleFunction(
-        BooleanToDoubleFunction initial
-    ) {
-        return Combine.WithBooleanToDoubleFunction.of(initial);
-    }
-
-    public static Combine.WithBooleanToDoubleFunction fuse(
-        BooleanToDoubleFunction initial
-    ) {
-        return fuseBooleanToDoubleFunction(initial);
-    }
-
-    public static Combine.WithBooleanToLongFunction fuseBooleanToLongFunction(
-        BooleanToLongFunction initial
-    ) {
-        return Combine.WithBooleanToLongFunction.of(initial);
-    }
-
-    public static Combine.WithBooleanToLongFunction fuse(
-        BooleanToLongFunction initial
-    ) {
-        return fuseBooleanToLongFunction(initial);
-    }
-
-    public static <A> Combine.WithBooleanToIntFunction fuseBooleanToIntFunction(
-        BooleanToIntFunction initial
-    ) {
-        return Combine.WithBooleanToIntFunction.of(initial);
-    }
-
-    public static <A> Combine.WithBooleanToIntFunction fuse(
-        BooleanToIntFunction initial
-    ) {
-        return fuseBooleanToIntFunction(initial);
-    }
-
-    public static <A> Combine.WithDoubleFunction<A> fuseDoubleFunction(
-        DoubleFunction<A> initial
-    ) {
-        return Combine.WithDoubleFunction.of(initial);
-    }
-
-    public static <A> Combine.WithDoubleFunction<A> with(
-        DoubleFunction<A> initial
-    ) {
-        return fuseDoubleFunction(initial);
-    }
-
-    public static <A> Combine.WithDoubleToIntFunction fuseDoubleToIntFunction(
-        DoubleToIntFunction initial
-    ) {
-        return Combine.WithDoubleToIntFunction.of(initial);
-    }
-
-    public static <A> Combine.WithDoubleToIntFunction fuse(
-        DoubleToIntFunction initial
-    ) {
-        return fuseDoubleToIntFunction(initial);
-    }
-
-    public static <A> Combine.WithDoubleToLongFunction fuseDoubleToLongFunction(
-        DoubleToLongFunction initial
-    ) {
-        return Combine.WithDoubleToLongFunction.of(initial);
-    }
-
-    public static <A> Combine.WithDoubleToLongFunction fuse(
-        DoubleToLongFunction initial
-    ) {
-        return fuseDoubleToLongFunction(initial);
-    }
-
-    public static <A> Combine.WithToDoubleFunction<A> fuseToDoubleFunction(
-        ToDoubleFunction<A> initial
-    ) {
-        return Combine.WithToDoubleFunction.of(initial);
-    }
-
-    public static <A> Combine.WithToDoubleFunction<A> fuse(
-        ToDoubleFunction<A> initial
-    ) {
-        return fuseToDoubleFunction(initial);
-    }
-
-    public static <A, B> Combine.WithToDoubleBiFunction<A, B> fuseToDoubleBiFunction(
-        ToDoubleBiFunction<A, B> initial
-    ) {
-        return Combine.WithToDoubleBiFunction.of(initial);
-    }
-
-    public static <A, B> Combine.WithToDoubleBiFunction<A, B> fuse(
-        ToDoubleBiFunction<A, B> initial
-    ) {
-        return fuseToDoubleBiFunction(initial);
-    }
-
-    public static <A> Combine.WithIntFunction<A> fuseIntFunction(
-        IntFunction<A> initial
-    ) {
-        return Combine.WithIntFunction.of(initial);
-    }
-
-    public static <A> Combine.WithIntFunction<A> fuse(IntFunction<A> initial) {
-        return fuseIntFunction(initial);
-    }
-
-    public static Combine.WithIntToDoubleFunction fuseIntToDoubleFunction(
-        IntToDoubleFunction initial
-    ) {
-        return Combine.WithIntToDoubleFunction.of(initial);
-    }
-
-    public static Combine.WithIntToDoubleFunction fuse(
-        IntToDoubleFunction initial
-    ) {
-        return fuseIntToDoubleFunction(initial);
-    }
-
-    public static Combine.WithIntToLongFunction fuseIntToLongFunction(
-        IntToLongFunction initial
-    ) {
-        return Combine.WithIntToLongFunction.of(initial);
-    }
-
-    public static Combine.WithIntToLongFunction fuse(
-        IntToLongFunction initial
-    ) {
-        return fuseIntToLongFunction(initial);
-    }
-
-    public static <A> Combine.WithToIntFunction<A> fuseToIntFunction(
-        ToIntFunction<A> initial
-    ) {
-        return Combine.WithToIntFunction.of(initial);
-    }
-
-    public static <A> Combine.WithToIntFunction<A> fuse(
-        ToIntFunction<A> initial
-    ) {
-        return fuseToIntFunction(initial);
-    }
-
-    public static <A, B> Combine.WithToIntBiFunction<A, B> fuseToIntBiFunction(
-        ToIntBiFunction<A, B> initial
-    ) {
-        return Combine.WithToIntBiFunction.of(initial);
-    }
-
-    public static <A, B> Combine.WithToIntBiFunction<A, B> fuse(
-        ToIntBiFunction<A, B> initial
-    ) {
-        return fuseToIntBiFunction(initial);
-    }
-
-    public static <A> Combine.WithLongFunction<A> fuseLongFunction(
-        LongFunction<A> initial
-    ) {
-        return Combine.WithLongFunction.of(initial);
-    }
-
-    public static <A> Combine.WithLongFunction<A> fuse(
-        LongFunction<A> initial
-    ) {
-        return fuseLongFunction(initial);
-    }
-
-    public static Combine.WithLongToDoubleFunction fuseLongToDoubleFunction(
-        LongToDoubleFunction initial
-    ) {
-        return Combine.WithLongToDoubleFunction.of(initial);
-    }
-
-    public static Combine.WithLongToDoubleFunction fuse(
-        LongToDoubleFunction initial
-    ) {
-        return fuseLongToDoubleFunction(initial);
-    }
-
-    public static Combine.WithLongToIntFunction fuseLongToIntFunction(
-        LongToIntFunction initial
-    ) {
-        return Combine.WithLongToIntFunction.of(initial);
-    }
-
-    public static Combine.WithLongToIntFunction fuse(
-        LongToIntFunction initial
-    ) {
-        return fuseLongToIntFunction(initial);
-    }
-
-    public static <A> Combine.WithToLongFunction<A> fuseToLongFunction(
-        ToLongFunction<A> initial
-    ) {
-        return Combine.WithToLongFunction.of(initial);
-    }
-
-    public static <A> Combine.WithToLongFunction<A> fuse(
-        ToLongFunction<A> initial
-    ) {
-        return fuseToLongFunction(initial);
-    }
-
-    public static <A, B> Combine.WithToLongBiFunction<A, B> fuseToLongBiFunction(
-        ToLongBiFunction<A, B> initial
-    ) {
-        return Combine.WithToLongBiFunction.of(initial);
-    }
-
-    public static <A, B> Combine.WithToLongBiFunction<A, B> fuse(
-        ToLongBiFunction<A, B> initial
-    ) {
-        return fuseToLongBiFunction(initial);
-    }
-
-    public static <A> Combine.WithPredicate<A> fusePredicate(
-        Predicate<A> initial
-    ) {
-        return Combine.WithPredicate.of(initial);
-    }
-
-    public static <A> Combine.WithPredicate<A> fuse(Predicate<A> initial) {
-        return fusePredicate(initial);
-    }
-
-    public static <A, B> Combine.WithBiPredicate<A, B> fuseBiPredicate(
-        BiPredicate<A, B> initial
-    ) {
-        return Combine.WithBiPredicate.of(initial);
-    }
-
-    public static <A, B> Combine.WithBiPredicate<A, B> fuse(
-        BiPredicate<A, B> initial
-    ) {
-        return fuseBiPredicate(initial);
-    }
-
-    public static Combine.WithBooleanPredicate fuseBooleanPredicate(
-        BooleanPredicate initial
-    ) {
-        return Combine.WithBooleanPredicate.of(initial);
-    }
-
-    public static Combine.WithBooleanPredicate fuse(BooleanPredicate initial) {
-        return fuseBooleanPredicate(initial);
-    }
-
-    public static Combine.WithDoublePredicate fuseDoublePredicate(
-        DoublePredicate initial
-    ) {
-        return Combine.WithDoublePredicate.of(initial);
-    }
-
-    public static Combine.WithDoublePredicate fuse(DoublePredicate initial) {
-        return fuseDoublePredicate(initial);
-    }
-
-    public static Combine.WithIntPredicate fuseIntPredicate(
-        IntPredicate initial
-    ) {
-        return Combine.WithIntPredicate.of(initial);
-    }
-
-    public static Combine.WithIntPredicate fuse(IntPredicate initial) {
-        return fuseIntPredicate(initial);
-    }
-
-    public static Combine.WithLongPredicate fuseLongPredicate(
-        LongPredicate initial
-    ) {
-        return Combine.WithLongPredicate.of(initial);
-    }
-
-    public static Combine.WithLongPredicate fuse(LongPredicate initial) {
-        return fuseLongPredicate(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithConsumer<A> fuseConsumer(
-        Consumer<A> initial
-    ) {
-        return Combine.WithConsumer.of(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithConsumer<A> fuse(Consumer<A> initial) {
-        return fuseConsumer(initial);
-    }
-
-    @Evil
-    public static <A, B> Combine.WithBiConsumer<A, B> fuseBiConsumer(
-        BiConsumer<A, B> initial
-    ) {
-        return Combine.WithBiConsumer.of(initial);
-    }
-
-    @Evil
-    public static <A, B> Combine.WithBiConsumer<A, B> fuse(
-        BiConsumer<A, B> initial
-    ) {
-        return fuseBiConsumer(initial);
-    }
-
-    @Evil
-    public static Combine.WithBooleanConsumer fuseBooleanConsumer(
-        BooleanConsumer initial
-    ) {
-        return Combine.WithBooleanConsumer.of(initial);
-    }
-
-    @Evil
-    public static Combine.WithBooleanConsumer fuse(BooleanConsumer initial) {
-        return fuseBooleanConsumer(initial);
-    }
-
-    @Evil
-    public static Combine.WithDoubleConsumer fuseDoubleConsumer(
-        DoubleConsumer initial
-    ) {
-        return Combine.WithDoubleConsumer.of(initial);
-    }
-
-    @Evil
-    public static Combine.WithDoubleConsumer fuse(DoubleConsumer initial) {
-        return fuseDoubleConsumer(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjDoubleConsumer<A> fuseObjDoubleConsumer(
-        ObjDoubleConsumer<A> initial
-    ) {
-        return Combine.WithObjDoubleConsumer.of(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjDoubleConsumer<A> fuse(
-        ObjDoubleConsumer<A> initial
-    ) {
-        return fuseObjDoubleConsumer(initial);
-    }
-
-    @Evil
-    public static Combine.WithIntConsumer fuseIntConsumer(IntConsumer initial) {
-        return Combine.WithIntConsumer.of(initial);
-    }
-
-    @Evil
-    public static Combine.WithIntConsumer fuse(IntConsumer initial) {
-        return fuseIntConsumer(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjIntConsumer<A> fuseObjIntConsumer(
-        ObjIntConsumer<A> initial
-    ) {
-        return Combine.WithObjIntConsumer.of(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjIntConsumer<A> fuse(
-        ObjIntConsumer<A> initial
-    ) {
-        return fuseObjIntConsumer(initial);
-    }
-
-    @Evil
-    public static Combine.WithLongConsumer fuseLongConsumer(
-        LongConsumer initial
-    ) {
-        return Combine.WithLongConsumer.of(initial);
-    }
-
-    @Evil
-    public static Combine.WithLongConsumer fuse(LongConsumer initial) {
-        return fuseLongConsumer(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjLongConsumer<A> fuseObjLongConsumer(
-        ObjLongConsumer<A> initial
-    ) {
-        return Combine.WithObjLongConsumer.of(initial);
-    }
-
-    @Evil
-    public static <A> Combine.WithObjLongConsumer<A> fuse(
-        ObjLongConsumer<A> initial
-    ) {
-        return fuseObjLongConsumer(initial);
-    }
-
-    public static <A> Combine.WithSupplier<A> fuseSupplier(
-        Supplier<A> initial
-    ) {
-        return Combine.WithSupplier.of(initial);
-    }
-
-    public static <A> Combine.WithSupplier<A> fuse(Supplier<A> initial) {
-        return fuseSupplier(initial);
-    }
-
-    public static Combine.WithBooleanSupplier fuseBooleanSupplier(
-        BooleanSupplier initial
-    ) {
-        return Combine.WithBooleanSupplier.of(initial);
-    }
-
-    public static Combine.WithBooleanSupplier fuse(BooleanSupplier initial) {
-        return fuseBooleanSupplier(initial);
-    }
-
-    public static Combine.WithDoubleSupplier fuseDoubleSupplier(
-        DoubleSupplier initial
-    ) {
-        return Combine.WithDoubleSupplier.of(initial);
-    }
-
-    public static Combine.WithDoubleSupplier fuse(DoubleSupplier initial) {
-        return fuseDoubleSupplier(initial);
-    }
-
-    public static Combine.WithIntSupplier fuseIntSupplier(IntSupplier initial) {
-        return Combine.WithIntSupplier.of(initial);
-    }
-
-    public static Combine.WithIntSupplier fuse(IntSupplier initial) {
-        return fuseIntSupplier(initial);
-    }
-
-    public static Combine.WithLongSupplier fuseLongSupplier(
-        LongSupplier initial
-    ) {
-        return Combine.WithLongSupplier.of(initial);
-    }
-
-    public static Combine.WithLongSupplier fuse(LongSupplier initial) {
-        return fuseLongSupplier(initial);
-    }
-
-    public static <A> Combine.WithUnaryOperator<A> fuseUnaryOperator(
-        UnaryOperator<A> initial
-    ) {
-        return Combine.WithUnaryOperator.of(initial);
-    }
-
-    public static <A> Combine.WithUnaryOperator<A> fuse(
-        UnaryOperator<A> initial
-    ) {
-        return fuseUnaryOperator(initial);
-    }
-
-    public static <A> Combine.WithBinaryOperator<A> fuseBinaryOperator(
-        BinaryOperator<A> initial
-    ) {
-        return Combine.WithBinaryOperator.of(initial);
-    }
-
-    public static <A> Combine.WithBinaryOperator<A> fuse(
-        BinaryOperator<A> initial
-    ) {
-        return fuseBinaryOperator(initial);
-    }
-
-    public static Combine.WithDoubleUnaryOperator fuseDoubleUnaryOperator(
-        DoubleUnaryOperator initial
-    ) {
-        return Combine.WithDoubleUnaryOperator.of(initial);
-    }
-
-    public static Combine.WithDoubleUnaryOperator fuse(
-        DoubleUnaryOperator initial
-    ) {
-        return fuseDoubleUnaryOperator(initial);
-    }
-
-    public static Combine.WithOperator fuseOperator(Operator initial) {
-        return Combine.WithOperator.of(initial);
-    }
-
-    public static Combine.WithOperator fuse(Operator initial) {
-        return fuseOperator(initial);
-    }
-
-    public static Combine.WithDoubleBinaryOperator fuseDoubleBinaryOperator(
-        DoubleBinaryOperator initial
-    ) {
-        return Combine.WithDoubleBinaryOperator.of(initial);
-    }
-
-    public static Combine.WithDoubleBinaryOperator fuse(
-        DoubleBinaryOperator initial
-    ) {
-        return fuseDoubleBinaryOperator(initial);
-    }
-
-    public static Combine.WithIntUnaryOperator fuseIntUnaryOperator(
-        IntUnaryOperator initial
-    ) {
-        return Combine.WithIntUnaryOperator.of(initial);
-    }
-
-    public static Combine.WithIntUnaryOperator fuse(IntUnaryOperator initial) {
-        return fuseIntUnaryOperator(initial);
-    }
-
-    public static Combine.WithIntBinaryOperator fuseIntBinaryOperator(
-        IntBinaryOperator initial
-    ) {
-        return Combine.WithIntBinaryOperator.of(initial);
-    }
-
-    public static Combine.WithIntBinaryOperator fuse(
-        IntBinaryOperator initial
-    ) {
-        return fuseIntBinaryOperator(initial);
-    }
-
-    public static Combine.WithLongUnaryOperator fuseLongUnaryOperator(
-        LongUnaryOperator initial
-    ) {
-        return Combine.WithLongUnaryOperator.of(initial);
-    }
-
-    public static Combine.WithLongUnaryOperator fuse(
-        LongUnaryOperator initial
-    ) {
-        return fuseLongUnaryOperator(initial);
-    }
-
-    public static Combine.WithLongBinaryOperator fuseLongBinaryOperator(
-        LongBinaryOperator initial
-    ) {
-        return Combine.WithLongBinaryOperator.of(initial);
-    }
-
-    public static Combine.WithLongBinaryOperator fuse(
-        LongBinaryOperator initial
-    ) {
-        return fuseLongBinaryOperator(initial);
     }
 
     // ┏┓
@@ -3962,6 +3840,18 @@ public final class Z {
     /* Consumer */
 
     @Evil
+    public static <A> Combine.WithConsumer<A> fuseConsumer(
+        Consumer<A> initial
+    ) {
+        return Combine.WithConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A> Combine.WithConsumer<A> fuse(Consumer<A> initial) {
+        return fuseConsumer(initial);
+    }
+
+    @Evil
     public static <A, B, C> Function<A, Function<B, C>> absorb(
         Consumer<A> initial,
         Function<B, C> next
@@ -4017,6 +3907,20 @@ public final class Z {
     /* BiConsumer */
 
     @Evil
+    public static <A, B> Combine.WithBiConsumer<A, B> fuseBiConsumer(
+        BiConsumer<A, B> initial
+    ) {
+        return Combine.WithBiConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A, B> Combine.WithBiConsumer<A, B> fuse(
+        BiConsumer<A, B> initial
+    ) {
+        return fuseBiConsumer(initial);
+    }
+
+    @Evil
     public static <A, B, C> Function<A, Function<B, C>> absorb(
         BiConsumer<A, B> initial,
         Supplier<C> next
@@ -4065,6 +3969,18 @@ public final class Z {
     }
 
     /* BooleanConsumer */
+
+    @Evil
+    public static Combine.WithBooleanConsumer fuseBooleanConsumer(
+        BooleanConsumer initial
+    ) {
+        return Combine.WithBooleanConsumer.of(initial);
+    }
+
+    @Evil
+    public static Combine.WithBooleanConsumer fuse(BooleanConsumer initial) {
+        return fuseBooleanConsumer(initial);
+    }
 
     @Evil
     public static <A> BooleanFunction<A> absorb(
@@ -4117,6 +4033,18 @@ public final class Z {
     /* DoubleConsumer */
 
     @Evil
+    public static Combine.WithDoubleConsumer fuseDoubleConsumer(
+        DoubleConsumer initial
+    ) {
+        return Combine.WithDoubleConsumer.of(initial);
+    }
+
+    @Evil
+    public static Combine.WithDoubleConsumer fuse(DoubleConsumer initial) {
+        return fuseDoubleConsumer(initial);
+    }
+
+    @Evil
     public static <A> DoubleFunction<A> absorb(
         DoubleConsumer initial,
         Supplier<A> next
@@ -4162,6 +4090,20 @@ public final class Z {
     }
 
     /* ObjDoubleConsumer */
+
+    @Evil
+    public static <A> Combine.WithObjDoubleConsumer<A> fuseObjDoubleConsumer(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return Combine.WithObjDoubleConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A> Combine.WithObjDoubleConsumer<A> fuse(
+        ObjDoubleConsumer<A> initial
+    ) {
+        return fuseObjDoubleConsumer(initial);
+    }
 
     @Evil
     public static <A, B> Function<A, DoubleFunction<B>> absorb(
@@ -4214,6 +4156,16 @@ public final class Z {
     /* IntConsumer */
 
     @Evil
+    public static Combine.WithIntConsumer fuseIntConsumer(IntConsumer initial) {
+        return Combine.WithIntConsumer.of(initial);
+    }
+
+    @Evil
+    public static Combine.WithIntConsumer fuse(IntConsumer initial) {
+        return fuseIntConsumer(initial);
+    }
+
+    @Evil
     public static <A> IntFunction<A> absorb(
         IntConsumer initial,
         Supplier<A> next
@@ -4259,6 +4211,20 @@ public final class Z {
     }
 
     /* ObjIntConsumer */
+
+    @Evil
+    public static <A> Combine.WithObjIntConsumer<A> fuseObjIntConsumer(
+        ObjIntConsumer<A> initial
+    ) {
+        return Combine.WithObjIntConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A> Combine.WithObjIntConsumer<A> fuse(
+        ObjIntConsumer<A> initial
+    ) {
+        return fuseObjIntConsumer(initial);
+    }
 
     @Evil
     public static <A, B> Function<A, IntFunction<B>> absorb(
@@ -4311,6 +4277,18 @@ public final class Z {
     /* LongConsumer */
 
     @Evil
+    public static Combine.WithLongConsumer fuseLongConsumer(
+        LongConsumer initial
+    ) {
+        return Combine.WithLongConsumer.of(initial);
+    }
+
+    @Evil
+    public static Combine.WithLongConsumer fuse(LongConsumer initial) {
+        return fuseLongConsumer(initial);
+    }
+
+    @Evil
     public static <A> LongFunction<A> absorb(
         LongConsumer initial,
         Supplier<A> next
@@ -4356,6 +4334,20 @@ public final class Z {
     }
 
     /* ObjLongConsumer */
+
+    @Evil
+    public static <A> Combine.WithObjLongConsumer<A> fuseObjLongConsumer(
+        ObjLongConsumer<A> initial
+    ) {
+        return Combine.WithObjLongConsumer.of(initial);
+    }
+
+    @Evil
+    public static <A> Combine.WithObjLongConsumer<A> fuse(
+        ObjLongConsumer<A> initial
+    ) {
+        return fuseObjLongConsumer(initial);
+    }
 
     @Evil
     public static <A, B> Function<A, LongFunction<B>> absorb(
@@ -4406,6 +4398,16 @@ public final class Z {
     }
 
     /* Operator */
+
+    @Evil
+    public static Combine.WithOperator fuseOperator(Operator initial) {
+        return Combine.WithOperator.of(initial);
+    }
+
+    @Evil
+    public static Combine.WithOperator fuse(Operator initial) {
+        return fuseOperator(initial);
+    }
 
     @Evil
     public static <A> Supplier<A> absorb(Operator initial, Supplier<A> next) {
