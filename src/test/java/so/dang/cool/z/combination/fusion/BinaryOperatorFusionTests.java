@@ -18,7 +18,7 @@ public class BinaryOperatorFusionTests {
 
     @Test
     void biop_deep() {
-        assertEquals("same-ish", Z.with(relation).apply("hi").apply("HI"));
+        assertEquals("same-ish", Z.fuse(relation).apply("hi").apply("HI"));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class BinaryOperatorFusionTests {
     void biop_to_fn_deep() {
         assertEquals(
             "same-ish",
-            Z.with(relation).fuse(trim).apply("hey").apply("HEY")
+            Z.fuse(relation).fuse(trim).apply("hey").apply("HEY")
         );
     }
 
@@ -41,7 +41,7 @@ public class BinaryOperatorFusionTests {
     void biop_to_fn_deeper() {
         assertEquals(
             "same-ish",
-            Z.with(relation).fusing(trim).apply("hey").apply("HEY")
+            Z.fuse(relation).fusing(trim).apply("hey").apply("HEY")
         );
     }
 

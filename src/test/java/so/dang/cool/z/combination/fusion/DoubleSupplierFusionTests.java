@@ -14,31 +14,31 @@ public class DoubleSupplierFusionTests {
     @Test
     void dblSup() {
         assertEquals(suppliedDouble, getDouble.getAsDouble());
-        assertEquals(suppliedDouble, Z.with(getDouble).getAsDouble());
+        assertEquals(suppliedDouble, Z.fuse(getDouble).getAsDouble());
     }
 
     @Test
     void dblSup_to_dblFn() {
         assertEquals("1.0", Z.fuse(getDouble, doubleToString).get());
-        assertEquals("1.0", Z.with(getDouble).fuse(doubleToString).get());
+        assertEquals("1.0", Z.fuse(getDouble).fuse(doubleToString).get());
     }
 
     @Test
     void dblSup_to_dblToInt() {
         assertEquals(1, Z.fuse(getDouble, doubleToInt).getAsInt());
-        assertEquals(1, Z.with(getDouble).fuse(doubleToInt).getAsInt());
+        assertEquals(1, Z.fuse(getDouble).fuse(doubleToInt).getAsInt());
     }
 
     @Test
     void dblSup_to_dblToLong() {
         assertEquals(1L, Z.fuse(getDouble, doubleToLong).getAsLong());
-        assertEquals(1L, Z.with(getDouble).fuse(doubleToLong).getAsLong());
+        assertEquals(1L, Z.fuse(getDouble).fuse(doubleToLong).getAsLong());
     }
 
     @Test
     void dblSup_to_dblPred() {
         assertTrue(Z.fuse(getDouble, isDoubleOne).getAsBoolean());
-        assertTrue(Z.with(getDouble).fuse(isDoubleOne).getAsBoolean());
+        assertTrue(Z.fuse(getDouble).fuse(isDoubleOne).getAsBoolean());
     }
 
     @Evil
@@ -50,7 +50,7 @@ public class DoubleSupplierFusionTests {
             assertEquals(suppliedDouble, consumedDoubleA);
 
             consumedDoubleA = 0.0;
-            Z.with(getDouble).fuse(saveDoubleA).run();
+            Z.fuse(getDouble).fuse(saveDoubleA).run();
             assertEquals(suppliedDouble, consumedDoubleA);
         }
     }
@@ -58,7 +58,7 @@ public class DoubleSupplierFusionTests {
     @Test
     void dblSup_to_dblUnop() {
         assertEquals(2.0, Z.fuse(getDouble, addOneToDouble).getAsDouble());
-        assertEquals(2.0, Z.with(getDouble).fuse(addOneToDouble).getAsDouble());
+        assertEquals(2.0, Z.fuse(getDouble).fuse(addOneToDouble).getAsDouble());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class DoubleSupplierFusionTests {
         Stream
             .of(
                 Z.fuse(getDouble, addDoubles),
-                Z.with(getDouble).fuse(addDoubles)
+                Z.fuse(getDouble).fuse(addDoubles)
             )
             .forEach(
                 fusion -> {
@@ -76,7 +76,7 @@ public class DoubleSupplierFusionTests {
 
         assertEquals(
             3.5,
-            Z.with(getDouble).fuse(addDoubles, 2.5).getAsDouble()
+            Z.fuse(getDouble).fuse(addDoubles, 2.5).getAsDouble()
         );
     }
 }

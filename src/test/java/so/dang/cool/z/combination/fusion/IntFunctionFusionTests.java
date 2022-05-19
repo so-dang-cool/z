@@ -19,7 +19,7 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_deep() {
-        assertEquals("1", Z.with(intToString).apply(1));
+        assertEquals("1", Z.fuse(intToString).apply(1));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class IntFunctionFusionTests {
     void intFn_to_fn_deep() {
         assertEquals(
             "1!",
-            Z.with(intToString).fuse(addExclamationMark).apply(1)
+            Z.fuse(intToString).fuse(addExclamationMark).apply(1)
         );
     }
 
@@ -39,7 +39,7 @@ public class IntFunctionFusionTests {
     void intFn_to_fn_deeper() {
         assertEquals(
             "1!",
-            Z.with(intToString).fusing(addExclamationMark).apply(1)
+            Z.fuse(intToString).fusing(addExclamationMark).apply(1)
         );
     }
 
@@ -48,7 +48,7 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, concat),
-                Z.with(intToString).fuse(concat)
+                Z.fuse(intToString).fuse(concat)
                 //Z.with(intToString).fusing(concat)
             )
             .forEach(
@@ -57,8 +57,8 @@ public class IntFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToString).fuse(concat, ".0"),
-                Z.with(intToString).fusing(concat, ".0")
+                Z.fuse(intToString).fuse(concat, ".0"),
+                Z.fuse(intToString).fusing(concat, ".0")
             )
             .forEach(fusion -> assertEquals("1.0", fusion.apply(1)));
     }
@@ -68,8 +68,8 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, stringToDouble),
-                Z.with(intToString).fuse(stringToDouble),
-                Z.with(intToString).fusing(stringToDouble)
+                Z.fuse(intToString).fuse(stringToDouble),
+                Z.fuse(intToString).fusing(stringToDouble)
             )
             .forEach(fusion -> assertEquals(1, fusion.applyAsDouble(1)));
     }
@@ -79,7 +79,7 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, addStringsAsDouble),
-                Z.with(intToString).fuse(addStringsAsDouble)
+                Z.fuse(intToString).fuse(addStringsAsDouble)
                 //Z.with(intToString).fusing(addStringsAsDouble)
             )
             .forEach(
@@ -88,8 +88,8 @@ public class IntFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToString).fuse(addStringsAsDouble, "2"),
-                Z.with(intToString).fusing(addStringsAsDouble, "2")
+                Z.fuse(intToString).fuse(addStringsAsDouble, "2"),
+                Z.fuse(intToString).fusing(addStringsAsDouble, "2")
             )
             .forEach(fusion -> assertEquals(3, fusion.applyAsDouble(1)));
     }
@@ -99,8 +99,8 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, stringToInt),
-                Z.with(intToString).fuse(stringToInt),
-                Z.with(intToString).fusing(stringToInt)
+                Z.fuse(intToString).fuse(stringToInt),
+                Z.fuse(intToString).fusing(stringToInt)
             )
             .forEach(fusion -> assertEquals(1, fusion.applyAsInt(1)));
     }
@@ -110,7 +110,7 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, addStringsAsInt),
-                Z.with(intToString).fuse(addStringsAsInt)
+                Z.fuse(intToString).fuse(addStringsAsInt)
                 //Z.with(intToString).fusing(addStringsAsInt)
             )
             .forEach(
@@ -119,8 +119,8 @@ public class IntFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToString).fuse(addStringsAsInt, "2"),
-                Z.with(intToString).fusing(addStringsAsInt, "2")
+                Z.fuse(intToString).fuse(addStringsAsInt, "2"),
+                Z.fuse(intToString).fusing(addStringsAsInt, "2")
             )
             .forEach(fusion -> assertEquals(3, fusion.applyAsInt(1)));
     }
@@ -130,8 +130,8 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, stringToLong),
-                Z.with(intToString).fuse(stringToLong),
-                Z.with(intToString).fusing(stringToLong)
+                Z.fuse(intToString).fuse(stringToLong),
+                Z.fuse(intToString).fusing(stringToLong)
             )
             .forEach(fusion -> assertEquals(1L, fusion.applyAsLong(1)));
     }
@@ -141,7 +141,7 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, addStringsAsLong),
-                Z.with(intToString).fuse(addStringsAsLong)
+                Z.fuse(intToString).fuse(addStringsAsLong)
                 //Z.with(intToString).fusing(addStringsAsLong)
             )
             .forEach(
@@ -150,8 +150,8 @@ public class IntFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToString).fuse(addStringsAsLong, "2"),
-                Z.with(intToString).fusing(addStringsAsLong, "2")
+                Z.fuse(intToString).fuse(addStringsAsLong, "2"),
+                Z.fuse(intToString).fusing(addStringsAsLong, "2")
             )
             .forEach(fusion -> assertEquals(3L, fusion.applyAsLong(1)));
     }
@@ -161,8 +161,8 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, isEmpty),
-                Z.with(intToString).fuse(isEmpty),
-                Z.with(intToString).fusing(isEmpty)
+                Z.fuse(intToString).fuse(isEmpty),
+                Z.fuse(intToString).fusing(isEmpty)
             )
             .forEach(fusion -> assertFalse(fusion.test(1)));
     }
@@ -172,15 +172,15 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, startsWith),
-                Z.with(intToString).fuse(startsWith)
+                Z.fuse(intToString).fuse(startsWith)
                 // Z.with(intToString).fusing(startsWith)
             )
             .forEach(fusion -> assertTrue(fusion.apply(1).test("1")));
 
         Stream
             .of(
-                Z.with(intToString).fuse(startsWith, "1"),
-                Z.with(intToString).fusing(startsWith, "1")
+                Z.fuse(intToString).fuse(startsWith, "1"),
+                Z.fuse(intToString).fusing(startsWith, "1")
             )
             .forEach(fusion -> assertTrue(fusion.test(1)));
     }
@@ -192,8 +192,8 @@ public class IntFunctionFusionTests {
             Stream
                 .of(
                     Z.fuse(intToString, saveStringA),
-                    Z.with(intToString).fuse(saveStringA),
-                    Z.with(intToString).fusing(saveStringA)
+                    Z.fuse(intToString).fuse(saveStringA),
+                    Z.fuse(intToString).fusing(saveStringA)
                 )
                 .forEach(
                     fusion -> {
@@ -215,7 +215,7 @@ public class IntFunctionFusionTests {
                 Stream
                     .of(
                         Z.fuse(intToString, saveStringsBandC),
-                        Z.with(intToString).fuse(saveStringsBandC)
+                        Z.fuse(intToString).fuse(saveStringsBandC)
                         //Z.with(intToString).fusing(saveStringsBandC)
                     )
                     .forEach(
@@ -233,10 +233,10 @@ public class IntFunctionFusionTests {
                 Stream
                     .of(
                         Z
-                            .with(intToString)
+                            .fuse(intToString)
                             .fuse(saveStringsBandC, "two and a half"),
                         Z
-                            .with(intToString)
+                            .fuse(intToString)
                             .fusing(saveStringsBandC, "two and a half")
                     )
                     .forEach(
@@ -262,7 +262,7 @@ public class IntFunctionFusionTests {
                 Stream
                     .of(
                         Z.fuse(intToString, saveStringDDoubleB),
-                        Z.with(intToString).fuse(saveStringDDoubleB)
+                        Z.fuse(intToString).fuse(saveStringDDoubleB)
                         // Z.with(intToString).fusing(saveStringDDoubleB)
                     )
                     .forEach(
@@ -279,8 +279,8 @@ public class IntFunctionFusionTests {
 
                 Stream
                     .of(
-                        Z.with(intToString).fuse(saveStringDDoubleB, 5.0),
-                        Z.with(intToString).fusing(saveStringDDoubleB, 5.0)
+                        Z.fuse(intToString).fuse(saveStringDDoubleB, 5.0),
+                        Z.fuse(intToString).fusing(saveStringDDoubleB, 5.0)
                     )
                     .forEach(
                         fusion -> {
@@ -305,7 +305,7 @@ public class IntFunctionFusionTests {
                 Stream
                     .of(
                         Z.fuse(intToString, saveStringEIntB),
-                        Z.with(intToString).fuse(saveStringEIntB)
+                        Z.fuse(intToString).fuse(saveStringEIntB)
                         // Z.with(intToString).fusing(saveStringEIntB)
                     )
                     .forEach(
@@ -322,8 +322,8 @@ public class IntFunctionFusionTests {
 
                 Stream
                     .of(
-                        Z.with(intToString).fuse(saveStringEIntB, 8),
-                        Z.with(intToString).fusing(saveStringEIntB, 8)
+                        Z.fuse(intToString).fuse(saveStringEIntB, 8),
+                        Z.fuse(intToString).fusing(saveStringEIntB, 8)
                     )
                     .forEach(
                         fusion -> {
@@ -348,7 +348,7 @@ public class IntFunctionFusionTests {
                 Stream
                     .of(
                         Z.fuse(intToString, saveStringFLongB),
-                        Z.with(intToString).fuse(saveStringFLongB)
+                        Z.fuse(intToString).fuse(saveStringFLongB)
                         // Z.with(intToString).fusing(saveStringFLongB)
                     )
                     .forEach(
@@ -365,8 +365,8 @@ public class IntFunctionFusionTests {
 
                 Stream
                     .of(
-                        Z.with(intToString).fuse(saveStringFLongB, 6L),
-                        Z.with(intToString).fusing(saveStringFLongB, 6L)
+                        Z.fuse(intToString).fuse(saveStringFLongB, 6L),
+                        Z.fuse(intToString).fusing(saveStringFLongB, 6L)
                     )
                     .forEach(
                         fusion -> {
@@ -388,8 +388,8 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, addQuestionMark),
-                Z.with(intToString).fuse(addQuestionMark),
-                Z.with(intToString).fusing(addQuestionMark)
+                Z.fuse(intToString).fuse(addQuestionMark),
+                Z.fuse(intToString).fusing(addQuestionMark)
             )
             .forEach(fusion -> assertEquals("10?", fusion.apply(10)));
     }
@@ -399,7 +399,7 @@ public class IntFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToString, relation),
-                Z.with(intToString).fuse(relation)
+                Z.fuse(intToString).fuse(relation)
                 // Z.with(intToString).fusing(relation)
             )
             .forEach(
@@ -408,8 +408,8 @@ public class IntFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToString).fuse(relation, "11"),
-                Z.with(intToString).fusing(relation, "11")
+                Z.fuse(intToString).fuse(relation, "11"),
+                Z.fuse(intToString).fusing(relation, "11")
             )
             .forEach(fusion -> assertEquals("same-ish", fusion.apply(11)));
     }

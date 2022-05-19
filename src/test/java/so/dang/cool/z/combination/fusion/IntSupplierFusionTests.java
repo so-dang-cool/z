@@ -14,31 +14,31 @@ public class IntSupplierFusionTests {
     @Test
     void intSup() {
         assertEquals(suppliedInt, getInt.getAsInt());
-        assertEquals(suppliedInt, Z.with(getInt).getAsInt());
+        assertEquals(suppliedInt, Z.fuse(getInt).getAsInt());
     }
 
     @Test
     void intSup_to_intFn() {
         assertEquals("2", Z.fuse(getInt, intToString).get());
-        assertEquals("2", Z.with(getInt).fuse(intToString).get());
+        assertEquals("2", Z.fuse(getInt).fuse(intToString).get());
     }
 
     @Test
     void intSup_to_intToDbl() {
         assertEquals(2.0, Z.fuse(getInt, intToDouble).getAsDouble());
-        assertEquals(2.0, Z.with(getInt).fuse(intToDouble).getAsDouble());
+        assertEquals(2.0, Z.fuse(getInt).fuse(intToDouble).getAsDouble());
     }
 
     @Test
     void intSup_to_intToLong() {
         assertEquals(2L, Z.fuse(getInt, intToLong).getAsLong());
-        assertEquals(2L, Z.with(getInt).fuse(intToLong).getAsLong());
+        assertEquals(2L, Z.fuse(getInt).fuse(intToLong).getAsLong());
     }
 
     @Test
     void intSup_to_intPred() {
         assertTrue(Z.fuse(getInt, isIntTwo).getAsBoolean());
-        assertTrue(Z.with(getInt).fuse(isIntTwo).getAsBoolean());
+        assertTrue(Z.fuse(getInt).fuse(isIntTwo).getAsBoolean());
     }
 
     @Evil
@@ -50,7 +50,7 @@ public class IntSupplierFusionTests {
             assertEquals(suppliedInt, consumedIntA);
 
             consumedIntA = 0;
-            Z.with(getInt).fuse(saveIntA).run();
+            Z.fuse(getInt).fuse(saveIntA).run();
             assertEquals(suppliedInt, consumedIntA);
         }
     }
@@ -58,19 +58,19 @@ public class IntSupplierFusionTests {
     @Test
     void intSup_to_intUnop() {
         assertEquals(4, Z.fuse(getInt, addTwoToInt).getAsInt());
-        assertEquals(4, Z.with(getInt).fuse(addTwoToInt).getAsInt());
+        assertEquals(4, Z.fuse(getInt).fuse(addTwoToInt).getAsInt());
     }
 
     @Test
     void intSup_to_intBiop() {
         Stream
-            .of(Z.fuse(getInt, addInts), Z.with(getInt).fuse(addInts))
+            .of(Z.fuse(getInt, addInts), Z.fuse(getInt).fuse(addInts))
             .forEach(
                 fusion -> {
                     assertEquals(4, fusion.applyAsInt(2));
                 }
             );
 
-        assertEquals(4, Z.with(getInt).fuse(addInts, 2).getAsInt());
+        assertEquals(4, Z.fuse(getInt).fuse(addInts, 2).getAsInt());
     }
 }

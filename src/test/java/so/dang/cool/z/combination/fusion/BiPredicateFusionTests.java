@@ -19,7 +19,7 @@ public class BiPredicateFusionTests {
 
     @Test
     void bipred_deep() {
-        assertTrue(Z.with(startsWith).apply("yolo").test("yo"));
+        assertTrue(Z.fuse(startsWith).apply("yolo").test("yo"));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class BiPredicateFusionTests {
     void bipred_to_boolFn_deep() {
         assertEquals(
             "true",
-            Z.with(startsWith).fuse(booleanToString).apply("yolo").apply("yo")
+            Z.fuse(startsWith).fuse(booleanToString).apply("yolo").apply("yo")
         );
     }
 
@@ -42,7 +42,7 @@ public class BiPredicateFusionTests {
     void bipred_to_boolFn_deeper() {
         assertEquals(
             "true",
-            Z.with(startsWith).fusing(booleanToString).apply("yolo").apply("yo")
+            Z.fuse(startsWith).fusing(booleanToString).apply("yolo").apply("yo")
         );
     }
 
@@ -51,8 +51,8 @@ public class BiPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(startsWith, maybeOneAsDouble),
-                Z.with(startsWith).fuse(maybeOneAsDouble),
-                Z.with(startsWith).fusing(maybeOneAsDouble)
+                Z.fuse(startsWith).fuse(maybeOneAsDouble),
+                Z.fuse(startsWith).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion ->
@@ -65,8 +65,8 @@ public class BiPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(startsWith, maybeTwoAsInt),
-                Z.with(startsWith).fuse(maybeTwoAsInt),
-                Z.with(startsWith).fusing(maybeTwoAsInt)
+                Z.fuse(startsWith).fuse(maybeTwoAsInt),
+                Z.fuse(startsWith).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> assertEquals(2, fusion.apply("yolo").applyAsInt("yo"))
@@ -78,8 +78,8 @@ public class BiPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(startsWith, maybeThreeAsLong),
-                Z.with(startsWith).fuse(maybeThreeAsLong),
-                Z.with(startsWith).fusing(maybeThreeAsLong)
+                Z.fuse(startsWith).fuse(maybeThreeAsLong),
+                Z.fuse(startsWith).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion ->
@@ -92,8 +92,8 @@ public class BiPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(startsWith, not),
-                Z.with(startsWith).fuse(not),
-                Z.with(startsWith).fusing(not)
+                Z.fuse(startsWith).fuse(not),
+                Z.fuse(startsWith).fusing(not)
             )
             .forEach(fusion -> assertFalse(fusion.apply("yolo").test("yo")));
     }
@@ -105,8 +105,8 @@ public class BiPredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(startsWith, saveBooleanA),
-                    Z.with(startsWith).fuse(saveBooleanA),
-                    Z.with(startsWith).fusing(saveBooleanA)
+                    Z.fuse(startsWith).fuse(saveBooleanA),
+                    Z.fuse(startsWith).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {
@@ -128,8 +128,8 @@ public class BiPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(startsWith, booleanId),
-                Z.with(startsWith).fuse(booleanId),
-                Z.with(startsWith).fusing(booleanId)
+                Z.fuse(startsWith).fuse(booleanId),
+                Z.fuse(startsWith).fusing(booleanId)
             )
             .forEach(fusion -> assertTrue(fusion.apply("yolo").test("yo")));
     }

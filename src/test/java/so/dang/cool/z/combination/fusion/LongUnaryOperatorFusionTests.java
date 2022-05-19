@@ -15,7 +15,7 @@ public class LongUnaryOperatorFusionTests {
     void longUnop() {
         assertEquals(4L, addThreeToLong.applyAsLong(1L));
 
-        assertEquals(4L, Z.with(addThreeToLong).applyAsLong(1L));
+        assertEquals(4L, Z.fuse(addThreeToLong).applyAsLong(1L));
     }
 
     @Test
@@ -23,8 +23,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, longToString),
-                Z.with(addThreeToLong).fuse(longToString),
-                Z.with(addThreeToLong).fusing(longToString)
+                Z.fuse(addThreeToLong).fuse(longToString),
+                Z.fuse(addThreeToLong).fusing(longToString)
             )
             .forEach(
                 fusion -> {
@@ -38,8 +38,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, longToDouble),
-                Z.with(addThreeToLong).fuse(longToDouble),
-                Z.with(addThreeToLong).fusing(longToDouble)
+                Z.fuse(addThreeToLong).fuse(longToDouble),
+                Z.fuse(addThreeToLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -53,8 +53,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, longToInt),
-                Z.with(addThreeToLong).fuse(longToInt),
-                Z.with(addThreeToLong).fusing(longToInt)
+                Z.fuse(addThreeToLong).fuse(longToInt),
+                Z.fuse(addThreeToLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -68,8 +68,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, isLongThree),
-                Z.with(addThreeToLong).fuse(isLongThree),
-                Z.with(addThreeToLong).fusing(isLongThree)
+                Z.fuse(addThreeToLong).fuse(isLongThree),
+                Z.fuse(addThreeToLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -85,8 +85,8 @@ public class LongUnaryOperatorFusionTests {
             Stream
                 .of(
                     Z.fuse(addThreeToLong, saveLongA),
-                    Z.with(addThreeToLong).fuse(saveLongA),
-                    Z.with(addThreeToLong).fusing(saveLongA)
+                    Z.fuse(addThreeToLong).fuse(saveLongA),
+                    Z.fuse(addThreeToLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -105,8 +105,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, addThreeToLong),
-                Z.with(addThreeToLong).fuse(addThreeToLong),
-                Z.with(addThreeToLong).fusing(addThreeToLong)
+                Z.fuse(addThreeToLong).fuse(addThreeToLong),
+                Z.fuse(addThreeToLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -120,8 +120,8 @@ public class LongUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addThreeToLong, addLongs),
-                Z.with(addThreeToLong).fuse(addLongs),
-                Z.with(addThreeToLong).fusing(addLongs)
+                Z.fuse(addThreeToLong).fuse(addLongs),
+                Z.fuse(addThreeToLong).fusing(addLongs)
             )
             .forEach(
                 fusion -> {
@@ -131,8 +131,8 @@ public class LongUnaryOperatorFusionTests {
 
         Stream
             .of(
-                Z.with(addThreeToLong).fuse(addLongs, 2L),
-                Z.with(addThreeToLong).fusing(addLongs, 2L)
+                Z.fuse(addThreeToLong).fuse(addLongs, 2L),
+                Z.fuse(addThreeToLong).fusing(addLongs, 2L)
             )
             .forEach(
                 fusion -> {

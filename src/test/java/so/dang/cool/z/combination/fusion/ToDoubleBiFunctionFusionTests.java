@@ -17,7 +17,7 @@ public class ToDoubleBiFunctionFusionTests {
 
         assertEquals(
             3.0,
-            Z.with(addStringsAsDouble).apply("1.0").applyAsDouble("2.0")
+            Z.fuse(addStringsAsDouble).apply("1.0").applyAsDouble("2.0")
         );
     }
 
@@ -26,8 +26,8 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, doubleToString),
-                Z.with(addStringsAsDouble).fuse(doubleToString),
-                Z.with(addStringsAsDouble).fusing(doubleToString)
+                Z.fuse(addStringsAsDouble).fuse(doubleToString),
+                Z.fuse(addStringsAsDouble).fusing(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -41,8 +41,8 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, doubleToInt),
-                Z.with(addStringsAsDouble).fuse(doubleToInt),
-                Z.with(addStringsAsDouble).fusing(doubleToInt)
+                Z.fuse(addStringsAsDouble).fuse(doubleToInt),
+                Z.fuse(addStringsAsDouble).fusing(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -56,8 +56,8 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, doubleToLong),
-                Z.with(addStringsAsDouble).fuse(doubleToLong),
-                Z.with(addStringsAsDouble).fusing(doubleToLong)
+                Z.fuse(addStringsAsDouble).fuse(doubleToLong),
+                Z.fuse(addStringsAsDouble).fusing(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -71,8 +71,8 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, isDoubleOne),
-                Z.with(addStringsAsDouble).fuse(isDoubleOne),
-                Z.with(addStringsAsDouble).fusing(isDoubleOne)
+                Z.fuse(addStringsAsDouble).fuse(isDoubleOne),
+                Z.fuse(addStringsAsDouble).fusing(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -88,8 +88,8 @@ public class ToDoubleBiFunctionFusionTests {
             Stream
                 .of(
                     Z.fuse(addStringsAsDouble, saveDoubleA),
-                    Z.with(addStringsAsDouble).fuse(saveDoubleA),
-                    Z.with(addStringsAsDouble).fusing(saveDoubleA)
+                    Z.fuse(addStringsAsDouble).fuse(saveDoubleA),
+                    Z.fuse(addStringsAsDouble).fusing(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -108,8 +108,8 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, addOneToDouble),
-                Z.with(addStringsAsDouble).fuse(addOneToDouble),
-                Z.with(addStringsAsDouble).fusing(addOneToDouble)
+                Z.fuse(addStringsAsDouble).fuse(addOneToDouble),
+                Z.fuse(addStringsAsDouble).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -123,7 +123,7 @@ public class ToDoubleBiFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(addStringsAsDouble, addDoubles),
-                Z.with(addStringsAsDouble).fuse(addDoubles)
+                Z.fuse(addStringsAsDouble).fuse(addDoubles)
             )
             .forEach(
                 fusion -> {
@@ -136,8 +136,8 @@ public class ToDoubleBiFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(addStringsAsDouble).fuse(addDoubles, 2.0),
-                Z.with(addStringsAsDouble).fusing(addDoubles, 2.0)
+                Z.fuse(addStringsAsDouble).fuse(addDoubles, 2.0),
+                Z.fuse(addStringsAsDouble).fusing(addDoubles, 2.0)
             )
             .forEach(
                 fusion -> {

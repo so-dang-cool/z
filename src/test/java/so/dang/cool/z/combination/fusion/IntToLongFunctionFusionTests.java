@@ -15,7 +15,7 @@ public class IntToLongFunctionFusionTests {
     void intToLong() {
         assertEquals(2L, intToLong.applyAsLong(2));
 
-        assertEquals(2L, Z.with(intToLong).applyAsLong(2));
+        assertEquals(2L, Z.fuse(intToLong).applyAsLong(2));
     }
 
     @Test
@@ -23,8 +23,8 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToLong, longToString),
-                Z.with(intToLong).fuse(longToString),
-                Z.with(intToLong).fusing(longToString)
+                Z.fuse(intToLong).fuse(longToString),
+                Z.fuse(intToLong).fusing(longToString)
             )
             .forEach(
                 fusion -> {
@@ -38,8 +38,8 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToLong, longToDouble),
-                Z.with(intToLong).fuse(longToDouble),
-                Z.with(intToLong).fusing(longToDouble)
+                Z.fuse(intToLong).fuse(longToDouble),
+                Z.fuse(intToLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -53,8 +53,8 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToLong, longToInt),
-                Z.with(intToLong).fuse(longToInt),
-                Z.with(intToLong).fusing(longToInt)
+                Z.fuse(intToLong).fuse(longToInt),
+                Z.fuse(intToLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -68,8 +68,8 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToLong, isLongThree),
-                Z.with(intToLong).fuse(isLongThree),
-                Z.with(intToLong).fusing(isLongThree)
+                Z.fuse(intToLong).fuse(isLongThree),
+                Z.fuse(intToLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -85,8 +85,8 @@ public class IntToLongFunctionFusionTests {
             Stream
                 .of(
                     Z.fuse(intToLong, saveLongA),
-                    Z.with(intToLong).fuse(saveLongA),
-                    Z.with(intToLong).fusing(saveLongA)
+                    Z.fuse(intToLong).fuse(saveLongA),
+                    Z.fuse(intToLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -105,8 +105,8 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(intToLong, addThreeToLong),
-                Z.with(intToLong).fuse(addThreeToLong),
-                Z.with(intToLong).fusing(addThreeToLong)
+                Z.fuse(intToLong).fuse(addThreeToLong),
+                Z.fuse(intToLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -118,7 +118,7 @@ public class IntToLongFunctionFusionTests {
     @Test
     void intToLong_to_longBiop() {
         Stream
-            .of(Z.fuse(intToLong, addLongs), Z.with(intToLong).fuse(addLongs))
+            .of(Z.fuse(intToLong, addLongs), Z.fuse(intToLong).fuse(addLongs))
             .forEach(
                 fusion -> {
                     assertEquals(4L, fusion.apply(1).applyAsLong(3L));
@@ -127,8 +127,8 @@ public class IntToLongFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(intToLong).fuse(addLongs, 3L),
-                Z.with(intToLong).fusing(addLongs, 3L)
+                Z.fuse(intToLong).fuse(addLongs, 3L),
+                Z.fuse(intToLong).fusing(addLongs, 3L)
             )
             .forEach(
                 fusion -> {

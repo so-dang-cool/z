@@ -224,7 +224,7 @@ public class UsageExamples {
         Function<String, String> addW = (String s) -> s.concat("ｗ");
 
         var addSevenWs = Z
-            .with(addW)
+            .fuse(addW)
             .fuse(addW)
             .fuse(addW)
             .fuse(addW)

@@ -16,7 +16,7 @@ public class IntPredicateFusionTests {
     void intPred() {
         assertTrue(isIntTwo.test(2));
 
-        assertTrue(Z.with(isIntTwo).test(2));
+        assertTrue(Z.fuse(isIntTwo).test(2));
     }
 
     @Test
@@ -24,8 +24,8 @@ public class IntPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isIntTwo, booleanToString),
-                Z.with(isIntTwo).fuse(booleanToString),
-                Z.with(isIntTwo).fusing(booleanToString)
+                Z.fuse(isIntTwo).fuse(booleanToString),
+                Z.fuse(isIntTwo).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -39,8 +39,8 @@ public class IntPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isIntTwo, maybeOneAsDouble),
-                Z.with(isIntTwo).fuse(maybeOneAsDouble),
-                Z.with(isIntTwo).fusing(maybeOneAsDouble)
+                Z.fuse(isIntTwo).fuse(maybeOneAsDouble),
+                Z.fuse(isIntTwo).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,8 +54,8 @@ public class IntPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isIntTwo, maybeTwoAsInt),
-                Z.with(isIntTwo).fuse(maybeTwoAsInt),
-                Z.with(isIntTwo).fusing(maybeTwoAsInt)
+                Z.fuse(isIntTwo).fuse(maybeTwoAsInt),
+                Z.fuse(isIntTwo).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -69,8 +69,8 @@ public class IntPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isIntTwo, maybeThreeAsLong),
-                Z.with(isIntTwo).fuse(maybeThreeAsLong),
-                Z.with(isIntTwo).fusing(maybeThreeAsLong)
+                Z.fuse(isIntTwo).fuse(maybeThreeAsLong),
+                Z.fuse(isIntTwo).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -84,8 +84,8 @@ public class IntPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isIntTwo, not),
-                Z.with(isIntTwo).fuse(not),
-                Z.with(isIntTwo).fusing(not)
+                Z.fuse(isIntTwo).fuse(not),
+                Z.fuse(isIntTwo).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -101,8 +101,8 @@ public class IntPredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(isIntTwo, saveBooleanA),
-                    Z.with(isIntTwo).fuse(saveBooleanA),
-                    Z.with(isIntTwo).fusing(saveBooleanA)
+                    Z.fuse(isIntTwo).fuse(saveBooleanA),
+                    Z.fuse(isIntTwo).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

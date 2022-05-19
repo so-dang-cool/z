@@ -16,7 +16,7 @@ public class LongPredicateFusionTests {
     void longPred() {
         assertTrue(isLongThree.test(3L));
 
-        assertTrue(Z.with(isLongThree).test(3L));
+        assertTrue(Z.fuse(isLongThree).test(3L));
     }
 
     @Test
@@ -24,8 +24,8 @@ public class LongPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isLongThree, booleanToString),
-                Z.with(isLongThree).fuse(booleanToString),
-                Z.with(isLongThree).fusing(booleanToString)
+                Z.fuse(isLongThree).fuse(booleanToString),
+                Z.fuse(isLongThree).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -39,8 +39,8 @@ public class LongPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isLongThree, maybeOneAsDouble),
-                Z.with(isLongThree).fuse(maybeOneAsDouble),
-                Z.with(isLongThree).fusing(maybeOneAsDouble)
+                Z.fuse(isLongThree).fuse(maybeOneAsDouble),
+                Z.fuse(isLongThree).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,8 +54,8 @@ public class LongPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isLongThree, maybeTwoAsInt),
-                Z.with(isLongThree).fuse(maybeTwoAsInt),
-                Z.with(isLongThree).fusing(maybeTwoAsInt)
+                Z.fuse(isLongThree).fuse(maybeTwoAsInt),
+                Z.fuse(isLongThree).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -69,8 +69,8 @@ public class LongPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isLongThree, maybeThreeAsLong),
-                Z.with(isLongThree).fuse(maybeThreeAsLong),
-                Z.with(isLongThree).fusing(maybeThreeAsLong)
+                Z.fuse(isLongThree).fuse(maybeThreeAsLong),
+                Z.fuse(isLongThree).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -84,8 +84,8 @@ public class LongPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isLongThree, not),
-                Z.with(isLongThree).fuse(not),
-                Z.with(isLongThree).fusing(not)
+                Z.fuse(isLongThree).fuse(not),
+                Z.fuse(isLongThree).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -101,8 +101,8 @@ public class LongPredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(isLongThree, saveBooleanA),
-                    Z.with(isLongThree).fuse(saveBooleanA),
-                    Z.with(isLongThree).fusing(saveBooleanA)
+                    Z.fuse(isLongThree).fuse(saveBooleanA),
+                    Z.fuse(isLongThree).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

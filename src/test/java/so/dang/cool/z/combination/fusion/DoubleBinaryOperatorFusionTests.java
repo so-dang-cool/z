@@ -15,7 +15,7 @@ public class DoubleBinaryOperatorFusionTests {
     void dblBiop() {
         assertEquals(3.0, addDoubles.applyAsDouble(1.0, 2.0));
 
-        assertEquals(3.0, Z.with(addDoubles).apply(1.0).applyAsDouble(2.0));
+        assertEquals(3.0, Z.fuse(addDoubles).apply(1.0).applyAsDouble(2.0));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, doubleToString),
-                Z.with(addDoubles).fuse(doubleToString)
+                Z.fuse(addDoubles).fuse(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -37,7 +37,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, doubleToInt),
-                Z.with(addDoubles).fuse(doubleToInt)
+                Z.fuse(addDoubles).fuse(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -51,7 +51,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, doubleToLong),
-                Z.with(addDoubles).fuse(doubleToLong)
+                Z.fuse(addDoubles).fuse(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -65,7 +65,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, isDoubleOne),
-                Z.with(addDoubles).fuse(isDoubleOne)
+                Z.fuse(addDoubles).fuse(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -81,7 +81,7 @@ public class DoubleBinaryOperatorFusionTests {
             Stream
                 .of(
                     Z.fuse(addDoubles, saveDoubleA),
-                    Z.with(addDoubles).fuse(saveDoubleA)
+                    Z.fuse(addDoubles).fuse(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -100,8 +100,8 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, addOneToDouble),
-                Z.with(addDoubles).fuse(addOneToDouble),
-                Z.with(addDoubles).fusing(addOneToDouble)
+                Z.fuse(addDoubles).fuse(addOneToDouble),
+                Z.fuse(addDoubles).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -115,7 +115,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.fuse(addDoubles, addDoubles),
-                Z.with(addDoubles).fuse(addDoubles)
+                Z.fuse(addDoubles).fuse(addDoubles)
             )
             .forEach(
                 fusion -> {
@@ -128,8 +128,8 @@ public class DoubleBinaryOperatorFusionTests {
 
         Stream
             .of(
-                Z.with(addDoubles).fuse(addDoubles, 2.0),
-                Z.with(addDoubles).fusing(addDoubles, 2.0)
+                Z.fuse(addDoubles).fuse(addDoubles, 2.0),
+                Z.fuse(addDoubles).fusing(addDoubles, 2.0)
             )
             .forEach(
                 fusion -> {

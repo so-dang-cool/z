@@ -17,7 +17,7 @@ public class AbsorptionTests {
     void cns() {
         synchronized (consumedStringA) {
             Stream
-                .of(saveStringA, Z.with(saveStringA))
+                .of(saveStringA, Z.fuse(saveStringA))
                 .forEach(
                     consumer -> {
                         consumedStringA = "";
@@ -37,7 +37,7 @@ public class AbsorptionTests {
             assertTrue(consumedBooleanA);
 
             consumedBooleanA = false;
-            Z.with(saveBooleanA).accept(true);
+            Z.fuse(saveBooleanA).accept(true);
             assertTrue(consumedBooleanA);
         }
     }
@@ -51,7 +51,7 @@ public class AbsorptionTests {
             assertEquals(1.5, consumedDoubleA);
 
             consumedDoubleA = 0.0;
-            Z.with(saveDoubleA).accept(1.5);
+            Z.fuse(saveDoubleA).accept(1.5);
             assertEquals(1.5, consumedDoubleA);
         }
     }
@@ -69,7 +69,7 @@ public class AbsorptionTests {
 
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
-                Z.with(saveStringDDoubleB).apply("heyo").accept(1.5);
+                Z.fuse(saveStringDDoubleB).apply("heyo").accept(1.5);
                 assertEquals("heyo", consumedStringD);
                 assertEquals(1.5, consumedDoubleB);
             }
@@ -89,7 +89,7 @@ public class AbsorptionTests {
 
                 consumedStringE = "";
                 consumedIntB = 0;
-                Z.with(saveStringEIntB).apply("heyo").accept(2);
+                Z.fuse(saveStringEIntB).apply("heyo").accept(2);
                 assertEquals("heyo", consumedStringE);
                 assertEquals(2, consumedIntB);
             }
@@ -109,7 +109,7 @@ public class AbsorptionTests {
 
                 consumedStringF = "";
                 consumedLongB = 0L;
-                Z.with(saveStringFLongB).apply("heyo").accept(2L);
+                Z.fuse(saveStringFLongB).apply("heyo").accept(2L);
                 assertEquals("heyo", consumedStringF);
                 assertEquals(2L, consumedLongB);
             }
@@ -121,7 +121,7 @@ public class AbsorptionTests {
     void intCns() {
         synchronized (consumedIntA) {
             Stream
-                .of(saveIntA, Z.with(saveIntA))
+                .of(saveIntA, Z.fuse(saveIntA))
                 .forEach(
                     consumer -> {
                         consumedIntA = 0;
@@ -137,7 +137,7 @@ public class AbsorptionTests {
     void longCns() {
         synchronized (consumedLongA) {
             Stream
-                .of(saveLongA, Z.with(saveLongA))
+                .of(saveLongA, Z.fuse(saveLongA))
                 .forEach(
                     consumer -> {
                         consumedLongA = 0L;
@@ -155,8 +155,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, trim),
-                    Z.with(saveStringA).absorb(trim),
-                    Z.with(saveStringA).absorbing(trim)
+                    Z.fuse(saveStringA).absorb(trim),
+                    Z.fuse(saveStringA).absorbing(trim)
                 )
                 .forEach(
                     fusion -> {
@@ -179,8 +179,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, getString),
-                    Z.with(saveStringA).absorb(getString),
-                    Z.with(saveStringA).absorbing(getString)
+                    Z.fuse(saveStringA).absorb(getString),
+                    Z.fuse(saveStringA).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -200,8 +200,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, getBooleanTrue),
-                    Z.with(saveStringA).absorb(getBooleanTrue),
-                    Z.with(saveStringA).absorbing(getBooleanTrue)
+                    Z.fuse(saveStringA).absorb(getBooleanTrue),
+                    Z.fuse(saveStringA).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -221,8 +221,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, getDouble),
-                    Z.with(saveStringA).absorb(getDouble),
-                    Z.with(saveStringA).absorbing(getDouble)
+                    Z.fuse(saveStringA).absorb(getDouble),
+                    Z.fuse(saveStringA).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -245,8 +245,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, getInt),
-                    Z.with(saveStringA).absorb(getInt),
-                    Z.with(saveStringA).absorbing(getInt)
+                    Z.fuse(saveStringA).absorb(getInt),
+                    Z.fuse(saveStringA).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -269,8 +269,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveStringA, getLong),
-                    Z.with(saveStringA).absorb(getLong),
-                    Z.with(saveStringA).absorbing(getLong)
+                    Z.fuse(saveStringA).absorb(getLong),
+                    Z.fuse(saveStringA).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -294,8 +294,8 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringA, doOperation),
-                        Z.with(saveStringA).absorb(doOperation),
-                        Z.with(saveStringA).absorbing(doOperation)
+                        Z.fuse(saveStringA).absorb(doOperation),
+                        Z.fuse(saveStringA).absorbing(doOperation)
                     )
                     .forEach(
                         fusion -> {
@@ -335,7 +335,7 @@ public class AbsorptionTests {
                 consumedStringB = "";
                 consumedStringC = "";
 
-                Z.with(saveStringsBandC).apply("cześć").accept("喂");
+                Z.fuse(saveStringsBandC).apply("cześć").accept("喂");
                 assertEquals("cześć", consumedStringB);
                 assertEquals("喂", consumedStringC);
             }
@@ -374,7 +374,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedString,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(getString)
                         .apply("cześć")
                         .apply("喂")
@@ -396,7 +396,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedString,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(getString)
                         .apply("cześć")
                         .apply("喂")
@@ -433,7 +433,7 @@ public class AbsorptionTests {
                 assertEquals(
                     true,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(getBooleanTrue)
                         .apply("hei")
                         .test("hej")
@@ -449,7 +449,7 @@ public class AbsorptionTests {
                 assertEquals(
                     true,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(getBooleanTrue)
                         .apply("hei")
                         .test("hej")
@@ -486,7 +486,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedDouble,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(getDouble)
                         .apply("buenas")
                         .applyAsDouble("dias")
@@ -502,7 +502,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedDouble,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(getDouble)
                         .apply("buenas")
                         .apply("dias")
@@ -539,7 +539,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedInt,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(getInt)
                         .apply("안녕")
                         .applyAsInt("하세요")
@@ -555,7 +555,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedInt,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(getInt)
                         .apply("안녕")
                         .apply("하세요")
@@ -592,7 +592,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedLong,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(getLong)
                         .apply("ça")
                         .applyAsLong("va")
@@ -608,7 +608,7 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedLong,
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(getLong)
                         .apply("ça")
                         .apply("va")
@@ -645,7 +645,7 @@ public class AbsorptionTests {
                     wasOperated = false;
 
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorb(doOperation)
                         .apply("...")
                         .accept("!!!");
@@ -661,7 +661,7 @@ public class AbsorptionTests {
                     wasOperated = false;
 
                     Z
-                        .with(saveStringsBandC)
+                        .fuse(saveStringsBandC)
                         .absorbing(doOperation)
                         .apply("...")
                         .accept("!!!");
@@ -681,8 +681,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveBooleanA, getString),
-                    Z.with(saveBooleanA).absorb(getString),
-                    Z.with(saveBooleanA).absorbing(getString)
+                    Z.fuse(saveBooleanA).absorb(getString),
+                    Z.fuse(saveBooleanA).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -702,8 +702,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveBooleanA, getBooleanTrue),
-                    Z.with(saveBooleanA).absorb(getBooleanTrue),
-                    Z.with(saveBooleanA).absorbing(getBooleanTrue)
+                    Z.fuse(saveBooleanA).absorb(getBooleanTrue),
+                    Z.fuse(saveBooleanA).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -723,8 +723,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveBooleanA, getDouble),
-                    Z.with(saveBooleanA).absorb(getDouble),
-                    Z.with(saveBooleanA).absorbing(getDouble)
+                    Z.fuse(saveBooleanA).absorb(getDouble),
+                    Z.fuse(saveBooleanA).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -747,8 +747,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveBooleanA, getInt),
-                    Z.with(saveBooleanA).absorb(getInt),
-                    Z.with(saveBooleanA).absorbing(getInt)
+                    Z.fuse(saveBooleanA).absorb(getInt),
+                    Z.fuse(saveBooleanA).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -768,8 +768,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveBooleanA, getLong),
-                    Z.with(saveBooleanA).absorb(getLong),
-                    Z.with(saveBooleanA).absorbing(getLong)
+                    Z.fuse(saveBooleanA).absorb(getLong),
+                    Z.fuse(saveBooleanA).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -790,8 +790,8 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveBooleanA, doOperation),
-                        Z.with(saveBooleanA).absorb(doOperation),
-                        Z.with(saveBooleanA).absorbing(doOperation)
+                        Z.fuse(saveBooleanA).absorb(doOperation),
+                        Z.fuse(saveBooleanA).absorbing(doOperation)
                     )
                     .forEach(
                         fusion -> {
@@ -815,8 +815,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveDoubleA, getString),
-                    Z.with(saveDoubleA).absorb(getString),
-                    Z.with(saveDoubleA).absorbing(getString)
+                    Z.fuse(saveDoubleA).absorb(getString),
+                    Z.fuse(saveDoubleA).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -836,8 +836,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveDoubleA, getBooleanTrue),
-                    Z.with(saveDoubleA).absorb(getBooleanTrue),
-                    Z.with(saveDoubleA).absorbing(getBooleanTrue)
+                    Z.fuse(saveDoubleA).absorb(getBooleanTrue),
+                    Z.fuse(saveDoubleA).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -857,8 +857,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveDoubleA, getDouble),
-                    Z.with(saveDoubleA).absorb(getDouble),
-                    Z.with(saveDoubleA).absorbing(getDouble)
+                    Z.fuse(saveDoubleA).absorb(getDouble),
+                    Z.fuse(saveDoubleA).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -878,8 +878,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveDoubleA, getInt),
-                    Z.with(saveDoubleA).absorb(getInt),
-                    Z.with(saveDoubleA).absorbing(getInt)
+                    Z.fuse(saveDoubleA).absorb(getInt),
+                    Z.fuse(saveDoubleA).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -899,8 +899,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveDoubleA, getLong),
-                    Z.with(saveDoubleA).absorb(getLong),
-                    Z.with(saveDoubleA).absorbing(getLong)
+                    Z.fuse(saveDoubleA).absorb(getLong),
+                    Z.fuse(saveDoubleA).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -921,8 +921,8 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveDoubleA, doOperation),
-                        Z.with(saveDoubleA).absorb(doOperation),
-                        Z.with(saveDoubleA).absorbing(doOperation)
+                        Z.fuse(saveDoubleA).absorb(doOperation),
+                        Z.fuse(saveDoubleA).absorbing(doOperation)
                     )
                     .forEach(
                         fusion -> {
@@ -947,7 +947,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringDDoubleB, getString),
-                        Z.with(saveStringDDoubleB).absorb(getString)
+                        Z.fuse(saveStringDDoubleB).absorb(getString)
                     )
                     .forEach(
                         fusion -> {
@@ -974,7 +974,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringDDoubleB, getBooleanTrue),
-                        Z.with(saveStringDDoubleB).absorb(getBooleanTrue)
+                        Z.fuse(saveStringDDoubleB).absorb(getBooleanTrue)
                     )
                     .forEach(
                         fusion -> {
@@ -998,7 +998,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringDDoubleB, getDouble),
-                        Z.with(saveStringDDoubleB).absorb(getDouble)
+                        Z.fuse(saveStringDDoubleB).absorb(getDouble)
                     )
                     .forEach(
                         fusion -> {
@@ -1025,7 +1025,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringDDoubleB, getInt),
-                        Z.with(saveStringDDoubleB).absorb(getInt)
+                        Z.fuse(saveStringDDoubleB).absorb(getInt)
                     )
                     .forEach(
                         fusion -> {
@@ -1052,7 +1052,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringDDoubleB, getLong),
-                        Z.with(saveStringDDoubleB).absorb(getLong)
+                        Z.fuse(saveStringDDoubleB).absorb(getLong)
                     )
                     .forEach(
                         fusion -> {
@@ -1080,8 +1080,8 @@ public class AbsorptionTests {
                     Stream
                         .of(
                             Z.absorb(saveStringDDoubleB, doOperation),
-                            Z.with(saveStringDDoubleB).absorb(doOperation),
-                            Z.with(saveStringDDoubleB).absorbing(doOperation)
+                            Z.fuse(saveStringDDoubleB).absorb(doOperation),
+                            Z.fuse(saveStringDDoubleB).absorbing(doOperation)
                         )
                         .forEach(
                             fusion -> {
@@ -1108,8 +1108,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveIntA, getString),
-                    Z.with(saveIntA).absorb(getString),
-                    Z.with(saveIntA).absorbing(getString)
+                    Z.fuse(saveIntA).absorb(getString),
+                    Z.fuse(saveIntA).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -1129,8 +1129,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveIntA, getBooleanTrue),
-                    Z.with(saveIntA).absorb(getBooleanTrue),
-                    Z.with(saveIntA).absorbing(getBooleanTrue)
+                    Z.fuse(saveIntA).absorb(getBooleanTrue),
+                    Z.fuse(saveIntA).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -1150,8 +1150,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveIntA, getDouble),
-                    Z.with(saveIntA).absorb(getDouble),
-                    Z.with(saveIntA).absorbing(getDouble)
+                    Z.fuse(saveIntA).absorb(getDouble),
+                    Z.fuse(saveIntA).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -1171,8 +1171,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveIntA, getInt),
-                    Z.with(saveIntA).absorb(getInt),
-                    Z.with(saveIntA).absorbing(getInt)
+                    Z.fuse(saveIntA).absorb(getInt),
+                    Z.fuse(saveIntA).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -1192,8 +1192,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveIntA, getLong),
-                    Z.with(saveIntA).absorb(getLong),
-                    Z.with(saveIntA).absorbing(getLong)
+                    Z.fuse(saveIntA).absorb(getLong),
+                    Z.fuse(saveIntA).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -1214,8 +1214,8 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveIntA, doOperation),
-                        Z.with(saveIntA).absorb(doOperation),
-                        Z.with(saveIntA).absorbing(doOperation)
+                        Z.fuse(saveIntA).absorb(doOperation),
+                        Z.fuse(saveIntA).absorbing(doOperation)
                     )
                     .forEach(
                         fusion -> {
@@ -1240,7 +1240,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringEIntB, getString),
-                        Z.with(saveStringEIntB).absorb(getString)
+                        Z.fuse(saveStringEIntB).absorb(getString)
                     )
                     .forEach(
                         fusion -> {
@@ -1267,7 +1267,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringEIntB, getBooleanTrue),
-                        Z.with(saveStringEIntB).absorb(getBooleanTrue)
+                        Z.fuse(saveStringEIntB).absorb(getBooleanTrue)
                     )
                     .forEach(
                         fusion -> {
@@ -1291,7 +1291,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringEIntB, getDouble),
-                        Z.with(saveStringEIntB).absorb(getDouble)
+                        Z.fuse(saveStringEIntB).absorb(getDouble)
                     )
                     .forEach(
                         fusion -> {
@@ -1318,7 +1318,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringEIntB, getInt),
-                        Z.with(saveStringEIntB).absorb(getInt)
+                        Z.fuse(saveStringEIntB).absorb(getInt)
                     )
                     .forEach(
                         fusion -> {
@@ -1345,7 +1345,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringEIntB, getLong),
-                        Z.with(saveStringEIntB).absorb(getLong)
+                        Z.fuse(saveStringEIntB).absorb(getLong)
                     )
                     .forEach(
                         fusion -> {
@@ -1373,8 +1373,8 @@ public class AbsorptionTests {
                     Stream
                         .of(
                             Z.absorb(saveStringEIntB, doOperation),
-                            Z.with(saveStringEIntB).absorb(doOperation),
-                            Z.with(saveStringEIntB).absorbing(doOperation)
+                            Z.fuse(saveStringEIntB).absorb(doOperation),
+                            Z.fuse(saveStringEIntB).absorbing(doOperation)
                         )
                         .forEach(
                             fusion -> {
@@ -1401,8 +1401,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveLongA, getString),
-                    Z.with(saveLongA).absorb(getString),
-                    Z.with(saveLongA).absorbing(getString)
+                    Z.fuse(saveLongA).absorb(getString),
+                    Z.fuse(saveLongA).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -1422,8 +1422,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveLongA, getBooleanTrue),
-                    Z.with(saveLongA).absorb(getBooleanTrue),
-                    Z.with(saveLongA).absorbing(getBooleanTrue)
+                    Z.fuse(saveLongA).absorb(getBooleanTrue),
+                    Z.fuse(saveLongA).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -1443,8 +1443,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveLongA, getDouble),
-                    Z.with(saveLongA).absorb(getDouble),
-                    Z.with(saveLongA).absorbing(getDouble)
+                    Z.fuse(saveLongA).absorb(getDouble),
+                    Z.fuse(saveLongA).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -1464,8 +1464,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveLongA, getInt),
-                    Z.with(saveLongA).absorb(getInt),
-                    Z.with(saveLongA).absorbing(getInt)
+                    Z.fuse(saveLongA).absorb(getInt),
+                    Z.fuse(saveLongA).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -1485,8 +1485,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(saveLongA, getLong),
-                    Z.with(saveLongA).absorb(getLong),
-                    Z.with(saveLongA).absorbing(getLong)
+                    Z.fuse(saveLongA).absorb(getLong),
+                    Z.fuse(saveLongA).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -1507,8 +1507,8 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveLongA, doOperation),
-                        Z.with(saveLongA).absorb(doOperation),
-                        Z.with(saveLongA).absorbing(doOperation)
+                        Z.fuse(saveLongA).absorb(doOperation),
+                        Z.fuse(saveLongA).absorbing(doOperation)
                     )
                     .forEach(
                         fusion -> {
@@ -1533,7 +1533,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringFLongB, getString),
-                        Z.with(saveStringFLongB).absorb(getString)
+                        Z.fuse(saveStringFLongB).absorb(getString)
                     )
                     .forEach(
                         fusion -> {
@@ -1560,7 +1560,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringFLongB, getBooleanTrue),
-                        Z.with(saveStringFLongB).absorb(getBooleanTrue)
+                        Z.fuse(saveStringFLongB).absorb(getBooleanTrue)
                     )
                     .forEach(
                         fusion -> {
@@ -1584,7 +1584,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringFLongB, getDouble),
-                        Z.with(saveStringFLongB).absorb(getDouble)
+                        Z.fuse(saveStringFLongB).absorb(getDouble)
                     )
                     .forEach(
                         fusion -> {
@@ -1611,7 +1611,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringFLongB, getInt),
-                        Z.with(saveStringFLongB).absorb(getInt)
+                        Z.fuse(saveStringFLongB).absorb(getInt)
                     )
                     .forEach(
                         fusion -> {
@@ -1638,7 +1638,7 @@ public class AbsorptionTests {
                 Stream
                     .of(
                         Z.absorb(saveStringFLongB, getLong),
-                        Z.with(saveStringFLongB).absorb(getLong)
+                        Z.fuse(saveStringFLongB).absorb(getLong)
                     )
                     .forEach(
                         fusion -> {
@@ -1666,8 +1666,8 @@ public class AbsorptionTests {
                     Stream
                         .of(
                             Z.absorb(saveStringFLongB, doOperation),
-                            Z.with(saveStringFLongB).absorb(doOperation),
-                            Z.with(saveStringFLongB).absorbing(doOperation)
+                            Z.fuse(saveStringFLongB).absorb(doOperation),
+                            Z.fuse(saveStringFLongB).absorbing(doOperation)
                         )
                         .forEach(
                             fusion -> {
@@ -1694,8 +1694,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, getString),
-                    Z.with(doOperation).absorb(getString),
-                    Z.with(doOperation).absorbing(getString)
+                    Z.fuse(doOperation).absorb(getString),
+                    Z.fuse(doOperation).absorbing(getString)
                 )
                 .forEach(
                     fusion -> {
@@ -1715,8 +1715,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, getBooleanTrue),
-                    Z.with(doOperation).absorb(getBooleanTrue),
-                    Z.with(doOperation).absorbing(getBooleanTrue)
+                    Z.fuse(doOperation).absorb(getBooleanTrue),
+                    Z.fuse(doOperation).absorbing(getBooleanTrue)
                 )
                 .forEach(
                     fusion -> {
@@ -1736,8 +1736,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, getDouble),
-                    Z.with(doOperation).absorb(getDouble),
-                    Z.with(doOperation).absorbing(getDouble)
+                    Z.fuse(doOperation).absorb(getDouble),
+                    Z.fuse(doOperation).absorbing(getDouble)
                 )
                 .forEach(
                     fusion -> {
@@ -1757,8 +1757,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, getInt),
-                    Z.with(doOperation).absorb(getInt),
-                    Z.with(doOperation).absorbing(getInt)
+                    Z.fuse(doOperation).absorb(getInt),
+                    Z.fuse(doOperation).absorbing(getInt)
                 )
                 .forEach(
                     fusion -> {
@@ -1778,8 +1778,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, getLong),
-                    Z.with(doOperation).absorb(getLong),
-                    Z.with(doOperation).absorbing(getLong)
+                    Z.fuse(doOperation).absorb(getLong),
+                    Z.fuse(doOperation).absorbing(getLong)
                 )
                 .forEach(
                     fusion -> {
@@ -1799,8 +1799,8 @@ public class AbsorptionTests {
             Stream
                 .of(
                     Z.absorb(doOperation, doOperation),
-                    Z.with(doOperation).absorb(doOperation),
-                    Z.with(doOperation).absorbing(doOperation)
+                    Z.fuse(doOperation).absorb(doOperation),
+                    Z.fuse(doOperation).absorbing(doOperation)
                 )
                 .forEach(
                     fusion -> {

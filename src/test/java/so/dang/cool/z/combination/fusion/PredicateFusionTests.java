@@ -15,7 +15,7 @@ public class PredicateFusionTests {
     @Test
     void pred() {
         assertTrue(isEmpty.test(""));
-        assertTrue(Z.with(isEmpty).test(""));
+        assertTrue(Z.fuse(isEmpty).test(""));
     }
 
     @Test
@@ -23,8 +23,8 @@ public class PredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isEmpty, booleanToString),
-                Z.with(isEmpty).fuse(booleanToString),
-                Z.with(isEmpty).fusing(booleanToString)
+                Z.fuse(isEmpty).fuse(booleanToString),
+                Z.fuse(isEmpty).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -38,8 +38,8 @@ public class PredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isEmpty, maybeOneAsDouble),
-                Z.with(isEmpty).fuse(maybeOneAsDouble),
-                Z.with(isEmpty).fusing(maybeOneAsDouble)
+                Z.fuse(isEmpty).fuse(maybeOneAsDouble),
+                Z.fuse(isEmpty).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -53,8 +53,8 @@ public class PredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isEmpty, maybeTwoAsInt),
-                Z.with(isEmpty).fuse(maybeTwoAsInt),
-                Z.with(isEmpty).fusing(maybeTwoAsInt)
+                Z.fuse(isEmpty).fuse(maybeTwoAsInt),
+                Z.fuse(isEmpty).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -68,8 +68,8 @@ public class PredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isEmpty, maybeThreeAsLong),
-                Z.with(isEmpty).fuse(maybeThreeAsLong),
-                Z.with(isEmpty).fusing(maybeThreeAsLong)
+                Z.fuse(isEmpty).fuse(maybeThreeAsLong),
+                Z.fuse(isEmpty).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -83,8 +83,8 @@ public class PredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isEmpty, not),
-                Z.with(isEmpty).fuse(not),
-                Z.with(isEmpty).fusing(not)
+                Z.fuse(isEmpty).fuse(not),
+                Z.fuse(isEmpty).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -100,8 +100,8 @@ public class PredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(isEmpty, saveBooleanA),
-                    Z.with(isEmpty).fuse(saveBooleanA),
-                    Z.with(isEmpty).fusing(saveBooleanA)
+                    Z.fuse(isEmpty).fuse(saveBooleanA),
+                    Z.fuse(isEmpty).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

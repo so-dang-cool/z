@@ -15,7 +15,7 @@ public class ToLongFunctionFusionTests {
     void toLongFn() {
         assertEquals(3L, stringToLong.applyAsLong("3"));
 
-        assertEquals(3L, Z.with(stringToLong).applyAsLong("3"));
+        assertEquals(3L, Z.fuse(stringToLong).applyAsLong("3"));
     }
 
     @Test
@@ -23,8 +23,8 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, longToString),
-                Z.with(stringToLong).fuse(longToString),
-                Z.with(stringToLong).fusing(longToString)
+                Z.fuse(stringToLong).fuse(longToString),
+                Z.fuse(stringToLong).fusing(longToString)
             )
             .forEach(
                 fusion -> {
@@ -38,8 +38,8 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, longToDouble),
-                Z.with(stringToLong).fuse(longToDouble),
-                Z.with(stringToLong).fusing(longToDouble)
+                Z.fuse(stringToLong).fuse(longToDouble),
+                Z.fuse(stringToLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -53,8 +53,8 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, longToInt),
-                Z.with(stringToLong).fuse(longToInt),
-                Z.with(stringToLong).fusing(longToInt)
+                Z.fuse(stringToLong).fuse(longToInt),
+                Z.fuse(stringToLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -68,8 +68,8 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, isLongThree),
-                Z.with(stringToLong).fuse(isLongThree),
-                Z.with(stringToLong).fusing(isLongThree)
+                Z.fuse(stringToLong).fuse(isLongThree),
+                Z.fuse(stringToLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -85,8 +85,8 @@ public class ToLongFunctionFusionTests {
             Stream
                 .of(
                     Z.fuse(stringToLong, saveLongA),
-                    Z.with(stringToLong).fuse(saveLongA),
-                    Z.with(stringToLong).fusing(saveLongA)
+                    Z.fuse(stringToLong).fuse(saveLongA),
+                    Z.fuse(stringToLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -105,8 +105,8 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, addThreeToLong),
-                Z.with(stringToLong).fuse(addThreeToLong),
-                Z.with(stringToLong).fusing(addThreeToLong)
+                Z.fuse(stringToLong).fuse(addThreeToLong),
+                Z.fuse(stringToLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -120,7 +120,7 @@ public class ToLongFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(stringToLong, addLongs),
-                Z.with(stringToLong).fuse(addLongs)
+                Z.fuse(stringToLong).fuse(addLongs)
             )
             .forEach(
                 fusion -> {
@@ -130,8 +130,8 @@ public class ToLongFunctionFusionTests {
 
         Stream
             .of(
-                Z.with(stringToLong).fuse(addLongs, 2L),
-                Z.with(stringToLong).fusing(addLongs, 2L)
+                Z.fuse(stringToLong).fuse(addLongs, 2L),
+                Z.fuse(stringToLong).fusing(addLongs, 2L)
             )
             .forEach(
                 fusion -> {

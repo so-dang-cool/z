@@ -16,7 +16,7 @@ public class BooleanPredicateFusionTests {
     void boolPred() {
         assertTrue(booleanId.test(true));
 
-        assertTrue(Z.with(booleanId).test(true));
+        assertTrue(Z.fuse(booleanId).test(true));
     }
 
     @Test
@@ -24,8 +24,8 @@ public class BooleanPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(booleanId, booleanToString),
-                Z.with(booleanId).fuse(booleanToString),
-                Z.with(booleanId).fusing(booleanToString)
+                Z.fuse(booleanId).fuse(booleanToString),
+                Z.fuse(booleanId).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -39,8 +39,8 @@ public class BooleanPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(booleanId, maybeOneAsDouble),
-                Z.with(booleanId).fuse(maybeOneAsDouble),
-                Z.with(booleanId).fusing(maybeOneAsDouble)
+                Z.fuse(booleanId).fuse(maybeOneAsDouble),
+                Z.fuse(booleanId).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,8 +54,8 @@ public class BooleanPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(booleanId, maybeTwoAsInt),
-                Z.with(booleanId).fuse(maybeTwoAsInt),
-                Z.with(booleanId).fusing(maybeTwoAsInt)
+                Z.fuse(booleanId).fuse(maybeTwoAsInt),
+                Z.fuse(booleanId).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -69,8 +69,8 @@ public class BooleanPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(booleanId, maybeThreeAsLong),
-                Z.with(booleanId).fuse(maybeThreeAsLong),
-                Z.with(booleanId).fusing(maybeThreeAsLong)
+                Z.fuse(booleanId).fuse(maybeThreeAsLong),
+                Z.fuse(booleanId).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -84,8 +84,8 @@ public class BooleanPredicateFusionTests {
         Stream
             .of(
                 Z.fuse(booleanId, not),
-                Z.with(booleanId).fuse(not),
-                Z.with(booleanId).fusing(not)
+                Z.fuse(booleanId).fuse(not),
+                Z.fuse(booleanId).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -101,8 +101,8 @@ public class BooleanPredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(booleanId, saveBooleanA),
-                    Z.with(booleanId).fuse(saveBooleanA),
-                    Z.with(booleanId).fusing(saveBooleanA)
+                    Z.fuse(booleanId).fuse(saveBooleanA),
+                    Z.fuse(booleanId).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

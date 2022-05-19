@@ -16,7 +16,7 @@ public class DoublePredicateFusionTests {
     void dblPred() {
         assertTrue(isDoubleOne.test(1.0));
 
-        assertTrue(Z.with(isDoubleOne).test(1.0));
+        assertTrue(Z.fuse(isDoubleOne).test(1.0));
     }
 
     @Test
@@ -24,8 +24,8 @@ public class DoublePredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isDoubleOne, booleanToString),
-                Z.with(isDoubleOne).fuse(booleanToString),
-                Z.with(isDoubleOne).fusing(booleanToString)
+                Z.fuse(isDoubleOne).fuse(booleanToString),
+                Z.fuse(isDoubleOne).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -39,8 +39,8 @@ public class DoublePredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isDoubleOne, maybeOneAsDouble),
-                Z.with(isDoubleOne).fuse(maybeOneAsDouble),
-                Z.with(isDoubleOne).fusing(maybeOneAsDouble)
+                Z.fuse(isDoubleOne).fuse(maybeOneAsDouble),
+                Z.fuse(isDoubleOne).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,8 +54,8 @@ public class DoublePredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isDoubleOne, maybeTwoAsInt),
-                Z.with(isDoubleOne).fuse(maybeTwoAsInt),
-                Z.with(isDoubleOne).fusing(maybeTwoAsInt)
+                Z.fuse(isDoubleOne).fuse(maybeTwoAsInt),
+                Z.fuse(isDoubleOne).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -69,8 +69,8 @@ public class DoublePredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isDoubleOne, maybeThreeAsLong),
-                Z.with(isDoubleOne).fuse(maybeThreeAsLong),
-                Z.with(isDoubleOne).fusing(maybeThreeAsLong)
+                Z.fuse(isDoubleOne).fuse(maybeThreeAsLong),
+                Z.fuse(isDoubleOne).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -84,8 +84,8 @@ public class DoublePredicateFusionTests {
         Stream
             .of(
                 Z.fuse(isDoubleOne, not),
-                Z.with(isDoubleOne).fuse(not),
-                Z.with(isDoubleOne).fusing(not)
+                Z.fuse(isDoubleOne).fuse(not),
+                Z.fuse(isDoubleOne).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -101,8 +101,8 @@ public class DoublePredicateFusionTests {
             Stream
                 .of(
                     Z.fuse(isDoubleOne, saveBooleanA),
-                    Z.with(isDoubleOne).fuse(saveBooleanA),
-                    Z.with(isDoubleOne).fusing(saveBooleanA)
+                    Z.fuse(isDoubleOne).fuse(saveBooleanA),
+                    Z.fuse(isDoubleOne).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {
