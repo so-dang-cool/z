@@ -15,7 +15,7 @@ public class PredicateFusionTests {
     @Test
     void pred() {
         assertTrue(isEmpty.test(""));
-        assertTrue(Z.with(isEmpty).resolve().test(""));
+        assertTrue(Z.with(isEmpty).test(""));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class PredicateFusionTests {
             .of(
                 Z.fuse(isEmpty, booleanToString),
                 Z.with(isEmpty).fuse(booleanToString),
-                Z.with(isEmpty).fusing(booleanToString).resolve()
+                Z.with(isEmpty).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class PredicateFusionTests {
             .of(
                 Z.fuse(isEmpty, maybeOneAsDouble),
                 Z.with(isEmpty).fuse(maybeOneAsDouble),
-                Z.with(isEmpty).fusing(maybeOneAsDouble).resolve()
+                Z.with(isEmpty).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class PredicateFusionTests {
             .of(
                 Z.fuse(isEmpty, maybeTwoAsInt),
                 Z.with(isEmpty).fuse(maybeTwoAsInt),
-                Z.with(isEmpty).fusing(maybeTwoAsInt).resolve()
+                Z.with(isEmpty).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class PredicateFusionTests {
             .of(
                 Z.fuse(isEmpty, maybeThreeAsLong),
                 Z.with(isEmpty).fuse(maybeThreeAsLong),
-                Z.with(isEmpty).fusing(maybeThreeAsLong).resolve()
+                Z.with(isEmpty).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -84,7 +84,7 @@ public class PredicateFusionTests {
             .of(
                 Z.fuse(isEmpty, not),
                 Z.with(isEmpty).fuse(not),
-                Z.with(isEmpty).fusing(not).resolve()
+                Z.with(isEmpty).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -101,7 +101,7 @@ public class PredicateFusionTests {
                 .of(
                     Z.fuse(isEmpty, saveBooleanA),
                     Z.with(isEmpty).fuse(saveBooleanA),
-                    Z.with(isEmpty).fusing(saveBooleanA).resolve()
+                    Z.with(isEmpty).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

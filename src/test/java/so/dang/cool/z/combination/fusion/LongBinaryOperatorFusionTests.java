@@ -15,7 +15,7 @@ public class LongBinaryOperatorFusionTests {
     void longBiop() {
         assertEquals(3L, addLongs.applyAsLong(1L, 2L));
 
-        assertEquals(3L, Z.with(addLongs).resolve().apply(1L).applyAsLong(2L));
+        assertEquals(3L, Z.with(addLongs).apply(1L).applyAsLong(2L));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class LongBinaryOperatorFusionTests {
             .of(
                 Z.fuse(addLongs, addThreeToLong),
                 Z.with(addLongs).fuse(addThreeToLong),
-                Z.with(addLongs).fusing(addThreeToLong).resolve()
+                Z.with(addLongs).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -125,7 +125,7 @@ public class LongBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.with(addLongs).fuse(addLongs, 3L),
-                Z.with(addLongs).fusing(addLongs, 3L).resolve()
+                Z.with(addLongs).fusing(addLongs, 3L)
             )
             .forEach(
                 fusion -> {

@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'so.dang.cool'
-version = '2.0.0'
+version = '3.0.0-BETA'
 
 repositories {
     mavenCentral()
@@ -76,6 +76,10 @@ spotless {
         removeUnusedImports()
         prettier(['prettier': '2.3.0', 'prettier-plugin-java': '1.1.1']).config(['parser': 'java', 'tabWidth': 4])
     }
+}
+
+tasks.register('fmt') {
+    dependsOn 'spotlessApply'
 }
 
 pmdTest {

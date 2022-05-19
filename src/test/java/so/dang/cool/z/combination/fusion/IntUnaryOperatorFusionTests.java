@@ -15,7 +15,7 @@ public class IntUnaryOperatorFusionTests {
     void intUnop() {
         assertEquals(3, addTwoToInt.applyAsInt(1));
 
-        assertEquals(3, Z.with(addTwoToInt).resolve().applyAsInt(1));
+        assertEquals(3, Z.with(addTwoToInt).applyAsInt(1));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, intToString),
                 Z.with(addTwoToInt).fuse(intToString),
-                Z.with(addTwoToInt).fusing(intToString).resolve()
+                Z.with(addTwoToInt).fusing(intToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, intToDouble),
                 Z.with(addTwoToInt).fuse(intToDouble),
-                Z.with(addTwoToInt).fusing(intToDouble).resolve()
+                Z.with(addTwoToInt).fusing(intToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, intToLong),
                 Z.with(addTwoToInt).fuse(intToLong),
-                Z.with(addTwoToInt).fusing(intToLong).resolve()
+                Z.with(addTwoToInt).fusing(intToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, isIntTwo),
                 Z.with(addTwoToInt).fuse(isIntTwo),
-                Z.with(addTwoToInt).fusing(isIntTwo).resolve()
+                Z.with(addTwoToInt).fusing(isIntTwo)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class IntUnaryOperatorFusionTests {
                 .of(
                     Z.fuse(addTwoToInt, saveIntA),
                     Z.with(addTwoToInt).fuse(saveIntA),
-                    Z.with(addTwoToInt).fusing(saveIntA).resolve()
+                    Z.with(addTwoToInt).fusing(saveIntA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, addTwoToInt),
                 Z.with(addTwoToInt).fuse(addTwoToInt),
-                Z.with(addTwoToInt).fusing(addTwoToInt).resolve()
+                Z.with(addTwoToInt).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -121,7 +121,7 @@ public class IntUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addTwoToInt, addInts),
                 Z.with(addTwoToInt).fuse(addInts),
-                Z.with(addTwoToInt).fusing(addInts).resolve()
+                Z.with(addTwoToInt).fusing(addInts)
             )
             .forEach(
                 fusion -> {
@@ -132,7 +132,7 @@ public class IntUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.with(addTwoToInt).fuse(addInts, 1),
-                Z.with(addTwoToInt).fusing(addInts, 1).resolve()
+                Z.with(addTwoToInt).fusing(addInts, 1)
             )
             .forEach(
                 fusion -> {

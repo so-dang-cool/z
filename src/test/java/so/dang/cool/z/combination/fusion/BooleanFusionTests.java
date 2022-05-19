@@ -13,7 +13,7 @@ public class BooleanFusionTests {
 
     @Test
     void boolean_deep() {
-        assertTrue(Z.with(true).resolve().getAsBoolean());
+        assertTrue(Z.with(true).getAsBoolean());
     }
 
     @Test
@@ -28,10 +28,7 @@ public class BooleanFusionTests {
 
     @Test
     void boolean_to_boolFn_deeper() {
-        assertEquals(
-            "true",
-            Z.with(true).fusing(booleanToString).resolve().get()
-        );
+        assertEquals("true", Z.with(true).fusing(booleanToString).get());
     }
 
     @Test

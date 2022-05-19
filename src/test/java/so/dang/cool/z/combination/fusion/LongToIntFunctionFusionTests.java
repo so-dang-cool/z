@@ -15,7 +15,7 @@ public class LongToIntFunctionFusionTests {
     void longToInt() {
         assertEquals(3, longToInt.applyAsInt(3L));
 
-        assertEquals(3, Z.with(longToInt).resolve().applyAsInt(3L));
+        assertEquals(3, Z.with(longToInt).applyAsInt(3L));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class LongToIntFunctionFusionTests {
             .of(
                 Z.fuse(longToInt, intToString),
                 Z.with(longToInt).fuse(intToString),
-                Z.with(longToInt).fusing(intToString).resolve()
+                Z.with(longToInt).fusing(intToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class LongToIntFunctionFusionTests {
             .of(
                 Z.fuse(longToInt, intToDouble),
                 Z.with(longToInt).fuse(intToDouble),
-                Z.with(longToInt).fusing(intToDouble).resolve()
+                Z.with(longToInt).fusing(intToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class LongToIntFunctionFusionTests {
             .of(
                 Z.fuse(longToInt, intToLong),
                 Z.with(longToInt).fuse(intToLong),
-                Z.with(longToInt).fusing(intToLong).resolve()
+                Z.with(longToInt).fusing(intToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class LongToIntFunctionFusionTests {
             .of(
                 Z.fuse(longToInt, isIntTwo),
                 Z.with(longToInt).fuse(isIntTwo),
-                Z.with(longToInt).fusing(isIntTwo).resolve()
+                Z.with(longToInt).fusing(isIntTwo)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class LongToIntFunctionFusionTests {
                 .of(
                     Z.fuse(longToInt, saveIntA),
                     Z.with(longToInt).fuse(saveIntA),
-                    Z.with(longToInt).fusing(saveIntA).resolve()
+                    Z.with(longToInt).fusing(saveIntA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class LongToIntFunctionFusionTests {
             .of(
                 Z.fuse(longToInt, addTwoToInt),
                 Z.with(longToInt).fuse(addTwoToInt),
-                Z.with(longToInt).fusing(addTwoToInt).resolve()
+                Z.with(longToInt).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -128,7 +128,7 @@ public class LongToIntFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToInt).fuse(addInts, 3),
-                Z.with(longToInt).fusing(addInts, 3).resolve()
+                Z.with(longToInt).fusing(addInts, 3)
             )
             .forEach(
                 fusion -> {

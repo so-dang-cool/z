@@ -13,7 +13,7 @@ public class ObjectFusionTests {
 
     @Test
     void class_deep() {
-        assertEquals("hi", Z.with(String.class).resolve().apply("hi"));
+        assertEquals("hi", Z.with(String.class).apply("hi"));
     }
 
     @Test
@@ -28,13 +28,13 @@ public class ObjectFusionTests {
     void class_to_fn_deeper() {
         assertEquals(
             suppliedString.toLowerCase(),
-            Z.with(String.class).fusing(toLower).resolve().apply("Z")
+            Z.with(String.class).fusing(toLower).apply("Z")
         );
     }
 
     @Test
     void object_deep() {
-        assertEquals("hi", Z.with("hi").resolve().get());
+        assertEquals("hi", Z.with("hi").get());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ObjectFusionTests {
     void object_to_fn_deeper() {
         assertEquals(
             suppliedString.toLowerCase(),
-            Z.with("Z").fusing(toLower).resolve().get()
+            Z.with("Z").fusing(toLower).get()
         );
     }
 

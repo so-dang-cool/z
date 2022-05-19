@@ -15,10 +15,7 @@ public class ToDoubleFunctionFusionTests {
     void toDblFn() {
         assertEquals(1.5, stringToDouble.applyAsDouble("1.5"));
 
-        assertEquals(
-            1.5,
-            Z.with(stringToDouble).resolve().applyAsDouble("1.5")
-        );
+        assertEquals(1.5, Z.with(stringToDouble).applyAsDouble("1.5"));
     }
 
     @Test
@@ -27,7 +24,7 @@ public class ToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(stringToDouble, doubleToString),
                 Z.with(stringToDouble).fuse(doubleToString),
-                Z.with(stringToDouble).fusing(doubleToString).resolve()
+                Z.with(stringToDouble).fusing(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -42,7 +39,7 @@ public class ToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(stringToDouble, doubleToInt),
                 Z.with(stringToDouble).fuse(doubleToInt),
-                Z.with(stringToDouble).fusing(doubleToInt).resolve()
+                Z.with(stringToDouble).fusing(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -57,7 +54,7 @@ public class ToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(stringToDouble, doubleToLong),
                 Z.with(stringToDouble).fuse(doubleToLong),
-                Z.with(stringToDouble).fusing(doubleToLong).resolve()
+                Z.with(stringToDouble).fusing(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -72,7 +69,7 @@ public class ToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(stringToDouble, isDoubleOne),
                 Z.with(stringToDouble).fuse(isDoubleOne),
-                Z.with(stringToDouble).fusing(isDoubleOne).resolve()
+                Z.with(stringToDouble).fusing(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -89,7 +86,7 @@ public class ToDoubleFunctionFusionTests {
                 .of(
                     Z.fuse(stringToDouble, saveDoubleA),
                     Z.with(stringToDouble).fuse(saveDoubleA),
-                    Z.with(stringToDouble).fusing(saveDoubleA).resolve()
+                    Z.with(stringToDouble).fusing(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -109,7 +106,7 @@ public class ToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(stringToDouble, addOneToDouble),
                 Z.with(stringToDouble).fuse(addOneToDouble),
-                Z.with(stringToDouble).fusing(addOneToDouble).resolve()
+                Z.with(stringToDouble).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -134,7 +131,7 @@ public class ToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.with(stringToDouble).fuse(addDoubles, 2.0),
-                Z.with(stringToDouble).fusing(addDoubles, 2.0).resolve()
+                Z.with(stringToDouble).fusing(addDoubles, 2.0)
             )
             .forEach(
                 fusion -> {

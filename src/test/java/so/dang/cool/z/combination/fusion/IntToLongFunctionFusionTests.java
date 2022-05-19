@@ -15,7 +15,7 @@ public class IntToLongFunctionFusionTests {
     void intToLong() {
         assertEquals(2L, intToLong.applyAsLong(2));
 
-        assertEquals(2L, Z.with(intToLong).resolve().applyAsLong(2));
+        assertEquals(2L, Z.with(intToLong).applyAsLong(2));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class IntToLongFunctionFusionTests {
             .of(
                 Z.fuse(intToLong, longToString),
                 Z.with(intToLong).fuse(longToString),
-                Z.with(intToLong).fusing(longToString).resolve()
+                Z.with(intToLong).fusing(longToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class IntToLongFunctionFusionTests {
             .of(
                 Z.fuse(intToLong, longToDouble),
                 Z.with(intToLong).fuse(longToDouble),
-                Z.with(intToLong).fusing(longToDouble).resolve()
+                Z.with(intToLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class IntToLongFunctionFusionTests {
             .of(
                 Z.fuse(intToLong, longToInt),
                 Z.with(intToLong).fuse(longToInt),
-                Z.with(intToLong).fusing(longToInt).resolve()
+                Z.with(intToLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class IntToLongFunctionFusionTests {
             .of(
                 Z.fuse(intToLong, isLongThree),
                 Z.with(intToLong).fuse(isLongThree),
-                Z.with(intToLong).fusing(isLongThree).resolve()
+                Z.with(intToLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class IntToLongFunctionFusionTests {
                 .of(
                     Z.fuse(intToLong, saveLongA),
                     Z.with(intToLong).fuse(saveLongA),
-                    Z.with(intToLong).fusing(saveLongA).resolve()
+                    Z.with(intToLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class IntToLongFunctionFusionTests {
             .of(
                 Z.fuse(intToLong, addThreeToLong),
                 Z.with(intToLong).fuse(addThreeToLong),
-                Z.with(intToLong).fusing(addThreeToLong).resolve()
+                Z.with(intToLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -128,7 +128,7 @@ public class IntToLongFunctionFusionTests {
         Stream
             .of(
                 Z.with(intToLong).fuse(addLongs, 3L),
-                Z.with(intToLong).fusing(addLongs, 3L).resolve()
+                Z.with(intToLong).fusing(addLongs, 3L)
             )
             .forEach(
                 fusion -> {

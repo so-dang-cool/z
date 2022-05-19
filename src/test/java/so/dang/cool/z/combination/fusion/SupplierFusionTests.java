@@ -16,7 +16,7 @@ public class SupplierFusionTests {
     @Test
     void sup() {
         assertEquals(suppliedString, getString.get());
-        assertEquals(suppliedString, Z.with(getString).resolve().get());
+        assertEquals(suppliedString, Z.with(getString).get());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SupplierFusionTests {
         );
         assertEquals(
             suppliedString.toLowerCase(),
-            Z.with(getString).fusing(toLower).resolve().get()
+            Z.with(getString).fusing(toLower).get()
         );
     }
 
@@ -41,14 +41,14 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(getString, concat),
                 Z.with(getString).fuse(concat),
-                Z.with(getString).fusing(concat).resolve()
+                Z.with(getString).fusing(concat)
             )
             .forEach(fusion -> assertEquals("Z!", fusion.apply("!")));
 
         Stream
             .of(
                 Z.with(getString).fuse(concat, "!"),
-                Z.with(getString).fusing(concat, "!").resolve()
+                Z.with(getString).fusing(concat, "!")
             )
             .forEach(fusion -> assertEquals("Z!", fusion.get()));
     }
@@ -62,7 +62,7 @@ public class SupplierFusionTests {
         );
         assertEquals(
             1.0,
-            Z.with(() -> "1.0").fusing(stringToDouble).resolve().getAsDouble()
+            Z.with(() -> "1.0").fusing(stringToDouble).getAsDouble()
         );
     }
 
@@ -74,7 +74,7 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(doubleOne, addStringsAsDouble),
                 Z.with(doubleOne).fuse(addStringsAsDouble),
-                Z.with(doubleOne).fusing(addStringsAsDouble).resolve()
+                Z.with(doubleOne).fusing(addStringsAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -85,7 +85,7 @@ public class SupplierFusionTests {
         Stream
             .of(
                 Z.with(doubleOne).fuse(addStringsAsDouble, "1.5"),
-                Z.with(doubleOne).fusing(addStringsAsDouble, "1.5").resolve()
+                Z.with(doubleOne).fusing(addStringsAsDouble, "1.5")
             )
             .forEach(
                 fusion -> {
@@ -98,10 +98,7 @@ public class SupplierFusionTests {
     void sup_to_toIntFn() {
         assertEquals(1, Z.fuse(() -> "1", stringToInt).getAsInt());
         assertEquals(1, Z.with(() -> "1").fuse(stringToInt).getAsInt());
-        assertEquals(
-            1,
-            Z.with(() -> "1").fusing(stringToInt).resolve().getAsInt()
-        );
+        assertEquals(1, Z.with(() -> "1").fusing(stringToInt).getAsInt());
     }
 
     @Test
@@ -112,7 +109,7 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(intOne, addStringsAsInt),
                 Z.with(intOne).fuse(addStringsAsInt),
-                Z.with(intOne).fusing(addStringsAsInt).resolve()
+                Z.with(intOne).fusing(addStringsAsInt)
             )
             .forEach(
                 fusion -> {
@@ -123,7 +120,7 @@ public class SupplierFusionTests {
         Stream
             .of(
                 Z.with(intOne).fuse(addStringsAsInt, "2"),
-                Z.with(intOne).fusing(addStringsAsInt, "2").resolve()
+                Z.with(intOne).fusing(addStringsAsInt, "2")
             )
             .forEach(
                 fusion -> {
@@ -136,10 +133,7 @@ public class SupplierFusionTests {
     void sup_to_toLongFn() {
         assertEquals(1L, Z.fuse(() -> "1", stringToLong).getAsLong());
         assertEquals(1L, Z.with(() -> "1").fuse(stringToLong).getAsLong());
-        assertEquals(
-            1L,
-            Z.with(() -> "1").fusing(stringToLong).resolve().getAsLong()
-        );
+        assertEquals(1L, Z.with(() -> "1").fusing(stringToLong).getAsLong());
     }
 
     @Test
@@ -150,7 +144,7 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(intOne, addStringsAsLong),
                 Z.with(intOne).fuse(addStringsAsLong),
-                Z.with(intOne).fusing(addStringsAsLong).resolve()
+                Z.with(intOne).fusing(addStringsAsLong)
             )
             .forEach(
                 fusion -> {
@@ -161,7 +155,7 @@ public class SupplierFusionTests {
         Stream
             .of(
                 Z.with(intOne).fuse(addStringsAsLong, "2"),
-                Z.with(intOne).fusing(addStringsAsLong, "2").resolve()
+                Z.with(intOne).fusing(addStringsAsLong, "2")
             )
             .forEach(
                 fusion -> {
@@ -174,7 +168,7 @@ public class SupplierFusionTests {
     void sup_to_pred() {
         assertFalse(Z.fuse(getString, isEmpty).getAsBoolean());
         assertFalse(Z.with(getString).fuse(isEmpty).getAsBoolean());
-        assertFalse(Z.with(getString).fusing(isEmpty).resolve().getAsBoolean());
+        assertFalse(Z.with(getString).fusing(isEmpty).getAsBoolean());
     }
 
     @Test
@@ -183,7 +177,7 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(getString, startsWith),
                 Z.with(getString).fuse(startsWith),
-                Z.with(getString).fusing(startsWith).resolve()
+                Z.with(getString).fusing(startsWith)
             )
             .forEach(
                 fusion -> {
@@ -194,7 +188,7 @@ public class SupplierFusionTests {
         Stream
             .of(
                 Z.with(getString).fuse(startsWith, "Z"),
-                Z.with(getString).fusing(startsWith, "Z").resolve()
+                Z.with(getString).fusing(startsWith, "Z")
             )
             .forEach(
                 fusion -> {
@@ -216,7 +210,7 @@ public class SupplierFusionTests {
             assertEquals(suppliedString, consumedStringA);
 
             consumedStringA = "";
-            Z.with(getString).fusing(saveStringA).resolve().run();
+            Z.with(getString).fusing(saveStringA).run();
             assertEquals(suppliedString, consumedStringA);
         }
     }
@@ -230,7 +224,7 @@ public class SupplierFusionTests {
                     .of(
                         Z.fuse(getString, saveStringsBandC),
                         Z.with(getString).fuse(saveStringsBandC),
-                        Z.with(getString).fusing(saveStringsBandC).resolve()
+                        Z.with(getString).fusing(saveStringsBandC)
                     )
                     .forEach(
                         fusion -> {
@@ -247,10 +241,7 @@ public class SupplierFusionTests {
                 Stream
                     .of(
                         Z.with(getString).fuse(saveStringsBandC, "z"),
-                        Z
-                            .with(getString)
-                            .fusing(saveStringsBandC, "z")
-                            .resolve()
+                        Z.with(getString).fusing(saveStringsBandC, "z")
                     )
                     .forEach(
                         fusion -> {
@@ -276,7 +267,7 @@ public class SupplierFusionTests {
                     .of(
                         Z.fuse(getString, saveStringDDoubleB),
                         Z.with(getString).fuse(saveStringDDoubleB),
-                        Z.with(getString).fusing(saveStringDDoubleB).resolve()
+                        Z.with(getString).fusing(saveStringDDoubleB)
                     )
                     .forEach(
                         fusion -> {
@@ -293,10 +284,7 @@ public class SupplierFusionTests {
                 Stream
                     .of(
                         Z.with(getString).fuse(saveStringDDoubleB, 5.0),
-                        Z
-                            .with(getString)
-                            .fusing(saveStringDDoubleB, 5.0)
-                            .resolve()
+                        Z.with(getString).fusing(saveStringDDoubleB, 5.0)
                     )
                     .forEach(
                         fusion -> {
@@ -322,7 +310,7 @@ public class SupplierFusionTests {
                     .of(
                         Z.fuse(getString, saveStringEIntB),
                         Z.with(getString).fuse(saveStringEIntB),
-                        Z.with(getString).fusing(saveStringEIntB).resolve()
+                        Z.with(getString).fusing(saveStringEIntB)
                     )
                     .forEach(
                         fusion -> {
@@ -339,7 +327,7 @@ public class SupplierFusionTests {
                 Stream
                     .of(
                         Z.with(getString).fuse(saveStringEIntB, 6),
-                        Z.with(getString).fusing(saveStringEIntB, 6).resolve()
+                        Z.with(getString).fusing(saveStringEIntB, 6)
                     )
                     .forEach(
                         fusion -> {
@@ -365,7 +353,7 @@ public class SupplierFusionTests {
                     .of(
                         Z.fuse(getString, saveStringFLongB),
                         Z.with(getString).fuse(saveStringFLongB),
-                        Z.with(getString).fusing(saveStringFLongB).resolve()
+                        Z.with(getString).fusing(saveStringFLongB)
                     )
                     .forEach(
                         fusion -> {
@@ -382,7 +370,7 @@ public class SupplierFusionTests {
                 Stream
                     .of(
                         Z.with(getString).fuse(saveStringFLongB, 7L),
-                        Z.with(getString).fusing(saveStringFLongB, 7L).resolve()
+                        Z.with(getString).fusing(saveStringFLongB, 7L)
                     )
                     .forEach(
                         fusion -> {
@@ -403,10 +391,7 @@ public class SupplierFusionTests {
     void sup_to_toUnop() {
         assertEquals("Z?", Z.fuse(getString, addQuestionMark).get());
         assertEquals("Z?", Z.with(getString).fuse(addQuestionMark).get());
-        assertEquals(
-            "Z?",
-            Z.with(getString).fusing(addQuestionMark).resolve().get()
-        );
+        assertEquals("Z?", Z.with(getString).fusing(addQuestionMark).get());
     }
 
     @Test
@@ -415,7 +400,7 @@ public class SupplierFusionTests {
             .of(
                 Z.fuse(getString, relation),
                 Z.with(getString).fuse(relation),
-                Z.with(getString).fusing(relation).resolve()
+                Z.with(getString).fusing(relation)
             )
             .forEach(
                 fusion -> {
@@ -426,7 +411,7 @@ public class SupplierFusionTests {
         Stream
             .of(
                 Z.with(getString).fuse(relation, "z"),
-                Z.with(getString).fusing(relation, "z").resolve()
+                Z.with(getString).fusing(relation, "z")
             )
             .forEach(
                 fusion -> {

@@ -60,14 +60,9 @@ public abstract class Combine<A, Fn> {
 
     private Combine() {}
 
-    /**
-     * Retrieve the resulting fusion.
-     */
-    public abstract Fn resolve();
-
     public static class WithFunction<A, B>
         extends Combine<B, Function<A, B>>
-        implements FunctionCombos<A, B> {
+        implements FunctionCombos<A, B>, Function<A, B> {
 
         private final transient Function<A, B> initial;
 
@@ -83,11 +78,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, B> resolve() {
             return initial;
         }
+
+        @Override
+        public B apply(A a) {
+            return initial.apply(a);
+        }
     }
 
     public static final class WithBiFunction<A, B, C>
         extends Combine<C, Function<A, Function<B, C>>>
-        implements BiFunctionCombos<A, B, C> {
+        implements BiFunctionCombos<A, B, C>, Function<A, Function<B, C>> {
 
         private final transient BiFunction<A, B, C> initial;
 
@@ -113,11 +113,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, Function<B, C>> resolve() {
             return (A a) -> (B b) -> initial.apply(a, b);
         }
+
+        @Override
+        public Function<B, C> apply(A a) {
+            return (B b) -> initial.apply(a, b);
+        }
     }
 
     public static final class WithBooleanFunction<A>
         extends Combine<A, BooleanFunction<A>>
-        implements BooleanFunctionCombos<A> {
+        implements BooleanFunctionCombos<A>, BooleanFunction<A> {
 
         private final transient BooleanFunction<A> initial;
 
@@ -135,11 +140,16 @@ public abstract class Combine<A, Fn> {
         public BooleanFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public A apply(boolean b) {
+            return initial.apply(b);
+        }
     }
 
     public static final class WithBooleanToDoubleFunction
         extends Combine<Double, BooleanToDoubleFunction>
-        implements BooleanToDoubleFunctionCombos {
+        implements BooleanToDoubleFunctionCombos, BooleanToDoubleFunction {
 
         private final transient BooleanToDoubleFunction initial;
 
@@ -157,11 +167,16 @@ public abstract class Combine<A, Fn> {
         public BooleanToDoubleFunction resolve() {
             return initial;
         }
+
+        @Override
+        public double applyAsDouble(boolean b) {
+            return initial.applyAsDouble(b);
+        }
     }
 
     public static final class WithBooleanToIntFunction
         extends Combine<Integer, BooleanToIntFunction>
-        implements BooleanToIntFunctionCombos {
+        implements BooleanToIntFunctionCombos, BooleanToIntFunction {
 
         private final transient BooleanToIntFunction initial;
 
@@ -179,11 +194,16 @@ public abstract class Combine<A, Fn> {
         public BooleanToIntFunction resolve() {
             return initial;
         }
+
+        @Override
+        public int applyAsInt(boolean b) {
+            return initial.applyAsInt(b);
+        }
     }
 
     public static final class WithBooleanToLongFunction
         extends Combine<Long, BooleanToLongFunction>
-        implements BooleanToLongFunctionCombos {
+        implements BooleanToLongFunctionCombos, BooleanToLongFunction {
 
         private final transient BooleanToLongFunction initial;
 
@@ -201,11 +221,16 @@ public abstract class Combine<A, Fn> {
         public BooleanToLongFunction resolve() {
             return initial;
         }
+
+        @Override
+        public long applyAsLong(boolean b) {
+            return initial.applyAsLong(b);
+        }
     }
 
     public static final class WithDoubleFunction<A>
         extends Combine<A, DoubleFunction<A>>
-        implements DoubleFunctionCombos<A> {
+        implements DoubleFunctionCombos<A>, DoubleFunction<A> {
 
         private final transient DoubleFunction<A> initial;
 
@@ -221,11 +246,16 @@ public abstract class Combine<A, Fn> {
         public DoubleFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public A apply(double d) {
+            return initial.apply(d);
+        }
     }
 
     public static final class WithDoubleToIntFunction
         extends Combine<Integer, DoubleToIntFunction>
-        implements DoubleToIntFunctionCombos {
+        implements DoubleToIntFunctionCombos, DoubleToIntFunction {
 
         private final transient DoubleToIntFunction initial;
 
@@ -241,11 +271,16 @@ public abstract class Combine<A, Fn> {
         public DoubleToIntFunction resolve() {
             return initial;
         }
+
+        @Override
+        public int applyAsInt(double d) {
+            return initial.applyAsInt(d);
+        }
     }
 
     public static final class WithDoubleToLongFunction
         extends Combine<Long, DoubleToLongFunction>
-        implements DoubleToLongFunctionCombos {
+        implements DoubleToLongFunctionCombos, DoubleToLongFunction {
 
         private final transient DoubleToLongFunction initial;
 
@@ -263,11 +298,16 @@ public abstract class Combine<A, Fn> {
         public DoubleToLongFunction resolve() {
             return initial;
         }
+
+        @Override
+        public long applyAsLong(double d) {
+            return initial.applyAsLong(d);
+        }
     }
 
     public static final class WithToDoubleFunction<A>
         extends Combine<Double, ToDoubleFunction<A>>
-        implements ToDoubleFunctionCombos<A> {
+        implements ToDoubleFunctionCombos<A>, ToDoubleFunction<A> {
 
         private final transient ToDoubleFunction<A> initial;
 
@@ -285,11 +325,17 @@ public abstract class Combine<A, Fn> {
         public ToDoubleFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public double applyAsDouble(A a) {
+            return initial.applyAsDouble(a);
+        }
     }
 
     public static final class WithToDoubleBiFunction<A, B>
         extends Combine<Double, Function<A, ToDoubleFunction<B>>>
-        implements ToDoubleBiFunctionCombos<A, B> {
+        implements
+            ToDoubleBiFunctionCombos<A, B>, Function<A, ToDoubleFunction<B>> {
 
         private final transient ToDoubleBiFunction<A, B> initial;
 
@@ -315,11 +361,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, ToDoubleFunction<B>> resolve() {
             return (A a) -> (B b) -> initial.applyAsDouble(a, b);
         }
+
+        @Override
+        public ToDoubleFunction<B> apply(A a) {
+            return (B b) -> initial.applyAsDouble(a, b);
+        }
     }
 
     public static final class WithIntFunction<A>
         extends Combine<A, IntFunction<A>>
-        implements IntFunctionCombos<A> {
+        implements IntFunctionCombos<A>, IntFunction<A> {
 
         private final transient IntFunction<A> initial;
 
@@ -335,11 +386,16 @@ public abstract class Combine<A, Fn> {
         public IntFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public A apply(int i) {
+            return initial.apply(i);
+        }
     }
 
     public static final class WithIntToDoubleFunction
         extends Combine<Integer, IntToDoubleFunction>
-        implements IntToDoubleFunctionCombos {
+        implements IntToDoubleFunctionCombos, IntToDoubleFunction {
 
         private final transient IntToDoubleFunction initial;
 
@@ -355,11 +411,16 @@ public abstract class Combine<A, Fn> {
         public IntToDoubleFunction resolve() {
             return initial;
         }
+
+        @Override
+        public double applyAsDouble(int i) {
+            return initial.applyAsDouble(i);
+        }
     }
 
     public static final class WithIntToLongFunction
         extends Combine<Long, IntToLongFunction>
-        implements IntToLongFunctionCombos {
+        implements IntToLongFunctionCombos, IntToLongFunction {
 
         private final transient IntToLongFunction initial;
 
@@ -375,11 +436,16 @@ public abstract class Combine<A, Fn> {
         public IntToLongFunction resolve() {
             return initial;
         }
+
+        @Override
+        public long applyAsLong(int i) {
+            return initial.applyAsLong(i);
+        }
     }
 
     public static final class WithToIntFunction<A>
         extends Combine<Integer, ToIntFunction<A>>
-        implements ToIntFunctionCombos<A> {
+        implements ToIntFunctionCombos<A>, ToIntFunction<A> {
 
         private final transient ToIntFunction<A> initial;
 
@@ -395,11 +461,16 @@ public abstract class Combine<A, Fn> {
         public ToIntFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public int applyAsInt(A a) {
+            return initial.applyAsInt(a);
+        }
     }
 
     public static final class WithToIntBiFunction<A, B>
         extends Combine<Integer, Function<A, ToIntFunction<B>>>
-        implements ToIntBiFunctionCombos<A, B> {
+        implements ToIntBiFunctionCombos<A, B>, Function<A, ToIntFunction<B>> {
 
         private final transient ToIntBiFunction<A, B> initial;
 
@@ -425,11 +496,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, ToIntFunction<B>> resolve() {
             return (A a) -> (B b) -> initial.applyAsInt(a, b);
         }
+
+        @Override
+        public ToIntFunction<B> apply(A a) {
+            return (B b) -> initial.applyAsInt(a, b);
+        }
     }
 
     public static final class WithLongFunction<A>
         extends Combine<A, LongFunction<A>>
-        implements LongFunctionCombos<A> {
+        implements LongFunctionCombos<A>, LongFunction<A> {
 
         private final transient LongFunction<A> initial;
 
@@ -445,11 +521,16 @@ public abstract class Combine<A, Fn> {
         public LongFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public A apply(long n) {
+            return initial.apply(n);
+        }
     }
 
     public static final class WithLongToDoubleFunction
         extends Combine<Long, LongToDoubleFunction>
-        implements LongToDoubleFunctionCombos {
+        implements LongToDoubleFunctionCombos, LongToDoubleFunction {
 
         private final transient LongToDoubleFunction initial;
 
@@ -467,11 +548,16 @@ public abstract class Combine<A, Fn> {
         public LongToDoubleFunction resolve() {
             return initial;
         }
+
+        @Override
+        public double applyAsDouble(long n) {
+            return initial.applyAsDouble(n);
+        }
     }
 
     public static final class WithLongToIntFunction
         extends Combine<Long, LongToIntFunction>
-        implements LongToIntFunctionCombos {
+        implements LongToIntFunctionCombos, LongToIntFunction {
 
         private final transient LongToIntFunction initial;
 
@@ -487,11 +573,16 @@ public abstract class Combine<A, Fn> {
         public LongToIntFunction resolve() {
             return initial;
         }
+
+        @Override
+        public int applyAsInt(long n) {
+            return initial.applyAsInt(n);
+        }
     }
 
     public static final class WithToLongFunction<A>
         extends Combine<Long, ToLongFunction<A>>
-        implements ToLongFunctionCombos<A> {
+        implements ToLongFunctionCombos<A>, ToLongFunction<A> {
 
         private final transient ToLongFunction<A> initial;
 
@@ -507,11 +598,17 @@ public abstract class Combine<A, Fn> {
         public ToLongFunction<A> resolve() {
             return initial;
         }
+
+        @Override
+        public long applyAsLong(A a) {
+            return initial.applyAsLong(a);
+        }
     }
 
     public static final class WithToLongBiFunction<A, B>
         extends Combine<Long, Function<A, ToLongFunction<B>>>
-        implements ToLongBiFunctionCombos<A, B> {
+        implements
+            ToLongBiFunctionCombos<A, B>, Function<A, ToLongFunction<B>> {
 
         private final transient ToLongBiFunction<A, B> initial;
 
@@ -537,12 +634,17 @@ public abstract class Combine<A, Fn> {
         public Function<A, ToLongFunction<B>> resolve() {
             return (A a) -> (B b) -> initial.applyAsLong(a, b);
         }
+
+        @Override
+        public ToLongFunction<B> apply(A a) {
+            return (B b) -> initial.applyAsLong(a, b);
+        }
     }
 
     @Evil
     public static final class WithConsumer<A>
         extends Combine<Void, Consumer<A>>
-        implements ConsumerCombos<A> {
+        implements ConsumerCombos<A>, Consumer<A> {
 
         private final transient Consumer<A> initial;
 
@@ -558,12 +660,17 @@ public abstract class Combine<A, Fn> {
         public Consumer<A> resolve() {
             return initial;
         }
+
+        @Override
+        public void accept(A a) {
+            initial.accept(a);
+        }
     }
 
     @Evil
     public static final class WithBiConsumer<A, B>
         extends Combine<Void, Function<A, Consumer<B>>>
-        implements BiConsumerCombos<A, B> {
+        implements BiConsumerCombos<A, B>, Function<A, Consumer<B>> {
 
         private final transient BiConsumer<A, B> initial;
 
@@ -587,12 +694,17 @@ public abstract class Combine<A, Fn> {
         public Function<A, Consumer<B>> resolve() {
             return (A a) -> (B b) -> initial.accept(a, b);
         }
+
+        @Override
+        public Consumer<B> apply(A a) {
+            return (B b) -> initial.accept(a, b);
+        }
     }
 
     @Evil
     public static final class WithBooleanConsumer
         extends Combine<Void, BooleanConsumer>
-        implements BooleanConsumerCombos {
+        implements BooleanConsumerCombos, BooleanConsumer {
 
         private final transient BooleanConsumer initial;
 
@@ -608,12 +720,17 @@ public abstract class Combine<A, Fn> {
         public BooleanConsumer resolve() {
             return initial;
         }
+
+        @Override
+        public void accept(boolean b) {
+            initial.accept(b);
+        }
     }
 
     @Evil
     public static final class WithDoubleConsumer
         extends Combine<Void, DoubleConsumer>
-        implements DoubleConsumerCombos {
+        implements DoubleConsumerCombos, DoubleConsumer {
 
         private final transient DoubleConsumer initial;
 
@@ -629,12 +746,17 @@ public abstract class Combine<A, Fn> {
         public DoubleConsumer resolve() {
             return initial;
         }
+
+        @Override
+        public void accept(double d) {
+            initial.accept(d);
+        }
     }
 
     @Evil
     public static final class WithObjDoubleConsumer<A>
         extends Combine<Void, Function<A, DoubleConsumer>>
-        implements ObjDoubleConsumerCombos<A> {
+        implements ObjDoubleConsumerCombos<A>, Function<A, DoubleConsumer> {
 
         private final transient ObjDoubleConsumer<A> initial;
 
@@ -660,12 +782,17 @@ public abstract class Combine<A, Fn> {
         public Function<A, DoubleConsumer> resolve() {
             return (A a) -> (double d) -> initial.accept(a, d);
         }
+
+        @Override
+        public DoubleConsumer apply(A a) {
+            return (double d) -> initial.accept(a, d);
+        }
     }
 
     @Evil
     public static final class WithIntConsumer
         extends Combine<Void, IntConsumer>
-        implements IntConsumerCombos {
+        implements IntConsumerCombos, IntConsumer {
 
         private final transient IntConsumer initial;
 
@@ -681,12 +808,17 @@ public abstract class Combine<A, Fn> {
         public IntConsumer resolve() {
             return initial;
         }
+
+        @Override
+        public void accept(int i) {
+            initial.accept(i);
+        }
     }
 
     @Evil
     public static final class WithObjIntConsumer<A>
         extends Combine<Void, Function<A, IntConsumer>>
-        implements ObjIntConsumerCombos<A> {
+        implements ObjIntConsumerCombos<A>, Function<A, IntConsumer> {
 
         private final transient ObjIntConsumer<A> initial;
 
@@ -710,12 +842,17 @@ public abstract class Combine<A, Fn> {
         public Function<A, IntConsumer> resolve() {
             return (A a) -> (int i) -> initial.accept(a, i);
         }
+
+        @Override
+        public IntConsumer apply(A a) {
+            return (int i) -> initial.accept(a, i);
+        }
     }
 
     @Evil
     public static final class WithLongConsumer
         extends Combine<Void, LongConsumer>
-        implements LongConsumerCombos {
+        implements LongConsumerCombos, LongConsumer {
 
         private final transient LongConsumer initial;
 
@@ -731,12 +868,17 @@ public abstract class Combine<A, Fn> {
         public LongConsumer resolve() {
             return initial;
         }
+
+        @Override
+        public void accept(long n) {
+            initial.accept(n);
+        }
     }
 
     @Evil
     public static final class WithObjLongConsumer<A>
         extends Combine<Void, Function<A, LongConsumer>>
-        implements ObjLongConsumerCombos<A> {
+        implements ObjLongConsumerCombos<A>, Function<A, LongConsumer> {
 
         private final transient ObjLongConsumer<A> initial;
 
@@ -762,11 +904,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, LongConsumer> resolve() {
             return (A a) -> (long n) -> initial.accept(a, n);
         }
+
+        @Override
+        public LongConsumer apply(A a) {
+            return (long n) -> initial.accept(a, n);
+        }
     }
 
     public static final class WithPredicate<A>
         extends Combine<Boolean, Predicate<A>>
-        implements PredicateCombos<A> {
+        implements PredicateCombos<A>, Predicate<A> {
 
         private final transient Predicate<A> initial;
 
@@ -782,11 +929,16 @@ public abstract class Combine<A, Fn> {
         public Predicate<A> resolve() {
             return initial;
         }
+
+        @Override
+        public boolean test(A a) {
+            return initial.test(a);
+        }
     }
 
     public static final class WithBiPredicate<A, B>
         extends Combine<Boolean, Function<A, Predicate<B>>>
-        implements BiPredicateCombos<A, B> {
+        implements BiPredicateCombos<A, B>, Function<A, Predicate<B>> {
 
         private final transient BiPredicate<A, B> initial;
 
@@ -812,11 +964,16 @@ public abstract class Combine<A, Fn> {
         public Function<A, Predicate<B>> resolve() {
             return (A a) -> (B b) -> initial.test(a, b);
         }
+
+        @Override
+        public Predicate<B> apply(A a) {
+            return (B b) -> initial.test(a, b);
+        }
     }
 
     public static final class WithBooleanPredicate
         extends Combine<Boolean, BooleanPredicate>
-        implements BooleanPredicateCombos {
+        implements BooleanPredicateCombos, BooleanPredicate {
 
         private final transient BooleanPredicate initial;
 
@@ -832,11 +989,16 @@ public abstract class Combine<A, Fn> {
         public BooleanPredicate resolve() {
             return initial;
         }
+
+        @Override
+        public boolean test(boolean b) {
+            return initial.test(b);
+        }
     }
 
     public static final class WithDoublePredicate
         extends Combine<Double, DoublePredicate>
-        implements DoublePredicateCombos {
+        implements DoublePredicateCombos, DoublePredicate {
 
         private final transient DoublePredicate initial;
 
@@ -852,11 +1014,16 @@ public abstract class Combine<A, Fn> {
         public DoublePredicate resolve() {
             return initial;
         }
+
+        @Override
+        public boolean test(double d) {
+            return initial.test(d);
+        }
     }
 
     public static final class WithIntPredicate
         extends Combine<Integer, IntPredicate>
-        implements IntPredicateCombos {
+        implements IntPredicateCombos, IntPredicate {
 
         private final transient IntPredicate initial;
 
@@ -872,11 +1039,16 @@ public abstract class Combine<A, Fn> {
         public IntPredicate resolve() {
             return initial;
         }
+
+        @Override
+        public boolean test(int i) {
+            return initial.test(i);
+        }
     }
 
     public static final class WithLongPredicate
         extends Combine<Long, LongPredicate>
-        implements LongPredicateCombos {
+        implements LongPredicateCombos, LongPredicate {
 
         private final transient LongPredicate initial;
 
@@ -892,11 +1064,16 @@ public abstract class Combine<A, Fn> {
         public LongPredicate resolve() {
             return initial;
         }
+
+        @Override
+        public boolean test(long n) {
+            return initial.test(n);
+        }
     }
 
     public static final class WithSupplier<A>
         extends Combine<A, Supplier<A>>
-        implements SupplierCombos<A> {
+        implements SupplierCombos<A>, Supplier<A> {
 
         private final transient Supplier<A> initial;
 
@@ -912,11 +1089,16 @@ public abstract class Combine<A, Fn> {
         public Supplier<A> resolve() {
             return initial;
         }
+
+        @Override
+        public A get() {
+            return initial.get();
+        }
     }
 
     public static final class WithBooleanSupplier
         extends Combine<Boolean, BooleanSupplier>
-        implements BooleanSupplierCombos {
+        implements BooleanSupplierCombos, BooleanSupplier {
 
         private final transient BooleanSupplier initial;
 
@@ -932,11 +1114,16 @@ public abstract class Combine<A, Fn> {
         public BooleanSupplier resolve() {
             return initial;
         }
+
+        @Override
+        public boolean getAsBoolean() {
+            return initial.getAsBoolean();
+        }
     }
 
     public static final class WithDoubleSupplier
         extends Combine<Double, DoubleSupplier>
-        implements DoubleSupplierCombos {
+        implements DoubleSupplierCombos, DoubleSupplier {
 
         private final transient DoubleSupplier initial;
 
@@ -952,11 +1139,16 @@ public abstract class Combine<A, Fn> {
         public DoubleSupplier resolve() {
             return initial;
         }
+
+        @Override
+        public double getAsDouble() {
+            return initial.getAsDouble();
+        }
     }
 
     public static final class WithIntSupplier
         extends Combine<Integer, IntSupplier>
-        implements IntSupplierCombos {
+        implements IntSupplierCombos, IntSupplier {
 
         private final transient IntSupplier initial;
 
@@ -972,11 +1164,16 @@ public abstract class Combine<A, Fn> {
         public IntSupplier resolve() {
             return initial;
         }
+
+        @Override
+        public int getAsInt() {
+            return initial.getAsInt();
+        }
     }
 
     public static final class WithLongSupplier
         extends Combine<Long, LongSupplier>
-        implements LongSupplierCombos {
+        implements LongSupplierCombos, LongSupplier {
 
         private final transient LongSupplier initial;
 
@@ -992,12 +1189,17 @@ public abstract class Combine<A, Fn> {
         public LongSupplier resolve() {
             return initial;
         }
+
+        @Override
+        public long getAsLong() {
+            return initial.getAsLong();
+        }
     }
 
     @Evil
     public static final class WithOperator
         extends Combine<Void, Operator>
-        implements OperatorCombos {
+        implements OperatorCombos, Operator {
 
         private final transient Operator initial;
 
@@ -1013,10 +1215,16 @@ public abstract class Combine<A, Fn> {
         public Operator resolve() {
             return initial;
         }
+
+        @Override
+        public void run() {
+            initial.run();
+        }
     }
 
     public static final class WithUnaryOperator<A>
-        extends Combine<A, UnaryOperator<A>> {
+        extends Combine<A, UnaryOperator<A>>
+        implements UnaryOperatorCombos<A>, UnaryOperator<A> {
 
         private final transient UnaryOperator<A> initial;
 
@@ -1033,51 +1241,15 @@ public abstract class Combine<A, Fn> {
             return initial;
         }
 
-        /* UnaryOperator -> Function<A, B> */
-
-        public <B> Function<A, B> fuseFunction(Function<A, B> next) {
-            return (A a) -> next.apply(resolve().apply(a));
-        }
-
-        public <B> Function<A, B> fuse(Function<A, B> next) {
-            return fuseFunction(next);
-        }
-
-        public <B> WithFunction<A, B> fusingFunction(Function<A, B> next) {
-            return WithFunction.of(fuse(next));
-        }
-
-        public <B> WithFunction<A, B> fusing(Function<A, B> next) {
-            return fusingFunction(next);
-        }
-
-        /* UnaryOperator -> BiFunction<A, B, C> */
-
-        public <B, C> Function<A, Function<B, C>> fuseBiFunction(
-            BiFunction<A, B, C> next
-        ) {
-            return (A a) -> (B c) -> next.apply(resolve().apply(a), c);
-        }
-
-        public <B, C> Function<A, Function<B, C>> fuse(
-            BiFunction<A, B, C> next
-        ) {
-            return fuseBiFunction(next);
-        }
-
-        public <B, C> WithBiFunction<A, B, C> fusingBiFunction(
-            BiFunction<A, B, C> next
-        ) {
-            return WithBiFunction.of(fuse(next));
-        }
-
-        public <B, C> WithBiFunction<A, B, C> fusing(BiFunction<A, B, C> next) {
-            return fusingBiFunction(next);
+        @Override
+        public A apply(A a) {
+            return initial.apply(a);
         }
     }
 
     public static final class WithBinaryOperator<A>
-        extends Combine<A, Function<A, UnaryOperator<A>>> {
+        extends Combine<A, Function<A, UnaryOperator<A>>>
+        implements BinaryOperatorCombos<A>, Function<A, UnaryOperator<A>> {
 
         private final transient BinaryOperator<A> initial;
 
@@ -1094,30 +1266,15 @@ public abstract class Combine<A, Fn> {
             return (A a1) -> (A a2) -> initial.apply(a1, a2);
         }
 
-        /* BinaryOperator -> Function<A, B> */
-
-        public <B> Function<A, Function<A, B>> fuseFunction(
-            Function<A, B> next
-        ) {
-            return (A a) -> (A b) -> next.apply(initial.apply(a, b));
-        }
-
-        public <B> Function<A, Function<A, B>> fuse(Function<A, B> next) {
-            return fuseFunction(next);
-        }
-
-        public <B> WithBiFunction<A, A, B> fusingFunction(Function<A, B> next) {
-            return WithBiFunction.of(fuse(next));
-        }
-
-        public <B> WithBiFunction<A, A, B> fusing(Function<A, B> next) {
-            return fusingFunction(next);
+        @Override
+        public UnaryOperator<A> apply(A a1) {
+            return (A a2) -> initial.apply(a1, a2);
         }
     }
 
     public static final class WithDoubleUnaryOperator
         extends Combine<Double, DoubleUnaryOperator>
-        implements DoubleUnaryOperatorCombos {
+        implements DoubleUnaryOperatorCombos, DoubleUnaryOperator {
 
         private final transient DoubleUnaryOperator initial;
 
@@ -1135,11 +1292,17 @@ public abstract class Combine<A, Fn> {
         public DoubleUnaryOperator resolve() {
             return initial;
         }
+
+        @Override
+        public double applyAsDouble(double d) {
+            return initial.applyAsDouble(d);
+        }
     }
 
     public static final class WithDoubleBinaryOperator
         extends Combine<Double, DoubleFunction<DoubleUnaryOperator>>
-        implements DoubleBinaryOperatorCombos {
+        implements
+            DoubleBinaryOperatorCombos, DoubleFunction<DoubleUnaryOperator> {
 
         private final transient DoubleBinaryOperator initial;
 
@@ -1165,11 +1328,16 @@ public abstract class Combine<A, Fn> {
         public DoubleFunction<DoubleUnaryOperator> resolve() {
             return (double d1) -> (double d2) -> initial.applyAsDouble(d1, d2);
         }
+
+        @Override
+        public DoubleUnaryOperator apply(double d1) {
+            return (double d2) -> initial.applyAsDouble(d1, d2);
+        }
     }
 
     public static final class WithIntUnaryOperator
         extends Combine<Integer, IntUnaryOperator>
-        implements IntUnaryOperatorCombos {
+        implements IntUnaryOperatorCombos, IntUnaryOperator {
 
         private final transient IntUnaryOperator initial;
 
@@ -1185,11 +1353,16 @@ public abstract class Combine<A, Fn> {
         public IntUnaryOperator resolve() {
             return initial;
         }
+
+        @Override
+        public int applyAsInt(int i) {
+            return initial.applyAsInt(i);
+        }
     }
 
     public static final class WithIntBinaryOperator
         extends Combine<Integer, IntFunction<IntUnaryOperator>>
-        implements IntBinaryOperatorCombos {
+        implements IntBinaryOperatorCombos, IntFunction<IntUnaryOperator> {
 
         private final transient IntBinaryOperator initial;
 
@@ -1213,11 +1386,16 @@ public abstract class Combine<A, Fn> {
         public IntFunction<IntUnaryOperator> resolve() {
             return (int i1) -> (int i2) -> initial.applyAsInt(i1, i2);
         }
+
+        @Override
+        public IntUnaryOperator apply(int i1) {
+            return (int i2) -> initial.applyAsInt(i1, i2);
+        }
     }
 
     public static final class WithLongUnaryOperator
         extends Combine<Long, LongUnaryOperator>
-        implements LongUnaryOperatorCombos {
+        implements LongUnaryOperatorCombos, LongUnaryOperator {
 
         private final transient LongUnaryOperator initial;
 
@@ -1233,11 +1411,16 @@ public abstract class Combine<A, Fn> {
         public LongUnaryOperator resolve() {
             return initial;
         }
+
+        @Override
+        public long applyAsLong(long n) {
+            return initial.applyAsLong(n);
+        }
     }
 
     public static final class WithLongBinaryOperator
         extends Combine<Long, LongFunction<LongUnaryOperator>>
-        implements LongBinaryOperatorCombos {
+        implements LongBinaryOperatorCombos, LongFunction<LongUnaryOperator> {
 
         private final transient LongBinaryOperator initial;
 
@@ -1262,6 +1445,11 @@ public abstract class Combine<A, Fn> {
         @Override
         public LongFunction<LongUnaryOperator> resolve() {
             return (long n1) -> (long n2) -> initial.applyAsLong(n1, n2);
+        }
+
+        @Override
+        public LongUnaryOperator apply(long n1) {
+            return (long n2) -> initial.applyAsLong(n1, n2);
         }
     }
 }

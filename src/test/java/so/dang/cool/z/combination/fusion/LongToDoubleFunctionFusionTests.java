@@ -15,7 +15,7 @@ public class LongToDoubleFunctionFusionTests {
     void longToDbl() {
         assertEquals(3.0, longToDouble.applyAsDouble(3L));
 
-        assertEquals(3.0, Z.with(longToDouble).resolve().applyAsDouble(3L));
+        assertEquals(3.0, Z.with(longToDouble).applyAsDouble(3L));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class LongToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(longToDouble, doubleToString),
                 Z.with(longToDouble).fuse(doubleToString),
-                Z.with(longToDouble).fusing(doubleToString).resolve()
+                Z.with(longToDouble).fusing(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class LongToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(longToDouble, doubleToInt),
                 Z.with(longToDouble).fuse(doubleToInt),
-                Z.with(longToDouble).fusing(doubleToInt).resolve()
+                Z.with(longToDouble).fusing(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class LongToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(longToDouble, doubleToLong),
                 Z.with(longToDouble).fuse(doubleToLong),
-                Z.with(longToDouble).fusing(doubleToLong).resolve()
+                Z.with(longToDouble).fusing(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class LongToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(longToDouble, isDoubleOne),
                 Z.with(longToDouble).fuse(isDoubleOne),
-                Z.with(longToDouble).fusing(isDoubleOne).resolve()
+                Z.with(longToDouble).fusing(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class LongToDoubleFunctionFusionTests {
                 .of(
                     Z.fuse(longToDouble, saveDoubleA),
                     Z.with(longToDouble).fuse(saveDoubleA),
-                    Z.with(longToDouble).fusing(saveDoubleA).resolve()
+                    Z.with(longToDouble).fusing(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class LongToDoubleFunctionFusionTests {
             .of(
                 Z.fuse(longToDouble, addOneToDouble),
                 Z.with(longToDouble).fuse(addOneToDouble),
-                Z.with(longToDouble).fusing(addOneToDouble).resolve()
+                Z.with(longToDouble).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -131,7 +131,7 @@ public class LongToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToDouble).fuse(addDoubles, 0.5),
-                Z.with(longToDouble).fusing(addDoubles, 0.5).resolve()
+                Z.with(longToDouble).fusing(addDoubles, 0.5)
             )
             .forEach(
                 fusion -> {

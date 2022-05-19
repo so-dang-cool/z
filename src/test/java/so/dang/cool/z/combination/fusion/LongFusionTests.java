@@ -12,7 +12,7 @@ public class LongFusionTests {
 
     @Test
     void long_deep() {
-        assertEquals(3L, Z.with(3L).resolve().getAsLong());
+        assertEquals(3L, Z.with(3L).getAsLong());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class LongFusionTests {
 
     @Test
     void long_to_longFn_deeper() {
-        assertEquals("3", Z.with(3L).fusing(longToString).resolve().get());
+        assertEquals("3", Z.with(3L).fusing(longToString).get());
     }
 
     @Test

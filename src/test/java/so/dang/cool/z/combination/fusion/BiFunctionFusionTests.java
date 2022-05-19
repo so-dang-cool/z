@@ -17,10 +17,7 @@ public class BiFunctionFusionTests {
 
     @Test
     void bifn_deep() {
-        assertEquals(
-            "greetings",
-            Z.with(concat).resolve().apply("greet").apply("ings")
-        );
+        assertEquals("greetings", Z.with(concat).apply("greet").apply("ings"));
     }
 
     @Test
@@ -43,7 +40,7 @@ public class BiFunctionFusionTests {
     void bifn_to_fn_deeper() {
         assertEquals(
             "hey there",
-            Z.with(concat).fusing(trim).resolve().apply(" hey ").apply("there ")
+            Z.with(concat).fusing(trim).apply(" hey ").apply("there ")
         );
     }
 
@@ -59,7 +56,7 @@ public class BiFunctionFusionTests {
             Z.with(concat).fuse(concat).apply("かめ").apply("はめ").apply("波")
         );
 
-        // TODO: Z.with(concat).fusing(concat).resolve()
+        // TODO: Z.with(concat).fusing(concat)
 
         assertEquals(
             "かめはめ波",
@@ -68,12 +65,7 @@ public class BiFunctionFusionTests {
 
         assertEquals(
             "かめはめ波",
-            Z
-                .with(concat)
-                .fusing(concat, "波")
-                .resolve()
-                .apply("かめ")
-                .apply("はめ")
+            Z.with(concat).fusing(concat, "波").apply("かめ").apply("はめ")
         );
     }
 
@@ -91,12 +83,7 @@ public class BiFunctionFusionTests {
 
         assertEquals(
             1.5,
-            Z
-                .with(concat)
-                .fusing(stringToDouble)
-                .resolve()
-                .apply("1")
-                .applyAsDouble(".5")
+            Z.with(concat).fusing(stringToDouble).apply("1").applyAsDouble(".5")
         );
     }
 
@@ -121,7 +108,7 @@ public class BiFunctionFusionTests {
                 .applyAsDouble("2.0")
         );
 
-        // TODO: Z.with(concat).fusing(addStringsAsDouble).resolve()
+        // TODO: Z.with(concat).fusing(addStringsAsDouble)
 
         assertEquals(
             3.0,
@@ -137,7 +124,6 @@ public class BiFunctionFusionTests {
             Z
                 .with(concat)
                 .fusing(addStringsAsDouble, "2.0")
-                .resolve()
                 .apply("1")
                 .applyAsDouble(".0")
         );
@@ -157,12 +143,7 @@ public class BiFunctionFusionTests {
 
         assertEquals(
             12,
-            Z
-                .with(concat)
-                .fusing(stringToInt)
-                .resolve()
-                .apply("1")
-                .applyAsInt("2")
+            Z.with(concat).fusing(stringToInt).apply("1").applyAsInt("2")
         );
     }
 
@@ -193,7 +174,7 @@ public class BiFunctionFusionTests {
         //     Z
         //         .with(concat)
         //         .fusing(addStringsAsInt)
-        //         .resolve()
+        //
         //         .apply("2")
         //         .apply("3")
         //         .applyAsInt("7")
@@ -209,7 +190,6 @@ public class BiFunctionFusionTests {
             Z
                 .with(concat)
                 .fusing(addStringsAsInt, "7")
-                .resolve()
                 .apply("2")
                 .applyAsInt("3")
         );
@@ -229,12 +209,7 @@ public class BiFunctionFusionTests {
 
         assertEquals(
             34L,
-            Z
-                .with(concat)
-                .fusing(stringToLong)
-                .resolve()
-                .apply("3")
-                .applyAsLong("4")
+            Z.with(concat).fusing(stringToLong).apply("3").applyAsLong("4")
         );
     }
 
@@ -265,7 +240,7 @@ public class BiFunctionFusionTests {
         //     Z
         //         .with(concat)
         //         .fusing(addStringsAsLong)
-        //         .resolve()
+        //
         //         .apply("3")
         //         .apply("4")
         //         .applyAsLong("6")
@@ -285,7 +260,6 @@ public class BiFunctionFusionTests {
             Z
                 .with(concat)
                 .fusing(addStringsAsLong, "6")
-                .resolve()
                 .apply("3")
                 .applyAsLong("4")
         );
@@ -297,7 +271,7 @@ public class BiFunctionFusionTests {
 
         assertTrue(Z.with(concat).fuse(isEmpty).apply("").test(""));
 
-        assertTrue(Z.with(concat).fusing(isEmpty).resolve().apply("").test(""));
+        assertTrue(Z.with(concat).fusing(isEmpty).apply("").test(""));
     }
 
     @Test
@@ -317,7 +291,7 @@ public class BiFunctionFusionTests {
 
         // TODO: Implement with currying
         // assertTrue(
-        //     Z.with(concat).fusing(startsWith).resolve().apply("ba").apply("nana").test("ban")
+        //     Z.with(concat).fusing(startsWith).apply("ba").apply("nana").test("ban")
         // );
 
         assertTrue(
@@ -325,12 +299,7 @@ public class BiFunctionFusionTests {
         );
 
         assertTrue(
-            Z
-                .with(concat)
-                .fusing(startsWith, "ban")
-                .resolve()
-                .apply("ba")
-                .test("nana")
+            Z.with(concat).fusing(startsWith, "ban").apply("ba").test("nana")
         );
     }
 
@@ -356,12 +325,7 @@ public class BiFunctionFusionTests {
 
             consumedStringA = "";
 
-            Z
-                .with(concat)
-                .fusing(saveStringA)
-                .resolve()
-                .apply("yo")
-                .accept("yo");
+            Z.with(concat).fusing(saveStringA).apply("yo").accept("yo");
 
             assertEquals("yoyo", consumedStringA);
         }
@@ -408,7 +372,7 @@ public class BiFunctionFusionTests {
                 // Z
                 //     .with(concat)
                 //     .fusing(saveStringsBandC)
-                //     .resolve()
+                //
                 //     .apply("hell")
                 //     .apply("o")
                 //     .accept("mother");
@@ -438,7 +402,6 @@ public class BiFunctionFusionTests {
                 Z
                     .with(concat)
                     .fusing(saveStringsBandC, "mother")
-                    .resolve()
                     .apply("hell")
                     .accept("o");
 
@@ -489,7 +452,7 @@ public class BiFunctionFusionTests {
                 // Z
                 //     .with(concat)
                 //     .fusing(saveStringDDoubleB)
-                //     .resolve()
+                //
                 //     .apply("point")
                 //     .apply(" five")
                 //     .accept(0.5);
@@ -519,7 +482,6 @@ public class BiFunctionFusionTests {
                 Z
                     .with(concat)
                     .fusing(saveStringDDoubleB, 0.5)
-                    .resolve()
                     .apply("point")
                     .accept(" five");
 
@@ -570,7 +532,7 @@ public class BiFunctionFusionTests {
                 // Z
                 //     .with(concat)
                 //     .fusing(saveStringEIntB)
-                //     .resolve()
+                //
                 //     .apply("eleven")
                 //     .apply("teen")
                 //     .accept(111);
@@ -600,7 +562,6 @@ public class BiFunctionFusionTests {
                 Z
                     .with(concat)
                     .fusing(saveStringEIntB, 111)
-                    .resolve()
                     .apply("eleven")
                     .accept("teen");
 
@@ -651,7 +612,7 @@ public class BiFunctionFusionTests {
                 // Z
                 //     .with(concat)
                 //     .fusing(saveStringFLongB)
-                //     .resolve()
+                //
                 //     .apply("twenty")
                 //     .apply("-two")
                 //     .accept(22L);
@@ -681,7 +642,6 @@ public class BiFunctionFusionTests {
                 Z
                     .with(concat)
                     .fusing(saveStringFLongB, 22L)
-                    .resolve()
                     .apply("twenty")
                     .accept("-two");
 
@@ -705,12 +665,7 @@ public class BiFunctionFusionTests {
 
         assertEquals(
             "goodbye?",
-            Z
-                .with(concat)
-                .fusing(addQuestionMark)
-                .resolve()
-                .apply("good")
-                .apply("bye")
+            Z.with(concat).fusing(addQuestionMark).apply("good").apply("bye")
         );
     }
 
@@ -733,7 +688,7 @@ public class BiFunctionFusionTests {
         // TODO: Implement with currying
         // assertEquals(
         //     "same-ish",
-        //     Z.with(concat).fusing(relation).resolve().apply("yo").apply(" mama").apply("YO MAMA")
+        //     Z.with(concat).fusing(relation).apply("yo").apply(" mama").apply("YO MAMA")
         // );
     }
 }

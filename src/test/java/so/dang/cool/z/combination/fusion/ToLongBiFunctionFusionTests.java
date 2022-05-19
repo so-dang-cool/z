@@ -18,10 +18,7 @@ public class ToLongBiFunctionFusionTests {
 
     @Test
     void toLongBifn_deep() {
-        assertEquals(
-            3L,
-            Z.with(addStringsAsLong).resolve().apply("1").applyAsLong("2")
-        );
+        assertEquals(3L, Z.with(addStringsAsLong).apply("1").applyAsLong("2"));
     }
 
     @Test
@@ -44,12 +41,7 @@ public class ToLongBiFunctionFusionTests {
     void toLongBifn_to_longFn_deeper() {
         assertEquals(
             "3",
-            Z
-                .with(addStringsAsLong)
-                .fusing(longToString)
-                .resolve()
-                .apply("1")
-                .apply("2")
+            Z.with(addStringsAsLong).fusing(longToString).apply("1").apply("2")
         );
     }
 
@@ -59,7 +51,7 @@ public class ToLongBiFunctionFusionTests {
             .of(
                 Z.fuse(addStringsAsLong, longToDouble),
                 Z.with(addStringsAsLong).fuse(longToDouble),
-                Z.with(addStringsAsLong).fusing(longToDouble).resolve()
+                Z.with(addStringsAsLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -74,7 +66,7 @@ public class ToLongBiFunctionFusionTests {
             .of(
                 Z.fuse(addStringsAsLong, longToInt),
                 Z.with(addStringsAsLong).fuse(longToInt),
-                Z.with(addStringsAsLong).fusing(longToInt).resolve()
+                Z.with(addStringsAsLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -89,7 +81,7 @@ public class ToLongBiFunctionFusionTests {
             .of(
                 Z.fuse(addStringsAsLong, isLongThree),
                 Z.with(addStringsAsLong).fuse(isLongThree),
-                Z.with(addStringsAsLong).fusing(isLongThree).resolve()
+                Z.with(addStringsAsLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -106,7 +98,7 @@ public class ToLongBiFunctionFusionTests {
                 .of(
                     Z.fuse(addStringsAsLong, saveLongA),
                     Z.with(addStringsAsLong).fuse(saveLongA),
-                    Z.with(addStringsAsLong).fusing(saveLongA).resolve()
+                    Z.with(addStringsAsLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -126,7 +118,7 @@ public class ToLongBiFunctionFusionTests {
             .of(
                 Z.fuse(addStringsAsLong, addThreeToLong),
                 Z.with(addStringsAsLong).fuse(addThreeToLong),
-                Z.with(addStringsAsLong).fusing(addThreeToLong).resolve()
+                Z.with(addStringsAsLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -154,7 +146,7 @@ public class ToLongBiFunctionFusionTests {
         Stream
             .of(
                 Z.with(addStringsAsLong).fuse(addLongs, 3L),
-                Z.with(addStringsAsLong).fusing(addLongs, 3L).resolve()
+                Z.with(addStringsAsLong).fusing(addLongs, 3L)
             )
             .forEach(
                 fusion -> {

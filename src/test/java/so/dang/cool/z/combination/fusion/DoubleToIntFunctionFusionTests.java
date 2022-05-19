@@ -15,7 +15,7 @@ public class DoubleToIntFunctionFusionTests {
     void dblToInt() {
         assertEquals(1, doubleToInt.applyAsInt(1.0));
 
-        assertEquals(1, Z.with(doubleToInt).resolve().applyAsInt(1.0));
+        assertEquals(1, Z.with(doubleToInt).applyAsInt(1.0));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class DoubleToIntFunctionFusionTests {
             .of(
                 Z.fuse(doubleToInt, intToString),
                 Z.with(doubleToInt).fuse(intToString),
-                Z.with(doubleToInt).fusing(intToString).resolve()
+                Z.with(doubleToInt).fusing(intToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class DoubleToIntFunctionFusionTests {
             .of(
                 Z.fuse(doubleToInt, intToDouble),
                 Z.with(doubleToInt).fuse(intToDouble),
-                Z.with(doubleToInt).fusing(intToDouble).resolve()
+                Z.with(doubleToInt).fusing(intToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class DoubleToIntFunctionFusionTests {
             .of(
                 Z.fuse(doubleToInt, intToLong),
                 Z.with(doubleToInt).fuse(intToLong),
-                Z.with(doubleToInt).fusing(intToLong).resolve()
+                Z.with(doubleToInt).fusing(intToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class DoubleToIntFunctionFusionTests {
             .of(
                 Z.fuse(doubleToInt, isIntTwo),
                 Z.with(doubleToInt).fuse(isIntTwo),
-                Z.with(doubleToInt).fusing(isIntTwo).resolve()
+                Z.with(doubleToInt).fusing(isIntTwo)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class DoubleToIntFunctionFusionTests {
                 .of(
                     Z.fuse(doubleToInt, saveIntA),
                     Z.with(doubleToInt).fuse(saveIntA),
-                    Z.with(doubleToInt).fusing(saveIntA).resolve()
+                    Z.with(doubleToInt).fusing(saveIntA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class DoubleToIntFunctionFusionTests {
             .of(
                 Z.fuse(doubleToInt, addTwoToInt),
                 Z.with(doubleToInt).fuse(addTwoToInt),
-                Z.with(doubleToInt).fusing(addTwoToInt).resolve()
+                Z.with(doubleToInt).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -128,7 +128,7 @@ public class DoubleToIntFunctionFusionTests {
         Stream
             .of(
                 Z.with(doubleToInt).fuse(addInts, 3),
-                Z.with(doubleToInt).fusing(addInts, 3).resolve()
+                Z.with(doubleToInt).fusing(addInts, 3)
             )
             .forEach(
                 fusion -> {

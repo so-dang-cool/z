@@ -15,7 +15,7 @@ public class BooleanToIntFunctionFusionTests {
     void dblToInt() {
         assertEquals(2, maybeTwoAsInt.applyAsInt(true));
 
-        assertEquals(2, Z.with(maybeTwoAsInt).resolve().applyAsInt(true));
+        assertEquals(2, Z.with(maybeTwoAsInt).applyAsInt(true));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class BooleanToIntFunctionFusionTests {
             .of(
                 Z.fuse(maybeTwoAsInt, intToString),
                 Z.with(maybeTwoAsInt).fuse(intToString),
-                Z.with(maybeTwoAsInt).fusing(intToString).resolve()
+                Z.with(maybeTwoAsInt).fusing(intToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class BooleanToIntFunctionFusionTests {
             .of(
                 Z.fuse(maybeTwoAsInt, intToDouble),
                 Z.with(maybeTwoAsInt).fuse(intToDouble),
-                Z.with(maybeTwoAsInt).fusing(intToDouble).resolve()
+                Z.with(maybeTwoAsInt).fusing(intToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class BooleanToIntFunctionFusionTests {
             .of(
                 Z.fuse(maybeTwoAsInt, intToLong),
                 Z.with(maybeTwoAsInt).fuse(intToLong),
-                Z.with(maybeTwoAsInt).fusing(intToLong).resolve()
+                Z.with(maybeTwoAsInt).fusing(intToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class BooleanToIntFunctionFusionTests {
             .of(
                 Z.fuse(maybeTwoAsInt, isIntTwo),
                 Z.with(maybeTwoAsInt).fuse(isIntTwo),
-                Z.with(maybeTwoAsInt).fusing(isIntTwo).resolve()
+                Z.with(maybeTwoAsInt).fusing(isIntTwo)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class BooleanToIntFunctionFusionTests {
                 .of(
                     Z.fuse(maybeTwoAsInt, saveIntA),
                     Z.with(maybeTwoAsInt).fuse(saveIntA),
-                    Z.with(maybeTwoAsInt).fusing(saveIntA).resolve()
+                    Z.with(maybeTwoAsInt).fusing(saveIntA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class BooleanToIntFunctionFusionTests {
             .of(
                 Z.fuse(maybeTwoAsInt, addTwoToInt),
                 Z.with(maybeTwoAsInt).fuse(addTwoToInt),
-                Z.with(maybeTwoAsInt).fusing(addTwoToInt).resolve()
+                Z.with(maybeTwoAsInt).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -131,7 +131,7 @@ public class BooleanToIntFunctionFusionTests {
         Stream
             .of(
                 Z.with(maybeTwoAsInt).fuse(addInts, 3),
-                Z.with(maybeTwoAsInt).fusing(addInts, 3).resolve()
+                Z.with(maybeTwoAsInt).fusing(addInts, 3)
             )
             .forEach(
                 fusion -> {

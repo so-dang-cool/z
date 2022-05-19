@@ -15,7 +15,7 @@ public class BooleanToLongFunctionFusionTests {
     void boolToLong() {
         assertEquals(3L, maybeThreeAsLong.applyAsLong(true));
 
-        assertEquals(3L, Z.with(maybeThreeAsLong).resolve().applyAsLong(true));
+        assertEquals(3L, Z.with(maybeThreeAsLong).applyAsLong(true));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class BooleanToLongFunctionFusionTests {
             .of(
                 Z.fuse(maybeThreeAsLong, longToString),
                 Z.with(maybeThreeAsLong).fuse(longToString),
-                Z.with(maybeThreeAsLong).fusing(longToString).resolve()
+                Z.with(maybeThreeAsLong).fusing(longToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class BooleanToLongFunctionFusionTests {
             .of(
                 Z.fuse(maybeThreeAsLong, longToDouble),
                 Z.with(maybeThreeAsLong).fuse(longToDouble),
-                Z.with(maybeThreeAsLong).fusing(longToDouble).resolve()
+                Z.with(maybeThreeAsLong).fusing(longToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class BooleanToLongFunctionFusionTests {
             .of(
                 Z.fuse(maybeThreeAsLong, longToInt),
                 Z.with(maybeThreeAsLong).fuse(longToInt),
-                Z.with(maybeThreeAsLong).fusing(longToInt).resolve()
+                Z.with(maybeThreeAsLong).fusing(longToInt)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class BooleanToLongFunctionFusionTests {
             .of(
                 Z.fuse(maybeThreeAsLong, isLongThree),
                 Z.with(maybeThreeAsLong).fuse(isLongThree),
-                Z.with(maybeThreeAsLong).fusing(isLongThree).resolve()
+                Z.with(maybeThreeAsLong).fusing(isLongThree)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class BooleanToLongFunctionFusionTests {
                 .of(
                     Z.fuse(maybeThreeAsLong, saveLongA),
                     Z.with(maybeThreeAsLong).fuse(saveLongA),
-                    Z.with(maybeThreeAsLong).fusing(saveLongA).resolve()
+                    Z.with(maybeThreeAsLong).fusing(saveLongA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class BooleanToLongFunctionFusionTests {
             .of(
                 Z.fuse(maybeThreeAsLong, addThreeToLong),
                 Z.with(maybeThreeAsLong).fuse(addThreeToLong),
-                Z.with(maybeThreeAsLong).fusing(addThreeToLong).resolve()
+                Z.with(maybeThreeAsLong).fusing(addThreeToLong)
             )
             .forEach(
                 fusion -> {
@@ -131,7 +131,7 @@ public class BooleanToLongFunctionFusionTests {
         Stream
             .of(
                 Z.with(maybeThreeAsLong).fuse(addLongs, 4L),
-                Z.with(maybeThreeAsLong).fusing(addLongs, 4L).resolve()
+                Z.with(maybeThreeAsLong).fusing(addLongs, 4L)
             )
             .forEach(
                 fusion -> {

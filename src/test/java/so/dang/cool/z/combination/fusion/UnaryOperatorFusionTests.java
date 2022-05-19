@@ -20,10 +20,7 @@ public class UnaryOperatorFusionTests {
     void unop_deep() {
         assertEquals(
             "is it me you're looking for?",
-            Z
-                .with(addQuestionMark)
-                .resolve()
-                .apply("is it me you're looking for")
+            Z.with(addQuestionMark).apply("is it me you're looking for")
         );
     }
 
@@ -44,7 +41,7 @@ public class UnaryOperatorFusionTests {
     void unop_to_fn_deeper() {
         assertEquals(
             "hello?",
-            Z.with(addQuestionMark).fusing(toLower).resolve().apply("HeLlO")
+            Z.with(addQuestionMark).fusing(toLower).apply("HeLlO")
         );
     }
 
@@ -68,12 +65,7 @@ public class UnaryOperatorFusionTests {
     void unop_to_bifn_deeper() {
         assertEquals(
             "hello?!",
-            Z
-                .with(addQuestionMark)
-                .fusing(concat)
-                .resolve()
-                .apply("hello")
-                .apply("!")
+            Z.with(addQuestionMark).fusing(concat).apply("hello").apply("!")
         );
     }
 

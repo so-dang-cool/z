@@ -19,7 +19,7 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_deep() {
-        assertEquals("1", Z.with(longToString).resolve().apply(1L));
+        assertEquals("1", Z.with(longToString).apply(1L));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class LongFunctionFusionTests {
     void longFn_to_fn_deeper() {
         assertEquals(
             "1!",
-            Z.with(longToString).fusing(addExclamationMark).resolve().apply(1L)
+            Z.with(longToString).fusing(addExclamationMark).apply(1L)
         );
     }
 
@@ -49,7 +49,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, concat),
                 Z.with(longToString).fuse(concat)
-                //Z.with(longToString).fusing(concat).resolve()
+                //Z.with(longToString).fusing(concat)
             )
             .forEach(
                 fusion -> assertEquals("1.0", fusion.apply(1L).apply(".0"))
@@ -58,7 +58,7 @@ public class LongFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToString).fuse(concat, ".0"),
-                Z.with(longToString).fusing(concat, ".0").resolve()
+                Z.with(longToString).fusing(concat, ".0")
             )
             .forEach(fusion -> assertEquals("1.0", fusion.apply(1L)));
     }
@@ -69,7 +69,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, stringToDouble),
                 Z.with(longToString).fuse(stringToDouble),
-                Z.with(longToString).fusing(stringToDouble).resolve()
+                Z.with(longToString).fusing(stringToDouble)
             )
             .forEach(fusion -> assertEquals(1L, fusion.applyAsDouble(1L)));
     }
@@ -80,7 +80,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, addStringsAsDouble),
                 Z.with(longToString).fuse(addStringsAsDouble)
-                //Z.with(longToString).fusing(addStringsAsDouble).resolve()
+                //Z.with(longToString).fusing(addStringsAsDouble)
             )
             .forEach(
                 fusion -> assertEquals(3L, fusion.apply(1L).applyAsDouble("2"))
@@ -89,7 +89,7 @@ public class LongFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToString).fuse(addStringsAsDouble, "2"),
-                Z.with(longToString).fusing(addStringsAsDouble, "2").resolve()
+                Z.with(longToString).fusing(addStringsAsDouble, "2")
             )
             .forEach(fusion -> assertEquals(3L, fusion.applyAsDouble(1L)));
     }
@@ -100,7 +100,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, stringToInt),
                 Z.with(longToString).fuse(stringToInt),
-                Z.with(longToString).fusing(stringToInt).resolve()
+                Z.with(longToString).fusing(stringToInt)
             )
             .forEach(fusion -> assertEquals(1, fusion.applyAsInt(1L)));
     }
@@ -111,7 +111,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, addStringsAsInt),
                 Z.with(longToString).fuse(addStringsAsInt)
-                //Z.with(longToString).fusing(addStringsAsInt).resolve()
+                //Z.with(longToString).fusing(addStringsAsInt)
             )
             .forEach(
                 fusion -> assertEquals(3, fusion.apply(1L).applyAsInt("2"))
@@ -120,7 +120,7 @@ public class LongFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToString).fuse(addStringsAsInt, "2"),
-                Z.with(longToString).fusing(addStringsAsInt, "2").resolve()
+                Z.with(longToString).fusing(addStringsAsInt, "2")
             )
             .forEach(fusion -> assertEquals(3, fusion.applyAsInt(1L)));
     }
@@ -131,7 +131,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, stringToLong),
                 Z.with(longToString).fuse(stringToLong),
-                Z.with(longToString).fusing(stringToLong).resolve()
+                Z.with(longToString).fusing(stringToLong)
             )
             .forEach(fusion -> assertEquals(1L, fusion.applyAsLong(1L)));
     }
@@ -142,7 +142,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, addStringsAsLong),
                 Z.with(longToString).fuse(addStringsAsLong)
-                //Z.with(longToString).fusing(addStringsAsLong).resolve()
+                //Z.with(longToString).fusing(addStringsAsLong)
             )
             .forEach(
                 fusion -> assertEquals(3L, fusion.apply(1L).applyAsLong("2"))
@@ -151,7 +151,7 @@ public class LongFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToString).fuse(addStringsAsLong, "2"),
-                Z.with(longToString).fusing(addStringsAsLong, "2").resolve()
+                Z.with(longToString).fusing(addStringsAsLong, "2")
             )
             .forEach(fusion -> assertEquals(3L, fusion.applyAsLong(1L)));
     }
@@ -162,7 +162,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, isEmpty),
                 Z.with(longToString).fuse(isEmpty),
-                Z.with(longToString).fusing(isEmpty).resolve()
+                Z.with(longToString).fusing(isEmpty)
             )
             .forEach(fusion -> assertFalse(fusion.test(1L)));
     }
@@ -173,14 +173,14 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, startsWith),
                 Z.with(longToString).fuse(startsWith)
-                // Z.with(longToString).fusing(startsWith).resolve()
+                // Z.with(longToString).fusing(startsWith)
             )
             .forEach(fusion -> assertTrue(fusion.apply(1L).test("1")));
 
         Stream
             .of(
                 Z.with(longToString).fuse(startsWith, "1"),
-                Z.with(longToString).fusing(startsWith, "1").resolve()
+                Z.with(longToString).fusing(startsWith, "1")
             )
             .forEach(fusion -> assertTrue(fusion.test(1L)));
     }
@@ -193,7 +193,7 @@ public class LongFunctionFusionTests {
                 .of(
                     Z.fuse(longToString, saveStringA),
                     Z.with(longToString).fuse(saveStringA),
-                    Z.with(longToString).fusing(saveStringA).resolve()
+                    Z.with(longToString).fusing(saveStringA)
                 )
                 .forEach(
                     fusion -> {
@@ -216,7 +216,7 @@ public class LongFunctionFusionTests {
                     .of(
                         Z.fuse(longToString, saveStringsBandC),
                         Z.with(longToString).fuse(saveStringsBandC)
-                        //Z.with(longToString).fusing(saveStringsBandC).resolve()
+                        //Z.with(longToString).fusing(saveStringsBandC)
                     )
                     .forEach(
                         fusion -> {
@@ -238,7 +238,6 @@ public class LongFunctionFusionTests {
                         Z
                             .with(longToString)
                             .fusing(saveStringsBandC, "two and a half")
-                            .resolve()
                     )
                     .forEach(
                         fusion -> {
@@ -264,7 +263,7 @@ public class LongFunctionFusionTests {
                     .of(
                         Z.fuse(longToString, saveStringDDoubleB),
                         Z.with(longToString).fuse(saveStringDDoubleB)
-                        // Z.with(longToString).fusing(saveStringDDoubleB).resolve()
+                        // Z.with(longToString).fusing(saveStringDDoubleB)
                     )
                     .forEach(
                         fusion -> {
@@ -281,10 +280,7 @@ public class LongFunctionFusionTests {
                 Stream
                     .of(
                         Z.with(longToString).fuse(saveStringDDoubleB, 5.0),
-                        Z
-                            .with(longToString)
-                            .fusing(saveStringDDoubleB, 5.0)
-                            .resolve()
+                        Z.with(longToString).fusing(saveStringDDoubleB, 5.0)
                     )
                     .forEach(
                         fusion -> {
@@ -310,7 +306,7 @@ public class LongFunctionFusionTests {
                     .of(
                         Z.fuse(longToString, saveStringEIntB),
                         Z.with(longToString).fuse(saveStringEIntB)
-                        // Z.with(longToString).fusing(saveStringEIntB).resolve()
+                        // Z.with(longToString).fusing(saveStringEIntB)
                     )
                     .forEach(
                         fusion -> {
@@ -327,10 +323,7 @@ public class LongFunctionFusionTests {
                 Stream
                     .of(
                         Z.with(longToString).fuse(saveStringEIntB, 6),
-                        Z
-                            .with(longToString)
-                            .fusing(saveStringEIntB, 6)
-                            .resolve()
+                        Z.with(longToString).fusing(saveStringEIntB, 6)
                     )
                     .forEach(
                         fusion -> {
@@ -356,7 +349,7 @@ public class LongFunctionFusionTests {
                     .of(
                         Z.fuse(longToString, saveStringFLongB),
                         Z.with(longToString).fuse(saveStringFLongB)
-                        // Z.with(longToString).fusing(saveStringFLongB).resolve()
+                        // Z.with(longToString).fusing(saveStringFLongB)
                     )
                     .forEach(
                         fusion -> {
@@ -373,10 +366,7 @@ public class LongFunctionFusionTests {
                 Stream
                     .of(
                         Z.with(longToString).fuse(saveStringFLongB, 8),
-                        Z
-                            .with(longToString)
-                            .fusing(saveStringFLongB, 8)
-                            .resolve()
+                        Z.with(longToString).fusing(saveStringFLongB, 8)
                     )
                     .forEach(
                         fusion -> {
@@ -399,7 +389,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, addQuestionMark),
                 Z.with(longToString).fuse(addQuestionMark),
-                Z.with(longToString).fusing(addQuestionMark).resolve()
+                Z.with(longToString).fusing(addQuestionMark)
             )
             .forEach(fusion -> assertEquals("10?", fusion.apply(10L)));
     }
@@ -410,7 +400,7 @@ public class LongFunctionFusionTests {
             .of(
                 Z.fuse(longToString, relation),
                 Z.with(longToString).fuse(relation)
-                // Z.with(longToString).fusing(relation).resolve()
+                // Z.with(longToString).fusing(relation)
             )
             .forEach(
                 fusion ->
@@ -420,7 +410,7 @@ public class LongFunctionFusionTests {
         Stream
             .of(
                 Z.with(longToString).fuse(relation, "11"),
-                Z.with(longToString).fusing(relation, "11").resolve()
+                Z.with(longToString).fusing(relation, "11")
             )
             .forEach(fusion -> assertEquals("same-ish", fusion.apply(11L)));
     }

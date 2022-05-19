@@ -17,7 +17,7 @@ public class FunctionFusionTests {
 
     @Test
     void fn_deep() {
-        assertEquals("hello", Z.with(trim).resolve().apply(" hello "));
+        assertEquals("hello", Z.with(trim).apply(" hello "));
     }
 
     @Test
@@ -32,10 +32,7 @@ public class FunctionFusionTests {
 
     @Test
     void fn_to_fn_deeper() {
-        assertEquals(
-            "hello",
-            Z.with(trim).fusing(toLower).resolve().apply(" HeLlO ")
-        );
+        assertEquals("hello", Z.with(trim).fusing(toLower).apply(" HeLlO "));
     }
 
     @Test
@@ -63,7 +60,7 @@ public class FunctionFusionTests {
     void fn_to_bifn_deeper() {
         assertEquals(
             "hello!",
-            Z.with(trim).fusing(concat).resolve().apply(" hello ").apply("!")
+            Z.with(trim).fusing(concat).apply(" hello ").apply("!")
         );
     }
 
@@ -71,7 +68,7 @@ public class FunctionFusionTests {
     void fn_to_bifn_deeper2() {
         assertEquals(
             "hello!",
-            Z.with(trim).fusing(concat, "!").resolve().apply(" hello ")
+            Z.with(trim).fusing(concat, "!").apply(" hello ")
         );
     }
 
@@ -92,7 +89,7 @@ public class FunctionFusionTests {
     void fn_to_toDblFn_deeper() {
         assertEquals(
             1.0,
-            Z.with(trim).fusing(stringToDouble).resolve().applyAsDouble(" 1.0 ")
+            Z.with(trim).fusing(stringToDouble).applyAsDouble(" 1.0 ")
         );
     }
 
@@ -131,7 +128,6 @@ public class FunctionFusionTests {
             Z
                 .with(trim)
                 .fusing(addStringsAsDouble)
-                .resolve()
                 .apply(" 1.0 ")
                 .applyAsDouble("2.0")
         );
@@ -144,7 +140,6 @@ public class FunctionFusionTests {
             Z
                 .with(trim)
                 .fusing(addStringsAsDouble, "2.0")
-                .resolve()
                 .applyAsDouble(" 1.0 ")
         );
     }
@@ -161,10 +156,7 @@ public class FunctionFusionTests {
 
     @Test
     void fn_to_toIntFn_deeper() {
-        assertEquals(
-            1,
-            Z.with(trim).fusing(stringToInt).resolve().applyAsInt(" 1 ")
-        );
+        assertEquals(1, Z.with(trim).fusing(stringToInt).applyAsInt(" 1 "));
     }
 
     @Test
@@ -195,12 +187,7 @@ public class FunctionFusionTests {
     void fn_to_toIntBifn_deeper() {
         assertEquals(
             3,
-            Z
-                .with(trim)
-                .fusing(addStringsAsInt)
-                .resolve()
-                .apply(" 1 ")
-                .applyAsInt("2")
+            Z.with(trim).fusing(addStringsAsInt).apply(" 1 ").applyAsInt("2")
         );
     }
 
@@ -208,7 +195,7 @@ public class FunctionFusionTests {
     void fn_to_toIntBifn_deeper2() {
         assertEquals(
             3,
-            Z.with(trim).fusing(addStringsAsInt, "2").resolve().applyAsInt("1")
+            Z.with(trim).fusing(addStringsAsInt, "2").applyAsInt("1")
         );
     }
 
@@ -224,10 +211,7 @@ public class FunctionFusionTests {
 
     @Test
     void fn_to_toLongFn_deeper() {
-        assertEquals(
-            1L,
-            Z.with(trim).fusing(stringToLong).resolve().applyAsLong(" 1 ")
-        );
+        assertEquals(1L, Z.with(trim).fusing(stringToLong).applyAsLong(" 1 "));
     }
 
     @Test
@@ -258,12 +242,7 @@ public class FunctionFusionTests {
     void fn_to_toLongBifn_deeper() {
         assertEquals(
             3L,
-            Z
-                .with(trim)
-                .fusing(addStringsAsLong)
-                .resolve()
-                .apply(" 1 ")
-                .applyAsLong("2")
+            Z.with(trim).fusing(addStringsAsLong).apply(" 1 ").applyAsLong("2")
         );
     }
 
@@ -271,11 +250,7 @@ public class FunctionFusionTests {
     void fn_to_toLongBifn_deeper2() {
         assertEquals(
             3L,
-            Z
-                .with(trim)
-                .fusing(addStringsAsLong, "2")
-                .resolve()
-                .applyAsLong(" 1 ")
+            Z.with(trim).fusing(addStringsAsLong, "2").applyAsLong(" 1 ")
         );
     }
 
@@ -291,7 +266,7 @@ public class FunctionFusionTests {
 
     @Test
     void fn_to_pred_deeper() {
-        assertTrue(Z.with(trim).fusing(isEmpty).resolve().test(" "));
+        assertTrue(Z.with(trim).fusing(isEmpty).test(" "));
     }
 
     @Test
@@ -312,20 +287,13 @@ public class FunctionFusionTests {
     @Test
     void fn_to_bipred_deeper() {
         assertTrue(
-            Z
-                .with(trim)
-                .fusing(startsWith)
-                .resolve()
-                .apply(" hello ")
-                .test("hell")
+            Z.with(trim).fusing(startsWith).apply(" hello ").test("hell")
         );
     }
 
     @Test
     void fn_to_bipred_deeper2() {
-        assertTrue(
-            Z.with(trim).fusing(startsWith, "hell").resolve().test(" hello ")
-        );
+        assertTrue(Z.with(trim).fusing(startsWith, "hell").test(" hello "));
     }
 
     @Evil
@@ -358,7 +326,7 @@ public class FunctionFusionTests {
         synchronized (consumedStringA) {
             consumedStringA = "";
 
-            Z.with(trim).fusing(saveStringA).resolve().accept(" hello ");
+            Z.with(trim).fusing(saveStringA).accept(" hello ");
 
             assertEquals("hello", consumedStringA);
         }
@@ -433,7 +401,6 @@ public class FunctionFusionTests {
                 Z
                     .with(trim)
                     .fusing(saveStringsBandC)
-                    .resolve()
                     .apply(" greetings ")
                     .accept("earthlings");
 
@@ -454,7 +421,6 @@ public class FunctionFusionTests {
                 Z
                     .with(trim)
                     .fusing(saveStringsBandC, "earthlings")
-                    .resolve()
                     .accept(" greetings ");
 
                 assertEquals("greetings", consumedStringB);
@@ -526,7 +492,6 @@ public class FunctionFusionTests {
                 Z
                     .with(trim)
                     .fusing(saveStringDDoubleB)
-                    .resolve()
                     .apply(" five ")
                     .accept(5.0);
 
@@ -544,11 +509,7 @@ public class FunctionFusionTests {
                 consumedStringD = "";
                 consumedDoubleB = 0.0;
 
-                Z
-                    .with(trim)
-                    .fusing(saveStringDDoubleB, 5.0)
-                    .resolve()
-                    .accept(" five ");
+                Z.with(trim).fusing(saveStringDDoubleB, 5.0).accept(" five ");
 
                 assertEquals("five", consumedStringD);
                 assertEquals(5.0, consumedDoubleB);
@@ -612,12 +573,7 @@ public class FunctionFusionTests {
                 consumedStringE = "";
                 consumedIntB = 0;
 
-                Z
-                    .with(trim)
-                    .fusing(saveStringEIntB)
-                    .resolve()
-                    .apply(" six ")
-                    .accept(6);
+                Z.with(trim).fusing(saveStringEIntB).apply(" six ").accept(6);
 
                 assertEquals("six", consumedStringE);
                 assertEquals(6, consumedIntB);
@@ -633,11 +589,7 @@ public class FunctionFusionTests {
                 consumedStringE = "";
                 consumedIntB = 0;
 
-                Z
-                    .with(trim)
-                    .fusing(saveStringEIntB, 6)
-                    .resolve()
-                    .accept(" six ");
+                Z.with(trim).fusing(saveStringEIntB, 6).accept(" six ");
 
                 assertEquals("six", consumedStringE);
                 assertEquals(6, consumedIntB);
@@ -704,7 +656,6 @@ public class FunctionFusionTests {
                 Z
                     .with(trim)
                     .fusing(saveStringFLongB)
-                    .resolve()
                     .apply(" seven ")
                     .accept(7L);
 
@@ -722,11 +673,7 @@ public class FunctionFusionTests {
                 consumedStringF = "";
                 consumedLongB = 0L;
 
-                Z
-                    .with(trim)
-                    .fusing(saveStringFLongB, 7L)
-                    .resolve()
-                    .accept(" seven ");
+                Z.with(trim).fusing(saveStringFLongB, 7L).accept(" seven ");
 
                 assertEquals("seven", consumedStringF);
                 assertEquals(7L, consumedLongB);
@@ -754,7 +701,7 @@ public class FunctionFusionTests {
     void fn_to_toUnop_deeper() {
         assertEquals(
             "goodbye?",
-            Z.with(trim).fusing(addQuestionMark).resolve().apply(" goodbye ")
+            Z.with(trim).fusing(addQuestionMark).apply(" goodbye ")
         );
     }
 
@@ -786,12 +733,7 @@ public class FunctionFusionTests {
     void fn_to_toBiop_deeper() {
         assertEquals(
             "same-ish",
-            Z
-                .with(trim)
-                .fusing(relation)
-                .resolve()
-                .apply(" yo man ")
-                .apply("YO MAN")
+            Z.with(trim).fusing(relation).apply(" yo man ").apply("YO MAN")
         );
     }
 
@@ -799,7 +741,7 @@ public class FunctionFusionTests {
     void fn_to_toBiop_deeper2() {
         assertEquals(
             "same-ish",
-            Z.with(trim).fusing(relation, "YO MAN").resolve().apply(" yo man ")
+            Z.with(trim).fusing(relation, "YO MAN").apply(" yo man ")
         );
     }
 }

@@ -18,7 +18,7 @@ public class BooleanFunctionFusionTests {
 
     @Test
     void boolFn_deep() {
-        assertEquals("true", Z.with(booleanToString).resolve().apply(true));
+        assertEquals("true", Z.with(booleanToString).apply(true));
     }
 
     @Test
@@ -41,11 +41,7 @@ public class BooleanFunctionFusionTests {
     void boolFn_to_fn_deeper() {
         assertEquals(
             "true!",
-            Z
-                .with(booleanToString)
-                .fusing(addExclamationMark)
-                .resolve()
-                .apply(true)
+            Z.with(booleanToString).fusing(addExclamationMark).apply(true)
         );
     }
 
@@ -64,7 +60,7 @@ public class BooleanFunctionFusionTests {
         // TODO: Implement with currying
         // assertEquals(
         //     "true...",
-        //     Z.with(booleanToString).fusing(concat).resolve().apply(true).apply("...")
+        //     Z.with(booleanToString).fusing(concat).apply(true).apply("...")
         // );
 
         assertEquals(
@@ -74,7 +70,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             "true...",
-            Z.with(booleanToString).fusing(concat, "...").resolve().apply(true)
+            Z.with(booleanToString).fusing(concat, "...").apply(true)
         );
     }
 
@@ -92,11 +88,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             1.0,
-            Z
-                .with(maybeOneAsString)
-                .fusing(stringToDouble)
-                .resolve()
-                .applyAsDouble(true)
+            Z.with(maybeOneAsString).fusing(stringToDouble).applyAsDouble(true)
         );
     }
 
@@ -125,7 +117,7 @@ public class BooleanFunctionFusionTests {
         //     Z
         //         .with(maybeOneAsString)
         //         .fusing(addStringsAsDouble)
-        //         .resolve()
+        //
         //         .apply(true)
         //         .applyAsDouble("2.0")
         // );
@@ -143,7 +135,6 @@ public class BooleanFunctionFusionTests {
             Z
                 .with(maybeOneAsString)
                 .fusing(addStringsAsDouble, "2.0")
-                .resolve()
                 .applyAsDouble(true)
         );
     }
@@ -159,11 +150,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             1,
-            Z
-                .with(maybeOneAsString)
-                .fusing(stringToInt)
-                .resolve()
-                .applyAsInt(true)
+            Z.with(maybeOneAsString).fusing(stringToInt).applyAsInt(true)
         );
     }
 
@@ -192,7 +179,7 @@ public class BooleanFunctionFusionTests {
         //     Z
         //         .with(maybeOneAsString)
         //         .fusing(addStringsAsInt)
-        //         .resolve()
+        //
         //         .apply(true)
         //         .applyAsInt("2")
         // );
@@ -207,7 +194,6 @@ public class BooleanFunctionFusionTests {
             Z
                 .with(maybeOneAsString)
                 .fusing(addStringsAsInt, "2")
-                .resolve()
                 .applyAsInt(true)
         );
     }
@@ -226,11 +212,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             1L,
-            Z
-                .with(maybeOneAsString)
-                .fusing(stringToLong)
-                .resolve()
-                .applyAsLong(true)
+            Z.with(maybeOneAsString).fusing(stringToLong).applyAsLong(true)
         );
     }
 
@@ -259,7 +241,7 @@ public class BooleanFunctionFusionTests {
         //     Z
         //         .with(maybeOneAsString)
         //         .fusing(addStringsAsLong)
-        //         .resolve()
+        //
         //         .apply(true)
         //         .applyAsLong("2")
         // );
@@ -277,7 +259,6 @@ public class BooleanFunctionFusionTests {
             Z
                 .with(maybeOneAsString)
                 .fusing(addStringsAsLong, "2")
-                .resolve()
                 .applyAsLong(true)
         );
     }
@@ -288,9 +269,7 @@ public class BooleanFunctionFusionTests {
 
         assertFalse(Z.with(booleanToString).fuse(isEmpty).test(true));
 
-        assertFalse(
-            Z.with(booleanToString).fusing(isEmpty).resolve().test(true)
-        );
+        assertFalse(Z.with(booleanToString).fusing(isEmpty).test(true));
     }
 
     @Test
@@ -302,13 +281,11 @@ public class BooleanFunctionFusionTests {
         );
 
         // TODO: Implement with currying
-        // assertTrue(Z.with(booleanToString).fusing(startsWith).resolve().apply(true).test("t"));
+        // assertTrue(Z.with(booleanToString).fusing(startsWith).apply(true).test("t"));
 
         assertTrue(Z.with(booleanToString).fuse(startsWith, "t").test(true));
 
-        assertTrue(
-            Z.with(booleanToString).fusing(startsWith, "t").resolve().test(true)
-        );
+        assertTrue(Z.with(booleanToString).fusing(startsWith, "t").test(true));
     }
 
     @Evil
@@ -333,7 +310,7 @@ public class BooleanFunctionFusionTests {
 
             consumedStringA = "";
 
-            Z.with(booleanToString).fusing(saveStringA).resolve().accept(true);
+            Z.with(booleanToString).fusing(saveStringA).accept(true);
 
             assertEquals("true", consumedStringA);
         }
@@ -402,7 +379,6 @@ public class BooleanFunctionFusionTests {
                 Z
                     .with(booleanToString)
                     .fusing(saveStringsBandC, "true and a half")
-                    .resolve()
                     .accept(true);
 
                 assertEquals("true", consumedStringB);
@@ -448,7 +424,7 @@ public class BooleanFunctionFusionTests {
                 // Z
                 //     .with(booleanToString)
                 //     .fusing(saveStringDDoubleB)
-                //     .resolve()
+                //
                 //     .apply(true)
                 //     .accept(4.5);
 
@@ -474,7 +450,6 @@ public class BooleanFunctionFusionTests {
                 Z
                     .with(booleanToString)
                     .fusing(saveStringDDoubleB, 4.5)
-                    .resolve()
                     .accept(true);
 
                 assertEquals("true", consumedStringD);
@@ -514,7 +489,7 @@ public class BooleanFunctionFusionTests {
                 // consumedStringE = "";
                 // consumedIntB = 0;
 
-                // Z.with(booleanToString).fusing(saveStringEIntB).resolve().apply(true).accept(6);
+                // Z.with(booleanToString).fusing(saveStringEIntB).apply(true).accept(6);
 
                 // assertEquals("true", consumedStringE);
                 // assertEquals(6, consumedIntB);
@@ -532,11 +507,7 @@ public class BooleanFunctionFusionTests {
                 consumedStringE = "";
                 consumedIntB = 0;
 
-                Z
-                    .with(booleanToString)
-                    .fusing(saveStringEIntB, 6)
-                    .resolve()
-                    .accept(true);
+                Z.with(booleanToString).fusing(saveStringEIntB, 6).accept(true);
 
                 assertEquals("true", consumedStringE);
                 assertEquals(6, consumedIntB);
@@ -575,7 +546,7 @@ public class BooleanFunctionFusionTests {
                 // consumedStringF = "";
                 // consumedLongB = 0L;
 
-                // Z.with(booleanToString).fusing(saveStringFLongB).resolve().apply(true).accept(8);
+                // Z.with(booleanToString).fusing(saveStringFLongB).apply(true).accept(8);
 
                 // assertEquals("true", consumedStringF);
                 // assertEquals(8, consumedLongB);
@@ -596,7 +567,6 @@ public class BooleanFunctionFusionTests {
                 Z
                     .with(booleanToString)
                     .fusing(saveStringFLongB, 8)
-                    .resolve()
                     .accept(true);
 
                 assertEquals("true", consumedStringF);
@@ -619,11 +589,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             "true?",
-            Z
-                .with(booleanToString)
-                .fusing(addQuestionMark)
-                .resolve()
-                .apply(true)
+            Z.with(booleanToString).fusing(addQuestionMark).apply(true)
         );
     }
 
@@ -642,7 +608,7 @@ public class BooleanFunctionFusionTests {
         // TODO: Implement with currying
         // assertEquals(
         //     "same-ish",
-        //     Z.with(booleanToString).fusing(relation).resolve().apply(true).apply("TRUE")
+        //     Z.with(booleanToString).fusing(relation).apply(true).apply("TRUE")
         // );
 
         assertEquals(
@@ -652,11 +618,7 @@ public class BooleanFunctionFusionTests {
 
         assertEquals(
             "same-ish",
-            Z
-                .with(booleanToString)
-                .fusing(relation, "TRUE")
-                .resolve()
-                .apply(true)
+            Z.with(booleanToString).fusing(relation, "TRUE").apply(true)
         );
     }
 }

@@ -14,7 +14,7 @@ public class IntBinaryOperatorFusionTests {
     @Test
     void intBiop() {
         assertEquals(3, addInts.applyAsInt(1, 2));
-        assertEquals(3, Z.with(addInts).resolve().apply(1).applyAsInt(2));
+        assertEquals(3, Z.with(addInts).apply(1).applyAsInt(2));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class IntBinaryOperatorFusionTests {
             .of(
                 Z.fuse(addInts, addTwoToInt),
                 Z.with(addInts).fuse(addTwoToInt),
-                Z.with(addInts).fusing(addTwoToInt).resolve()
+                Z.with(addInts).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -107,7 +107,7 @@ public class IntBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.with(addInts).fuse(addInts, 3),
-                Z.with(addInts).fusing(addInts, 3).resolve()
+                Z.with(addInts).fusing(addInts, 3)
             )
             .forEach(
                 fusion -> {

@@ -16,7 +16,7 @@ public class BooleanPredicateFusionTests {
     void boolPred() {
         assertTrue(booleanId.test(true));
 
-        assertTrue(Z.with(booleanId).resolve().test(true));
+        assertTrue(Z.with(booleanId).test(true));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class BooleanPredicateFusionTests {
             .of(
                 Z.fuse(booleanId, booleanToString),
                 Z.with(booleanId).fuse(booleanToString),
-                Z.with(booleanId).fusing(booleanToString).resolve()
+                Z.with(booleanId).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -40,7 +40,7 @@ public class BooleanPredicateFusionTests {
             .of(
                 Z.fuse(booleanId, maybeOneAsDouble),
                 Z.with(booleanId).fuse(maybeOneAsDouble),
-                Z.with(booleanId).fusing(maybeOneAsDouble).resolve()
+                Z.with(booleanId).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -55,7 +55,7 @@ public class BooleanPredicateFusionTests {
             .of(
                 Z.fuse(booleanId, maybeTwoAsInt),
                 Z.with(booleanId).fuse(maybeTwoAsInt),
-                Z.with(booleanId).fusing(maybeTwoAsInt).resolve()
+                Z.with(booleanId).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -70,7 +70,7 @@ public class BooleanPredicateFusionTests {
             .of(
                 Z.fuse(booleanId, maybeThreeAsLong),
                 Z.with(booleanId).fuse(maybeThreeAsLong),
-                Z.with(booleanId).fusing(maybeThreeAsLong).resolve()
+                Z.with(booleanId).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -85,7 +85,7 @@ public class BooleanPredicateFusionTests {
             .of(
                 Z.fuse(booleanId, not),
                 Z.with(booleanId).fuse(not),
-                Z.with(booleanId).fusing(not).resolve()
+                Z.with(booleanId).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -102,7 +102,7 @@ public class BooleanPredicateFusionTests {
                 .of(
                     Z.fuse(booleanId, saveBooleanA),
                     Z.with(booleanId).fuse(saveBooleanA),
-                    Z.with(booleanId).fusing(saveBooleanA).resolve()
+                    Z.with(booleanId).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

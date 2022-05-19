@@ -16,7 +16,7 @@ public class DoublePredicateFusionTests {
     void dblPred() {
         assertTrue(isDoubleOne.test(1.0));
 
-        assertTrue(Z.with(isDoubleOne).resolve().test(1.0));
+        assertTrue(Z.with(isDoubleOne).test(1.0));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class DoublePredicateFusionTests {
             .of(
                 Z.fuse(isDoubleOne, booleanToString),
                 Z.with(isDoubleOne).fuse(booleanToString),
-                Z.with(isDoubleOne).fusing(booleanToString).resolve()
+                Z.with(isDoubleOne).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -40,7 +40,7 @@ public class DoublePredicateFusionTests {
             .of(
                 Z.fuse(isDoubleOne, maybeOneAsDouble),
                 Z.with(isDoubleOne).fuse(maybeOneAsDouble),
-                Z.with(isDoubleOne).fusing(maybeOneAsDouble).resolve()
+                Z.with(isDoubleOne).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -55,7 +55,7 @@ public class DoublePredicateFusionTests {
             .of(
                 Z.fuse(isDoubleOne, maybeTwoAsInt),
                 Z.with(isDoubleOne).fuse(maybeTwoAsInt),
-                Z.with(isDoubleOne).fusing(maybeTwoAsInt).resolve()
+                Z.with(isDoubleOne).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -70,7 +70,7 @@ public class DoublePredicateFusionTests {
             .of(
                 Z.fuse(isDoubleOne, maybeThreeAsLong),
                 Z.with(isDoubleOne).fuse(maybeThreeAsLong),
-                Z.with(isDoubleOne).fusing(maybeThreeAsLong).resolve()
+                Z.with(isDoubleOne).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -85,7 +85,7 @@ public class DoublePredicateFusionTests {
             .of(
                 Z.fuse(isDoubleOne, not),
                 Z.with(isDoubleOne).fuse(not),
-                Z.with(isDoubleOne).fusing(not).resolve()
+                Z.with(isDoubleOne).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -102,7 +102,7 @@ public class DoublePredicateFusionTests {
                 .of(
                     Z.fuse(isDoubleOne, saveBooleanA),
                     Z.with(isDoubleOne).fuse(saveBooleanA),
-                    Z.with(isDoubleOne).fusing(saveBooleanA).resolve()
+                    Z.with(isDoubleOne).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {

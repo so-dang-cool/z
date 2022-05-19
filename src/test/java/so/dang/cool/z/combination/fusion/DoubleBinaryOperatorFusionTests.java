@@ -15,10 +15,7 @@ public class DoubleBinaryOperatorFusionTests {
     void dblBiop() {
         assertEquals(3.0, addDoubles.applyAsDouble(1.0, 2.0));
 
-        assertEquals(
-            3.0,
-            Z.with(addDoubles).resolve().apply(1.0).applyAsDouble(2.0)
-        );
+        assertEquals(3.0, Z.with(addDoubles).apply(1.0).applyAsDouble(2.0));
     }
 
     @Test
@@ -104,7 +101,7 @@ public class DoubleBinaryOperatorFusionTests {
             .of(
                 Z.fuse(addDoubles, addOneToDouble),
                 Z.with(addDoubles).fuse(addOneToDouble),
-                Z.with(addDoubles).fusing(addOneToDouble).resolve()
+                Z.with(addDoubles).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -132,7 +129,7 @@ public class DoubleBinaryOperatorFusionTests {
         Stream
             .of(
                 Z.with(addDoubles).fuse(addDoubles, 2.0),
-                Z.with(addDoubles).fusing(addDoubles, 2.0).resolve()
+                Z.with(addDoubles).fusing(addDoubles, 2.0)
             )
             .forEach(
                 fusion -> {

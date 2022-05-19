@@ -12,7 +12,7 @@ public class IntFusionTests {
 
     @Test
     void int_deep() {
-        assertEquals(2, Z.with(2).resolve().getAsInt());
+        assertEquals(2, Z.with(2).getAsInt());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class IntFusionTests {
 
     @Test
     void int_to_intFn_deeper() {
-        assertEquals("2", Z.with(2).fusing(intToString).resolve().get());
+        assertEquals("2", Z.with(2).fusing(intToString).get());
     }
 
     @Test

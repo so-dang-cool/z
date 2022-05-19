@@ -15,7 +15,7 @@ public class ToIntFunctionFusionTests {
     void toIntFn() {
         assertEquals(1, stringToInt.applyAsInt("1"));
 
-        assertEquals(1, Z.with(stringToInt).resolve().applyAsInt("1"));
+        assertEquals(1, Z.with(stringToInt).applyAsInt("1"));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class ToIntFunctionFusionTests {
             .of(
                 Z.fuse(stringToInt, intToString),
                 Z.with(stringToInt).fuse(intToString),
-                Z.with(stringToInt).fusing(intToString).resolve()
+                Z.with(stringToInt).fusing(intToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class ToIntFunctionFusionTests {
             .of(
                 Z.fuse(stringToInt, intToDouble),
                 Z.with(stringToInt).fuse(intToDouble),
-                Z.with(stringToInt).fusing(intToDouble).resolve()
+                Z.with(stringToInt).fusing(intToDouble)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class ToIntFunctionFusionTests {
             .of(
                 Z.fuse(stringToInt, intToLong),
                 Z.with(stringToInt).fuse(intToLong),
-                Z.with(stringToInt).fusing(intToLong).resolve()
+                Z.with(stringToInt).fusing(intToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class ToIntFunctionFusionTests {
             .of(
                 Z.fuse(stringToInt, isIntTwo),
                 Z.with(stringToInt).fuse(isIntTwo),
-                Z.with(stringToInt).fusing(isIntTwo).resolve()
+                Z.with(stringToInt).fusing(isIntTwo)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class ToIntFunctionFusionTests {
                 .of(
                     Z.fuse(stringToInt, saveIntA),
                     Z.with(stringToInt).fuse(saveIntA),
-                    Z.with(stringToInt).fusing(saveIntA).resolve()
+                    Z.with(stringToInt).fusing(saveIntA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class ToIntFunctionFusionTests {
             .of(
                 Z.fuse(stringToInt, addTwoToInt),
                 Z.with(stringToInt).fuse(addTwoToInt),
-                Z.with(stringToInt).fusing(addTwoToInt).resolve()
+                Z.with(stringToInt).fusing(addTwoToInt)
             )
             .forEach(
                 fusion -> {
@@ -128,7 +128,7 @@ public class ToIntFunctionFusionTests {
         Stream
             .of(
                 Z.with(stringToInt).fuse(addInts, 2),
-                Z.with(stringToInt).fusing(addInts, 2).resolve()
+                Z.with(stringToInt).fusing(addInts, 2)
             )
             .forEach(
                 fusion -> {

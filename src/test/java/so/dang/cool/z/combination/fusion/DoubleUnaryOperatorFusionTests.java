@@ -15,7 +15,7 @@ public class DoubleUnaryOperatorFusionTests {
     void dblUnop() {
         assertEquals(1.5, addOneToDouble.applyAsDouble(0.5));
 
-        assertEquals(1.5, Z.with(addOneToDouble).resolve().applyAsDouble(0.5));
+        assertEquals(1.5, Z.with(addOneToDouble).applyAsDouble(0.5));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, doubleToString),
                 Z.with(addOneToDouble).fuse(doubleToString),
-                Z.with(addOneToDouble).fusing(doubleToString).resolve()
+                Z.with(addOneToDouble).fusing(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -39,7 +39,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, doubleToInt),
                 Z.with(addOneToDouble).fuse(doubleToInt),
-                Z.with(addOneToDouble).fusing(doubleToInt).resolve()
+                Z.with(addOneToDouble).fusing(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -54,7 +54,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, doubleToLong),
                 Z.with(addOneToDouble).fuse(doubleToLong),
-                Z.with(addOneToDouble).fusing(doubleToLong).resolve()
+                Z.with(addOneToDouble).fusing(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -69,7 +69,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, isDoubleOne),
                 Z.with(addOneToDouble).fuse(isDoubleOne),
-                Z.with(addOneToDouble).fusing(isDoubleOne).resolve()
+                Z.with(addOneToDouble).fusing(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -86,7 +86,7 @@ public class DoubleUnaryOperatorFusionTests {
                 .of(
                     Z.fuse(addOneToDouble, saveDoubleA),
                     Z.with(addOneToDouble).fuse(saveDoubleA),
-                    Z.with(addOneToDouble).fusing(saveDoubleA).resolve()
+                    Z.with(addOneToDouble).fusing(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -106,7 +106,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, addOneToDouble),
                 Z.with(addOneToDouble).fuse(addOneToDouble),
-                Z.with(addOneToDouble).fusing(addOneToDouble).resolve()
+                Z.with(addOneToDouble).fusing(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -121,7 +121,7 @@ public class DoubleUnaryOperatorFusionTests {
             .of(
                 Z.fuse(addOneToDouble, addDoubles),
                 Z.with(addOneToDouble).fuse(addDoubles),
-                Z.with(addOneToDouble).fusing(addDoubles).resolve()
+                Z.with(addOneToDouble).fusing(addDoubles)
             )
             .forEach(
                 fusion -> {
@@ -132,7 +132,7 @@ public class DoubleUnaryOperatorFusionTests {
         Stream
             .of(
                 Z.with(addOneToDouble).fuse(addDoubles, 2.5),
-                Z.with(addOneToDouble).fusing(addDoubles, 2.5).resolve()
+                Z.with(addOneToDouble).fusing(addDoubles, 2.5)
             )
             .forEach(
                 fusion -> {

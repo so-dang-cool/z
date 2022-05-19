@@ -12,7 +12,7 @@ public class DoubleFusionTests {
 
     @Test
     void double_deep() {
-        assertEquals(1.0, Z.with(1.0).resolve().getAsDouble());
+        assertEquals(1.0, Z.with(1.0).getAsDouble());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class DoubleFusionTests {
 
     @Test
     void double_to_dblFn_deeper() {
-        assertEquals("1.0", Z.with(1.0).fusing(doubleToString).resolve().get());
+        assertEquals("1.0", Z.with(1.0).fusing(doubleToString).get());
     }
 
     @Test

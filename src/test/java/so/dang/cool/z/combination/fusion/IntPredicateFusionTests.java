@@ -16,7 +16,7 @@ public class IntPredicateFusionTests {
     void intPred() {
         assertTrue(isIntTwo.test(2));
 
-        assertTrue(Z.with(isIntTwo).resolve().test(2));
+        assertTrue(Z.with(isIntTwo).test(2));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class IntPredicateFusionTests {
             .of(
                 Z.fuse(isIntTwo, booleanToString),
                 Z.with(isIntTwo).fuse(booleanToString),
-                Z.with(isIntTwo).fusing(booleanToString).resolve()
+                Z.with(isIntTwo).fusing(booleanToString)
             )
             .forEach(
                 fusion -> {
@@ -40,7 +40,7 @@ public class IntPredicateFusionTests {
             .of(
                 Z.fuse(isIntTwo, maybeOneAsDouble),
                 Z.with(isIntTwo).fuse(maybeOneAsDouble),
-                Z.with(isIntTwo).fusing(maybeOneAsDouble).resolve()
+                Z.with(isIntTwo).fusing(maybeOneAsDouble)
             )
             .forEach(
                 fusion -> {
@@ -55,7 +55,7 @@ public class IntPredicateFusionTests {
             .of(
                 Z.fuse(isIntTwo, maybeTwoAsInt),
                 Z.with(isIntTwo).fuse(maybeTwoAsInt),
-                Z.with(isIntTwo).fusing(maybeTwoAsInt).resolve()
+                Z.with(isIntTwo).fusing(maybeTwoAsInt)
             )
             .forEach(
                 fusion -> {
@@ -70,7 +70,7 @@ public class IntPredicateFusionTests {
             .of(
                 Z.fuse(isIntTwo, maybeThreeAsLong),
                 Z.with(isIntTwo).fuse(maybeThreeAsLong),
-                Z.with(isIntTwo).fusing(maybeThreeAsLong).resolve()
+                Z.with(isIntTwo).fusing(maybeThreeAsLong)
             )
             .forEach(
                 fusion -> {
@@ -85,7 +85,7 @@ public class IntPredicateFusionTests {
             .of(
                 Z.fuse(isIntTwo, not),
                 Z.with(isIntTwo).fuse(not),
-                Z.with(isIntTwo).fusing(not).resolve()
+                Z.with(isIntTwo).fusing(not)
             )
             .forEach(
                 fusion -> {
@@ -102,7 +102,7 @@ public class IntPredicateFusionTests {
                 .of(
                     Z.fuse(isIntTwo, saveBooleanA),
                     Z.with(isIntTwo).fuse(saveBooleanA),
-                    Z.with(isIntTwo).fusing(saveBooleanA).resolve()
+                    Z.with(isIntTwo).fusing(saveBooleanA)
                 )
                 .forEach(
                     fusion -> {
