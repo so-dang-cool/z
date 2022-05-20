@@ -4,10 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
-import java.util.function.DoubleConsumer;
 import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
 import java.util.function.ObjDoubleConsumer;
 import java.util.function.ObjIntConsumer;
 import java.util.function.ObjLongConsumer;
@@ -18,551 +15,394 @@ import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
-import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
-import so.dang.cool.z.function.BooleanPredicate;
-import so.dang.cool.z.function.BooleanToDoubleFunction;
-import so.dang.cool.z.function.BooleanToIntFunction;
-import so.dang.cool.z.function.BooleanToLongFunction;
+import so.dang.cool.z.internal.combination.Combine.WithBiConsumer;
+import so.dang.cool.z.internal.combination.Combine.WithBiFunction;
+import so.dang.cool.z.internal.combination.Combine.WithBiPredicate;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanPredicate;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanToDoubleFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanToIntFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanToLongFunction;
+import so.dang.cool.z.internal.combination.Combine.WithToDoubleBiFunction;
+import so.dang.cool.z.internal.combination.Combine.WithToIntBiFunction;
+import so.dang.cool.z.internal.combination.Combine.WithToLongBiFunction;
 
 interface BooleanFunctionCombos<A> {
     BooleanFunction<A> resolve();
 
     /* BooleanFunction<A> -> Function<A,B> */
 
-    public default <B> BooleanFunction<B> fuseFunction(Function<A, B> next) {
-        return (boolean b) -> next.apply(resolve().apply(b));
-    }
-
-    public default <B> BooleanFunction<B> fuse(Function<A, B> next) {
-        return fuseFunction(next);
-    }
-
-    public default <B> WithBooleanFunction<B> fusingFunction(
+    public default <B> WithBooleanFunction<B> fuseFunction(
         Function<A, B> next
     ) {
-        return WithBooleanFunction.of(fuseFunction(next));
+        return WithBooleanFunction.of(
+            (boolean b) -> next.apply(resolve().apply(b))
+        );
     }
 
-    public default <B> WithBooleanFunction<B> fusing(Function<A, B> next) {
-        return fusingFunction(next);
+    public default <B> WithBooleanFunction<B> fuse(Function<A, B> next) {
+        return fuseFunction(next);
     }
 
     /* BooleanFunction<A> -> BiFunction<A,B,C> */
 
-    public default <B, C> BooleanFunction<Function<B, C>> fuseBiFunction(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B, C> WithBiFunction<Boolean, B, C> fuseBiFunction(
         BiFunction<A, B, C> next
     ) {
-        return (boolean b1) -> (B b2) -> next.apply(resolve().apply(b1), b2);
+        return WithBiFunction.of(
+            (Boolean b1) -> (B b2) -> next.apply(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B, C> BooleanFunction<Function<B, C>> fuse(
+    public default <B, C> WithBiFunction<Boolean, B, C> fuse(
         BiFunction<A, B, C> next
     ) {
         return fuseBiFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingBiFunction(bifn)
-
-    public default <B, C> BooleanFunction<C> fuseBiFunction(
+    public default <B, C> WithBooleanFunction<C> fuseBiFunction(
         BiFunction<A, B, C> next,
         B secondArg
     ) {
-        return (boolean b) -> next.apply(resolve().apply(b), secondArg);
+        return WithBooleanFunction.of(
+            (boolean b) -> next.apply(resolve().apply(b), secondArg)
+        );
     }
 
-    public default <B, C> BooleanFunction<C> fuse(
+    public default <B, C> WithBooleanFunction<C> fuse(
         BiFunction<A, B, C> next,
         B secondArg
     ) {
         return fuseBiFunction(next, secondArg);
     }
 
-    public default <B, C> WithBooleanFunction<C> fusingBiFunction(
-        BiFunction<A, B, C> next,
-        B secondArg
-    ) {
-        return WithBooleanFunction.of(fuseBiFunction(next, secondArg));
-    }
-
-    public default <B, C> WithBooleanFunction<C> fusing(
-        BiFunction<A, B, C> next,
-        B secondArg
-    ) {
-        return fusingBiFunction(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ToDoubleFunction<A> */
 
-    public default BooleanToDoubleFunction fuseToDoubleFunction(
+    public default WithBooleanToDoubleFunction fuseToDoubleFunction(
         ToDoubleFunction<A> next
     ) {
-        return (boolean b) -> next.applyAsDouble(resolve().apply(b));
+        return WithBooleanToDoubleFunction.of(
+            (boolean b) -> next.applyAsDouble(resolve().apply(b))
+        );
     }
 
-    public default BooleanToDoubleFunction fuse(ToDoubleFunction<A> next) {
+    public default WithBooleanToDoubleFunction fuse(ToDoubleFunction<A> next) {
         return fuseToDoubleFunction(next);
-    }
-
-    public default WithBooleanToDoubleFunction fusingToDoubleFunction(
-        ToDoubleFunction<A> next
-    ) {
-        return WithBooleanToDoubleFunction.of(fuseToDoubleFunction(next));
-    }
-
-    public default WithBooleanToDoubleFunction fusing(
-        ToDoubleFunction<A> next
-    ) {
-        return fusingToDoubleFunction(next);
     }
 
     /* BooleanFunction<A> -> ToDoubleBiFunction<A> */
 
-    public default <B> BooleanFunction<ToDoubleFunction<B>> fuseToDoubleBiFunction(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B> WithToDoubleBiFunction<Boolean, B> fuseToDoubleBiFunction(
         ToDoubleBiFunction<A, B> next
     ) {
-        return (boolean b1) ->
-            (B b2) -> next.applyAsDouble(resolve().apply(b1), b2);
+        return WithToDoubleBiFunction.of(
+            (Boolean b1) ->
+                (B b2) -> next.applyAsDouble(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B> BooleanFunction<ToDoubleFunction<B>> fuse(
+    public default <B> WithToDoubleBiFunction<Boolean, B> fuse(
         ToDoubleBiFunction<A, B> next
     ) {
         return fuseToDoubleBiFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingToDoubleBiFunction(ToDoubleBiFunction<A, B> next)
-
-    public default <B> BooleanToDoubleFunction fuseToDoubleBiFunction(
+    public default <B> WithBooleanToDoubleFunction fuseToDoubleBiFunction(
         ToDoubleBiFunction<A, B> next,
         B secondArg
     ) {
-        return (boolean b1) ->
-            next.applyAsDouble(resolve().apply(b1), secondArg);
+        return WithBooleanToDoubleFunction.of(
+            (boolean b1) -> next.applyAsDouble(resolve().apply(b1), secondArg)
+        );
     }
 
-    public default <B> BooleanToDoubleFunction fuse(
+    public default <B> WithBooleanToDoubleFunction fuse(
         ToDoubleBiFunction<A, B> next,
         B secondArg
     ) {
         return fuseToDoubleBiFunction(next, secondArg);
     }
 
-    public default <B> WithBooleanToDoubleFunction fusingToDoubleBiFunction(
-        ToDoubleBiFunction<A, B> next,
-        B secondArg
+    /* BooleanFunction<A> -> ToIntFunction<A> */
+
+    public default WithBooleanToIntFunction fuseToIntFunction(
+        ToIntFunction<A> next
     ) {
-        return WithBooleanToDoubleFunction.of(
-            fuseToDoubleBiFunction(next, secondArg)
+        return WithBooleanToIntFunction.of(
+            (boolean b) -> next.applyAsInt(resolve().apply(b))
         );
     }
 
-    public default <B> WithBooleanToDoubleFunction fusing(
-        ToDoubleBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fusingToDoubleBiFunction(next, secondArg);
-    }
-
-    /* BooleanFunction<A> -> ToIntFunction<A> */
-
-    public default BooleanToIntFunction fuseToIntFunction(
-        ToIntFunction<A> next
-    ) {
-        return (boolean b) -> next.applyAsInt(resolve().apply(b));
-    }
-
-    public default BooleanToIntFunction fuse(ToIntFunction<A> next) {
+    public default WithBooleanToIntFunction fuse(ToIntFunction<A> next) {
         return fuseToIntFunction(next);
-    }
-
-    public default WithBooleanToIntFunction fusingToIntFunction(
-        ToIntFunction<A> next
-    ) {
-        return WithBooleanToIntFunction.of(fuseToIntFunction(next));
-    }
-
-    public default WithBooleanToIntFunction fusing(ToIntFunction<A> next) {
-        return fusingToIntFunction(next);
     }
 
     /* BooleanFunction<A> -> ToIntBiFunction<A> */
 
-    public default <B> BooleanFunction<ToIntFunction<B>> fuseToIntBiFunction(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B> WithToIntBiFunction<Boolean, B> fuseToIntBiFunction(
         ToIntBiFunction<A, B> next
     ) {
-        return (boolean b1) ->
-            (B b2) -> next.applyAsInt(resolve().apply(b1), b2);
+        return WithToIntBiFunction.of(
+            (Boolean b1) -> (B b2) -> next.applyAsInt(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B> BooleanFunction<ToIntFunction<B>> fuse(
+    public default <B> WithToIntBiFunction<Boolean, B> fuse(
         ToIntBiFunction<A, B> next
     ) {
         return fuseToIntBiFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingToIntBiFunction(ToIntBiFunction<A, B> next)
-
-    public default <B> BooleanToIntFunction fuseToIntBiFunction(
+    public default <B> WithBooleanToIntFunction fuseToIntBiFunction(
         ToIntBiFunction<A, B> next,
         B secondArg
     ) {
-        return (boolean b1) -> next.applyAsInt(resolve().apply(b1), secondArg);
+        return WithBooleanToIntFunction.of(
+            (boolean b1) -> next.applyAsInt(resolve().apply(b1), secondArg)
+        );
     }
 
-    public default <B> BooleanToIntFunction fuse(
+    public default <B> WithBooleanToIntFunction fuse(
         ToIntBiFunction<A, B> next,
         B secondArg
     ) {
         return fuseToIntBiFunction(next, secondArg);
     }
 
-    public default <B> WithBooleanToIntFunction fusingToIntBiFunction(
-        ToIntBiFunction<A, B> next,
-        B secondArg
+    /* BooleanFunction<A> -> ToLongFunction<A> */
+
+    public default WithBooleanToLongFunction fuseToLongFunction(
+        ToLongFunction<A> next
     ) {
-        return WithBooleanToIntFunction.of(
-            fuseToIntBiFunction(next, secondArg)
+        return WithBooleanToLongFunction.of(
+            (boolean b) -> next.applyAsLong(resolve().apply(b))
         );
     }
 
-    public default <B> WithBooleanToIntFunction fusing(
-        ToIntBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fusingToIntBiFunction(next, secondArg);
-    }
-
-    /* BooleanFunction<A> -> ToLongFunction<A> */
-
-    public default BooleanToLongFunction fuseToLongFunction(
-        ToLongFunction<A> next
-    ) {
-        return (boolean b) -> next.applyAsLong(resolve().apply(b));
-    }
-
-    public default BooleanToLongFunction fuse(ToLongFunction<A> next) {
+    public default WithBooleanToLongFunction fuse(ToLongFunction<A> next) {
         return fuseToLongFunction(next);
-    }
-
-    public default WithBooleanToLongFunction fusingToLongFunction(
-        ToLongFunction<A> next
-    ) {
-        return WithBooleanToLongFunction.of(fuseToLongFunction(next));
-    }
-
-    public default WithBooleanToLongFunction fusing(ToLongFunction<A> next) {
-        return fusingToLongFunction(next);
     }
 
     /* BooleanFunction<A> -> ToLongBiFunction<A> */
 
-    public default <B> BooleanFunction<ToLongFunction<B>> fuseToLongBiFunction(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B> WithToLongBiFunction<Boolean, B> fuseToLongBiFunction(
         ToLongBiFunction<A, B> next
     ) {
-        return (boolean b1) ->
-            (B b2) -> next.applyAsLong(resolve().apply(b1), b2);
+        return WithToLongBiFunction.of(
+            (Boolean b1) -> (B b2) -> next.applyAsLong(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B> BooleanFunction<ToLongFunction<B>> fuse(
+    public default <B> WithToLongBiFunction<Boolean, B> fuse(
         ToLongBiFunction<A, B> next
     ) {
         return fuseToLongBiFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingToLongBiFunction(ToLongBiFunction<A, B> next)
-
-    public default <B> BooleanToLongFunction fuseToLongBiFunction(
+    public default <B> WithBooleanToLongFunction fuseToLongBiFunction(
         ToLongBiFunction<A, B> next,
         B secondArg
     ) {
-        return (boolean b1) -> next.applyAsLong(resolve().apply(b1), secondArg);
+        return WithBooleanToLongFunction.of(
+            (boolean b1) -> next.applyAsLong(resolve().apply(b1), secondArg)
+        );
     }
 
-    public default <B> BooleanToLongFunction fuse(
+    public default <B> WithBooleanToLongFunction fuse(
         ToLongBiFunction<A, B> next,
         B secondArg
     ) {
         return fuseToLongBiFunction(next, secondArg);
     }
 
-    public default <B> WithBooleanToLongFunction fusingToLongBiFunction(
-        ToLongBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanToLongFunction.of(
-            fuseToLongBiFunction(next, secondArg)
+    /* BooleanFunction<A> -> Predicate<A> */
+
+    public default WithBooleanPredicate fusePredicate(Predicate<A> next) {
+        return WithBooleanPredicate.of(
+            (boolean b) -> next.test(resolve().apply(b))
         );
     }
 
-    public default <B> WithBooleanToLongFunction fusing(
-        ToLongBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fusingToLongBiFunction(next, secondArg);
-    }
-
-    /* BooleanFunction<A> -> Predicate<A> */
-
-    public default BooleanPredicate fusePredicate(Predicate<A> next) {
-        return (boolean b) -> next.test(resolve().apply(b));
-    }
-
-    public default BooleanPredicate fuse(Predicate<A> next) {
+    public default WithBooleanPredicate fuse(Predicate<A> next) {
         return fusePredicate(next);
-    }
-
-    public default WithBooleanPredicate fusingPredicate(Predicate<A> next) {
-        return WithBooleanPredicate.of(fusePredicate(next));
-    }
-
-    public default WithBooleanPredicate fusing(Predicate<A> next) {
-        return fusingPredicate(next);
     }
 
     /* BooleanFunction<A> -> BiPredicate<A> */
 
-    public default <B> BooleanFunction<Predicate<B>> fuseBiPredicate(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B> WithBiPredicate<Boolean, B> fuseBiPredicate(
         BiPredicate<A, B> next
     ) {
-        return (boolean b1) -> (B b2) -> next.test(resolve().apply(b1), b2);
+        return WithBiPredicate.of(
+            (Boolean b1) -> (B b2) -> next.test(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B> BooleanFunction<Predicate<B>> fuse(
+    public default <B> WithBiPredicate<Boolean, B> fuse(
         BiPredicate<A, B> next
     ) {
         return fuseBiPredicate(next);
     }
 
-    // TODO: Implement with currying
-    // fusingBiPredicate(BiPredicate<A, B> next)
-
-    public default <B> BooleanPredicate fuseBiPredicate(
+    public default <B> WithBooleanPredicate fuseBiPredicate(
         BiPredicate<A, B> next,
         B secondArg
     ) {
-        return (boolean b1) -> next.test(resolve().apply(b1), secondArg);
+        return WithBooleanPredicate.of(
+            (boolean b1) -> next.test(resolve().apply(b1), secondArg)
+        );
     }
 
-    public default <B> BooleanPredicate fuse(
+    public default <B> WithBooleanPredicate fuse(
         BiPredicate<A, B> next,
         B secondArg
     ) {
         return fuseBiPredicate(next, secondArg);
     }
 
-    public default <B> WithBooleanPredicate fusingBiPredicate(
-        BiPredicate<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanPredicate.of(fuseBiPredicate(next, secondArg));
-    }
-
-    public default <B> WithBooleanPredicate fusing(
-        BiPredicate<A, B> next,
-        B secondArg
-    ) {
-        return fusingBiPredicate(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> Consumer<A> */
 
-    public default BooleanConsumer fuseConsumer(Consumer<A> next) {
-        return (boolean b) -> next.accept(resolve().apply(b));
+    public default WithBooleanConsumer fuseConsumer(Consumer<A> next) {
+        return WithBooleanConsumer.of(
+            (boolean b) -> next.accept(resolve().apply(b))
+        );
     }
 
-    public default BooleanConsumer fuse(Consumer<A> next) {
+    public default WithBooleanConsumer fuse(Consumer<A> next) {
         return fuseConsumer(next);
-    }
-
-    public default WithBooleanConsumer fusingConsumer(Consumer<A> next) {
-        return WithBooleanConsumer.of(fuseConsumer(next));
-    }
-
-    public default WithBooleanConsumer fusing(Consumer<A> next) {
-        return fusingConsumer(next);
     }
 
     /* BooleanFunction<A> -> BiConsumer<A> */
 
-    public default <B> BooleanFunction<Consumer<B>> fuseBiConsumer(
+    @PromotesPrimitive(promoted = Boolean.class)
+    public default <B> WithBiConsumer<Boolean, B> fuseBiConsumer(
         BiConsumer<A, B> next
     ) {
-        return (boolean b1) -> (B b2) -> next.accept(resolve().apply(b1), b2);
+        return WithBiConsumer.of(
+            (Boolean b1) -> (B b2) -> next.accept(resolve().apply(b1), b2)
+        );
     }
 
-    public default <B> BooleanFunction<Consumer<B>> fuse(
-        BiConsumer<A, B> next
-    ) {
+    public default <B> WithBiConsumer<Boolean, B> fuse(BiConsumer<A, B> next) {
         return fuseBiConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // fusingBiConsumer(BiConsumer<A, B> next)
-
-    public default <B> BooleanConsumer fuseBiConsumer(
+    public default <B> WithBooleanConsumer fuseBiConsumer(
         BiConsumer<A, B> next,
         B secondArg
     ) {
-        return (boolean b1) -> next.accept(resolve().apply(b1), secondArg);
+        return WithBooleanConsumer.of(
+            (boolean b1) -> next.accept(resolve().apply(b1), secondArg)
+        );
     }
 
-    public default <B> BooleanConsumer fuse(
+    public default <B> WithBooleanConsumer fuse(
         BiConsumer<A, B> next,
         B secondArg
     ) {
         return fuseBiConsumer(next, secondArg);
     }
 
-    public default <B> WithBooleanConsumer fusingBiConsumer(
-        BiConsumer<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanConsumer.of(fuseBiConsumer(next, secondArg));
-    }
-
-    public default <B> WithBooleanConsumer fusing(
-        BiConsumer<A, B> next,
-        B secondArg
-    ) {
-        return fusingBiConsumer(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ObjDoubleConsumer<A> */
 
-    public default BooleanFunction<DoubleConsumer> fuseObjDoubleConsumer(
+    @PromotesPrimitive(promoted = { Boolean.class, Double.class })
+    public default WithBiConsumer<Boolean, Double> fuseObjDoubleConsumer(
         ObjDoubleConsumer<A> next
     ) {
-        return (boolean b) -> (double d) -> next.accept(resolve().apply(b), d);
+        return WithBiConsumer.of(
+            (Boolean b) -> (Double d) -> next.accept(resolve().apply(b), d)
+        );
     }
 
-    public default BooleanFunction<DoubleConsumer> fuse(
+    public default WithBiConsumer<Boolean, Double> fuse(
         ObjDoubleConsumer<A> next
     ) {
         return fuseObjDoubleConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // public default BooleanFunction<DoubleConsumer> fusingObjDoubleConsumer(ObjDoubleConsumer<A> next) {...}
-
-    public default BooleanConsumer fuseObjDoubleConsumer(
+    public default WithBooleanConsumer fuseObjDoubleConsumer(
         ObjDoubleConsumer<A> next,
         double secondArg
     ) {
-        return (boolean b) -> next.accept(resolve().apply(b), secondArg);
+        return WithBooleanConsumer.of(
+            (boolean b) -> next.accept(resolve().apply(b), secondArg)
+        );
     }
 
-    public default BooleanConsumer fuse(
+    public default WithBooleanConsumer fuse(
         ObjDoubleConsumer<A> next,
         double secondArg
     ) {
         return fuseObjDoubleConsumer(next, secondArg);
     }
 
-    public default WithBooleanConsumer fusingObjDoubleConsumer(
-        ObjDoubleConsumer<A> next,
-        double secondArg
-    ) {
-        return WithBooleanConsumer.of(fuseObjDoubleConsumer(next, secondArg));
-    }
-
-    public default WithBooleanConsumer fusing(
-        ObjDoubleConsumer<A> next,
-        double secondArg
-    ) {
-        return fusingObjDoubleConsumer(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ObjIntConsumer<A> */
 
-    public default BooleanFunction<IntConsumer> fuseObjIntConsumer(
+    @PromotesPrimitive(promoted = { Boolean.class, Integer.class })
+    public default WithBiConsumer<Boolean, Integer> fuseObjIntConsumer(
         ObjIntConsumer<A> next
     ) {
-        return (boolean b) -> (int d) -> next.accept(resolve().apply(b), d);
+        return WithBiConsumer.of(
+            (Boolean b) -> (Integer d) -> next.accept(resolve().apply(b), d)
+        );
     }
 
-    public default BooleanFunction<IntConsumer> fuse(ObjIntConsumer<A> next) {
+    public default WithBiConsumer<Boolean, Integer> fuse(
+        ObjIntConsumer<A> next
+    ) {
         return fuseObjIntConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // public default BooleanFunction<IntConsumer> fusingObjIntConsumer(ObjIntConsumer<A> next) {...}
-
-    public default BooleanConsumer fuseObjIntConsumer(
+    public default WithBooleanConsumer fuseObjIntConsumer(
         ObjIntConsumer<A> next,
         int secondArg
     ) {
-        return (boolean b) -> next.accept(resolve().apply(b), secondArg);
+        return WithBooleanConsumer.of(
+            (boolean b) -> next.accept(resolve().apply(b), secondArg)
+        );
     }
 
-    public default BooleanConsumer fuse(ObjIntConsumer<A> next, int secondArg) {
+    public default WithBooleanConsumer fuse(
+        ObjIntConsumer<A> next,
+        int secondArg
+    ) {
         return fuseObjIntConsumer(next, secondArg);
-    }
-
-    public default WithBooleanConsumer fusingObjIntConsumer(
-        ObjIntConsumer<A> next,
-        int secondArg
-    ) {
-        return WithBooleanConsumer.of(fuseObjIntConsumer(next, secondArg));
-    }
-
-    public default WithBooleanConsumer fusing(
-        ObjIntConsumer<A> next,
-        int secondArg
-    ) {
-        return fusingObjIntConsumer(next, secondArg);
     }
 
     /* BooleanFunction<A> -> ObjLongConsumer<A> */
 
-    public default BooleanFunction<LongConsumer> fuseObjLongConsumer(
+    @PromotesPrimitive(promoted = { Boolean.class, Long.class })
+    public default WithBiConsumer<Boolean, Long> fuseObjLongConsumer(
         ObjLongConsumer<A> next
     ) {
-        return (boolean b) -> (long d) -> next.accept(resolve().apply(b), d);
+        return WithBiConsumer.of(
+            (Boolean b) -> (Long d) -> next.accept(resolve().apply(b), d)
+        );
     }
 
-    public default BooleanFunction<LongConsumer> fuse(ObjLongConsumer<A> next) {
+    public default WithBiConsumer<Boolean, Long> fuse(ObjLongConsumer<A> next) {
         return fuseObjLongConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // public default BooleanFunction<LongConsumer> fusingObjLongConsumer(ObjLongConsumer<A> next) {...}
-
-    public default BooleanConsumer fuseObjLongConsumer(
+    public default WithBooleanConsumer fuseObjLongConsumer(
         ObjLongConsumer<A> next,
         long secondArg
     ) {
-        return (boolean b) -> next.accept(resolve().apply(b), secondArg);
+        return WithBooleanConsumer.of(
+            (boolean b) -> next.accept(resolve().apply(b), secondArg)
+        );
     }
 
-    public default BooleanConsumer fuse(
+    public default WithBooleanConsumer fuse(
         ObjLongConsumer<A> next,
         long secondArg
     ) {
         return fuseObjLongConsumer(next, secondArg);
-    }
-
-    public default WithBooleanConsumer fusingObjLongConsumer(
-        ObjLongConsumer<A> next,
-        long secondArg
-    ) {
-        return WithBooleanConsumer.of(fuseObjLongConsumer(next, secondArg));
-    }
-
-    public default WithBooleanConsumer fusing(
-        ObjLongConsumer<A> next,
-        long secondArg
-    ) {
-        return fusingObjLongConsumer(next, secondArg);
     }
 }

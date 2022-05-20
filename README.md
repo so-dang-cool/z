@@ -87,16 +87,19 @@ assertEquals(List.of("batman"), heroes);
 
 ## Super Fusion
 
-`Z.with(var or fn1).fusing(fn2).[...].fuse(fn[N])` Combine _N_ functions.
+`Z.fuse(var or fn1).fuse(fn2).[...].fuse(fn[N])` Combine _N_ functions.
 
 ```java
-var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
-    .fusingFunction(Pattern::compile)
-    .fusing(Pattern::matcher)
+var isLocalHost = Z.fuse("https?://localhost(:\\d+)?(/\\S*)?")
+    .fuseFunction(Pattern::compile)
+    .fuse(Pattern::matcher)
     .fuse(Matcher::matches);
 
 assertTrue(isLocalHost.test("https://localhost:443"));
 ```
+
+_Note: `fuseFunction` above is an explicit choice of a single-arg variant of
+`Pattern::compile`. Similar `fuse[Etc]` exist for other functional interfaces._
 
 # Z is lean and predictable
 

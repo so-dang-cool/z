@@ -579,14 +579,14 @@ public final class Z {
         return fuseBiFunction(initial);
     }
 
-    // TODO: "fusing" and "With[Etc]" cleanup starts here!
-    public static <A, B, C, D> Function<A, Function<B, D>> fuse(
+    public static <A, B, C, D> Combine.WithBiFunction<A, B, D> fuse(
         BiFunction<A, B, C> initial,
         Function<C, D> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithTriFunction?
     public static <A, B, C, D, E> Function<A, Function<B, Function<D, E>>> fuse(
         BiFunction<A, B, C> initial,
         BiFunction<C, D, E> next
@@ -594,13 +594,14 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<A, ToDoubleFunction<B>> fuse(
+    public static <A, B, C> Combine.WithToDoubleBiFunction<A, B> fuse(
         BiFunction<A, B, C> initial,
         ToDoubleFunction<C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithToDoubleTriFunction?
     public static <A, B, C, D> Function<A, Function<B, ToDoubleFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToDoubleBiFunction<C, D> next
@@ -608,13 +609,14 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<A, ToIntFunction<B>> fuse(
+    public static <A, B, C> Combine.WithToIntBiFunction<A, B> fuse(
         BiFunction<A, B, C> initial,
         ToIntFunction<C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithToIntTriFunction?
     public static <A, B, C, D> Function<A, Function<B, ToIntFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToIntBiFunction<C, D> next
@@ -622,13 +624,14 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<A, ToLongFunction<B>> fuse(
+    public static <A, B, C> Combine.WithToLongBiFunction<A, B> fuse(
         BiFunction<A, B, C> initial,
         ToLongFunction<C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithToLongTriFunction?
     public static <A, B, C, D> Function<A, Function<B, ToLongFunction<D>>> fuse(
         BiFunction<A, B, C> initial,
         ToLongBiFunction<C, D> next
@@ -636,13 +639,14 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<A, Predicate<B>> fuse(
+    public static <A, B, C> Combine.WithBiPredicate<A, B> fuse(
         BiFunction<A, B, C> initial,
         Predicate<C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithTriPredicate?
     public static <A, B, C, D> Function<A, Function<B, Predicate<D>>> fuse(
         BiFunction<A, B, C> initial,
         BiPredicate<C, D> next
@@ -650,13 +654,14 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> Function<A, Consumer<B>> fuse(
+    public static <A, B, C> Combine.WithBiConsumer<A, B> fuse(
         BiFunction<A, B, C> initial,
         Consumer<C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithTriConsumer?
     public static <A, B, C, D> Function<A, Function<B, Consumer<D>>> fuse(
         BiFunction<A, B, C> initial,
         BiConsumer<C, D> next
@@ -664,6 +669,7 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithBiObjDoubleConsumer?
     public static <A, B, C, D> Function<A, Function<B, DoubleConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjDoubleConsumer<C> next
@@ -671,6 +677,7 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithBiObjIntConsumer?
     public static <A, B, C, D> Function<A, Function<B, IntConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjIntConsumer<C> next
@@ -678,6 +685,7 @@ public final class Z {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: WithBiObjLongConsumer?
     public static <A, B, C, D> Function<A, Function<B, LongConsumer>> fuse(
         BiFunction<A, B, C> initial,
         ObjLongConsumer<C> next
@@ -699,105 +707,105 @@ public final class Z {
         return fuseBooleanFunction(initial);
     }
 
-    public static <A, B> BooleanFunction<B> fuse(
+    public static <A, B> Combine.WithBooleanFunction<B> fuse(
         BooleanFunction<A> initial,
         Function<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B, C> BooleanFunction<Function<B, C>> fuse(
+    public static <A, B, C> Combine.WithBiFunction<Boolean, B, C> fuse(
         BooleanFunction<A> initial,
         BiFunction<A, B, C> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanToDoubleFunction fuse(
+    public static <A> Combine.WithBooleanToDoubleFunction fuse(
         BooleanFunction<A> initial,
         ToDoubleFunction<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B> BooleanFunction<ToDoubleFunction<B>> fuse(
+    public static <A, B> Combine.WithToDoubleBiFunction<Boolean, B> fuse(
         BooleanFunction<A> initial,
         ToDoubleBiFunction<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanToIntFunction fuse(
+    public static <A> Combine.WithBooleanToIntFunction fuse(
         BooleanFunction<A> initial,
         ToIntFunction<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B> BooleanFunction<ToIntFunction<B>> fuse(
+    public static <A, B> Combine.WithToIntBiFunction<Boolean, B> fuse(
         BooleanFunction<A> initial,
         ToIntBiFunction<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanToLongFunction fuse(
+    public static <A> Combine.WithBooleanToLongFunction fuse(
         BooleanFunction<A> initial,
         ToLongFunction<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B> BooleanFunction<ToLongFunction<B>> fuse(
+    public static <A, B> Combine.WithToLongBiFunction<Boolean, B> fuse(
         BooleanFunction<A> initial,
         ToLongBiFunction<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanPredicate fuse(
+    public static <A> Combine.WithBooleanPredicate fuse(
         BooleanFunction<A> initial,
         Predicate<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B> BooleanFunction<Predicate<B>> fuse(
+    public static <A, B> Combine.WithBiPredicate<Boolean, B> fuse(
         BooleanFunction<A> initial,
         BiPredicate<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanConsumer fuse(
+    public static <A> Combine.WithBooleanConsumer fuse(
         BooleanFunction<A> initial,
         Consumer<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A, B> BooleanFunction<Consumer<B>> fuse(
+    public static <A, B> Combine.WithBiConsumer<Boolean, B> fuse(
         BooleanFunction<A> initial,
         BiConsumer<A, B> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanFunction<DoubleConsumer> fuse(
+    public static <A> Combine.WithBiConsumer<Boolean, Double> fuse(
         BooleanFunction<A> initial,
         ObjDoubleConsumer<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanFunction<IntConsumer> fuse(
+    public static <A> Combine.WithBiConsumer<Boolean, Integer> fuse(
         BooleanFunction<A> initial,
         ObjIntConsumer<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static <A> BooleanFunction<LongConsumer> fuse(
+    public static <A> Combine.WithBiConsumer<Boolean, Long> fuse(
         BooleanFunction<A> initial,
         ObjLongConsumer<A> next
     ) {
