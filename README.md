@@ -21,7 +21,7 @@ Unlock your functional programming potential with these combination techniques:
 `Z.fuse(fn1, fn2)` Combine two functions.
 
 ```java
-var internedTrim = Z.fuse(String::trim, String::intern);
+var internedTrim = Z.fuse(String::trim).fuse(String::intern);
 
 assertEquals("hello", internedTrim.apply(" hello "));
 
@@ -39,10 +39,10 @@ var concat = Z.split(String::concat);
 assertEquals("hotpot", concat.apply("hot").apply("pot"));
 
 // Protip: "Curried" functions can be partially applied.
-var goodSomething = concat.apply("pre");
+var preSomething = concat.apply("pre");
 
-assertEquals("prefix", goodSomething.apply("fix"));
-assertEquals("presume", goodSomething.apply("sume"));
+assertEquals("prefix", preSomething.apply("fix"));
+assertEquals("presume", preSomething.apply("sume"));
 
 // Protip: Z also has a "flip" function to change order.
 var fixedSomething = Z.flip(concat).apply("fix");
@@ -76,7 +76,7 @@ _This is an **evil** technique. It's provided as a tool to control evil problems
 ```java
 var heroes = new ArrayList<>(List.of("joker"));
 
-var emptiedHeroes = Z.absorb(heroes::clear, () -> heroes);
+var emptiedHeroes = Z.fuse(heroes::clear).absorb(() -> heroes);
 
 assertEquals(List.of(), emptiedHeroes.get());
 
@@ -101,7 +101,7 @@ assertTrue(isLocalHost.test("https://localhost:443"));
 _Note: `fuseFunction` above is an explicit choice of a single-arg variant of
 `Pattern::compile`. Similar `fuse[Etc]` exist for other functional interfaces._
 
-# Z is lean and predictable
+# Z goals
 
 1. Z only provides function combinators
 1. Z will never need other dependencies
@@ -153,4 +153,4 @@ Some advantages of Z here:
     conventions that already exist. A `Predicate` will have a `test` method, a
     `Consumer` will have an `accept` method, etc.
 
-_These and more examples can be found in the [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java) in the project's tests._
+_More examples can be found in the [Usage Examples](https://github.com/hiljusti/z/blob/HEAD/src/test/java/so/dang/cool/z/UsageExamples.java) in the project's tests._

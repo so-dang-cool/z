@@ -6,10 +6,10 @@
  * Fusion combines two functional interfaces into one. It is the heart and soul of
  * Z techniques.
  * <br><br>
- * Access through {@code Z.fuse(initial, next)} where both {@code initial} and
+ * Standard usage is {@code Z.fuse(initial).fuse(next)} where both {@code initial} and
  * {@code next} are functional interfaces.
  * <br><br>
- * The technique used is like the {@code compose} and {@code andThen} static functions
+ * The technique used is like the {@code compose} and {@code andThen} functions
  * available from Java's {@code java.util.function} package, but generalizes to
  * support arbitrary combinations.
  * <br><br>
@@ -35,7 +35,7 @@
  * // === Z ===
  *
  * // Z handles composition a little more succinctly.
- * ToIntFunction<String> asciiSum = Z.fuse(String::chars, IntStream::sum);
+ * ToIntFunction<String> asciiSum = Z.fuse(String::chars).fuse(IntStream::sum);
  * }
  * </pre>
  * <br><br>
@@ -59,19 +59,19 @@
  * <h1>Fission</h1>
  *
  * Fission dissolves functional interfaces into a curried form.
- * <br><br>
+ *
  * TODO: Explain.
  *
  * <h1>Assimilation (Evil)</h1>
  *
  * Assimilation combines curried functions into many-argument functional interfaces.
- * <br><br>
+ *
  * TODO: Explain
  *
  * <h1>Absorption (Evil)</h1>
  *
  * Absorption forcefully combines functional interfaces that share no direct relation.
- * <br><br>
+ *
  * TODO: Explain
  */
 package so.dang.cool.z;

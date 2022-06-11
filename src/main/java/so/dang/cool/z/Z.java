@@ -680,20 +680,36 @@ public final class Z {
         return withObject(initial);
     }
 
-    public static Combine.WithBooleanSupplier with(boolean initial) {
+    public static Combine.WithBooleanSupplier withBoolean(boolean initial) {
         return Combine.WithBooleanSupplier.of(() -> initial);
     }
 
-    public static Combine.WithDoubleSupplier with(double initial) {
+    public static Combine.WithBooleanSupplier with(boolean initial) {
+        return withBoolean(initial);
+    }
+
+    public static Combine.WithDoubleSupplier withDouble(double initial) {
         return Combine.WithDoubleSupplier.of(() -> initial);
     }
 
-    public static Combine.WithIntSupplier with(int initial) {
+    public static Combine.WithDoubleSupplier with(double initial) {
+        return withDouble(initial);
+    }
+
+    public static Combine.WithIntSupplier withInt(int initial) {
         return Combine.WithIntSupplier.of(() -> initial);
     }
 
-    public static Combine.WithLongSupplier with(long initial) {
+    public static Combine.WithIntSupplier with(int initial) {
+        return withInt(initial);
+    }
+
+    public static Combine.WithLongSupplier withLong(long initial) {
         return Combine.WithLongSupplier.of(() -> initial);
+    }
+
+    public static Combine.WithLongSupplier with(long initial) {
+        return withLong(initial);
     }
 
     // ┏┓
