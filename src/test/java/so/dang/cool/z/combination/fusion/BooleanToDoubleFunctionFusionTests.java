@@ -23,8 +23,7 @@ public class BooleanToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(maybeOneAsDouble, doubleToString),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToString),
-                Z.fuse(maybeOneAsDouble).fusing(doubleToString)
+                Z.fuse(maybeOneAsDouble).fuse(doubleToString)
             )
             .forEach(
                 fusion -> {
@@ -38,8 +37,7 @@ public class BooleanToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(maybeOneAsDouble, doubleToInt),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToInt),
-                Z.fuse(maybeOneAsDouble).fusing(doubleToInt)
+                Z.fuse(maybeOneAsDouble).fuse(doubleToInt)
             )
             .forEach(
                 fusion -> {
@@ -53,8 +51,7 @@ public class BooleanToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(maybeOneAsDouble, doubleToLong),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToLong),
-                Z.fuse(maybeOneAsDouble).fusing(doubleToLong)
+                Z.fuse(maybeOneAsDouble).fuse(doubleToLong)
             )
             .forEach(
                 fusion -> {
@@ -68,8 +65,7 @@ public class BooleanToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(maybeOneAsDouble, isDoubleOne),
-                Z.fuse(maybeOneAsDouble).fuse(isDoubleOne),
-                Z.fuse(maybeOneAsDouble).fusing(isDoubleOne)
+                Z.fuse(maybeOneAsDouble).fuse(isDoubleOne)
             )
             .forEach(
                 fusion -> {
@@ -85,8 +81,7 @@ public class BooleanToDoubleFunctionFusionTests {
             Stream
                 .of(
                     Z.fuse(maybeOneAsDouble, saveDoubleA),
-                    Z.fuse(maybeOneAsDouble).fuse(saveDoubleA),
-                    Z.fuse(maybeOneAsDouble).fusing(saveDoubleA)
+                    Z.fuse(maybeOneAsDouble).fuse(saveDoubleA)
                 )
                 .forEach(
                     fusion -> {
@@ -105,8 +100,7 @@ public class BooleanToDoubleFunctionFusionTests {
         Stream
             .of(
                 Z.fuse(maybeOneAsDouble, addOneToDouble),
-                Z.fuse(maybeOneAsDouble).fuse(addOneToDouble),
-                Z.fuse(maybeOneAsDouble).fusing(addOneToDouble)
+                Z.fuse(maybeOneAsDouble).fuse(addOneToDouble)
             )
             .forEach(
                 fusion -> {
@@ -128,15 +122,9 @@ public class BooleanToDoubleFunctionFusionTests {
                 }
             );
 
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble).fuse(addDoubles, 0.5),
-                Z.fuse(maybeOneAsDouble).fusing(addDoubles, 0.5)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1.5, fusion.applyAsDouble(true));
-                }
-            );
+        assertEquals(
+            1.5,
+            Z.fuse(maybeOneAsDouble).fuse(addDoubles, 0.5).applyAsDouble(true)
+        );
     }
 }

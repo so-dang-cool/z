@@ -826,48 +826,49 @@ public final class Z {
         return fuseBooleanToDoubleFunction(initial);
     }
 
-    public static <A> BooleanFunction<A> fuse(
+    public static <A> Combine.WithBooleanFunction<A> fuse(
         BooleanToDoubleFunction initial,
         DoubleFunction<A> next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static BooleanToIntFunction fuse(
+    public static Combine.WithBooleanToIntFunction fuse(
         BooleanToDoubleFunction initial,
         DoubleToIntFunction next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static BooleanToLongFunction fuse(
+    public static Combine.WithBooleanToLongFunction fuse(
         BooleanToDoubleFunction initial,
         DoubleToLongFunction next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static BooleanPredicate fuse(
+    public static Combine.WithBooleanPredicate fuse(
         BooleanToDoubleFunction initial,
         DoublePredicate next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static BooleanConsumer fuse(
+    public static Combine.WithBooleanConsumer fuse(
         BooleanToDoubleFunction initial,
         DoubleConsumer next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
-    public static BooleanToDoubleFunction fuse(
+    public static Combine.WithBooleanToDoubleFunction fuse(
         BooleanToDoubleFunction initial,
         DoubleUnaryOperator next
     ) {
         return Z.fuse(initial).fuse(next);
     }
 
+    // TODO: Combine.WithBooleanDoubleToDoubleFunction?
     public static BooleanFunction<DoubleUnaryOperator> fuse(
         BooleanToDoubleFunction initial,
         DoubleBinaryOperator next
