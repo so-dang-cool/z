@@ -7,11 +7,6 @@ import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.function.BooleanConsumer;
-import so.dang.cool.z.function.BooleanFunction;
-import so.dang.cool.z.function.BooleanPredicate;
-import so.dang.cool.z.function.BooleanToDoubleFunction;
-import so.dang.cool.z.function.BooleanToIntFunction;
-import so.dang.cool.z.function.BooleanToLongFunction;
 import so.dang.cool.z.function.Operator;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithBooleanFunction;
@@ -26,164 +21,110 @@ interface BooleanConsumerCombos {
     /* BooleanConsumer -> Supplier<A> */
 
     @Evil
-    public default <A> BooleanFunction<A> absorbSupplier(Supplier<A> next) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            return next.get();
-        };
+    public default <A> WithBooleanFunction<A> absorbSupplier(Supplier<A> next) {
+        return WithBooleanFunction.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                return next.get();
+            }
+        );
     }
 
     @Evil
-    public default <A> BooleanFunction<A> absorb(Supplier<A> next) {
+    public default <A> WithBooleanFunction<A> absorb(Supplier<A> next) {
         return absorbSupplier(next);
-    }
-
-    @Evil
-    public default <A> WithBooleanFunction<A> absorbingSupplier(
-        Supplier<A> next
-    ) {
-        return WithBooleanFunction.of(absorbSupplier(next));
-    }
-
-    @Evil
-    public default <A> WithBooleanFunction<A> absorbing(Supplier<A> next) {
-        return absorbingSupplier(next);
     }
 
     /* BooleanConsumer -> BooleanSupplier<A> */
 
     @Evil
-    public default BooleanPredicate absorbBooleanSupplier(
+    public default WithBooleanPredicate absorbBooleanSupplier(
         BooleanSupplier next
     ) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            return next.getAsBoolean();
-        };
+        return WithBooleanPredicate.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                return next.getAsBoolean();
+            }
+        );
     }
 
     @Evil
-    public default BooleanPredicate absorb(BooleanSupplier next) {
+    public default WithBooleanPredicate absorb(BooleanSupplier next) {
         return absorbBooleanSupplier(next);
-    }
-
-    @Evil
-    public default WithBooleanPredicate absorbingBooleanSupplier(
-        BooleanSupplier next
-    ) {
-        return WithBooleanPredicate.of(absorbBooleanSupplier(next));
-    }
-
-    @Evil
-    public default WithBooleanPredicate absorbing(BooleanSupplier next) {
-        return absorbingBooleanSupplier(next);
     }
 
     /* BooleanConsumer -> DoubleSupplier<B> */
 
     @Evil
-    public default BooleanToDoubleFunction absorbDoubleSupplier(
+    public default WithBooleanToDoubleFunction absorbDoubleSupplier(
         DoubleSupplier next
     ) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            return next.getAsDouble();
-        };
+        return WithBooleanToDoubleFunction.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                return next.getAsDouble();
+            }
+        );
     }
 
     @Evil
-    public default BooleanToDoubleFunction absorb(DoubleSupplier next) {
+    public default WithBooleanToDoubleFunction absorb(DoubleSupplier next) {
         return absorbDoubleSupplier(next);
-    }
-
-    @Evil
-    public default WithBooleanToDoubleFunction absorbingDoubleSupplier(
-        DoubleSupplier next
-    ) {
-        return WithBooleanToDoubleFunction.of(absorbDoubleSupplier(next));
-    }
-
-    @Evil
-    public default WithBooleanToDoubleFunction absorbing(DoubleSupplier next) {
-        return absorbingDoubleSupplier(next);
     }
 
     /* BooleanConsumer -> IntSupplier<B> */
 
     @Evil
-    public default BooleanToIntFunction absorbIntSupplier(IntSupplier next) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            return next.getAsInt();
-        };
-    }
-
-    @Evil
-    public default BooleanToIntFunction absorb(IntSupplier next) {
-        return absorbIntSupplier(next);
-    }
-
-    @Evil
-    public default WithBooleanToIntFunction absorbingIntSupplier(
+    public default WithBooleanToIntFunction absorbIntSupplier(
         IntSupplier next
     ) {
-        return WithBooleanToIntFunction.of(absorbIntSupplier(next));
+        return WithBooleanToIntFunction.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                return next.getAsInt();
+            }
+        );
     }
 
     @Evil
-    public default WithBooleanToIntFunction absorbing(IntSupplier next) {
-        return absorbingIntSupplier(next);
+    public default WithBooleanToIntFunction absorb(IntSupplier next) {
+        return absorbIntSupplier(next);
     }
 
     /* BooleanConsumer -> LongSupplier<B> */
 
     @Evil
-    public default BooleanToLongFunction absorbLongSupplier(LongSupplier next) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            return next.getAsLong();
-        };
-    }
-
-    @Evil
-    public default BooleanToLongFunction absorb(LongSupplier next) {
-        return absorbLongSupplier(next);
-    }
-
-    @Evil
-    public default WithBooleanToLongFunction absorbingLongSupplier(
+    public default WithBooleanToLongFunction absorbLongSupplier(
         LongSupplier next
     ) {
-        return WithBooleanToLongFunction.of(absorbLongSupplier(next));
+        return WithBooleanToLongFunction.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                return next.getAsLong();
+            }
+        );
     }
 
     @Evil
-    public default WithBooleanToLongFunction absorbing(LongSupplier next) {
-        return absorbingLongSupplier(next);
+    public default WithBooleanToLongFunction absorb(LongSupplier next) {
+        return absorbLongSupplier(next);
     }
 
     /* BooleanConsumer -> Operator<B> */
 
     @Evil
-    public default BooleanConsumer absorbOperator(Operator next) {
-        return (boolean b) -> {
-            resolve().accept(b);
-            next.run();
-        };
+    public default WithBooleanConsumer absorbOperator(Operator next) {
+        return WithBooleanConsumer.of(
+            (boolean b) -> {
+                resolve().accept(b);
+                next.run();
+            }
+        );
     }
 
     @Evil
-    public default BooleanConsumer absorb(Operator next) {
+    public default WithBooleanConsumer absorb(Operator next) {
         return absorbOperator(next);
-    }
-
-    @Evil
-    public default WithBooleanConsumer absorbingOperator(Operator next) {
-        return WithBooleanConsumer.of(absorbOperator(next));
-    }
-
-    @Evil
-    public default WithBooleanConsumer absorbing(Operator next) {
-        return absorbingOperator(next);
     }
 }

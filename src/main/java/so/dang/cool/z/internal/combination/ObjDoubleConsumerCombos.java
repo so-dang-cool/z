@@ -34,9 +34,6 @@ interface ObjDoubleConsumerCombos<A> {
         return absorbSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingSupplier(Supplier<B> next) { ... }
-
     /* ObjDoubleConsumer<A> -> BooleanSupplier */
 
     public default Function<A, DoublePredicate> absorbBooleanSupplier(
@@ -53,9 +50,6 @@ interface ObjDoubleConsumerCombos<A> {
         return absorbBooleanSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingBooleanSupplier(BooleanSupplier next) { ... }
-
     /* ObjDoubleConsumer<A> -> IntSupplier */
 
     public default Function<A, DoubleToIntFunction> absorbIntSupplier(
@@ -71,9 +65,6 @@ interface ObjDoubleConsumerCombos<A> {
     public default Function<A, DoubleToIntFunction> absorb(IntSupplier next) {
         return absorbIntSupplier(next);
     }
-
-    // TODO: Implement with currying
-    // absorbingIntSupplier(IntSupplier<B> next) { ... }
 
     /* ObjDoubleConsumer<A> -> DoubleSupplier */
 
@@ -93,9 +84,6 @@ interface ObjDoubleConsumerCombos<A> {
         return absorbDoubleSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingDoubleSupplier(DoubleSupplier<B> next) { ... }
-
     /* ObjDoubleConsumer<A> -> LongSupplier */
 
     public default Function<A, DoubleToLongFunction> absorbLongSupplier(
@@ -112,28 +100,19 @@ interface ObjDoubleConsumerCombos<A> {
         return absorbLongSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingLongSupplier(LongSupplier<B> next) { ... }
-
     /* ObjDoubleConsumer<A> -> Operator */
 
-    public default Function<A, DoubleConsumer> absorbOperator(Operator next) {
-        return (A a) ->
-            (double d) -> {
-                resolve().apply(a).accept(d);
-                next.run();
-            };
+    public default WithObjDoubleConsumer<A> absorbOperator(Operator next) {
+        return WithObjDoubleConsumer.of(
+            (A a) ->
+                (double d) -> {
+                    resolve().apply(a).accept(d);
+                    next.run();
+                }
+        );
     }
 
-    public default Function<A, DoubleConsumer> absorb(Operator next) {
+    public default WithObjDoubleConsumer<A> absorb(Operator next) {
         return absorbOperator(next);
-    }
-
-    public default WithObjDoubleConsumer<A> absorbingOperator(Operator next) {
-        return WithObjDoubleConsumer.of(absorbOperator(next));
-    }
-
-    public default WithObjDoubleConsumer<A> absorbing(Operator next) {
-        return absorbingOperator(next);
     }
 }

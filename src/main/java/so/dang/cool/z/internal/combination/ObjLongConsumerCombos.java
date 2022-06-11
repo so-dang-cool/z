@@ -34,9 +34,6 @@ interface ObjLongConsumerCombos<A> {
         return absorbSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingSupplier(Supplier<B> next) { ... }
-
     /* ObjLongConsumer<A> -> BooleanSupplier */
 
     public default Function<A, LongPredicate> absorbBooleanSupplier(
@@ -53,9 +50,6 @@ interface ObjLongConsumerCombos<A> {
         return absorbBooleanSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingBooleanSupplier(BooleanSupplier next) { ... }
-
     /* ObjLongConsumer<A> -> IntSupplier */
 
     public default Function<A, LongToIntFunction> absorbIntSupplier(
@@ -71,9 +65,6 @@ interface ObjLongConsumerCombos<A> {
     public default Function<A, LongToIntFunction> absorb(IntSupplier next) {
         return absorbIntSupplier(next);
     }
-
-    // TODO: Implement with currying
-    // absorbingIntSupplier(IntSupplier<B> next) { ... }
 
     /* ObjLongConsumer<A> -> DoubleSupplier */
 
@@ -93,9 +84,6 @@ interface ObjLongConsumerCombos<A> {
         return absorbDoubleSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingSupplier(LongSupplier<B> next) { ... }
-
     /* ObjLongConsumer<A> -> LongSupplier */
 
     public default Function<A, LongUnaryOperator> absorbLongSupplier(
@@ -112,28 +100,19 @@ interface ObjLongConsumerCombos<A> {
         return absorbLongSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingSupplier(LongSupplier<B> next) { ... }
-
     /* ObjLongConsumer<A> -> Operator */
 
-    public default Function<A, LongConsumer> absorbOperator(Operator next) {
-        return (A a) ->
-            (long n) -> {
-                resolve().apply(a).accept(n);
-                next.run();
-            };
+    public default WithObjLongConsumer<A> absorbOperator(Operator next) {
+        return WithObjLongConsumer.of(
+            (A a) ->
+                (long n) -> {
+                    resolve().apply(a).accept(n);
+                    next.run();
+                }
+        );
     }
 
-    public default Function<A, LongConsumer> absorb(Operator next) {
+    public default WithObjLongConsumer<A> absorb(Operator next) {
         return absorbOperator(next);
-    }
-
-    public default WithObjLongConsumer<A> absorbingOperator(Operator next) {
-        return WithObjLongConsumer.of(absorbOperator(next));
-    }
-
-    public default WithObjLongConsumer<A> absorbing(Operator next) {
-        return absorbingOperator(next);
     }
 }

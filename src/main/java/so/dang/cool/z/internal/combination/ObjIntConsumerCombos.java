@@ -34,9 +34,6 @@ interface ObjIntConsumerCombos<A> {
         return absorbSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingSupplier(Supplier<B> next) { ... }
-
     /* ObjIntConsumer<A> -> BooleanSupplier */
 
     public default Function<A, IntPredicate> absorbBooleanSupplier(
@@ -52,9 +49,6 @@ interface ObjIntConsumerCombos<A> {
     public default Function<A, IntPredicate> absorb(BooleanSupplier next) {
         return absorbBooleanSupplier(next);
     }
-
-    // TODO: Implement with currying
-    // absorbingBooleanSupplier(BooleanSupplier next) { ... }
 
     /* ObjIntConsumer<A> -> DoubleSupplier */
 
@@ -74,9 +68,6 @@ interface ObjIntConsumerCombos<A> {
         return absorbDoubleSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingDoubleSupplier(Supplier<B> next) { ... }
-
     /* ObjIntConsumer<A> -> IntSupplier */
 
     public default Function<A, IntUnaryOperator> absorbIntSupplier(
@@ -92,9 +83,6 @@ interface ObjIntConsumerCombos<A> {
     public default Function<A, IntUnaryOperator> absorb(IntSupplier next) {
         return absorbIntSupplier(next);
     }
-
-    // TODO: Implement with currying
-    // absorbingIngSupplier(IntSupplier<B> next) { ... }
 
     /* ObjIntConsumer<A> -> LongSupplier */
 
@@ -112,28 +100,19 @@ interface ObjIntConsumerCombos<A> {
         return absorbLongSupplier(next);
     }
 
-    // TODO: Implement with currying
-    // absorbingLongSupplier(LongSupplier<B> next) { ... }
-
     /* ObjIntConsumer<A> -> Operator */
 
-    public default Function<A, IntConsumer> absorbOperator(Operator next) {
-        return (A a) ->
-            (int i) -> {
-                resolve().apply(a).accept(i);
-                next.run();
-            };
+    public default WithObjIntConsumer<A> absorbOperator(Operator next) {
+        return WithObjIntConsumer.of(
+            (A a) ->
+                (int i) -> {
+                    resolve().apply(a).accept(i);
+                    next.run();
+                }
+        );
     }
 
-    public default Function<A, IntConsumer> absorb(Operator next) {
+    public default WithObjIntConsumer<A> absorb(Operator next) {
         return absorbOperator(next);
-    }
-
-    public default WithObjIntConsumer<A> absorbingOperator(Operator next) {
-        return WithObjIntConsumer.of(absorbOperator(next));
-    }
-
-    public default WithObjIntConsumer<A> absorbing(Operator next) {
-        return absorbingOperator(next);
     }
 }
