@@ -27,7 +27,7 @@ public class UsageExamples {
 
     @Test
     public void example_fusion() {
-        var internedTrim = Z.fuse(String::trim, String::intern);
+        var internedTrim = Z.fuse(String::trim).fuse(String::intern);
 
         assertEquals("hello", internedTrim.apply(" hello "));
 
@@ -71,7 +71,7 @@ public class UsageExamples {
     public void example_absorption() {
         var heroes = new ArrayList<>(List.of("joker"));
 
-        var emptiedHeroes = Z.absorb(heroes::clear, () -> heroes);
+        var emptiedHeroes = Z.fuse(heroes::clear).absorb(() -> heroes);
 
         assertEquals(List.of(), emptiedHeroes.get());
 
@@ -104,7 +104,7 @@ public class UsageExamples {
     @Test
     public void ascii_sum_z() {
         // Z handles composition a little more succinctly.
-        var asciiSum = Z.fuse(String::chars, IntStream::sum);
+        var asciiSum = Z.fuse(String::chars).fuse(IntStream::sum);
 
         assertEquals(294, asciiSum.applyAsInt("abc"));
         assertEquals(775, asciiSum.applyAsInt("burrito"));
@@ -146,7 +146,7 @@ public class UsageExamples {
         Function<String, String> toLowerCase = String::toLowerCase;
         Predicate<String> isLowerToledo = s -> s.equals("toledo");
 
-        Predicate<String> isToledo = Z.fuse(toLowerCase, isLowerToledo);
+        Predicate<String> isToledo = Z.fuse(toLowerCase).fuse(isLowerToledo);
 
         assertAll(
             () -> isToledo.test("Toledo"),
@@ -180,10 +180,9 @@ public class UsageExamples {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
         Pattern pattern = Pattern.compile(urlRegex);
 
-        Predicate<CharSequence> isLocalHost = Z.fuse(
-            pattern::matcher,
-            Matcher::matches
-        );
+        Predicate<CharSequence> isLocalHost = Z
+            .fuse(pattern::matcher)
+            .fuse(Matcher::matches);
 
         assertFalse(isLocalHost.test("invalid"));
         assertTrue(isLocalHost.test("https://localhost:443"));
@@ -194,14 +193,12 @@ public class UsageExamples {
         final String urlRegex = "https?://localhost(:\\d+)?(/\\S*)?";
 
         Function<String, Pattern> patternOf = Pattern::compile;
-        Function<String, Function<CharSequence, Matcher>> matcherOf = Z.fuse(
-            patternOf,
-            Pattern::matcher
-        );
-        Predicate<CharSequence> isLocalHost = Z.fuse(
-            matcherOf.apply(urlRegex),
-            Matcher::matches
-        );
+        Function<String, Function<CharSequence, Matcher>> matcherOf = Z
+            .fuse(patternOf)
+            .fuse(Pattern::matcher);
+        Predicate<CharSequence> isLocalHost = Z
+            .fuse(matcherOf.apply(urlRegex))
+            .fuse(Matcher::matches);
 
         assertFalse(isLocalHost.test("invalid"));
         assertTrue(isLocalHost.test("https://localhost:443"));
@@ -242,7 +239,7 @@ public class UsageExamples {
         Function<String, String> addSevenWs = IntStream
             .range(0, 7)
             .mapToObj(ignored -> addW)
-            .reduce(Z::fuse)
+            .reduce((a, b) -> Z.fuse(a).fuse(b))
             .get();
 
         assertEquals("うはｗｗｗｗｗｗｗ", addSevenWs.apply("うは"));
@@ -303,20 +300,30 @@ public class UsageExamples {
             (BiFunction<Integer, Integer, String>) Integer::toString
         );
 
-        var integerStream = Z.fuse(
-            IntStream::range,
-            (BiFunction<IntStream, IntFunction<Integer>, Stream<Integer>>) IntStream::mapToObj
-        );
+        var integerStream = Z
+            .fuseBiFunction(IntStream::range)
+            .fuse(
+                (BiFunction<IntStream, IntFunction<Integer>, Stream<Integer>>) IntStream::mapToObj
+            );
 
-        var stringing = Z.fuse(
-            (Integer start, Integer end) ->
-                integerStream.apply(start).apply(end).apply(Integer::valueOf),
-            Z.fuse(
-                (BiFunction<Stream<Integer>, Function<Integer, String>, Stream<String>>) Stream::map,
-                (Stream<String> stream, String delim) ->
-                    stream.collect(Collectors.joining(delim))
+        var stringing = Z
+            .fuse(
+                (Integer start, Integer end) ->
+                    integerStream
+                        .apply(start)
+                        .apply(end)
+                        .apply(Integer::valueOf)
             )
-        );
+            .fuse(
+                Z
+                    .fuse(
+                        (BiFunction<Stream<Integer>, Function<Integer, String>, Stream<String>>) Stream::map
+                    )
+                    .fuse(
+                        (Stream<String> stream, String delim) ->
+                            stream.collect(Collectors.joining(delim))
+                    )
+            );
 
         // A class can be used to convey intent to complex fusions.
         // This is briefly included to fuel the imagination. For real world
@@ -398,12 +405,14 @@ public class UsageExamples {
             regrets.stream().collect(Collectors.joining(" "));
 
         Operator no = () -> regrets.add("no");
-        Operator nono = Z.absorb(no, no);
+        Operator nono = Z.fuse(no).absorb(no);
         Consumer<String> regret = regrets::add;
-        Consumer<String> starter = Z.absorb(regret, nono);
+        Consumer<String> starter = Z.fuse(regret).absorb(nono);
 
         // End result looks like an innocent String -> String function...
-        Function<String, String> regretCreator = Z.absorb(starter, getPhrase);
+        Function<String, String> regretCreator = Z
+            .fuse(starter)
+            .absorb(getPhrase);
 
         String result1 = regretCreator.apply("Oh,");
         String result2 = regretCreator.apply("... Oh... no no");

@@ -24,11 +24,7 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblFn() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, doubleToString),
-                Z.fuse(addStringsAsDouble).fuse(doubleToString),
-                Z.fuse(addStringsAsDouble).fusing(doubleToString)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(doubleToString))
             .forEach(
                 fusion -> {
                     assertEquals("3.0", fusion.apply("1.0").apply("2.0"));
@@ -39,11 +35,7 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblToInt() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, doubleToInt),
-                Z.fuse(addStringsAsDouble).fuse(doubleToInt),
-                Z.fuse(addStringsAsDouble).fusing(doubleToInt)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(doubleToInt))
             .forEach(
                 fusion -> {
                     assertEquals(3, fusion.apply("1.2").applyAsInt("2.3"));
@@ -54,11 +46,7 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblToLong() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, doubleToLong),
-                Z.fuse(addStringsAsDouble).fuse(doubleToLong),
-                Z.fuse(addStringsAsDouble).fusing(doubleToLong)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(doubleToLong))
             .forEach(
                 fusion -> {
                     assertEquals(10L, fusion.apply("4.5").applyAsLong("5.6"));
@@ -69,11 +57,7 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblPred() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, isDoubleOne),
-                Z.fuse(addStringsAsDouble).fuse(isDoubleOne),
-                Z.fuse(addStringsAsDouble).fusing(isDoubleOne)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(isDoubleOne))
             .forEach(
                 fusion -> {
                     assertTrue(fusion.apply("0.5").test("0.5"));
@@ -86,11 +70,7 @@ public class ToDoubleBiFunctionFusionTests {
     void toDblBifn_to_dblCns() {
         synchronized (consumedDoubleA) {
             Stream
-                .of(
-                    Z.fuse(addStringsAsDouble, saveDoubleA),
-                    Z.fuse(addStringsAsDouble).fuse(saveDoubleA),
-                    Z.fuse(addStringsAsDouble).fusing(saveDoubleA)
-                )
+                .of(Z.fuse(addStringsAsDouble).fuse(saveDoubleA))
                 .forEach(
                     fusion -> {
                         consumedDoubleA = 0.0;
@@ -106,11 +86,7 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblUnop() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, addOneToDouble),
-                Z.fuse(addStringsAsDouble).fuse(addOneToDouble),
-                Z.fuse(addStringsAsDouble).fusing(addOneToDouble)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(addOneToDouble))
             .forEach(
                 fusion -> {
                     assertEquals(7.5, fusion.apply("0.5").applyAsDouble("6.0"));
@@ -121,27 +97,13 @@ public class ToDoubleBiFunctionFusionTests {
     @Test
     void toDblBifn_to_dblBiop() {
         Stream
-            .of(
-                Z.fuse(addStringsAsDouble, addDoubles),
-                Z.fuse(addStringsAsDouble).fuse(addDoubles)
-            )
+            .of(Z.fuse(addStringsAsDouble).fuse(addDoubles))
             .forEach(
                 fusion -> {
                     assertEquals(
                         4.0,
                         fusion.apply("0.5").apply("1.5").applyAsDouble(2.0)
                     );
-                }
-            );
-
-        Stream
-            .of(
-                Z.fuse(addStringsAsDouble).fuse(addDoubles, 2.0),
-                Z.fuse(addStringsAsDouble).fusing(addDoubles, 2.0)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(4.0, fusion.apply("0.5").applyAsDouble("1.5"));
                 }
             );
     }

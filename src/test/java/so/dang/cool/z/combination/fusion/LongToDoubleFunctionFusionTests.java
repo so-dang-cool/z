@@ -21,11 +21,7 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblFn() {
         Stream
-            .of(
-                Z.fuse(longToDouble, doubleToString),
-                Z.fuse(longToDouble).fuse(doubleToString),
-                Z.fuse(longToDouble).fusing(doubleToString)
-            )
+            .of(Z.fuse(longToDouble).fuse(doubleToString))
             .forEach(
                 fusion -> {
                     assertEquals("1.0", fusion.apply(1L));
@@ -36,11 +32,7 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblToInt() {
         Stream
-            .of(
-                Z.fuse(longToDouble, doubleToInt),
-                Z.fuse(longToDouble).fuse(doubleToInt),
-                Z.fuse(longToDouble).fusing(doubleToInt)
-            )
+            .of(Z.fuse(longToDouble).fuse(doubleToInt))
             .forEach(
                 fusion -> {
                     assertEquals(2, fusion.applyAsInt(2L));
@@ -51,11 +43,7 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblToLong() {
         Stream
-            .of(
-                Z.fuse(longToDouble, doubleToLong),
-                Z.fuse(longToDouble).fuse(doubleToLong),
-                Z.fuse(longToDouble).fusing(doubleToLong)
-            )
+            .of(Z.fuse(longToDouble).fuse(doubleToLong))
             .forEach(
                 fusion -> {
                     assertEquals(3L, fusion.applyAsLong(3L));
@@ -66,11 +54,7 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblPred() {
         Stream
-            .of(
-                Z.fuse(longToDouble, isDoubleOne),
-                Z.fuse(longToDouble).fuse(isDoubleOne),
-                Z.fuse(longToDouble).fusing(isDoubleOne)
-            )
+            .of(Z.fuse(longToDouble).fuse(isDoubleOne))
             .forEach(
                 fusion -> {
                     assertTrue(fusion.test(1L));
@@ -83,11 +67,7 @@ public class LongToDoubleFunctionFusionTests {
     void longToDbl_to_dblCns() {
         synchronized (consumedDoubleA) {
             Stream
-                .of(
-                    Z.fuse(longToDouble, saveDoubleA),
-                    Z.fuse(longToDouble).fuse(saveDoubleA),
-                    Z.fuse(longToDouble).fusing(saveDoubleA)
-                )
+                .of(Z.fuse(longToDouble).fuse(saveDoubleA))
                 .forEach(
                     fusion -> {
                         consumedDoubleA = 0.0;
@@ -103,11 +83,7 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblUnop() {
         Stream
-            .of(
-                Z.fuse(longToDouble, addOneToDouble),
-                Z.fuse(longToDouble).fuse(addOneToDouble),
-                Z.fuse(longToDouble).fusing(addOneToDouble)
-            )
+            .of(Z.fuse(longToDouble).fuse(addOneToDouble))
             .forEach(
                 fusion -> {
                     assertEquals(2.0, fusion.applyAsDouble(1L));
@@ -118,24 +94,10 @@ public class LongToDoubleFunctionFusionTests {
     @Test
     void longToDbl_to_dblBiop() {
         Stream
-            .of(
-                Z.fuse(longToDouble, addDoubles),
-                Z.fuse(longToDouble).fuse(addDoubles)
-            )
+            .of(Z.fuse(longToDouble).fuse(addDoubles))
             .forEach(
                 fusion -> {
                     assertEquals(1.5, fusion.apply(1L).applyAsDouble(0.5));
-                }
-            );
-
-        Stream
-            .of(
-                Z.fuse(longToDouble).fuse(addDoubles, 0.5),
-                Z.fuse(longToDouble).fusing(addDoubles, 0.5)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1.5, fusion.applyAsDouble(1L));
                 }
             );
     }

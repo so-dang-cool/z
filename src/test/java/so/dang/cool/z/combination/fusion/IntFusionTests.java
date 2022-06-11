@@ -17,27 +17,22 @@ public class IntFusionTests {
 
     @Test
     void int_to_intFn() {
-        assertEquals("2", Z.fuse(2, intToString).get());
-    }
-
-    @Test
-    void int_to_intFn_deep() {
         assertEquals("2", Z.with(2).fuse(intToString).get());
     }
 
     @Test
     void int_to_intToDbl() {
-        assertEquals(2.0, Z.fuse(2, intToDouble).getAsDouble());
+        assertEquals(2.0, Z.with(2).fuse(intToDouble).getAsDouble());
     }
 
     @Test
     void int_to_intToLong() {
-        assertEquals(2L, Z.fuse(2, intToLong).getAsLong());
+        assertEquals(2L, Z.with(2).fuse(intToLong).getAsLong());
     }
 
     @Test
     void int_to_intPred() {
-        assertTrue(Z.fuse(2, isIntTwo).getAsBoolean());
+        assertTrue(Z.with(2).fuse(isIntTwo).getAsBoolean());
     }
 
     @Evil
@@ -46,7 +41,7 @@ public class IntFusionTests {
         synchronized (consumedIntA) {
             consumedIntA = 0;
 
-            Z.fuse(2, saveIntA).run();
+            Z.with(2).fuse(saveIntA).run();
 
             assertEquals(suppliedInt, consumedIntA);
         }
@@ -54,11 +49,11 @@ public class IntFusionTests {
 
     @Test
     void int_to_intUnop() {
-        assertEquals(4, Z.fuse(2, addTwoToInt).getAsInt());
+        assertEquals(4, Z.with(2).fuse(addTwoToInt).getAsInt());
     }
 
     @Test
     void int_to_intBiop() {
-        assertEquals(4, Z.fuse(2, addInts).applyAsInt(2));
+        assertEquals(4, Z.with(2).fuse(addInts).applyAsInt(2));
     }
 }

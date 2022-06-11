@@ -7,12 +7,8 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
 import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
 import so.dang.cool.z.internal.combination.Combine.WithIntConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithIntFunction;
 import so.dang.cool.z.internal.combination.Combine.WithIntPredicate;
@@ -25,128 +21,82 @@ interface IntToDoubleFunctionCombos {
 
     /* IntToDoubleFunction -> DoubleFunction<A> */
 
-    public default <A> IntFunction<A> fuseDoubleFunction(
+    public default <A> WithIntFunction<A> fuseDoubleFunction(
         DoubleFunction<A> next
     ) {
-        return (int i) -> next.apply(resolve().applyAsDouble(i));
+        return WithIntFunction.of(
+            (int i) -> next.apply(resolve().applyAsDouble(i))
+        );
     }
 
-    public default <A> IntFunction<A> fuse(DoubleFunction<A> next) {
+    public default <A> WithIntFunction<A> fuse(DoubleFunction<A> next) {
         return fuseDoubleFunction(next);
-    }
-
-    public default <A> WithIntFunction<A> fusingDoubleFunction(
-        DoubleFunction<A> next
-    ) {
-        return WithIntFunction.of(fuseDoubleFunction(next));
-    }
-
-    public default <A> WithIntFunction<A> fusing(DoubleFunction<A> next) {
-        return fusingDoubleFunction(next);
     }
 
     /* IntToDoubleFunction -> DoubleToIntFunction */
 
-    public default IntUnaryOperator fuseDoubleToIntFunction(
+    public default WithIntUnaryOperator fuseDoubleToIntFunction(
         DoubleToIntFunction next
     ) {
-        return (int i) -> next.applyAsInt(resolve().applyAsDouble(i));
+        return WithIntUnaryOperator.of(
+            (int i) -> next.applyAsInt(resolve().applyAsDouble(i))
+        );
     }
 
-    public default IntUnaryOperator fuse(DoubleToIntFunction next) {
+    public default WithIntUnaryOperator fuse(DoubleToIntFunction next) {
         return fuseDoubleToIntFunction(next);
-    }
-
-    public default WithIntUnaryOperator fusingDoubleToIntFunction(
-        DoubleToIntFunction next
-    ) {
-        return WithIntUnaryOperator.of(fuseDoubleToIntFunction(next));
-    }
-
-    public default WithIntUnaryOperator fusing(DoubleToIntFunction next) {
-        return fusingDoubleToIntFunction(next);
     }
 
     /* IntToDoubleFunction -> DoubleToLongFunction */
 
-    public default IntToLongFunction fuseDoubleToLongFunction(
+    public default WithIntToLongFunction fuseDoubleToLongFunction(
         DoubleToLongFunction next
     ) {
-        return (int i) -> next.applyAsLong(resolve().applyAsDouble(i));
+        return WithIntToLongFunction.of(
+            (int i) -> next.applyAsLong(resolve().applyAsDouble(i))
+        );
     }
 
-    public default IntToLongFunction fuse(DoubleToLongFunction next) {
+    public default WithIntToLongFunction fuse(DoubleToLongFunction next) {
         return fuseDoubleToLongFunction(next);
-    }
-
-    public default WithIntToLongFunction fusingDoubleToLongFunction(
-        DoubleToLongFunction next
-    ) {
-        return WithIntToLongFunction.of(fuseDoubleToLongFunction(next));
-    }
-
-    public default WithIntToLongFunction fusing(DoubleToLongFunction next) {
-        return fusingDoubleToLongFunction(next);
     }
 
     /* IntToDoubleFunction -> DoublePredicate */
 
-    public default IntPredicate fuseDoublePredicate(DoublePredicate next) {
-        return (int i) -> next.test(resolve().applyAsDouble(i));
+    public default WithIntPredicate fuseDoublePredicate(DoublePredicate next) {
+        return WithIntPredicate.of(
+            (int i) -> next.test(resolve().applyAsDouble(i))
+        );
     }
 
-    public default IntPredicate fuse(DoublePredicate next) {
+    public default WithIntPredicate fuse(DoublePredicate next) {
         return fuseDoublePredicate(next);
-    }
-
-    public default WithIntPredicate fusingDoublePredicate(
-        DoublePredicate next
-    ) {
-        return WithIntPredicate.of(fuseDoublePredicate(next));
-    }
-
-    public default WithIntPredicate fusing(DoublePredicate next) {
-        return fusingDoublePredicate(next);
     }
 
     /* IntToDoubleFunction -> DoubleConsumer */
 
-    public default IntConsumer fuseDoubleConsumer(DoubleConsumer next) {
-        return (int i) -> next.accept(resolve().applyAsDouble(i));
+    public default WithIntConsumer fuseDoubleConsumer(DoubleConsumer next) {
+        return WithIntConsumer.of(
+            (int i) -> next.accept(resolve().applyAsDouble(i))
+        );
     }
 
-    public default IntConsumer fuse(DoubleConsumer next) {
+    public default WithIntConsumer fuse(DoubleConsumer next) {
         return fuseDoubleConsumer(next);
-    }
-
-    public default WithIntConsumer fusingDoubleConsumer(DoubleConsumer next) {
-        return WithIntConsumer.of(fuseDoubleConsumer(next));
-    }
-
-    public default WithIntConsumer fusing(DoubleConsumer next) {
-        return fusingDoubleConsumer(next);
     }
 
     /* IntToDoubleFunction -> DoubleUnaryOperator */
 
-    public default IntToDoubleFunction fuseDoubleUnaryOperator(
+    public default WithIntToDoubleFunction fuseDoubleUnaryOperator(
         DoubleUnaryOperator next
     ) {
-        return (int i) -> next.applyAsDouble(resolve().applyAsDouble(i));
+        return WithIntToDoubleFunction.of(
+            (int i) -> next.applyAsDouble(resolve().applyAsDouble(i))
+        );
     }
 
-    public default IntToDoubleFunction fuse(DoubleUnaryOperator next) {
+    public default WithIntToDoubleFunction fuse(DoubleUnaryOperator next) {
         return fuseDoubleUnaryOperator(next);
-    }
-
-    public default WithIntToDoubleFunction fusingDoubleUnaryOperator(
-        DoubleUnaryOperator next
-    ) {
-        return WithIntToDoubleFunction.of(fuseDoubleUnaryOperator(next));
-    }
-
-    public default WithIntToDoubleFunction fusing(DoubleUnaryOperator next) {
-        return fusingDoubleUnaryOperator(next);
     }
 
     /* IntToDoubleFunction -> DoubleBinaryOperator */
@@ -162,39 +112,5 @@ interface IntToDoubleFunctionCombos {
         DoubleBinaryOperator next
     ) {
         return fuseDoubleBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingDoubleBinaryOperator(DoubleBinaryOperator next) { ... }
-
-    public default IntToDoubleFunction fuseDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return (int i) ->
-            next.applyAsDouble(resolve().applyAsDouble(i), secondArg);
-    }
-
-    public default IntToDoubleFunction fuse(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fuseDoubleBinaryOperator(next, secondArg);
-    }
-
-    public default WithIntToDoubleFunction fusingDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return WithIntToDoubleFunction.of(
-            fuseDoubleBinaryOperator(next, secondArg)
-        );
-    }
-
-    public default WithIntToDoubleFunction fusing(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fusingDoubleBinaryOperator(next, secondArg);
     }
 }

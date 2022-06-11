@@ -20,17 +20,14 @@ public class UnaryOperatorFusionTests {
     void unop_deep() {
         assertEquals(
             "is it me you're looking for?",
-            Z.fuse(addQuestionMark).apply("is it me you're looking for")
+            Z
+                .fuseUnaryOperator(addQuestionMark)
+                .apply("is it me you're looking for")
         );
     }
 
     @Test
     void unop_to_fn() {
-        assertEquals("hello?", Z.fuse(addQuestionMark, toLower).apply("HeLlO"));
-    }
-
-    @Test
-    void unop_to_fn_deep() {
         assertEquals(
             "hello?",
             Z.fuse(addQuestionMark).fuse(toLower).apply("HeLlO")
@@ -38,23 +35,7 @@ public class UnaryOperatorFusionTests {
     }
 
     @Test
-    void unop_to_fn_deeper() {
-        assertEquals(
-            "hello?",
-            Z.fuse(addQuestionMark).fusing(toLower).apply("HeLlO")
-        );
-    }
-
-    @Test
     void unop_to_bifn() {
-        assertEquals(
-            "hello?!",
-            Z.fuse(addQuestionMark, concat).apply("hello").apply("!")
-        );
-    }
-
-    @Test
-    void unop_to_bifn_deep() {
         assertEquals(
             "hello?!",
             Z.fuse(addQuestionMark).fuse(concat).apply("hello").apply("!")
@@ -62,18 +43,10 @@ public class UnaryOperatorFusionTests {
     }
 
     @Test
-    void unop_to_bifn_deeper() {
-        assertEquals(
-            "hello?!",
-            Z.fuse(addQuestionMark).fusing(concat).apply("hello").apply("!")
-        );
-    }
-
-    @Test
     void unop_to_toDblFn() {
         assertEquals(
             1.0,
-            Z.fuse(addTrailingZero, stringToDouble).applyAsDouble("1.")
+            Z.fuse(addTrailingZero).fuse(stringToDouble).applyAsDouble("1.")
         );
     }
 
@@ -82,7 +55,8 @@ public class UnaryOperatorFusionTests {
         assertEquals(
             3.0,
             Z
-                .fuse(addTrailingZero, addStringsAsDouble)
+                .fuse(addTrailingZero)
+                .fuse(addStringsAsDouble)
                 .apply("1.")
                 .applyAsDouble("2.0")
         );
@@ -90,14 +64,21 @@ public class UnaryOperatorFusionTests {
 
     @Test
     void unop_to_toIntFn() {
-        assertEquals(10, Z.fuse(addTrailingZero, stringToInt).applyAsInt("1"));
+        assertEquals(
+            10,
+            Z.fuse(addTrailingZero).fuse(stringToInt).applyAsInt("1")
+        );
     }
 
     @Test
     void unop_to_toIntBifn() {
         assertEquals(
             12,
-            Z.fuse(addTrailingZero, addStringsAsInt).apply("1").applyAsInt("2")
+            Z
+                .fuse(addTrailingZero)
+                .fuse(addStringsAsInt)
+                .apply("1")
+                .applyAsInt("2")
         );
     }
 
@@ -105,7 +86,7 @@ public class UnaryOperatorFusionTests {
     void unop_to_toLongFn() {
         assertEquals(
             10L,
-            Z.fuse(addTrailingZero, stringToLong).applyAsLong("1")
+            Z.fuse(addTrailingZero).fuse(stringToLong).applyAsLong("1")
         );
     }
 
@@ -114,7 +95,8 @@ public class UnaryOperatorFusionTests {
         assertEquals(
             12L,
             Z
-                .fuse(addTrailingZero, addStringsAsLong)
+                .fuse(addTrailingZero)
+                .fuse(addStringsAsLong)
                 .apply("1")
                 .applyAsLong("2")
         );
@@ -122,13 +104,13 @@ public class UnaryOperatorFusionTests {
 
     @Test
     void unop_to_pred() {
-        assertFalse(Z.fuse(addQuestionMark, isEmpty).test(""));
+        assertFalse(Z.fuse(addQuestionMark).fuse(isEmpty).test(""));
     }
 
     @Test
     void unop_to_bipred() {
         assertTrue(
-            Z.fuse(addQuestionMark, startsWith).apply("hello").test("hell")
+            Z.fuse(addQuestionMark).fuse(startsWith).apply("hello").test("hell")
         );
     }
 
@@ -138,7 +120,7 @@ public class UnaryOperatorFusionTests {
         synchronized (consumedStringA) {
             consumedStringA = "";
 
-            Z.fuse(addQuestionMark, saveStringA).accept("hello");
+            Z.fuse(addQuestionMark).fuse(saveStringA).accept("hello");
 
             assertEquals("hello?", consumedStringA);
         }
@@ -153,7 +135,8 @@ public class UnaryOperatorFusionTests {
                 consumedStringC = "";
 
                 Z
-                    .fuse(addQuestionMark, saveStringsBandC)
+                    .fuse(addQuestionMark)
+                    .fuse(saveStringsBandC)
                     .apply("greetings")
                     .accept("earthlings");
 
@@ -172,7 +155,8 @@ public class UnaryOperatorFusionTests {
                 consumedDoubleB = 0.0;
 
                 Z
-                    .fuse(addQuestionMark, saveStringDDoubleB)
+                    .fuse(addQuestionMark)
+                    .fuse(saveStringDDoubleB)
                     .apply("five")
                     .accept(5.0);
 
@@ -190,7 +174,11 @@ public class UnaryOperatorFusionTests {
                 consumedStringE = "";
                 consumedIntB = 0;
 
-                Z.fuse(addQuestionMark, saveStringEIntB).apply("six").accept(6);
+                Z
+                    .fuse(addQuestionMark)
+                    .fuse(saveStringEIntB)
+                    .apply("six")
+                    .accept(6);
 
                 assertEquals("six?", consumedStringE);
                 assertEquals(6, consumedIntB);
@@ -207,7 +195,8 @@ public class UnaryOperatorFusionTests {
                 consumedLongB = 0L;
 
                 Z
-                    .fuse(addQuestionMark, saveStringFLongB)
+                    .fuse(addQuestionMark)
+                    .fuse(saveStringFLongB)
                     .apply("seven")
                     .accept(7L);
 
@@ -221,7 +210,7 @@ public class UnaryOperatorFusionTests {
     void unop_to_unop() {
         assertEquals(
             "goodbye??",
-            Z.fuse(addQuestionMark, addQuestionMark).apply("goodbye")
+            Z.fuse(addQuestionMark).fuse(addQuestionMark).apply("goodbye")
         );
     }
 
@@ -229,7 +218,11 @@ public class UnaryOperatorFusionTests {
     void unop_to_biop() {
         assertEquals(
             "same-ish",
-            Z.fuse(addQuestionMark, relation).apply("yo man").apply("YO MAN?")
+            Z
+                .fuse(addQuestionMark)
+                .fuse(relation)
+                .apply("yo man")
+                .apply("YO MAN?")
         );
     }
 }

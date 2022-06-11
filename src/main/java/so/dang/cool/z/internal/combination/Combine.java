@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
-import java.util.function.BinaryOperator;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
@@ -43,7 +42,6 @@ import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
-import java.util.function.UnaryOperator;
 import so.dang.cool.z.annotation.Evil;
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
@@ -1219,56 +1217,6 @@ public abstract class Combine<A, Fn> {
         @Override
         public void run() {
             initial.run();
-        }
-    }
-
-    public static final class WithUnaryOperator<A>
-        extends Combine<A, UnaryOperator<A>>
-        implements UnaryOperatorCombos<A>, UnaryOperator<A> {
-
-        private final transient UnaryOperator<A> initial;
-
-        private WithUnaryOperator(UnaryOperator<A> initial) {
-            this.initial = Objects.requireNonNull(initial);
-        }
-
-        public static <A> WithUnaryOperator<A> of(UnaryOperator<A> initial) {
-            return new WithUnaryOperator<>(initial);
-        }
-
-        @Override
-        public UnaryOperator<A> resolve() {
-            return initial;
-        }
-
-        @Override
-        public A apply(A a) {
-            return initial.apply(a);
-        }
-    }
-
-    public static final class WithBinaryOperator<A>
-        extends Combine<A, Function<A, UnaryOperator<A>>>
-        implements BinaryOperatorCombos<A>, Function<A, UnaryOperator<A>> {
-
-        private final transient BinaryOperator<A> initial;
-
-        private WithBinaryOperator(BinaryOperator<A> initial) {
-            this.initial = Objects.requireNonNull(initial);
-        }
-
-        public static <A> WithBinaryOperator<A> of(BinaryOperator<A> initial) {
-            return new WithBinaryOperator<>(initial);
-        }
-
-        @Override
-        public Function<A, UnaryOperator<A>> resolve() {
-            return (A a1) -> (A a2) -> initial.apply(a1, a2);
-        }
-
-        @Override
-        public UnaryOperator<A> apply(A a1) {
-            return (A a2) -> initial.apply(a1, a2);
         }
     }
 

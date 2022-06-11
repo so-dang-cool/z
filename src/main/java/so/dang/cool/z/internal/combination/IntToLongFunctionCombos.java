@@ -1,11 +1,7 @@
 package so.dang.cool.z.internal.combination;
 
-import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
@@ -25,124 +21,82 @@ interface IntToLongFunctionCombos {
 
     /* IntToLongFunction -> LongFunction<A> */
 
-    public default <A> IntFunction<A> fuseLongFunction(LongFunction<A> next) {
-        return (int i) -> next.apply(resolve().applyAsLong(i));
-    }
-
-    public default <A> IntFunction<A> fuse(LongFunction<A> next) {
-        return fuseLongFunction(next);
-    }
-
-    public default <A> WithIntFunction<A> fusingLongFunction(
+    public default <A> WithIntFunction<A> fuseLongFunction(
         LongFunction<A> next
     ) {
-        return WithIntFunction.of(fuseLongFunction(next));
+        return WithIntFunction.of(
+            (int i) -> next.apply(resolve().applyAsLong(i))
+        );
     }
 
-    public default <A> WithIntFunction<A> fusing(LongFunction<A> next) {
-        return fusingLongFunction(next);
+    public default <A> WithIntFunction<A> fuse(LongFunction<A> next) {
+        return fuseLongFunction(next);
     }
 
     /* IntToLongFunction -> LongToDoubleFunction */
 
-    public default IntToDoubleFunction fuseLongToDoubleFunction(
+    public default WithIntToDoubleFunction fuseLongToDoubleFunction(
         LongToDoubleFunction next
     ) {
-        return (int i) -> next.applyAsDouble(resolve().applyAsLong(i));
+        return WithIntToDoubleFunction.of(
+            (int i) -> next.applyAsDouble(resolve().applyAsLong(i))
+        );
     }
 
-    public default IntToDoubleFunction fuse(LongToDoubleFunction next) {
+    public default WithIntToDoubleFunction fuse(LongToDoubleFunction next) {
         return fuseLongToDoubleFunction(next);
-    }
-
-    public default WithIntToDoubleFunction fusingLongToDoubleFunction(
-        LongToDoubleFunction next
-    ) {
-        return WithIntToDoubleFunction.of(fuseLongToDoubleFunction(next));
-    }
-
-    public default WithIntToDoubleFunction fusing(LongToDoubleFunction next) {
-        return fusingLongToDoubleFunction(next);
     }
 
     /* IntToLongFunction -> LongToIntFunction */
 
-    public default IntUnaryOperator fuseLongToIntFunction(
+    public default WithIntUnaryOperator fuseLongToIntFunction(
         LongToIntFunction next
     ) {
-        return (int i) -> next.applyAsInt(resolve().applyAsLong(i));
+        return WithIntUnaryOperator.of(
+            (int i) -> next.applyAsInt(resolve().applyAsLong(i))
+        );
     }
 
-    public default IntUnaryOperator fuse(LongToIntFunction next) {
+    public default WithIntUnaryOperator fuse(LongToIntFunction next) {
         return fuseLongToIntFunction(next);
-    }
-
-    public default WithIntUnaryOperator fusingLongToIntFunction(
-        LongToIntFunction next
-    ) {
-        return WithIntUnaryOperator.of(fuseLongToIntFunction(next));
-    }
-
-    public default WithIntUnaryOperator fusing(LongToIntFunction next) {
-        return fusingLongToIntFunction(next);
     }
 
     /* IntToLongFunction -> LongPredicate */
 
-    public default IntPredicate fuseLongPredicate(LongPredicate next) {
-        return (int i) -> next.test(resolve().applyAsLong(i));
+    public default WithIntPredicate fuseLongPredicate(LongPredicate next) {
+        return WithIntPredicate.of(
+            (int i) -> next.test(resolve().applyAsLong(i))
+        );
     }
 
-    public default IntPredicate fuse(LongPredicate next) {
+    public default WithIntPredicate fuse(LongPredicate next) {
         return fuseLongPredicate(next);
-    }
-
-    public default WithIntPredicate fusingLongPredicate(LongPredicate next) {
-        return WithIntPredicate.of(fuseLongPredicate(next));
-    }
-
-    public default WithIntPredicate fusing(LongPredicate next) {
-        return fusingLongPredicate(next);
     }
 
     /* IntToLongFunction -> LongConsumer */
 
-    public default IntConsumer fuseLongConsumer(LongConsumer next) {
-        return (int i) -> next.accept(resolve().applyAsLong(i));
+    public default WithIntConsumer fuseLongConsumer(LongConsumer next) {
+        return WithIntConsumer.of(
+            (int i) -> next.accept(resolve().applyAsLong(i))
+        );
     }
 
-    public default IntConsumer fuse(LongConsumer next) {
+    public default WithIntConsumer fuse(LongConsumer next) {
         return fuseLongConsumer(next);
-    }
-
-    public default WithIntConsumer fusingLongConsumer(LongConsumer next) {
-        return WithIntConsumer.of(fuseLongConsumer(next));
-    }
-
-    public default WithIntConsumer fusing(LongConsumer next) {
-        return fusingLongConsumer(next);
     }
 
     /* IntToLongFunction -> LongUnaryOperator */
 
-    public default IntToLongFunction fuseLongUnaryOperator(
+    public default WithIntToLongFunction fuseLongUnaryOperator(
         LongUnaryOperator next
     ) {
-        return (int i) -> next.applyAsLong(resolve().applyAsLong(i));
+        return WithIntToLongFunction.of(
+            (int i) -> next.applyAsLong(resolve().applyAsLong(i))
+        );
     }
 
-    public default IntToLongFunction fuse(LongUnaryOperator next) {
+    public default WithIntToLongFunction fuse(LongUnaryOperator next) {
         return fuseLongUnaryOperator(next);
-    }
-
-    public default WithIntToLongFunction fusingLongUnaryOperator(
-        LongUnaryOperator next
-    ) {
-        return WithIntToLongFunction.of(fuseLongUnaryOperator(next));
-    }
-
-    public default WithIntToLongFunction fusing(LongUnaryOperator next) {
-        return fusingLongUnaryOperator(next);
     }
 
     /* IntToLongFunction -> LongBinaryOperator */
@@ -158,38 +112,5 @@ interface IntToLongFunctionCombos {
         LongBinaryOperator next
     ) {
         return fuseLongBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingLongBinaryOperator(LongBinaryOperator next) { ... }
-
-    public default IntToLongFunction fuseLongBinaryOperator(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return (int i) -> next.applyAsLong(resolve().applyAsLong(i), secondArg);
-    }
-
-    public default IntToLongFunction fuse(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return fuseLongBinaryOperator(next, secondArg);
-    }
-
-    public default WithIntToLongFunction fusingLongBinaryOperator(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return WithIntToLongFunction.of(
-            fuseLongBinaryOperator(next, secondArg)
-        );
-    }
-
-    public default WithIntToLongFunction fusing(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return fusingLongBinaryOperator(next, secondArg);
     }
 }

@@ -17,27 +17,22 @@ public class DoubleFusionTests {
 
     @Test
     void double_to_dblFn() {
-        assertEquals("1.0", Z.fuse(1.0, doubleToString).get());
-    }
-
-    @Test
-    void double_to_dblFn_deep() {
         assertEquals("1.0", Z.with(1.0).fuse(doubleToString).get());
     }
 
     @Test
     void double_to_dblToInt() {
-        assertEquals(1, Z.fuse(1.0, doubleToInt).getAsInt());
+        assertEquals(1, Z.with(1.0).fuse(doubleToInt).getAsInt());
     }
 
     @Test
     void double_to_dblToLong() {
-        assertEquals(1L, Z.fuse(1.0, doubleToLong).getAsLong());
+        assertEquals(1L, Z.with(1.0).fuse(doubleToLong).getAsLong());
     }
 
     @Test
     void double_to_dblPred() {
-        assertTrue(Z.fuse(1.0, isDoubleOne).getAsBoolean());
+        assertTrue(Z.with(1.0).fuse(isDoubleOne).getAsBoolean());
     }
 
     @Evil
@@ -46,7 +41,7 @@ public class DoubleFusionTests {
         synchronized (consumedDoubleA) {
             consumedDoubleA = 0.0;
 
-            Z.fuse(1.0, saveDoubleA).run();
+            Z.with(1.0).fuse(saveDoubleA).run();
 
             assertEquals(suppliedDouble, consumedDoubleA);
         }
@@ -54,11 +49,11 @@ public class DoubleFusionTests {
 
     @Test
     void double_to_dblUnop() {
-        assertEquals(2.0, Z.fuse(1.0, addOneToDouble).getAsDouble());
+        assertEquals(2.0, Z.with(1.0).fuse(addOneToDouble).getAsDouble());
     }
 
     @Test
     void double_to_dblBiop() {
-        assertEquals(3.0, Z.fuse(1.0, addDoubles).applyAsDouble(2.0));
+        assertEquals(3.0, Z.with(1.0).fuse(addDoubles).applyAsDouble(2.0));
     }
 }

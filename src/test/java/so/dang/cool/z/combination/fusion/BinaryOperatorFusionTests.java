@@ -18,38 +18,17 @@ public class BinaryOperatorFusionTests {
 
     @Test
     void biop_deep() {
-        assertEquals("same-ish", Z.fuse(relation).apply("hi").apply("HI"));
+        assertEquals(
+            "same-ish",
+            Z.fuseBinaryOperator(relation).apply("hi").apply("HI")
+        );
     }
 
     @Test
     void biop_to_fn() {
         assertEquals(
             "same-ish",
-            Z.fuse(relation, trim).apply("hey").apply("HEY")
-        );
-    }
-
-    @Test
-    void biop_to_fn_deep() {
-        assertEquals(
-            "same-ish",
             Z.fuse(relation).fuse(trim).apply("hey").apply("HEY")
-        );
-    }
-
-    @Test
-    void biop_to_fn_deeper() {
-        assertEquals(
-            "same-ish",
-            Z.fuse(relation).fusing(trim).apply("hey").apply("HEY")
-        );
-    }
-
-    @Test
-    void biop_to_bifn() {
-        assertEquals(
-            "same-ish-ness",
-            Z.fuse(relation, concat).apply("hey").apply("HEY").apply("-ness")
         );
     }
 
@@ -58,7 +37,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             15.0,
             Z
-                .fuse(concatAndAddTrailingZero, stringToDouble)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(stringToDouble)
                 .apply("1")
                 .applyAsDouble("5.")
         );
@@ -69,7 +49,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             12.0,
             Z
-                .fuse(concatAndAddTrailingZero, addStringsAsDouble)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(addStringsAsDouble)
                 .apply("1")
                 .apply("0.")
                 .applyAsDouble("2.0")
@@ -81,7 +62,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             120,
             Z
-                .fuse(concatAndAddTrailingZero, stringToInt)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(stringToInt)
                 .apply("1")
                 .applyAsInt("2")
         );
@@ -92,7 +74,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             237,
             Z
-                .fuse(concatAndAddTrailingZero, addStringsAsInt)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(addStringsAsInt)
                 .apply("2")
                 .apply("3")
                 .applyAsInt("7")
@@ -104,7 +87,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             340L,
             Z
-                .fuse(concatAndAddTrailingZero, stringToLong)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(stringToLong)
                 .apply("3")
                 .applyAsLong("4")
         );
@@ -115,7 +99,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             346L,
             Z
-                .fuse(concatAndAddTrailingZero, addStringsAsLong)
+                .fuse(concatAndAddTrailingZero)
+                .fuse(addStringsAsLong)
                 .apply("3")
                 .apply("4")
                 .applyAsLong("6")
@@ -124,13 +109,18 @@ public class BinaryOperatorFusionTests {
 
     @Test
     void biop_to_pred() {
-        assertFalse(Z.fuse(relation, isEmpty).apply("hey").test("HEY"));
+        assertFalse(Z.fuse(relation).fuse(isEmpty).apply("hey").test("HEY"));
     }
 
     @Test
     void biop_to_bipred() {
         assertTrue(
-            Z.fuse(relation, startsWith).apply("hey").apply("HEY").test("same")
+            Z
+                .fuse(relation)
+                .fuse(startsWith)
+                .apply("hey")
+                .apply("HEY")
+                .test("same")
         );
     }
 
@@ -140,7 +130,7 @@ public class BinaryOperatorFusionTests {
         synchronized (consumedStringA) {
             consumedStringA = "";
 
-            Z.fuse(relation, saveStringA).apply("hey").accept("HEY");
+            Z.fuse(relation).fuse(saveStringA).apply("hey").accept("HEY");
 
             assertEquals("same-ish", consumedStringA);
         }
@@ -155,7 +145,8 @@ public class BinaryOperatorFusionTests {
                 consumedStringC = "";
 
                 Z
-                    .fuse(relation, saveStringsBandC)
+                    .fuse(relation)
+                    .fuse(saveStringsBandC)
                     .apply("hey")
                     .apply("HEY")
                     .accept("mother");
@@ -175,7 +166,8 @@ public class BinaryOperatorFusionTests {
                 consumedDoubleB = 0.0;
 
                 Z
-                    .fuse(relation, saveStringDDoubleB)
+                    .fuse(relation)
+                    .fuse(saveStringDDoubleB)
                     .apply("hey")
                     .apply("HEY")
                     .accept(0.5);
@@ -195,7 +187,8 @@ public class BinaryOperatorFusionTests {
                 consumedIntB = 0;
 
                 Z
-                    .fuse(relation, saveStringEIntB)
+                    .fuse(relation)
+                    .fuse(saveStringEIntB)
                     .apply("hey")
                     .apply("HEY")
                     .accept(111);
@@ -215,7 +208,8 @@ public class BinaryOperatorFusionTests {
                 consumedLongB = 0L;
 
                 Z
-                    .fuse(relation, saveStringFLongB)
+                    .fuse(relation)
+                    .fuse(saveStringFLongB)
                     .apply("hey")
                     .apply("HEY")
                     .accept(22L);
@@ -230,7 +224,7 @@ public class BinaryOperatorFusionTests {
     void biop_to_unop() {
         assertEquals(
             "same-ish?",
-            Z.fuse(relation, addQuestionMark).apply("hey").apply("HEY")
+            Z.fuse(relation).fuse(addQuestionMark).apply("hey").apply("HEY")
         );
     }
 
@@ -239,7 +233,8 @@ public class BinaryOperatorFusionTests {
         assertEquals(
             "same-ish",
             Z
-                .fuse(relation, relation)
+                .fuse(relation)
+                .fuse(relation)
                 .apply("hey")
                 .apply("HEY")
                 .apply("SAME-ISH")

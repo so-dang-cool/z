@@ -1,11 +1,6 @@
 package so.dang.cool.z.internal.combination;
 
-import java.util.function.LongConsumer;
-import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.LongUnaryOperator;
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
 import so.dang.cool.z.function.BooleanPredicate;
@@ -24,131 +19,77 @@ interface LongPredicateCombos {
 
     /* LongPredicate -> BooleanFunction<A> */
 
-    public default <A> LongFunction<A> fuseBooleanFunction(
+    public default <A> WithLongFunction<A> fuseBooleanFunction(
         BooleanFunction<A> next
     ) {
-        return (long n) -> next.apply(resolve().test(n));
+        return WithLongFunction.of((long n) -> next.apply(resolve().test(n)));
     }
 
-    public default <A> LongFunction<A> fuse(BooleanFunction<A> next) {
+    public default <A> WithLongFunction<A> fuse(BooleanFunction<A> next) {
         return fuseBooleanFunction(next);
-    }
-
-    public default <A> WithLongFunction<A> fusingBooleanFunction(
-        BooleanFunction<A> next
-    ) {
-        return WithLongFunction.of(fuseBooleanFunction(next));
-    }
-
-    public default <A> WithLongFunction<A> fusing(BooleanFunction<A> next) {
-        return fusingBooleanFunction(next);
     }
 
     /* LongPredicate -> BooleanToDoubleFunction */
 
-    public default LongToDoubleFunction fuseBooleanToDoubleFunction(
+    public default WithLongToDoubleFunction fuseBooleanToDoubleFunction(
         BooleanToDoubleFunction next
     ) {
-        return (long n) -> next.applyAsDouble(resolve().test(n));
+        return WithLongToDoubleFunction.of(
+            (long n) -> next.applyAsDouble(resolve().test(n))
+        );
     }
 
-    public default LongToDoubleFunction fuse(BooleanToDoubleFunction next) {
+    public default WithLongToDoubleFunction fuse(BooleanToDoubleFunction next) {
         return fuseBooleanToDoubleFunction(next);
-    }
-
-    public default WithLongToDoubleFunction fusingBooleanToDoubleFunction(
-        BooleanToDoubleFunction next
-    ) {
-        return WithLongToDoubleFunction.of(fuseBooleanToDoubleFunction(next));
-    }
-
-    public default WithLongToDoubleFunction fusing(
-        BooleanToDoubleFunction next
-    ) {
-        return fusingBooleanToDoubleFunction(next);
     }
 
     /* LongPredicate -> BooleanToIntFunction */
 
-    public default LongToIntFunction fuseBooleanToIntFunction(
+    public default WithLongToIntFunction fuseBooleanToIntFunction(
         BooleanToIntFunction next
     ) {
-        return (long n) -> next.applyAsInt(resolve().test(n));
+        return WithLongToIntFunction.of(
+            (long n) -> next.applyAsInt(resolve().test(n))
+        );
     }
 
-    public default LongToIntFunction fuse(BooleanToIntFunction next) {
+    public default WithLongToIntFunction fuse(BooleanToIntFunction next) {
         return fuseBooleanToIntFunction(next);
-    }
-
-    public default WithLongToIntFunction fusingBooleanToIntFunction(
-        BooleanToIntFunction next
-    ) {
-        return WithLongToIntFunction.of(fuseBooleanToIntFunction(next));
-    }
-
-    public default WithLongToIntFunction fusing(BooleanToIntFunction next) {
-        return fusingBooleanToIntFunction(next);
     }
 
     /* LongPredicate -> BooleanToLongFunction */
 
-    public default LongUnaryOperator fuseBooleanToLongFunction(
+    public default WithLongUnaryOperator fuseBooleanToLongFunction(
         BooleanToLongFunction next
     ) {
-        return (long n) -> next.applyAsLong(resolve().test(n));
+        return WithLongUnaryOperator.of(
+            (long n) -> next.applyAsLong(resolve().test(n))
+        );
     }
 
-    public default LongUnaryOperator fuse(BooleanToLongFunction next) {
+    public default WithLongUnaryOperator fuse(BooleanToLongFunction next) {
         return fuseBooleanToLongFunction(next);
-    }
-
-    public default WithLongUnaryOperator fusingBooleanToLongFunction(
-        BooleanToLongFunction next
-    ) {
-        return WithLongUnaryOperator.of(fuseBooleanToLongFunction(next));
-    }
-
-    public default WithLongUnaryOperator fusing(BooleanToLongFunction next) {
-        return fusingBooleanToLongFunction(next);
     }
 
     /* LongPredicate -> BooleanPredicate */
 
-    public default LongPredicate fuseBooleanPredicate(BooleanPredicate next) {
-        return (long n) -> next.test(resolve().test(n));
-    }
-
-    public default LongPredicate fuse(BooleanPredicate next) {
-        return fuseBooleanPredicate(next);
-    }
-
-    public default WithLongPredicate fusingBooleanPredicate(
+    public default WithLongPredicate fuseBooleanPredicate(
         BooleanPredicate next
     ) {
-        return WithLongPredicate.of(fuseBooleanPredicate(next));
+        return WithLongPredicate.of((long n) -> next.test(resolve().test(n)));
     }
 
-    public default WithLongPredicate fusing(BooleanPredicate next) {
-        return fusingBooleanPredicate(next);
+    public default WithLongPredicate fuse(BooleanPredicate next) {
+        return fuseBooleanPredicate(next);
     }
 
     /* LongPredicate -> BooleanConsumer */
 
-    public default LongConsumer fuseBooleanConsumer(BooleanConsumer next) {
-        return (long n) -> next.accept(resolve().test(n));
+    public default WithLongConsumer fuseBooleanConsumer(BooleanConsumer next) {
+        return WithLongConsumer.of((long n) -> next.accept(resolve().test(n)));
     }
 
-    public default LongConsumer fuse(BooleanConsumer next) {
+    public default WithLongConsumer fuse(BooleanConsumer next) {
         return fuseBooleanConsumer(next);
-    }
-
-    public default WithLongConsumer fusingBooleanConsumer(
-        BooleanConsumer next
-    ) {
-        return WithLongConsumer.of(fuseBooleanConsumer(next));
-    }
-
-    public default WithLongConsumer fusing(BooleanConsumer next) {
-        return fusingBooleanConsumer(next);
     }
 }

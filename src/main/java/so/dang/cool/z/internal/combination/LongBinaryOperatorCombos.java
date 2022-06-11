@@ -28,7 +28,7 @@ interface LongBinaryOperatorCombos {
     }
 
     // TODO: Implement with currying
-    // fusingLongFunction(LongFunction<A> next) { ... }
+    // fuseLongFunction(LongFunction<A> next) { ... }
 
     /* LongBinaryOperator -> LongToIntFunction */
 
@@ -46,7 +46,7 @@ interface LongBinaryOperatorCombos {
     }
 
     // TODO: Implement with currying
-    // fusingLongToIntFunction(LongToIntFunction next) { ... }
+    // fuseLongToIntFunction(LongToIntFunction next) { ... }
 
     /* LongBinaryOperator -> LongToDoubleFunction */
 
@@ -65,7 +65,7 @@ interface LongBinaryOperatorCombos {
     }
 
     // TODO: Implement with currying
-    // fusingLongToDoubleFunction(LongToDoubleFunction next) { ... }
+    // fuseLongToDoubleFunction(LongToDoubleFunction next) { ... }
 
     /* LongBinaryOperator -> LongPredicate */
 
@@ -81,7 +81,7 @@ interface LongBinaryOperatorCombos {
     }
 
     // TODO: Implement with currying
-    // fusingLongPredicate(LongPredicate next) { ... }
+    // fuseLongPredicate(LongPredicate next) { ... }
 
     /* LongBinaryOperator -> LongConsumer */
 
@@ -96,32 +96,20 @@ interface LongBinaryOperatorCombos {
         return fuseLongConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // fusingLongConsumer(LongConsumer next) { ... }
-
     /* LongBinaryOperator -> LongUnaryOperator */
 
-    public default LongFunction<LongUnaryOperator> fuseLongUnaryOperator(
+    public default WithLongBinaryOperator fuseLongUnaryOperator(
         LongUnaryOperator next
     ) {
-        return (long n1) ->
-            (long n2) -> next.applyAsLong(resolve().apply(n1).applyAsLong(n2));
+        return WithLongBinaryOperator.of(
+            (long n1) ->
+                (long n2) ->
+                    next.applyAsLong(resolve().apply(n1).applyAsLong(n2))
+        );
     }
 
-    public default LongFunction<LongUnaryOperator> fuse(
-        LongUnaryOperator next
-    ) {
+    public default WithLongBinaryOperator fuse(LongUnaryOperator next) {
         return fuseLongUnaryOperator(next);
-    }
-
-    public default WithLongBinaryOperator fusingLongUnaryOperator(
-        LongUnaryOperator next
-    ) {
-        return WithLongBinaryOperator.of(fuseLongUnaryOperator(next));
-    }
-
-    public default WithLongBinaryOperator fusing(LongUnaryOperator next) {
-        return fusingLongUnaryOperator(next);
     }
 
     /* LongBinaryOperator -> LongBinaryOperator */
@@ -139,43 +127,5 @@ interface LongBinaryOperatorCombos {
         LongBinaryOperator next
     ) {
         return fuseLongBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingLongBinaryOperator(LongBinaryOperator next) { ... }
-
-    public default LongFunction<LongUnaryOperator> fuseLongBinaryOperator(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return (long n1) ->
-            (long n2) ->
-                next.applyAsLong(
-                    resolve().apply(n1).applyAsLong(n2),
-                    secondArg
-                );
-    }
-
-    public default LongFunction<LongUnaryOperator> fuse(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return fuseLongBinaryOperator(next, secondArg);
-    }
-
-    public default WithLongBinaryOperator fusingLongBinaryOperator(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return WithLongBinaryOperator.of(
-            fuseLongBinaryOperator(next, secondArg)
-        );
-    }
-
-    public default WithLongBinaryOperator fusing(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return fusingLongBinaryOperator(next, secondArg);
     }
 }

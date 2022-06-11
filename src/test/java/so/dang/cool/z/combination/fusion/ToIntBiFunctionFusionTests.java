@@ -21,11 +21,7 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_intFn() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, intToString),
-                Z.fuse(addStringsAsInt).fuse(intToString),
-                Z.fuse(addStringsAsInt).fusing(intToString)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(intToString))
             .forEach(
                 fusion -> {
                     assertEquals("3", fusion.apply("1").apply("2"));
@@ -36,11 +32,7 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_intToDbl() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, intToDouble),
-                Z.fuse(addStringsAsInt).fuse(intToDouble),
-                Z.fuse(addStringsAsInt).fusing(intToDouble)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(intToDouble))
             .forEach(
                 fusion -> {
                     assertEquals(3.0, fusion.apply("1").applyAsDouble("2"));
@@ -51,11 +43,7 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_dblToLong() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, intToLong),
-                Z.fuse(addStringsAsInt).fuse(intToLong),
-                Z.fuse(addStringsAsInt).fusing(intToLong)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(intToLong))
             .forEach(
                 fusion -> {
                     assertEquals(9L, fusion.apply("4").applyAsLong("5"));
@@ -66,11 +54,7 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_intPred() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, isIntTwo),
-                Z.fuse(addStringsAsInt).fuse(isIntTwo),
-                Z.fuse(addStringsAsInt).fusing(isIntTwo)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(isIntTwo))
             .forEach(
                 fusion -> {
                     assertTrue(fusion.apply("-1").test("3"));
@@ -83,11 +67,7 @@ public class ToIntBiFunctionFusionTests {
     void toIntBifn_to_intCns() {
         synchronized (consumedIntA) {
             Stream
-                .of(
-                    Z.fuse(addStringsAsInt, saveIntA),
-                    Z.fuse(addStringsAsInt).fuse(saveIntA),
-                    Z.fuse(addStringsAsInt).fusing(saveIntA)
-                )
+                .of(Z.fuse(addStringsAsInt).fuse(saveIntA))
                 .forEach(
                     fusion -> {
                         consumedIntA = 0;
@@ -103,11 +83,7 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_intUnop() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, addTwoToInt),
-                Z.fuse(addStringsAsInt).fuse(addTwoToInt),
-                Z.fuse(addStringsAsInt).fusing(addTwoToInt)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(addTwoToInt))
             .forEach(
                 fusion -> {
                     assertEquals(6, fusion.apply("1").applyAsInt("3"));
@@ -118,24 +94,10 @@ public class ToIntBiFunctionFusionTests {
     @Test
     void toIntBifn_to_intBiop() {
         Stream
-            .of(
-                Z.fuse(addStringsAsInt, addInts),
-                Z.fuse(addStringsAsInt).fuse(addInts)
-            )
+            .of(Z.fuse(addStringsAsInt).fuse(addInts))
             .forEach(
                 fusion -> {
                     assertEquals(6, fusion.apply("1").apply("2").applyAsInt(3));
-                }
-            );
-
-        Stream
-            .of(
-                Z.fuse(addStringsAsInt).fuse(addInts, 3),
-                Z.fuse(addStringsAsInt).fusing(addInts, 3)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(6, fusion.apply("1").applyAsInt("2"));
                 }
             );
     }

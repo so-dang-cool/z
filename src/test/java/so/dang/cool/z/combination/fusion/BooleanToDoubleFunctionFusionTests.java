@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -20,111 +19,62 @@ public class BooleanToDoubleFunctionFusionTests {
 
     @Test
     void boolToDbl_to_dblFn() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, doubleToString),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToString)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals("1.0", fusion.apply(true));
-                }
-            );
+        assertEquals(
+            "1.0",
+            Z.fuse(maybeOneAsDouble).fuse(doubleToString).apply(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblToInt() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, doubleToInt),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToInt)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1, fusion.applyAsInt(true));
-                }
-            );
+        assertEquals(
+            1,
+            Z.fuse(maybeOneAsDouble).fuse(doubleToInt).applyAsInt(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblToLong() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, doubleToLong),
-                Z.fuse(maybeOneAsDouble).fuse(doubleToLong)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1L, fusion.applyAsLong(true));
-                }
-            );
+        assertEquals(
+            1L,
+            Z.fuse(maybeOneAsDouble).fuse(doubleToLong).applyAsLong(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblPred() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, isDoubleOne),
-                Z.fuse(maybeOneAsDouble).fuse(isDoubleOne)
-            )
-            .forEach(
-                fusion -> {
-                    assertTrue(fusion.test(true));
-                }
-            );
+        assertTrue(Z.fuse(maybeOneAsDouble).fuse(isDoubleOne).test(true));
     }
 
     @Evil
     @Test
     void boolToDbl_to_dblCns() {
         synchronized (consumedDoubleA) {
-            Stream
-                .of(
-                    Z.fuse(maybeOneAsDouble, saveDoubleA),
-                    Z.fuse(maybeOneAsDouble).fuse(saveDoubleA)
-                )
-                .forEach(
-                    fusion -> {
-                        consumedDoubleA = 0.0;
+            consumedDoubleA = 0.0;
 
-                        fusion.accept(true);
+            Z.fuse(maybeOneAsDouble).fuse(saveDoubleA).accept(true);
 
-                        assertEquals(1.0, consumedDoubleA);
-                    }
-                );
+            assertEquals(1.0, consumedDoubleA);
         }
     }
 
     @Test
     void boolToDbl_to_dblUnop() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, addOneToDouble),
-                Z.fuse(maybeOneAsDouble).fuse(addOneToDouble)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(2.0, fusion.applyAsDouble(true));
-                }
-            );
+        assertEquals(
+            2.0,
+            Z.fuse(maybeOneAsDouble).fuse(addOneToDouble).applyAsDouble(true)
+        );
     }
 
     @Test
     void boolToDbl_to_dblBiop() {
-        Stream
-            .of(
-                Z.fuse(maybeOneAsDouble, addDoubles),
-                Z.fuse(maybeOneAsDouble).fuse(addDoubles)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1.5, fusion.apply(true).applyAsDouble(0.5));
-                }
-            );
-
         assertEquals(
             1.5,
-            Z.fuse(maybeOneAsDouble).fuse(addDoubles, 0.5).applyAsDouble(true)
+            Z
+                .fuse(maybeOneAsDouble)
+                .fuse(addDoubles)
+                .apply(true)
+                .applyAsDouble(0.5)
         );
     }
 }

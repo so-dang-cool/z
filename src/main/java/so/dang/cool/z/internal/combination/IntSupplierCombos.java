@@ -100,17 +100,4 @@ interface IntSupplierCombos {
     public default WithIntUnaryOperator fuse(IntBinaryOperator next) {
         return fuseIntBinaryOperator(next);
     }
-
-    public default WithIntSupplier fuseIntBinaryOperator(
-        IntBinaryOperator next,
-        int secondArg
-    ) {
-        return WithIntSupplier.of(
-            () -> next.applyAsInt(resolve().getAsInt(), secondArg)
-        );
-    }
-
-    public default WithIntSupplier fuse(IntBinaryOperator next, int secondArg) {
-        return fuseIntBinaryOperator(next, secondArg);
-    }
 }

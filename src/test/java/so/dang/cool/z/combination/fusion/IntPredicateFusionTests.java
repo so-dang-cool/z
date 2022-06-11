@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -21,98 +20,44 @@ public class IntPredicateFusionTests {
 
     @Test
     void intPred_to_fn() {
-        Stream
-            .of(
-                Z.fuse(isIntTwo, booleanToString),
-                Z.fuse(isIntTwo).fuse(booleanToString),
-                Z.fuse(isIntTwo).fusing(booleanToString)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals("true", fusion.apply(2));
-                }
-            );
+        assertEquals("true", Z.fuse(isIntTwo).fuse(booleanToString).apply(2));
     }
 
     @Test
     void intPred_to_toDblFn() {
-        Stream
-            .of(
-                Z.fuse(isIntTwo, maybeOneAsDouble),
-                Z.fuse(isIntTwo).fuse(maybeOneAsDouble),
-                Z.fuse(isIntTwo).fusing(maybeOneAsDouble)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(1.0, fusion.applyAsDouble(2));
-                }
-            );
+        assertEquals(
+            1.0,
+            Z.fuse(isIntTwo).fuse(maybeOneAsDouble).applyAsDouble(2)
+        );
     }
 
     @Test
     void intPred_to_toIntFn() {
-        Stream
-            .of(
-                Z.fuse(isIntTwo, maybeTwoAsInt),
-                Z.fuse(isIntTwo).fuse(maybeTwoAsInt),
-                Z.fuse(isIntTwo).fusing(maybeTwoAsInt)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(2, fusion.applyAsInt(2));
-                }
-            );
+        assertEquals(2, Z.fuse(isIntTwo).fuse(maybeTwoAsInt).applyAsInt(2));
     }
 
     @Test
     void intPred_to_toLongFn() {
-        Stream
-            .of(
-                Z.fuse(isIntTwo, maybeThreeAsLong),
-                Z.fuse(isIntTwo).fuse(maybeThreeAsLong),
-                Z.fuse(isIntTwo).fusing(maybeThreeAsLong)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(3L, fusion.applyAsLong(2));
-                }
-            );
+        assertEquals(
+            3L,
+            Z.fuse(isIntTwo).fuse(maybeThreeAsLong).applyAsLong(2)
+        );
     }
 
     @Test
     void intPred_to_boolPred() {
-        Stream
-            .of(
-                Z.fuse(isIntTwo, not),
-                Z.fuse(isIntTwo).fuse(not),
-                Z.fuse(isIntTwo).fusing(not)
-            )
-            .forEach(
-                fusion -> {
-                    assertFalse(fusion.test(2));
-                }
-            );
+        assertFalse(Z.fuse(isIntTwo).fuse(not).test(2));
     }
 
     @Evil
     @Test
     void intPred_to_cns() {
         synchronized (consumedBooleanA) {
-            Stream
-                .of(
-                    Z.fuse(isIntTwo, saveBooleanA),
-                    Z.fuse(isIntTwo).fuse(saveBooleanA),
-                    Z.fuse(isIntTwo).fusing(saveBooleanA)
-                )
-                .forEach(
-                    fusion -> {
-                        consumedBooleanA = false;
+            consumedBooleanA = false;
 
-                        fusion.accept(2);
+            Z.fuse(isIntTwo).fuse(saveBooleanA).accept(2);
 
-                        assertTrue(consumedBooleanA);
-                    }
-                );
+            assertTrue(consumedBooleanA);
         }
     }
 }

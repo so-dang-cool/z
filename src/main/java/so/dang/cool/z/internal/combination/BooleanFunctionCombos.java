@@ -63,22 +63,6 @@ interface BooleanFunctionCombos<A> {
         return fuseBiFunction(next);
     }
 
-    public default <B, C> WithBooleanFunction<C> fuseBiFunction(
-        BiFunction<A, B, C> next,
-        B secondArg
-    ) {
-        return WithBooleanFunction.of(
-            (boolean b) -> next.apply(resolve().apply(b), secondArg)
-        );
-    }
-
-    public default <B, C> WithBooleanFunction<C> fuse(
-        BiFunction<A, B, C> next,
-        B secondArg
-    ) {
-        return fuseBiFunction(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ToDoubleFunction<A> */
 
     public default WithBooleanToDoubleFunction fuseToDoubleFunction(
@@ -109,22 +93,6 @@ interface BooleanFunctionCombos<A> {
         ToDoubleBiFunction<A, B> next
     ) {
         return fuseToDoubleBiFunction(next);
-    }
-
-    public default <B> WithBooleanToDoubleFunction fuseToDoubleBiFunction(
-        ToDoubleBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanToDoubleFunction.of(
-            (boolean b1) -> next.applyAsDouble(resolve().apply(b1), secondArg)
-        );
-    }
-
-    public default <B> WithBooleanToDoubleFunction fuse(
-        ToDoubleBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fuseToDoubleBiFunction(next, secondArg);
     }
 
     /* BooleanFunction<A> -> ToIntFunction<A> */
@@ -158,22 +126,6 @@ interface BooleanFunctionCombos<A> {
         return fuseToIntBiFunction(next);
     }
 
-    public default <B> WithBooleanToIntFunction fuseToIntBiFunction(
-        ToIntBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanToIntFunction.of(
-            (boolean b1) -> next.applyAsInt(resolve().apply(b1), secondArg)
-        );
-    }
-
-    public default <B> WithBooleanToIntFunction fuse(
-        ToIntBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fuseToIntBiFunction(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ToLongFunction<A> */
 
     public default WithBooleanToLongFunction fuseToLongFunction(
@@ -205,22 +157,6 @@ interface BooleanFunctionCombos<A> {
         return fuseToLongBiFunction(next);
     }
 
-    public default <B> WithBooleanToLongFunction fuseToLongBiFunction(
-        ToLongBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanToLongFunction.of(
-            (boolean b1) -> next.applyAsLong(resolve().apply(b1), secondArg)
-        );
-    }
-
-    public default <B> WithBooleanToLongFunction fuse(
-        ToLongBiFunction<A, B> next,
-        B secondArg
-    ) {
-        return fuseToLongBiFunction(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> Predicate<A> */
 
     public default WithBooleanPredicate fusePredicate(Predicate<A> next) {
@@ -250,22 +186,6 @@ interface BooleanFunctionCombos<A> {
         return fuseBiPredicate(next);
     }
 
-    public default <B> WithBooleanPredicate fuseBiPredicate(
-        BiPredicate<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanPredicate.of(
-            (boolean b1) -> next.test(resolve().apply(b1), secondArg)
-        );
-    }
-
-    public default <B> WithBooleanPredicate fuse(
-        BiPredicate<A, B> next,
-        B secondArg
-    ) {
-        return fuseBiPredicate(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> Consumer<A> */
 
     public default WithBooleanConsumer fuseConsumer(Consumer<A> next) {
@@ -293,22 +213,6 @@ interface BooleanFunctionCombos<A> {
         return fuseBiConsumer(next);
     }
 
-    public default <B> WithBooleanConsumer fuseBiConsumer(
-        BiConsumer<A, B> next,
-        B secondArg
-    ) {
-        return WithBooleanConsumer.of(
-            (boolean b1) -> next.accept(resolve().apply(b1), secondArg)
-        );
-    }
-
-    public default <B> WithBooleanConsumer fuse(
-        BiConsumer<A, B> next,
-        B secondArg
-    ) {
-        return fuseBiConsumer(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ObjDoubleConsumer<A> */
 
     @PromotesPrimitive(promoted = { Boolean.class, Double.class })
@@ -324,22 +228,6 @@ interface BooleanFunctionCombos<A> {
         ObjDoubleConsumer<A> next
     ) {
         return fuseObjDoubleConsumer(next);
-    }
-
-    public default WithBooleanConsumer fuseObjDoubleConsumer(
-        ObjDoubleConsumer<A> next,
-        double secondArg
-    ) {
-        return WithBooleanConsumer.of(
-            (boolean b) -> next.accept(resolve().apply(b), secondArg)
-        );
-    }
-
-    public default WithBooleanConsumer fuse(
-        ObjDoubleConsumer<A> next,
-        double secondArg
-    ) {
-        return fuseObjDoubleConsumer(next, secondArg);
     }
 
     /* BooleanFunction<A> -> ObjIntConsumer<A> */
@@ -359,22 +247,6 @@ interface BooleanFunctionCombos<A> {
         return fuseObjIntConsumer(next);
     }
 
-    public default WithBooleanConsumer fuseObjIntConsumer(
-        ObjIntConsumer<A> next,
-        int secondArg
-    ) {
-        return WithBooleanConsumer.of(
-            (boolean b) -> next.accept(resolve().apply(b), secondArg)
-        );
-    }
-
-    public default WithBooleanConsumer fuse(
-        ObjIntConsumer<A> next,
-        int secondArg
-    ) {
-        return fuseObjIntConsumer(next, secondArg);
-    }
-
     /* BooleanFunction<A> -> ObjLongConsumer<A> */
 
     @PromotesPrimitive(promoted = { Boolean.class, Long.class })
@@ -388,21 +260,5 @@ interface BooleanFunctionCombos<A> {
 
     public default WithBiConsumer<Boolean, Long> fuse(ObjLongConsumer<A> next) {
         return fuseObjLongConsumer(next);
-    }
-
-    public default WithBooleanConsumer fuseObjLongConsumer(
-        ObjLongConsumer<A> next,
-        long secondArg
-    ) {
-        return WithBooleanConsumer.of(
-            (boolean b) -> next.accept(resolve().apply(b), secondArg)
-        );
-    }
-
-    public default WithBooleanConsumer fuse(
-        ObjLongConsumer<A> next,
-        long secondArg
-    ) {
-        return fuseObjLongConsumer(next, secondArg);
     }
 }

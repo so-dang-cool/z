@@ -27,9 +27,6 @@ interface DoubleBinaryOperatorCombos {
         return fuseDoubleFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingDoubleFunction(DoubleFunction<A> next) { ... }
-
     /* DoubleBinaryOperator -> DoubleToIntFunction */
 
     public default DoubleFunction<DoubleToIntFunction> fuseDoubleToIntFunction(
@@ -45,9 +42,6 @@ interface DoubleBinaryOperatorCombos {
     ) {
         return fuseDoubleToIntFunction(next);
     }
-
-    // TODO: Implement with currying
-    // fusingDoubleToIntFunction(DoubleToIntFunction next) { ... }
 
     /* DoubleBinaryOperator -> DoubleToLongFunction */
 
@@ -65,9 +59,6 @@ interface DoubleBinaryOperatorCombos {
         return fuseDoubleToLongFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingDoubleToLongFunction(DoubleToLongFunction next) { ... }
-
     /* DoubleBinaryOperator -> DoublePredicate */
 
     public default DoubleFunction<DoublePredicate> fuseDoublePredicate(
@@ -80,9 +71,6 @@ interface DoubleBinaryOperatorCombos {
     public default DoubleFunction<DoublePredicate> fuse(DoublePredicate next) {
         return fuseDoublePredicate(next);
     }
-
-    // TODO: Implement with currying
-    // fusingDoublePredicate(DoublePredicate next) { ... }
 
     /* DoubleBinaryOperator -> DoubleConsumer */
 
@@ -97,33 +85,20 @@ interface DoubleBinaryOperatorCombos {
         return fuseDoubleConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // fusingDoubleConsumer(DoubleConsumer next) { ... }
-
     /* DoubleBinaryOperator -> DoubleUnaryOperator */
 
-    public default DoubleFunction<DoubleUnaryOperator> fuseDoubleUnaryOperator(
+    public default WithDoubleBinaryOperator fuseDoubleUnaryOperator(
         DoubleUnaryOperator next
     ) {
-        return (double d1) ->
-            (double d2) ->
-                next.applyAsDouble(resolve().apply(d1).applyAsDouble(d2));
+        return WithDoubleBinaryOperator.of(
+            (double d1) ->
+                (double d2) ->
+                    next.applyAsDouble(resolve().apply(d1).applyAsDouble(d2))
+        );
     }
 
-    public default DoubleFunction<DoubleUnaryOperator> fuse(
-        DoubleUnaryOperator next
-    ) {
+    public default WithDoubleBinaryOperator fuse(DoubleUnaryOperator next) {
         return fuseDoubleUnaryOperator(next);
-    }
-
-    public default WithDoubleBinaryOperator fusingDoubleUnaryOperator(
-        DoubleUnaryOperator next
-    ) {
-        return WithDoubleBinaryOperator.of(fuseDoubleUnaryOperator(next));
-    }
-
-    public default WithDoubleBinaryOperator fusing(DoubleUnaryOperator next) {
-        return fusingDoubleUnaryOperator(next);
     }
 
     /* DoubleBinaryOperator -> DoubleBinaryOperator */
@@ -144,43 +119,5 @@ interface DoubleBinaryOperatorCombos {
         DoubleBinaryOperator next
     ) {
         return fuseDoubleBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingDoubleBinaryOperator(DoubleBinaryOperator next) { ... }
-
-    public default DoubleFunction<DoubleUnaryOperator> fuseDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return (double d1) ->
-            (double d2) ->
-                next.applyAsDouble(
-                    resolve().apply(d1).applyAsDouble(d2),
-                    secondArg
-                );
-    }
-
-    public default DoubleFunction<DoubleUnaryOperator> fuse(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fuseDoubleBinaryOperator(next, secondArg);
-    }
-
-    public default WithDoubleBinaryOperator fusingDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return WithDoubleBinaryOperator.of(
-            fuseDoubleBinaryOperator(next, secondArg)
-        );
-    }
-
-    public default WithDoubleBinaryOperator fusing(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fusingDoubleBinaryOperator(next, secondArg);
     }
 }

@@ -21,11 +21,7 @@ public class PredicateFusionTests {
     @Test
     void pred_to_boolFn() {
         Stream
-            .of(
-                Z.fuse(isEmpty, booleanToString),
-                Z.fuse(isEmpty).fuse(booleanToString),
-                Z.fuse(isEmpty).fusing(booleanToString)
-            )
+            .of(Z.fuse(isEmpty).fuse(booleanToString))
             .forEach(
                 fusion -> {
                     assertEquals("true", fusion.apply(""));
@@ -36,11 +32,7 @@ public class PredicateFusionTests {
     @Test
     void pred_to_toDblFn() {
         Stream
-            .of(
-                Z.fuse(isEmpty, maybeOneAsDouble),
-                Z.fuse(isEmpty).fuse(maybeOneAsDouble),
-                Z.fuse(isEmpty).fusing(maybeOneAsDouble)
-            )
+            .of(Z.fuse(isEmpty).fuse(maybeOneAsDouble))
             .forEach(
                 fusion -> {
                     assertEquals(1.0, fusion.applyAsDouble(""));
@@ -51,11 +43,7 @@ public class PredicateFusionTests {
     @Test
     void pred_to_toIntFn() {
         Stream
-            .of(
-                Z.fuse(isEmpty, maybeTwoAsInt),
-                Z.fuse(isEmpty).fuse(maybeTwoAsInt),
-                Z.fuse(isEmpty).fusing(maybeTwoAsInt)
-            )
+            .of(Z.fuse(isEmpty).fuse(maybeTwoAsInt))
             .forEach(
                 fusion -> {
                     assertEquals(2, fusion.applyAsInt(""));
@@ -66,11 +54,7 @@ public class PredicateFusionTests {
     @Test
     void pred_to_toLongFn() {
         Stream
-            .of(
-                Z.fuse(isEmpty, maybeThreeAsLong),
-                Z.fuse(isEmpty).fuse(maybeThreeAsLong),
-                Z.fuse(isEmpty).fusing(maybeThreeAsLong)
-            )
+            .of(Z.fuse(isEmpty).fuse(maybeThreeAsLong))
             .forEach(
                 fusion -> {
                     assertEquals(3L, fusion.applyAsLong(""));
@@ -81,11 +65,7 @@ public class PredicateFusionTests {
     @Test
     void pred_to_boolPred() {
         Stream
-            .of(
-                Z.fuse(isEmpty, not),
-                Z.fuse(isEmpty).fuse(not),
-                Z.fuse(isEmpty).fusing(not)
-            )
+            .of(Z.fuse(isEmpty).fuse(not))
             .forEach(
                 fusion -> {
                     assertFalse(fusion.test(""));
@@ -98,11 +78,7 @@ public class PredicateFusionTests {
     void pred_to_cns() {
         synchronized (consumedBooleanA) {
             Stream
-                .of(
-                    Z.fuse(isEmpty, saveBooleanA),
-                    Z.fuse(isEmpty).fuse(saveBooleanA),
-                    Z.fuse(isEmpty).fusing(saveBooleanA)
-                )
+                .of(Z.fuse(isEmpty).fuse(saveBooleanA))
                 .forEach(
                     fusion -> {
                         consumedBooleanA = false;

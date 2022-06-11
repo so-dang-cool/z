@@ -21,11 +21,7 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intFn() {
         Stream
-            .of(
-                Z.fuse(stringToInt, intToString),
-                Z.fuse(stringToInt).fuse(intToString),
-                Z.fuse(stringToInt).fusing(intToString)
-            )
+            .of(Z.fuse(stringToInt).fuse(intToString))
             .forEach(
                 fusion -> {
                     assertEquals("1", fusion.apply("1"));
@@ -36,11 +32,7 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intToDbl() {
         Stream
-            .of(
-                Z.fuse(stringToInt, intToDouble),
-                Z.fuse(stringToInt).fuse(intToDouble),
-                Z.fuse(stringToInt).fusing(intToDouble)
-            )
+            .of(Z.fuse(stringToInt).fuse(intToDouble))
             .forEach(
                 fusion -> {
                     assertEquals(1.0, fusion.applyAsDouble("1"));
@@ -51,11 +43,7 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intToLong() {
         Stream
-            .of(
-                Z.fuse(stringToInt, intToLong),
-                Z.fuse(stringToInt).fuse(intToLong),
-                Z.fuse(stringToInt).fusing(intToLong)
-            )
+            .of(Z.fuse(stringToInt).fuse(intToLong))
             .forEach(
                 fusion -> {
                     assertEquals(1L, fusion.applyAsLong("1"));
@@ -66,11 +54,7 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intPred() {
         Stream
-            .of(
-                Z.fuse(stringToInt, isIntTwo),
-                Z.fuse(stringToInt).fuse(isIntTwo),
-                Z.fuse(stringToInt).fusing(isIntTwo)
-            )
+            .of(Z.fuse(stringToInt).fuse(isIntTwo))
             .forEach(
                 fusion -> {
                     assertTrue(fusion.test("2"));
@@ -83,11 +67,7 @@ public class ToIntFunctionFusionTests {
     void toIntFn_to_intCns() {
         synchronized (consumedIntA) {
             Stream
-                .of(
-                    Z.fuse(stringToInt, saveIntA),
-                    Z.fuse(stringToInt).fuse(saveIntA),
-                    Z.fuse(stringToInt).fusing(saveIntA)
-                )
+                .of(Z.fuse(stringToInt).fuse(saveIntA))
                 .forEach(
                     fusion -> {
                         consumedIntA = 0;
@@ -103,11 +83,7 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intUnop() {
         Stream
-            .of(
-                Z.fuse(stringToInt, addTwoToInt),
-                Z.fuse(stringToInt).fuse(addTwoToInt),
-                Z.fuse(stringToInt).fusing(addTwoToInt)
-            )
+            .of(Z.fuse(stringToInt).fuse(addTwoToInt))
             .forEach(
                 fusion -> {
                     assertEquals(8, fusion.applyAsInt("6"));
@@ -118,21 +94,10 @@ public class ToIntFunctionFusionTests {
     @Test
     void toIntFn_to_intBiop() {
         Stream
-            .of(Z.fuse(stringToInt, addInts), Z.fuse(stringToInt).fuse(addInts))
+            .of(Z.fuse(stringToInt).fuse(addInts))
             .forEach(
                 fusion -> {
                     assertEquals(3, fusion.apply("1").applyAsInt(2));
-                }
-            );
-
-        Stream
-            .of(
-                Z.fuse(stringToInt).fuse(addInts, 2),
-                Z.fuse(stringToInt).fusing(addInts, 2)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(3, fusion.applyAsInt("1"));
                 }
             );
     }

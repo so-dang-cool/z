@@ -22,11 +22,7 @@ public class LongPredicateFusionTests {
     @Test
     void longPred_to_boolFn() {
         Stream
-            .of(
-                Z.fuse(isLongThree, booleanToString),
-                Z.fuse(isLongThree).fuse(booleanToString),
-                Z.fuse(isLongThree).fusing(booleanToString)
-            )
+            .of(Z.fuse(isLongThree).fuse(booleanToString))
             .forEach(
                 fusion -> {
                     assertEquals("true", fusion.apply(3L));
@@ -37,11 +33,7 @@ public class LongPredicateFusionTests {
     @Test
     void longPred_to_toDblFn() {
         Stream
-            .of(
-                Z.fuse(isLongThree, maybeOneAsDouble),
-                Z.fuse(isLongThree).fuse(maybeOneAsDouble),
-                Z.fuse(isLongThree).fusing(maybeOneAsDouble)
-            )
+            .of(Z.fuse(isLongThree).fuse(maybeOneAsDouble))
             .forEach(
                 fusion -> {
                     assertEquals(1.0, fusion.applyAsDouble(3L));
@@ -52,11 +44,7 @@ public class LongPredicateFusionTests {
     @Test
     void longPred_to_toIntFn() {
         Stream
-            .of(
-                Z.fuse(isLongThree, maybeTwoAsInt),
-                Z.fuse(isLongThree).fuse(maybeTwoAsInt),
-                Z.fuse(isLongThree).fusing(maybeTwoAsInt)
-            )
+            .of(Z.fuse(isLongThree).fuse(maybeTwoAsInt))
             .forEach(
                 fusion -> {
                     assertEquals(2, fusion.applyAsInt(3L));
@@ -67,11 +55,7 @@ public class LongPredicateFusionTests {
     @Test
     void longPred_to_toLongFn() {
         Stream
-            .of(
-                Z.fuse(isLongThree, maybeThreeAsLong),
-                Z.fuse(isLongThree).fuse(maybeThreeAsLong),
-                Z.fuse(isLongThree).fusing(maybeThreeAsLong)
-            )
+            .of(Z.fuse(isLongThree).fuse(maybeThreeAsLong))
             .forEach(
                 fusion -> {
                     assertEquals(3L, fusion.applyAsLong(3L));
@@ -82,11 +66,7 @@ public class LongPredicateFusionTests {
     @Test
     void longPred_to_boolPred() {
         Stream
-            .of(
-                Z.fuse(isLongThree, not),
-                Z.fuse(isLongThree).fuse(not),
-                Z.fuse(isLongThree).fusing(not)
-            )
+            .of(Z.fuse(isLongThree).fuse(not))
             .forEach(
                 fusion -> {
                     assertFalse(fusion.test(3L));
@@ -99,11 +79,7 @@ public class LongPredicateFusionTests {
     void longPred_to_cns() {
         synchronized (consumedBooleanA) {
             Stream
-                .of(
-                    Z.fuse(isLongThree, saveBooleanA),
-                    Z.fuse(isLongThree).fuse(saveBooleanA),
-                    Z.fuse(isLongThree).fusing(saveBooleanA)
-                )
+                .of(Z.fuse(isLongThree).fuse(saveBooleanA))
                 .forEach(
                     fusion -> {
                         consumedBooleanA = false;

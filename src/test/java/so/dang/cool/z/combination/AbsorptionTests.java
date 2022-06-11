@@ -154,7 +154,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, trim),
+                    Z.fuse(saveStringA).absorb(trim),
                     Z.fuse(saveStringA).absorb(trim),
                     Z.fuse(saveStringA).absorbing(trim)
                 )
@@ -178,7 +178,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, getString),
+                    Z.fuse(saveStringA).absorb(getString),
                     Z.fuse(saveStringA).absorb(getString),
                     Z.fuse(saveStringA).absorbing(getString)
                 )
@@ -199,7 +199,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, getBooleanTrue),
+                    Z.fuse(saveStringA).absorb(getBooleanTrue),
                     Z.fuse(saveStringA).absorb(getBooleanTrue),
                     Z.fuse(saveStringA).absorbing(getBooleanTrue)
                 )
@@ -220,7 +220,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, getDouble),
+                    Z.fuse(saveStringA).absorb(getDouble),
                     Z.fuse(saveStringA).absorb(getDouble),
                     Z.fuse(saveStringA).absorbing(getDouble)
                 )
@@ -244,7 +244,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, getInt),
+                    Z.fuse(saveStringA).absorb(getInt),
                     Z.fuse(saveStringA).absorb(getInt),
                     Z.fuse(saveStringA).absorbing(getInt)
                 )
@@ -268,7 +268,7 @@ public class AbsorptionTests {
         synchronized (consumedStringA) {
             Stream
                 .of(
-                    Z.absorb(saveStringA, getLong),
+                    Z.fuse(saveStringA).absorb(getLong),
                     Z.fuse(saveStringA).absorb(getLong),
                     Z.fuse(saveStringA).absorbing(getLong)
                 )
@@ -293,7 +293,7 @@ public class AbsorptionTests {
             synchronized (wasOperated) {
                 Stream
                     .of(
-                        Z.absorb(saveStringA, doOperation),
+                        Z.fuse(saveStringA).absorb(doOperation),
                         Z.fuse(saveStringA).absorb(doOperation),
                         Z.fuse(saveStringA).absorbing(doOperation)
                     )
@@ -353,7 +353,8 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedString,
                     Z
-                        .absorb(saveStringsBandC, getString)
+                        .fuse(saveStringsBandC)
+                        .absorb(getString)
                         .apply("cześć")
                         .apply("喂")
                 );
@@ -418,7 +419,8 @@ public class AbsorptionTests {
                 assertEquals(
                     true,
                     Z
-                        .absorb(saveStringsBandC, getBooleanTrue)
+                        .fuse(saveStringsBandC)
+                        .absorb(getBooleanTrue)
                         .apply("hei")
                         .test("hej")
                 );
@@ -471,7 +473,8 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedDouble,
                     Z
-                        .absorb(saveStringsBandC, getDouble)
+                        .fuse(saveStringsBandC)
+                        .absorb(getDouble)
                         .apply("buenas")
                         .applyAsDouble("dias")
                 );
@@ -524,7 +527,8 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedInt,
                     Z
-                        .absorb(saveStringsBandC, getInt)
+                        .fuse(saveStringsBandC)
+                        .absorb(getInt)
                         .apply("안녕")
                         .applyAsInt("하세요")
                 );
@@ -577,7 +581,8 @@ public class AbsorptionTests {
                 assertEquals(
                     suppliedLong,
                     Z
-                        .absorb(saveStringsBandC, getLong)
+                        .fuse(saveStringsBandC)
+                        .absorb(getLong)
                         .apply("ça")
                         .applyAsLong("va")
                 );
@@ -630,7 +635,8 @@ public class AbsorptionTests {
                     wasOperated = false;
 
                     Z
-                        .absorb(saveStringsBandC, doOperation)
+                        .fuse(saveStringsBandC)
+                        .absorb(doOperation)
                         .apply("...")
                         .accept("!!!");
 
@@ -680,7 +686,7 @@ public class AbsorptionTests {
         synchronized (consumedBooleanA) {
             Stream
                 .of(
-                    Z.absorb(saveBooleanA, getString),
+                    Z.fuse(saveBooleanA).absorb(getString),
                     Z.fuse(saveBooleanA).absorb(getString),
                     Z.fuse(saveBooleanA).absorbing(getString)
                 )
@@ -701,7 +707,7 @@ public class AbsorptionTests {
         synchronized (consumedBooleanA) {
             Stream
                 .of(
-                    Z.absorb(saveBooleanA, getBooleanTrue),
+                    Z.fuse(saveBooleanA).absorb(getBooleanTrue),
                     Z.fuse(saveBooleanA).absorb(getBooleanTrue),
                     Z.fuse(saveBooleanA).absorbing(getBooleanTrue)
                 )
@@ -722,7 +728,7 @@ public class AbsorptionTests {
         synchronized (consumedBooleanA) {
             Stream
                 .of(
-                    Z.absorb(saveBooleanA, getDouble),
+                    Z.fuse(saveBooleanA).absorb(getDouble),
                     Z.fuse(saveBooleanA).absorb(getDouble),
                     Z.fuse(saveBooleanA).absorbing(getDouble)
                 )
@@ -746,7 +752,7 @@ public class AbsorptionTests {
         synchronized (consumedBooleanA) {
             Stream
                 .of(
-                    Z.absorb(saveBooleanA, getInt),
+                    Z.fuse(saveBooleanA).absorb(getInt),
                     Z.fuse(saveBooleanA).absorb(getInt),
                     Z.fuse(saveBooleanA).absorbing(getInt)
                 )
@@ -767,7 +773,7 @@ public class AbsorptionTests {
         synchronized (consumedBooleanA) {
             Stream
                 .of(
-                    Z.absorb(saveBooleanA, getLong),
+                    Z.fuse(saveBooleanA).absorb(getLong),
                     Z.fuse(saveBooleanA).absorb(getLong),
                     Z.fuse(saveBooleanA).absorbing(getLong)
                 )
@@ -789,7 +795,7 @@ public class AbsorptionTests {
             synchronized (wasOperated) {
                 Stream
                     .of(
-                        Z.absorb(saveBooleanA, doOperation),
+                        Z.fuse(saveBooleanA).absorb(doOperation),
                         Z.fuse(saveBooleanA).absorb(doOperation),
                         Z.fuse(saveBooleanA).absorbing(doOperation)
                     )
@@ -814,7 +820,7 @@ public class AbsorptionTests {
         synchronized (consumedDoubleA) {
             Stream
                 .of(
-                    Z.absorb(saveDoubleA, getString),
+                    Z.fuse(saveDoubleA).absorb(getString),
                     Z.fuse(saveDoubleA).absorb(getString),
                     Z.fuse(saveDoubleA).absorbing(getString)
                 )
@@ -835,7 +841,7 @@ public class AbsorptionTests {
         synchronized (consumedDoubleA) {
             Stream
                 .of(
-                    Z.absorb(saveDoubleA, getBooleanTrue),
+                    Z.fuse(saveDoubleA).absorb(getBooleanTrue),
                     Z.fuse(saveDoubleA).absorb(getBooleanTrue),
                     Z.fuse(saveDoubleA).absorbing(getBooleanTrue)
                 )
@@ -856,7 +862,7 @@ public class AbsorptionTests {
         synchronized (consumedDoubleA) {
             Stream
                 .of(
-                    Z.absorb(saveDoubleA, getDouble),
+                    Z.fuse(saveDoubleA).absorb(getDouble),
                     Z.fuse(saveDoubleA).absorb(getDouble),
                     Z.fuse(saveDoubleA).absorbing(getDouble)
                 )
@@ -877,7 +883,7 @@ public class AbsorptionTests {
         synchronized (consumedDoubleA) {
             Stream
                 .of(
-                    Z.absorb(saveDoubleA, getInt),
+                    Z.fuse(saveDoubleA).absorb(getInt),
                     Z.fuse(saveDoubleA).absorb(getInt),
                     Z.fuse(saveDoubleA).absorbing(getInt)
                 )
@@ -898,7 +904,7 @@ public class AbsorptionTests {
         synchronized (consumedDoubleA) {
             Stream
                 .of(
-                    Z.absorb(saveDoubleA, getLong),
+                    Z.fuse(saveDoubleA).absorb(getLong),
                     Z.fuse(saveDoubleA).absorb(getLong),
                     Z.fuse(saveDoubleA).absorbing(getLong)
                 )
@@ -920,7 +926,7 @@ public class AbsorptionTests {
             synchronized (wasOperated) {
                 Stream
                     .of(
-                        Z.absorb(saveDoubleA, doOperation),
+                        Z.fuse(saveDoubleA).absorb(doOperation),
                         Z.fuse(saveDoubleA).absorb(doOperation),
                         Z.fuse(saveDoubleA).absorbing(doOperation)
                     )
@@ -946,7 +952,7 @@ public class AbsorptionTests {
             synchronized (consumedDoubleB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringDDoubleB, getString),
+                        Z.fuse(saveStringDDoubleB).absorb(getString),
                         Z.fuse(saveStringDDoubleB).absorb(getString)
                     )
                     .forEach(
@@ -973,7 +979,7 @@ public class AbsorptionTests {
             synchronized (consumedDoubleB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringDDoubleB, getBooleanTrue),
+                        Z.fuse(saveStringDDoubleB).absorb(getBooleanTrue),
                         Z.fuse(saveStringDDoubleB).absorb(getBooleanTrue)
                     )
                     .forEach(
@@ -997,7 +1003,7 @@ public class AbsorptionTests {
             synchronized (consumedDoubleB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringDDoubleB, getDouble),
+                        Z.fuse(saveStringDDoubleB).absorb(getDouble),
                         Z.fuse(saveStringDDoubleB).absorb(getDouble)
                     )
                     .forEach(
@@ -1024,7 +1030,7 @@ public class AbsorptionTests {
             synchronized (consumedDoubleB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringDDoubleB, getInt),
+                        Z.fuse(saveStringDDoubleB).absorb(getInt),
                         Z.fuse(saveStringDDoubleB).absorb(getInt)
                     )
                     .forEach(
@@ -1051,7 +1057,7 @@ public class AbsorptionTests {
             synchronized (consumedDoubleB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringDDoubleB, getLong),
+                        Z.fuse(saveStringDDoubleB).absorb(getLong),
                         Z.fuse(saveStringDDoubleB).absorb(getLong)
                     )
                     .forEach(
@@ -1079,7 +1085,7 @@ public class AbsorptionTests {
                 synchronized (wasOperated) {
                     Stream
                         .of(
-                            Z.absorb(saveStringDDoubleB, doOperation),
+                            Z.fuse(saveStringDDoubleB).absorb(doOperation),
                             Z.fuse(saveStringDDoubleB).absorb(doOperation),
                             Z.fuse(saveStringDDoubleB).absorbing(doOperation)
                         )
@@ -1107,7 +1113,7 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             Stream
                 .of(
-                    Z.absorb(saveIntA, getString),
+                    Z.fuse(saveIntA).absorb(getString),
                     Z.fuse(saveIntA).absorb(getString),
                     Z.fuse(saveIntA).absorbing(getString)
                 )
@@ -1128,7 +1134,7 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             Stream
                 .of(
-                    Z.absorb(saveIntA, getBooleanTrue),
+                    Z.fuse(saveIntA).absorb(getBooleanTrue),
                     Z.fuse(saveIntA).absorb(getBooleanTrue),
                     Z.fuse(saveIntA).absorbing(getBooleanTrue)
                 )
@@ -1149,7 +1155,7 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             Stream
                 .of(
-                    Z.absorb(saveIntA, getDouble),
+                    Z.fuse(saveIntA).absorb(getDouble),
                     Z.fuse(saveIntA).absorb(getDouble),
                     Z.fuse(saveIntA).absorbing(getDouble)
                 )
@@ -1170,7 +1176,7 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             Stream
                 .of(
-                    Z.absorb(saveIntA, getInt),
+                    Z.fuse(saveIntA).absorb(getInt),
                     Z.fuse(saveIntA).absorb(getInt),
                     Z.fuse(saveIntA).absorbing(getInt)
                 )
@@ -1191,7 +1197,7 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             Stream
                 .of(
-                    Z.absorb(saveIntA, getLong),
+                    Z.fuse(saveIntA).absorb(getLong),
                     Z.fuse(saveIntA).absorb(getLong),
                     Z.fuse(saveIntA).absorbing(getLong)
                 )
@@ -1213,7 +1219,7 @@ public class AbsorptionTests {
             synchronized (wasOperated) {
                 Stream
                     .of(
-                        Z.absorb(saveIntA, doOperation),
+                        Z.fuse(saveIntA).absorb(doOperation),
                         Z.fuse(saveIntA).absorb(doOperation),
                         Z.fuse(saveIntA).absorbing(doOperation)
                     )
@@ -1239,7 +1245,7 @@ public class AbsorptionTests {
             synchronized (consumedIntB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringEIntB, getString),
+                        Z.fuse(saveStringEIntB).absorb(getString),
                         Z.fuse(saveStringEIntB).absorb(getString)
                     )
                     .forEach(
@@ -1266,7 +1272,7 @@ public class AbsorptionTests {
             synchronized (consumedIntB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringEIntB, getBooleanTrue),
+                        Z.fuse(saveStringEIntB).absorb(getBooleanTrue),
                         Z.fuse(saveStringEIntB).absorb(getBooleanTrue)
                     )
                     .forEach(
@@ -1290,7 +1296,7 @@ public class AbsorptionTests {
             synchronized (consumedIntB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringEIntB, getDouble),
+                        Z.fuse(saveStringEIntB).absorb(getDouble),
                         Z.fuse(saveStringEIntB).absorb(getDouble)
                     )
                     .forEach(
@@ -1317,7 +1323,7 @@ public class AbsorptionTests {
             synchronized (consumedIntB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringEIntB, getInt),
+                        Z.fuse(saveStringEIntB).absorb(getInt),
                         Z.fuse(saveStringEIntB).absorb(getInt)
                     )
                     .forEach(
@@ -1344,7 +1350,7 @@ public class AbsorptionTests {
             synchronized (consumedIntB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringEIntB, getLong),
+                        Z.fuse(saveStringEIntB).absorb(getLong),
                         Z.fuse(saveStringEIntB).absorb(getLong)
                     )
                     .forEach(
@@ -1372,7 +1378,7 @@ public class AbsorptionTests {
                 synchronized (wasOperated) {
                     Stream
                         .of(
-                            Z.absorb(saveStringEIntB, doOperation),
+                            Z.fuse(saveStringEIntB).absorb(doOperation),
                             Z.fuse(saveStringEIntB).absorb(doOperation),
                             Z.fuse(saveStringEIntB).absorbing(doOperation)
                         )
@@ -1400,7 +1406,7 @@ public class AbsorptionTests {
         synchronized (consumedLongA) {
             Stream
                 .of(
-                    Z.absorb(saveLongA, getString),
+                    Z.fuse(saveLongA).absorb(getString),
                     Z.fuse(saveLongA).absorb(getString),
                     Z.fuse(saveLongA).absorbing(getString)
                 )
@@ -1421,7 +1427,7 @@ public class AbsorptionTests {
         synchronized (consumedLongA) {
             Stream
                 .of(
-                    Z.absorb(saveLongA, getBooleanTrue),
+                    Z.fuse(saveLongA).absorb(getBooleanTrue),
                     Z.fuse(saveLongA).absorb(getBooleanTrue),
                     Z.fuse(saveLongA).absorbing(getBooleanTrue)
                 )
@@ -1442,7 +1448,7 @@ public class AbsorptionTests {
         synchronized (consumedLongA) {
             Stream
                 .of(
-                    Z.absorb(saveLongA, getDouble),
+                    Z.fuse(saveLongA).absorb(getDouble),
                     Z.fuse(saveLongA).absorb(getDouble),
                     Z.fuse(saveLongA).absorbing(getDouble)
                 )
@@ -1463,7 +1469,7 @@ public class AbsorptionTests {
         synchronized (consumedLongA) {
             Stream
                 .of(
-                    Z.absorb(saveLongA, getInt),
+                    Z.fuse(saveLongA).absorb(getInt),
                     Z.fuse(saveLongA).absorb(getInt),
                     Z.fuse(saveLongA).absorbing(getInt)
                 )
@@ -1484,7 +1490,7 @@ public class AbsorptionTests {
         synchronized (consumedLongA) {
             Stream
                 .of(
-                    Z.absorb(saveLongA, getLong),
+                    Z.fuse(saveLongA).absorb(getLong),
                     Z.fuse(saveLongA).absorb(getLong),
                     Z.fuse(saveLongA).absorbing(getLong)
                 )
@@ -1506,7 +1512,7 @@ public class AbsorptionTests {
             synchronized (wasOperated) {
                 Stream
                     .of(
-                        Z.absorb(saveLongA, doOperation),
+                        Z.fuse(saveLongA).absorb(doOperation),
                         Z.fuse(saveLongA).absorb(doOperation),
                         Z.fuse(saveLongA).absorbing(doOperation)
                     )
@@ -1532,7 +1538,7 @@ public class AbsorptionTests {
             synchronized (consumedLongB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringFLongB, getString),
+                        Z.fuse(saveStringFLongB).absorb(getString),
                         Z.fuse(saveStringFLongB).absorb(getString)
                     )
                     .forEach(
@@ -1559,7 +1565,7 @@ public class AbsorptionTests {
             synchronized (consumedLongB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringFLongB, getBooleanTrue),
+                        Z.fuse(saveStringFLongB).absorb(getBooleanTrue),
                         Z.fuse(saveStringFLongB).absorb(getBooleanTrue)
                     )
                     .forEach(
@@ -1583,7 +1589,7 @@ public class AbsorptionTests {
             synchronized (consumedLongB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringFLongB, getDouble),
+                        Z.fuse(saveStringFLongB).absorb(getDouble),
                         Z.fuse(saveStringFLongB).absorb(getDouble)
                     )
                     .forEach(
@@ -1610,7 +1616,7 @@ public class AbsorptionTests {
             synchronized (consumedLongB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringFLongB, getInt),
+                        Z.fuse(saveStringFLongB).absorb(getInt),
                         Z.fuse(saveStringFLongB).absorb(getInt)
                     )
                     .forEach(
@@ -1637,7 +1643,7 @@ public class AbsorptionTests {
             synchronized (consumedLongB) {
                 Stream
                     .of(
-                        Z.absorb(saveStringFLongB, getLong),
+                        Z.fuse(saveStringFLongB).absorb(getLong),
                         Z.fuse(saveStringFLongB).absorb(getLong)
                     )
                     .forEach(
@@ -1665,7 +1671,7 @@ public class AbsorptionTests {
                 synchronized (wasOperated) {
                     Stream
                         .of(
-                            Z.absorb(saveStringFLongB, doOperation),
+                            Z.fuse(saveStringFLongB).absorb(doOperation),
                             Z.fuse(saveStringFLongB).absorb(doOperation),
                             Z.fuse(saveStringFLongB).absorbing(doOperation)
                         )
@@ -1693,7 +1699,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, getString),
+                    Z.fuse(doOperation).absorb(getString),
                     Z.fuse(doOperation).absorb(getString),
                     Z.fuse(doOperation).absorbing(getString)
                 )
@@ -1714,7 +1720,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, getBooleanTrue),
+                    Z.fuse(doOperation).absorb(getBooleanTrue),
                     Z.fuse(doOperation).absorb(getBooleanTrue),
                     Z.fuse(doOperation).absorbing(getBooleanTrue)
                 )
@@ -1735,7 +1741,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, getDouble),
+                    Z.fuse(doOperation).absorb(getDouble),
                     Z.fuse(doOperation).absorb(getDouble),
                     Z.fuse(doOperation).absorbing(getDouble)
                 )
@@ -1756,7 +1762,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, getInt),
+                    Z.fuse(doOperation).absorb(getInt),
                     Z.fuse(doOperation).absorb(getInt),
                     Z.fuse(doOperation).absorbing(getInt)
                 )
@@ -1777,7 +1783,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, getLong),
+                    Z.fuse(doOperation).absorb(getLong),
                     Z.fuse(doOperation).absorb(getLong),
                     Z.fuse(doOperation).absorbing(getLong)
                 )
@@ -1798,7 +1804,7 @@ public class AbsorptionTests {
         synchronized (wasOperated) {
             Stream
                 .of(
-                    Z.absorb(doOperation, doOperation),
+                    Z.fuse(doOperation).absorb(doOperation),
                     Z.fuse(doOperation).absorb(doOperation),
                     Z.fuse(doOperation).absorbing(doOperation)
                 )

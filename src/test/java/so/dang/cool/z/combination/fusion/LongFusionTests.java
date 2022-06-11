@@ -17,27 +17,22 @@ public class LongFusionTests {
 
     @Test
     void long_to_longFn() {
-        assertEquals("3", Z.fuse(3L, longToString).get());
-    }
-
-    @Test
-    void long_to_longFn_deep() {
         assertEquals("3", Z.with(3L).fuse(longToString).get());
     }
 
     @Test
     void long_to_longToDbl() {
-        assertEquals(3.0, Z.fuse(3L, longToDouble).getAsDouble());
+        assertEquals(3.0, Z.with(3L).fuse(longToDouble).getAsDouble());
     }
 
     @Test
     void long_to_longToInt() {
-        assertEquals(3, Z.fuse(3L, longToInt).getAsInt());
+        assertEquals(3, Z.with(3L).fuse(longToInt).getAsInt());
     }
 
     @Test
     void long_to_longPred() {
-        assertTrue(Z.fuse(3L, isLongThree).getAsBoolean());
+        assertTrue(Z.with(3L).fuse(isLongThree).getAsBoolean());
     }
 
     @Evil
@@ -46,7 +41,7 @@ public class LongFusionTests {
         synchronized (consumedLongA) {
             consumedLongA = 0L;
 
-            Z.fuse(3L, saveLongA).run();
+            Z.with(3L).fuse(saveLongA).run();
 
             assertEquals(suppliedLong, consumedLongA);
         }
@@ -54,11 +49,11 @@ public class LongFusionTests {
 
     @Test
     void long_to_longUnop() {
-        assertEquals(6, Z.fuse(3L, addThreeToLong).getAsLong());
+        assertEquals(6, Z.with(3L).fuse(addThreeToLong).getAsLong());
     }
 
     @Test
     void long_to_longBiop() {
-        assertEquals(5, Z.fuse(3L, addLongs).applyAsLong(2L));
+        assertEquals(5, Z.with(3L).fuse(addLongs).applyAsLong(2L));
     }
 }

@@ -25,9 +25,6 @@ interface IntBinaryOperatorCombos {
         return fuseIntFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingIntFunction(IntFunction<A> next) { ... }
-
     /* IntBinaryOperator -> IntToDoubleFunction */
 
     public default IntFunction<IntToDoubleFunction> fuseIntToDoubleFunction(
@@ -43,9 +40,6 @@ interface IntBinaryOperatorCombos {
         return fuseIntToDoubleFunction(next);
     }
 
-    // TODO: Implement with currying
-    // fusingIntToDoubleFunction(IntToDoubleFunction next) { ... }
-
     /* IntBinaryOperator -> IntToLongFunction */
 
     public default IntFunction<IntToLongFunction> fuseIntToLongFunction(
@@ -58,9 +52,6 @@ interface IntBinaryOperatorCombos {
     public default IntFunction<IntToLongFunction> fuse(IntToLongFunction next) {
         return fuseIntToLongFunction(next);
     }
-
-    // TODO: Implement with currying
-    // fusingIntToLongFunction(IntToLongFunction next) { ... }
 
     /* IntBinaryOperator -> IntPredicate */
 
@@ -75,9 +66,6 @@ interface IntBinaryOperatorCombos {
         return fuseIntPredicate(next);
     }
 
-    // TODO: Implement with currying
-    // fusingIntPredicate(IntPredicate next) { ... }
-
     /* IntBinaryOperator -> IntConsumer */
 
     public default IntFunction<IntConsumer> fuseIntConsumer(IntConsumer next) {
@@ -89,30 +77,19 @@ interface IntBinaryOperatorCombos {
         return fuseIntConsumer(next);
     }
 
-    // TODO: Implement with currying
-    // fusingIntConsumer(IntConsumer next) { ... }
-
     /* IntBinaryOperator -> IntUnaryOperator */
 
-    public default IntFunction<IntUnaryOperator> fuseIntUnaryOperator(
+    public default WithIntBinaryOperator fuseIntUnaryOperator(
         IntUnaryOperator next
     ) {
-        return (int i1) ->
-            (int i2) -> next.applyAsInt(resolve().apply(i1).applyAsInt(i2));
+        return WithIntBinaryOperator.of(
+            (int i1) ->
+                (int i2) -> next.applyAsInt(resolve().apply(i1).applyAsInt(i2))
+        );
     }
 
-    public default IntFunction<IntUnaryOperator> fuse(IntUnaryOperator next) {
+    public default WithIntBinaryOperator fuse(IntUnaryOperator next) {
         return fuseIntUnaryOperator(next);
-    }
-
-    public default WithIntBinaryOperator fusingIntUnaryOperator(
-        IntUnaryOperator next
-    ) {
-        return WithIntBinaryOperator.of(fuseIntUnaryOperator(next));
-    }
-
-    public default WithIntBinaryOperator fusing(IntUnaryOperator next) {
-        return fusingIntUnaryOperator(next);
     }
 
     /* IntBinaryOperator -> IntBinaryOperator */
@@ -130,38 +107,5 @@ interface IntBinaryOperatorCombos {
         IntBinaryOperator next
     ) {
         return fuseIntBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingIntBinaryOperator(IntBinaryOperator next) { ... }
-
-    public default IntFunction<IntUnaryOperator> fuseIntBinaryOperator(
-        IntBinaryOperator next,
-        int secondArg
-    ) {
-        return (int i1) ->
-            (int i2) ->
-                next.applyAsInt(resolve().apply(i1).applyAsInt(i2), secondArg);
-    }
-
-    public default IntFunction<IntUnaryOperator> fuse(
-        IntBinaryOperator next,
-        int secondArg
-    ) {
-        return fuseIntBinaryOperator(next, secondArg);
-    }
-
-    public default WithIntBinaryOperator fusingIntBinaryOperator(
-        IntBinaryOperator next,
-        int secondArg
-    ) {
-        return WithIntBinaryOperator.of(fuseIntBinaryOperator(next, secondArg));
-    }
-
-    public default WithIntBinaryOperator fusing(
-        IntBinaryOperator next,
-        int secondArg
-    ) {
-        return fusingIntBinaryOperator(next, secondArg);
     }
 }

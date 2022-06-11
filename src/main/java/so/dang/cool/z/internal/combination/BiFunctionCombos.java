@@ -58,22 +58,6 @@ interface BiFunctionCombos<A, B, C> {
         return fuseBiFunction(next);
     }
 
-    public default <D, E> WithBiFunction<A, B, E> fuseBiFunction(
-        BiFunction<C, D, E> next,
-        D secondArg
-    ) {
-        return WithBiFunction.of(
-            (A a, B b) -> next.apply(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D, E> WithBiFunction<A, B, E> fuse(
-        BiFunction<C, D, E> next,
-        D secondArg
-    ) {
-        return fuseBiFunction(next, secondArg);
-    }
-
     /* BiFunction<A, B, C> -> ToDoubleFunction<C> */
 
     public default WithToDoubleBiFunction<A, B> fuseToDoubleFunction(
@@ -103,23 +87,6 @@ interface BiFunctionCombos<A, B, C> {
         ToDoubleBiFunction<C, D> next
     ) {
         return fuseToDoubleBiFunction(next);
-    }
-
-    public default <D> WithToDoubleBiFunction<A, B> fuseToDoubleBiFunction(
-        ToDoubleBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return WithToDoubleBiFunction.of(
-            (A a, B b) ->
-                next.applyAsDouble(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithToDoubleBiFunction<A, B> fuse(
-        ToDoubleBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return fuseToDoubleBiFunction(next, secondArg);
     }
 
     /* BiFunction<A, B, C> -> ToIntFunction<C> */
@@ -152,23 +119,6 @@ interface BiFunctionCombos<A, B, C> {
         return fuseToIntBiFunction(next);
     }
 
-    public default <D> WithToIntBiFunction<A, B> fuseToIntBiFunction(
-        ToIntBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return WithToIntBiFunction.of(
-            (A a, B b) ->
-                next.applyAsInt(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithToIntBiFunction<A, B> fuse(
-        ToIntBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return fuseToIntBiFunction(next, secondArg);
-    }
-
     /* BiFunction<A, B, C> -> ToLongFunction<C> */
 
     public default WithToLongBiFunction<A, B> fuseToLongFunction(
@@ -199,23 +149,6 @@ interface BiFunctionCombos<A, B, C> {
         return fuseToLongBiFunction(next);
     }
 
-    public default <D> WithToLongBiFunction<A, B> fuseToLongBiFunction(
-        ToLongBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return WithToLongBiFunction.of(
-            (A a, B b) ->
-                next.applyAsLong(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithToLongBiFunction<A, B> fuse(
-        ToLongBiFunction<C, D> next,
-        D secondArg
-    ) {
-        return fuseToLongBiFunction(next, secondArg);
-    }
-
     /* BiFunction<A, B, C> -> Predicate<C> */
 
     public default WithBiPredicate<A, B> fusePredicate(Predicate<C> next) {
@@ -242,22 +175,6 @@ interface BiFunctionCombos<A, B, C> {
         BiPredicate<C, D> next
     ) {
         return fuseBiPredicate(next);
-    }
-
-    public default <D> WithBiPredicate<A, B> fuseBiPredicate(
-        BiPredicate<C, D> next,
-        D secondArg
-    ) {
-        return WithBiPredicate.of(
-            (A a, B b) -> next.test(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithBiPredicate<A, B> fuse(
-        BiPredicate<C, D> next,
-        D secondArg
-    ) {
-        return fuseBiPredicate(next, secondArg);
     }
 
     /* BiFunction<A, B, C> -> Consumer<C> */
@@ -288,22 +205,6 @@ interface BiFunctionCombos<A, B, C> {
         return fuseBiConsumer(next);
     }
 
-    public default <D> WithBiConsumer<A, B> fuseBiConsumer(
-        BiConsumer<C, D> next,
-        D secondArg
-    ) {
-        return WithBiConsumer.of(
-            (A a, B b) -> next.accept(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithBiConsumer<A, B> fuse(
-        BiConsumer<C, D> next,
-        D secondArg
-    ) {
-        return fuseBiConsumer(next, secondArg);
-    }
-
     /* BiFunction<A, B, C> -> ObjDoubleConsumer<C> */
 
     //TODO: Implement with currying?
@@ -318,22 +219,6 @@ interface BiFunctionCombos<A, B, C> {
         ObjDoubleConsumer<C> next
     ) {
         return fuseObjDoubleConsumer(next);
-    }
-
-    public default <D> WithBiConsumer<A, B> fuseObjDoubleConsumer(
-        ObjDoubleConsumer<C> next,
-        double secondArg
-    ) {
-        return WithBiConsumer.of(
-            (A a, B b) -> next.accept(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithBiConsumer<A, B> fuse(
-        ObjDoubleConsumer<C> next,
-        double secondArg
-    ) {
-        return fuseObjDoubleConsumer(next, secondArg);
     }
 
     /* BiFunction<A, B, C> -> ObjIntConsumer<C> */
@@ -352,22 +237,6 @@ interface BiFunctionCombos<A, B, C> {
         return fuseObjIntConsumer(next);
     }
 
-    public default <D> WithBiConsumer<A, B> fuseObjIntConsumer(
-        ObjIntConsumer<C> next,
-        int secondArg
-    ) {
-        return WithBiConsumer.of(
-            (A a, B b) -> next.accept(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithBiConsumer<A, B> fuse(
-        ObjIntConsumer<C> next,
-        int secondArg
-    ) {
-        return fuseObjIntConsumer(next, secondArg);
-    }
-
     /* BiFunction<A, B, C> -> ObjLongConsumer<C> */
 
     //TODO: Implement with currying?
@@ -382,21 +251,5 @@ interface BiFunctionCombos<A, B, C> {
         ObjLongConsumer<C> next
     ) {
         return fuseObjLongConsumer(next);
-    }
-
-    public default <D> WithBiConsumer<A, B> fuseObjLongConsumer(
-        ObjLongConsumer<C> next,
-        long secondArg
-    ) {
-        return WithBiConsumer.of(
-            (A a, B b) -> next.accept(resolve().apply(a).apply(b), secondArg)
-        );
-    }
-
-    public default <D> WithBiConsumer<A, B> fuse(
-        ObjLongConsumer<C> next,
-        long secondArg
-    ) {
-        return fuseObjLongConsumer(next, secondArg);
     }
 }

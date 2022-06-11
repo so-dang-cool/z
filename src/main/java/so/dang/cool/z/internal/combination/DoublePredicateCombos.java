@@ -1,11 +1,6 @@
 package so.dang.cool.z.internal.combination;
 
-import java.util.function.DoubleConsumer;
-import java.util.function.DoubleFunction;
 import java.util.function.DoublePredicate;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.DoubleToLongFunction;
-import java.util.function.DoubleUnaryOperator;
 import so.dang.cool.z.function.BooleanConsumer;
 import so.dang.cool.z.function.BooleanFunction;
 import so.dang.cool.z.function.BooleanPredicate;
@@ -24,131 +19,85 @@ interface DoublePredicateCombos {
 
     /* DoublePredicate -> BooleanFunction<A> */
 
-    public default <A> DoubleFunction<A> fuseBooleanFunction(
+    public default <A> WithDoubleFunction<A> fuseBooleanFunction(
         BooleanFunction<A> next
     ) {
-        return (double d) -> next.apply(resolve().test(d));
+        return WithDoubleFunction.of(
+            (double d) -> next.apply(resolve().test(d))
+        );
     }
 
-    public default <A> DoubleFunction<A> fuse(BooleanFunction<A> next) {
+    public default <A> WithDoubleFunction<A> fuse(BooleanFunction<A> next) {
         return fuseBooleanFunction(next);
-    }
-
-    public default <A> WithDoubleFunction<A> fusingBooleanFunction(
-        BooleanFunction<A> next
-    ) {
-        return WithDoubleFunction.of(fuseBooleanFunction(next));
-    }
-
-    public default <A> WithDoubleFunction<A> fusing(BooleanFunction<A> next) {
-        return fusingBooleanFunction(next);
     }
 
     /* DoublePredicate -> BooleanToDoubleFunction */
 
-    public default DoubleUnaryOperator fuseBooleanToDoubleFunction(
+    public default WithDoubleUnaryOperator fuseBooleanToDoubleFunction(
         BooleanToDoubleFunction next
     ) {
-        return (double d) -> next.applyAsDouble(resolve().test(d));
+        return WithDoubleUnaryOperator.of(
+            (double d) -> next.applyAsDouble(resolve().test(d))
+        );
     }
 
-    public default DoubleUnaryOperator fuse(BooleanToDoubleFunction next) {
+    public default WithDoubleUnaryOperator fuse(BooleanToDoubleFunction next) {
         return fuseBooleanToDoubleFunction(next);
-    }
-
-    public default WithDoubleUnaryOperator fusingBooleanToDoubleFunction(
-        BooleanToDoubleFunction next
-    ) {
-        return WithDoubleUnaryOperator.of(fuseBooleanToDoubleFunction(next));
-    }
-
-    public default WithDoubleUnaryOperator fusing(
-        BooleanToDoubleFunction next
-    ) {
-        return fusingBooleanToDoubleFunction(next);
     }
 
     /* DoublePredicate -> BooleanToIntFunction */
 
-    public default DoubleToIntFunction fuseBooleanToIntFunction(
+    public default WithDoubleToIntFunction fuseBooleanToIntFunction(
         BooleanToIntFunction next
     ) {
-        return (double d) -> next.applyAsInt(resolve().test(d));
+        return WithDoubleToIntFunction.of(
+            (double d) -> next.applyAsInt(resolve().test(d))
+        );
     }
 
-    public default DoubleToIntFunction fuse(BooleanToIntFunction next) {
+    public default WithDoubleToIntFunction fuse(BooleanToIntFunction next) {
         return fuseBooleanToIntFunction(next);
-    }
-
-    public default WithDoubleToIntFunction fusingBooleanToIntFunction(
-        BooleanToIntFunction next
-    ) {
-        return WithDoubleToIntFunction.of(fuseBooleanToIntFunction(next));
-    }
-
-    public default WithDoubleToIntFunction fusing(BooleanToIntFunction next) {
-        return fusingBooleanToIntFunction(next);
     }
 
     /* DoublePredicate -> BooleanToLongFunction */
 
-    public default DoubleToLongFunction fuseBooleanToLongFunction(
+    public default WithDoubleToLongFunction fuseBooleanToLongFunction(
         BooleanToLongFunction next
     ) {
-        return (double d) -> next.applyAsLong(resolve().test(d));
+        return WithDoubleToLongFunction.of(
+            (double d) -> next.applyAsLong(resolve().test(d))
+        );
     }
 
-    public default DoubleToLongFunction fuse(BooleanToLongFunction next) {
+    public default WithDoubleToLongFunction fuse(BooleanToLongFunction next) {
         return fuseBooleanToLongFunction(next);
-    }
-
-    public default WithDoubleToLongFunction fusingBooleanToLongFunction(
-        BooleanToLongFunction next
-    ) {
-        return WithDoubleToLongFunction.of(fuseBooleanToLongFunction(next));
-    }
-
-    public default WithDoubleToLongFunction fusing(BooleanToLongFunction next) {
-        return fusingBooleanToLongFunction(next);
     }
 
     /* DoublePredicate -> BooleanPredicate */
 
-    public default DoublePredicate fuseDoublePredicate(BooleanPredicate next) {
-        return (double d) -> next.test(resolve().test(d));
-    }
-
-    public default DoublePredicate fuse(BooleanPredicate next) {
-        return fuseDoublePredicate(next);
-    }
-
-    public default WithDoublePredicate fusingDoublePredicate(
+    public default WithDoublePredicate fuseDoublePredicate(
         BooleanPredicate next
     ) {
-        return WithDoublePredicate.of(fuseDoublePredicate(next));
+        return WithDoublePredicate.of(
+            (double d) -> next.test(resolve().test(d))
+        );
     }
 
-    public default WithDoublePredicate fusing(BooleanPredicate next) {
-        return fusingDoublePredicate(next);
+    public default WithDoublePredicate fuse(BooleanPredicate next) {
+        return fuseDoublePredicate(next);
     }
 
     /* DoublePredicate -> BooleanConsumer */
 
-    public default DoubleConsumer fuseBooleanConsumer(BooleanConsumer next) {
-        return (double d) -> next.accept(resolve().test(d));
-    }
-
-    public default DoubleConsumer fuse(BooleanConsumer next) {
-        return fuseBooleanConsumer(next);
-    }
-
-    public default WithDoubleConsumer fusingBooleanConsumer(
+    public default WithDoubleConsumer fuseBooleanConsumer(
         BooleanConsumer next
     ) {
-        return WithDoubleConsumer.of(fuseBooleanConsumer(next));
+        return WithDoubleConsumer.of(
+            (double d) -> next.accept(resolve().test(d))
+        );
     }
 
-    public default WithDoubleConsumer fusing(BooleanConsumer next) {
-        return fusingBooleanConsumer(next);
+    public default WithDoubleConsumer fuse(BooleanConsumer next) {
+        return fuseBooleanConsumer(next);
     }
 }

@@ -102,20 +102,4 @@ interface LongSupplierCombos {
     public default WithLongUnaryOperator fuse(LongBinaryOperator next) {
         return fuseLongBinaryOperator(next);
     }
-
-    public default WithLongSupplier fuseLongBinaryOperator(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return WithLongSupplier.of(
-            () -> next.applyAsLong(resolve().getAsLong(), secondArg)
-        );
-    }
-
-    public default WithLongSupplier fuse(
-        LongBinaryOperator next,
-        long secondArg
-    ) {
-        return fuseLongBinaryOperator(next, secondArg);
-    }
 }

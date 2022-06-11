@@ -20,26 +20,16 @@ public class LongBinaryOperatorFusionTests {
 
     @Test
     void longBiop_to_longFn() {
-        Stream
-            .of(
-                Z.fuse(addLongs, longToString),
-                Z.fuse(addLongs).fuse(longToString)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals("3", fusion.apply(1L).apply(2L));
-                }
-            );
-        assertEquals("3", Z.fuse(addLongs, longToString).apply(1L).apply(2L));
+        assertEquals(
+            "3",
+            Z.fuse(addLongs).fuse(longToString).apply(1L).apply(2L)
+        );
     }
 
     @Test
     void longBiop_to_longToDbl() {
         Stream
-            .of(
-                Z.fuse(addLongs, longToDouble),
-                Z.fuse(addLongs).fuse(longToDouble)
-            )
+            .of(Z.fuse(addLongs).fuse(longToDouble))
             .forEach(
                 fusion -> {
                     assertEquals(3.0, fusion.apply(1L).applyAsDouble(2L));
@@ -49,23 +39,16 @@ public class LongBinaryOperatorFusionTests {
 
     @Test
     void longBiop_to_longToInt() {
-        Stream
-            .of(Z.fuse(addLongs, longToInt), Z.fuse(addLongs).fuse(longToInt))
-            .forEach(
-                fusion -> {
-                    assertEquals(9, fusion.apply(4L).applyAsInt(5L));
-                }
-            );
-        assertEquals(9, Z.fuse(addLongs, longToInt).apply(4L).applyAsInt(5L));
+        assertEquals(
+            9,
+            Z.fuse(addLongs).fuse(longToInt).apply(4L).applyAsInt(5L)
+        );
     }
 
     @Test
     void longBiop_to_longPred() {
         Stream
-            .of(
-                Z.fuse(addLongs, isLongThree),
-                Z.fuse(addLongs).fuse(isLongThree)
-            )
+            .of(Z.fuse(addLongs).fuse(isLongThree))
             .forEach(
                 fusion -> {
                     assertTrue(fusion.apply(-1L).test(4L));
@@ -78,10 +61,7 @@ public class LongBinaryOperatorFusionTests {
     void longBiop_to_longCns() {
         synchronized (consumedLongA) {
             Stream
-                .of(
-                    Z.fuse(addLongs, saveLongA),
-                    Z.fuse(addLongs).fuse(saveLongA)
-                )
+                .of(Z.fuse(addLongs).fuse(saveLongA))
                 .forEach(
                     fusion -> {
                         consumedLongA = 0L;
@@ -97,11 +77,7 @@ public class LongBinaryOperatorFusionTests {
     @Test
     void longBiop_to_longUnop() {
         Stream
-            .of(
-                Z.fuse(addLongs, addThreeToLong),
-                Z.fuse(addLongs).fuse(addThreeToLong),
-                Z.fuse(addLongs).fusing(addThreeToLong)
-            )
+            .of(Z.fuse(addLongs).fuse(addThreeToLong))
             .forEach(
                 fusion -> {
                     assertEquals(6L, fusion.apply(1L).applyAsLong(2L));
@@ -112,24 +88,13 @@ public class LongBinaryOperatorFusionTests {
     @Test
     void longBiop_to_longBiop() {
         Stream
-            .of(Z.fuse(addLongs, addLongs), Z.fuse(addLongs).fuse(addLongs))
+            .of(Z.fuse(addLongs).fuse(addLongs))
             .forEach(
                 fusion -> {
                     assertEquals(
                         6L,
                         fusion.apply(1L).apply(2L).applyAsLong(3L)
                     );
-                }
-            );
-
-        Stream
-            .of(
-                Z.fuse(addLongs).fuse(addLongs, 3L),
-                Z.fuse(addLongs).fusing(addLongs, 3L)
-            )
-            .forEach(
-                fusion -> {
-                    assertEquals(6L, fusion.apply(1L).applyAsLong(2L));
                 }
             );
     }

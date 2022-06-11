@@ -115,21 +115,4 @@ interface BooleanToDoubleFunctionCombos {
     ) {
         return fuseDoubleBinaryOperator(next);
     }
-
-    public default WithBooleanToDoubleFunction fuseDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return WithBooleanToDoubleFunction.of(
-            (boolean b) ->
-                next.applyAsDouble(resolve().applyAsDouble(b), secondArg)
-        );
-    }
-
-    public default WithBooleanToDoubleFunction fuse(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fuseDoubleBinaryOperator(next, secondArg);
-    }
 }

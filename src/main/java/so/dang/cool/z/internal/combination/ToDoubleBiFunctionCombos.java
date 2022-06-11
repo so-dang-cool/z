@@ -1,6 +1,5 @@
 package so.dang.cool.z.internal.combination;
 
-import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
@@ -9,10 +8,7 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBiConsumer;
 import so.dang.cool.z.internal.combination.Combine.WithBiFunction;
 import so.dang.cool.z.internal.combination.Combine.WithBiPredicate;
@@ -25,151 +21,89 @@ interface ToDoubleBiFunctionCombos<A, B> {
 
     /* ToDoubleBiFunction<A, B> -> DoubleFunction<C> */
 
-    public default <C> Function<A, Function<B, C>> fuseDoubleFunction(
+    public default <C> WithBiFunction<A, B, C> fuseDoubleFunction(
         DoubleFunction<C> next
     ) {
-        return (A a) ->
-            (B b) -> next.apply(resolve().apply(a).applyAsDouble(b));
+        return WithBiFunction.of(
+            (A a) -> (B b) -> next.apply(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default <C> Function<A, Function<B, C>> fuse(
-        DoubleFunction<C> next
-    ) {
+    public default <C> WithBiFunction<A, B, C> fuse(DoubleFunction<C> next) {
         return fuseDoubleFunction(next);
-    }
-
-    public default <C> WithBiFunction<A, B, C> fusingDoubleFunction(
-        DoubleFunction<C> next
-    ) {
-        return WithBiFunction.of(fuseDoubleFunction(next));
-    }
-
-    public default <C> WithBiFunction<A, B, C> fusing(DoubleFunction<C> next) {
-        return fusingDoubleFunction(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoubleToIntFunction */
 
-    public default Function<A, ToIntFunction<B>> fuseDoubleToIntFunction(
+    public default WithToIntBiFunction<A, B> fuseDoubleToIntFunction(
         DoubleToIntFunction next
     ) {
-        return (A a) ->
-            (B b) -> next.applyAsInt(resolve().apply(a).applyAsDouble(b));
+        return WithToIntBiFunction.of(
+            (A a) ->
+                (B b) -> next.applyAsInt(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default Function<A, ToIntFunction<B>> fuse(
-        DoubleToIntFunction next
-    ) {
+    public default WithToIntBiFunction<A, B> fuse(DoubleToIntFunction next) {
         return fuseDoubleToIntFunction(next);
-    }
-
-    public default WithToIntBiFunction<A, B> fusingDoubleToIntFunction(
-        DoubleToIntFunction next
-    ) {
-        return WithToIntBiFunction.of(fuseDoubleToIntFunction(next));
-    }
-
-    public default WithToIntBiFunction<A, B> fusing(DoubleToIntFunction next) {
-        return fusingDoubleToIntFunction(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoubleToLongFunction */
 
-    public default Function<A, ToLongFunction<B>> fuseDoubleToLongFunction(
+    public default WithToLongBiFunction<A, B> fuseDoubleToLongFunction(
         DoubleToLongFunction next
     ) {
-        return (A a) ->
-            (B b) -> next.applyAsLong(resolve().apply(a).applyAsDouble(b));
+        return WithToLongBiFunction.of(
+            (A a) ->
+                (B b) -> next.applyAsLong(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default Function<A, ToLongFunction<B>> fuse(
-        DoubleToLongFunction next
-    ) {
+    public default WithToLongBiFunction<A, B> fuse(DoubleToLongFunction next) {
         return fuseDoubleToLongFunction(next);
-    }
-
-    public default WithToLongBiFunction<A, B> fusingDoubleToLongFunction(
-        DoubleToLongFunction next
-    ) {
-        return WithToLongBiFunction.of(fuseDoubleToLongFunction(next));
-    }
-
-    public default WithToLongBiFunction<A, B> fusing(
-        DoubleToLongFunction next
-    ) {
-        return fusingDoubleToLongFunction(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoublePredicate */
 
-    public default Function<A, Predicate<B>> fuseDoublePredicate(
+    public default WithBiPredicate<A, B> fuseDoublePredicate(
         DoublePredicate next
     ) {
-        return (A a) -> (B b) -> next.test(resolve().apply(a).applyAsDouble(b));
+        return WithBiPredicate.of(
+            (A a) -> (B b) -> next.test(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default Function<A, Predicate<B>> fuse(DoublePredicate next) {
+    public default WithBiPredicate<A, B> fuse(DoublePredicate next) {
         return fuseDoublePredicate(next);
-    }
-
-    public default WithBiPredicate<A, B> fusingDoublePredicate(
-        DoublePredicate next
-    ) {
-        return WithBiPredicate.of(fuseDoublePredicate(next));
-    }
-
-    public default WithBiPredicate<A, B> fusing(DoublePredicate next) {
-        return fusingDoublePredicate(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoubleConsumer */
 
-    public default Function<A, Consumer<B>> fuseDoubleConsumer(
+    public default WithBiConsumer<A, B> fuseDoubleConsumer(
         DoubleConsumer next
     ) {
-        return (A a) ->
-            (B b) -> next.accept(resolve().apply(a).applyAsDouble(b));
+        return WithBiConsumer.of(
+            (A a) -> (B b) -> next.accept(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default Function<A, Consumer<B>> fuse(DoubleConsumer next) {
+    public default WithBiConsumer<A, B> fuse(DoubleConsumer next) {
         return fuseDoubleConsumer(next);
-    }
-
-    public default WithBiConsumer<A, B> fusingDoubleConsumer(
-        DoubleConsumer next
-    ) {
-        return WithBiConsumer.of(fuseDoubleConsumer(next));
-    }
-
-    public default WithBiConsumer<A, B> fusing(DoubleConsumer next) {
-        return fusingDoubleConsumer(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoubleUnaryOperator */
 
-    public default Function<A, ToDoubleFunction<B>> fuseDoubleUnaryOperator(
+    public default WithToDoubleBiFunction<A, B> fuseDoubleUnaryOperator(
         DoubleUnaryOperator next
     ) {
-        return (A a) ->
-            (B b) -> next.applyAsDouble(resolve().apply(a).applyAsDouble(b));
+        return WithToDoubleBiFunction.of(
+            (A a) ->
+                (B b) -> next.applyAsDouble(resolve().apply(a).applyAsDouble(b))
+        );
     }
 
-    public default Function<A, ToDoubleFunction<B>> fuse(
-        DoubleUnaryOperator next
-    ) {
+    public default WithToDoubleBiFunction<A, B> fuse(DoubleUnaryOperator next) {
         return fuseDoubleUnaryOperator(next);
-    }
-
-    public default WithToDoubleBiFunction<A, B> fusingDoubleUnaryOperator(
-        DoubleUnaryOperator next
-    ) {
-        return WithToDoubleBiFunction.of(fuseDoubleUnaryOperator(next));
-    }
-
-    public default WithToDoubleBiFunction<A, B> fusing(
-        DoubleUnaryOperator next
-    ) {
-        return fusingDoubleUnaryOperator(next);
     }
 
     /* ToDoubleBiFunction<A, B> -> DoubleBinaryOperator */
@@ -187,43 +121,5 @@ interface ToDoubleBiFunctionCombos<A, B> {
         DoubleBinaryOperator next
     ) {
         return fuseDoubleBinaryOperator(next);
-    }
-
-    // TODO: Implement with currying
-    // fusingDoubleBinaryOperator(DoubleBinaryOperator next) { ... }
-
-    public default Function<A, ToDoubleFunction<B>> fuseDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return (A a) ->
-            (B b) ->
-                next.applyAsDouble(
-                    resolve().apply(a).applyAsDouble(b),
-                    secondArg
-                );
-    }
-
-    public default Function<A, ToDoubleFunction<B>> fuse(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fuseDoubleBinaryOperator(next, secondArg);
-    }
-
-    public default WithToDoubleBiFunction<A, B> fusingDoubleBinaryOperator(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return WithToDoubleBiFunction.of(
-            fuseDoubleBinaryOperator(next, secondArg)
-        );
-    }
-
-    public default WithToDoubleBiFunction<A, B> fusing(
-        DoubleBinaryOperator next,
-        double secondArg
-    ) {
-        return fusingDoubleBinaryOperator(next, secondArg);
     }
 }
