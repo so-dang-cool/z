@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'so.dang.cool'
-version = '3.0.0-BETA'
+version = '3.0.0'
 
 repositories {
     mavenCentral()
