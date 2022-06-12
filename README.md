@@ -9,7 +9,7 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/hiljusti/z)
 [![codecov](https://codecov.io/gh/hiljusti/z/branch/core/graph/badge.svg?token=CF80PDSXUB)](https://codecov.io/gh/hiljusti/z)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hiljusti/z)
-![jar size](https://img.shields.io/badge/jar_size-243_kB-blue)
+![jar size](https://img.shields.io/badge/jar_size-192_kB-blue)
 ![dependency count](https://img.shields.io/badge/dependencies-0-blue)
 
 # Techniques
