@@ -178,7 +178,7 @@ public final class TestFunctions {
     public static LongUnaryOperator addThreeToLong = n -> n + 3L;
     public static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
 
-    // autofmt:off
+    // fmt:off
 
     public static BiFunction<String, String, String> concat2 =
         (a, b) -> concatVariableStrings(a, b);
@@ -223,9 +223,9 @@ public final class TestFunctions {
     public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>> curriedConcat11 =
         a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k);
     public static Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, Function<String, String>>>>>>>>>>>> curriedConcat12 =
-        a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j,k,  l);
+        a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l -> concatVariableStrings(a, b, c, d, e, f, g, h, i, j, k, l);
 
-    // autofmt:on
+    // fmt:on
 
     private static String concatVariableStrings(String... strings) {
         return Stream.of(strings).reduce(String::concat).get();

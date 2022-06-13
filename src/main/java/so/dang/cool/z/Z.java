@@ -77,6 +77,7 @@ import so.dang.cool.z.internal.combination.Combine;
  */
 public final class Z {
 
+    // Instantiation is prevented with a private constructor.
     private Z() {}
 
     /**
@@ -644,24 +645,6 @@ public final class Z {
         return fuseLongBinaryOperator(initial);
     }
 
-    // ┏┓
-    // ┏━━━━┓
-    // ┏━━━━━━━━┓
-    // ┏━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    // ┃                                          ┃
-    // ┃    ┏━┓╻ ╻┏━┓┏━╸┏━┓   ┏━╸╻ ╻┏━┓╻┏━┓┏┓╻    ┃
-    // ┃    ┗━┓┃ ┃┣━┛┣╸ ┣┳┛   ┣╸ ┃ ┃┗━┓┃┃ ┃┃┗┫    ┃
-    // ┃    ┗━┛┗━┛╹  ┗━╸╹┗╸   ╹  ┗━┛┗━┛╹┗━┛╹ ╹    ┃
-    // ┃                                          ┃
-    // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
     // Classes, objects, and primitives into combinators.
 
     public static <A> Combine.WithFunction<A, A> withClass(Class<A> clazz) {
@@ -728,7 +711,7 @@ public final class Z {
 
     // Multi-argument functions into curried forms.
 
-    // autofmt:off
+    // fmt:off
 
     public static <A, B, C>
         Function<A,
@@ -1028,7 +1011,7 @@ public final class Z {
         return split12(initial);
     }
 
-	// autofmt:on
+	// fmt:on
 
     public static <A, B> Function<A, ToDoubleFunction<B>> splitToDoubleBiFunction(
         ToDoubleBiFunction<A, B> initial
@@ -1147,7 +1130,7 @@ public final class Z {
 
     /* Multifunctions */
 
-    // autofmt:off
+    // fmt:off
 
     @Evil
     public static <A, B, C>
@@ -1325,7 +1308,7 @@ public final class Z {
             curried.apply(a).apply(b).apply(c).apply(d).apply(e).apply(f).apply(g).apply(h).apply(i).apply(j).apply(k).apply(l);
     }
 
-	// autofmt:on
+	// fmt:on
 
     // ┏┓
     // ┏━━━━┓
