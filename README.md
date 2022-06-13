@@ -18,7 +18,7 @@ Unlock your functional programming potential with these combination techniques:
 
 ## Fusion
 
-`Z.fuse(fn1, fn2)` Combine two functions.
+`Z.fuse(fn1).fuse(fn2)` Combine two functions.
 
 ```java
 var internedTrim = Z.fuse(String::trim).fuse(String::intern);
@@ -69,7 +69,7 @@ assertEquals(
 
 ## Absorption
 
-`Z.absorb(fn1, fn2)` Unnaturally combine two functions.
+`Z.fuse(fn1).absorb(fn2)` Unnaturally combine two functions.
 
 _This is an **evil** technique. It's provided as a tool to control evil problems, not to encourage evil code._
 
@@ -87,10 +87,10 @@ assertEquals(List.of("batman"), heroes);
 
 ## Super Fusion
 
-`Z.fuse(var or fn1).fuse(fn2).[...].fuse(fn[N])` Combine _N_ functions.
+`Z.fuse(fn1).fuse(fn2).[...].fuse(fn[N])` Combine _N_ functions. To start with an object or primitive use `Z.with(var)...`
 
 ```java
-var isLocalHost = Z.fuse("https?://localhost(:\\d+)?(/\\S*)?")
+var isLocalHost = Z.with("https?://localhost(:\\d+)?(/\\S*)?")
     .fuseFunction(Pattern::compile)
     .fuse(Pattern::matcher)
     .fuse(Matcher::matches);
