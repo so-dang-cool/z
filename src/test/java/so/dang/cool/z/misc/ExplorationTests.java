@@ -1,10 +1,10 @@
 package so.dang.cool.z.misc;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 public class ExplorationTests {
+
     @Test
     public void cons() {
         var stack = Zack.of("Hello!").push(17).push(List.of('a', 'b', 'c'));
@@ -33,6 +33,7 @@ interface Zack<PREV extends Zack<?, ?>, CURR> {
     }
 
     class VoidNode implements Zack<VoidNode, Void> {
+
         @Override
         public Void top() {
             throw new RuntimeException("Zack overflow!");
@@ -45,6 +46,7 @@ interface Zack<PREV extends Zack<?, ?>, CURR> {
     }
 
     class OneNode<PREV extends Zack<?, ?>, CURR> implements Zack<PREV, CURR> {
+
         private PREV prev;
         private CURR v;
 
