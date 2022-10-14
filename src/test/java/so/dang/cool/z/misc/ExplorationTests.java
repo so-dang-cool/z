@@ -20,11 +20,11 @@ public class ExplorationTests {
     }
 }
 
-interface Zack<ST extends Zack<?, ?>, VAL> {
-    VAL top();
-    ST prev();
+interface Zack<PREV extends Zack<?, ?>, CURR> {
+    CURR top();
+    PREV prev();
 
-    default <NEXT> Zack<Zack<ST, VAL>, NEXT> push(NEXT next) {
+    default <NEXT> Zack<Zack<PREV, CURR>, NEXT> push(NEXT next) {
         return new OneNode<>(this, next);
     }
 
@@ -44,22 +44,22 @@ interface Zack<ST extends Zack<?, ?>, VAL> {
         }
     }
 
-    class OneNode<ST extends Zack<?, ?>, VAL> implements Zack<ST, VAL> {
-        private ST prev;
-        private VAL v;
+    class OneNode<PREV extends Zack<?, ?>, CURR> implements Zack<PREV, CURR> {
+        private PREV prev;
+        private CURR v;
 
-        OneNode(ST prev, VAL v) {
+        OneNode(PREV prev, CURR v) {
             this.prev = prev;
             this.v = v;
         }
 
         @Override
-        public VAL top() {
+        public CURR top() {
             return v;
         }
 
         @Override
-        public ST prev() {
+        public PREV prev() {
             return prev;
         }
     }
