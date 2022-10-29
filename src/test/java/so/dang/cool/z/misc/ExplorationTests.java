@@ -38,7 +38,7 @@ interface Channel<A, PREV extends Channel<?, ?>> extends Supplier<A> {
     class Nothing implements Channel<Void, Nothing> {
 
         @Override
-        public <A> Channel<A, Nothing> fuse(Function<Void, A> f) {
+        public <A> OneThing<A, Nothing> fuse(Function<Void, A> f) {
             return new OneThing<>(f.apply(null), this);
         }
 
@@ -59,7 +59,7 @@ interface Channel<A, PREV extends Channel<?, ?>> extends Supplier<A> {
         }
 
         @Override
-        public <B> Channel<B, PREV> fuse(Function<A, B> f) {
+        public <B> OneThing<B, PREV> fuse(Function<A, B> f) {
             return new OneThing<>(f.apply(a), prev);
         }
 
