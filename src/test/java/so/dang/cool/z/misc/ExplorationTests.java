@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
-
 import org.junit.jupiter.api.Test;
 
 public class ExplorationTests {
@@ -13,28 +12,31 @@ public class ExplorationTests {
     public void uhawwwwwww_example() {
         Function<String, String> addW = s -> s.concat("ｗ");
 
-        Function<String, String> addSevenWs = s -> Channel.of(s)
-            .fuse(addW)
-            .fuse(addW)
-            .fuse(addW)
-            .fuse(addW)
-            .fuse(addW)
-            .fuse(addW)
-            .fuse(addW)
-            .get();
+        Function<String, String> addSevenWs = s ->
+            Channel
+                .push(s)
+                .fuse(addW)
+                .fuse(addW)
+                .fuse(addW)
+                .fuse(addW)
+                .fuse(addW)
+                .fuse(addW)
+                .fuse(addW)
+                .get();
 
         assertEquals("うはｗｗｗｗｗｗｗ", addSevenWs.apply("うは"));
     }
 }
 
-interface Channel <A, PREV extends Channel<?, ?>> extends Supplier<A> {
+interface Channel<A, PREV extends Channel<?, ?>> extends Supplier<A> {
     <B> Channel<B, PREV> fuse(Function<A, B> f);
 
-    static <A> OneThing<A, Nothing> of(A a) {
+    static <A> OneThing<A, Nothing> push(A a) {
         return new OneThing<>(a, new Nothing());
     }
 
     class Nothing implements Channel<Void, Nothing> {
+
         @Override
         public <A> Channel<A, Nothing> fuse(Function<Void, A> f) {
             return new OneThing<>(f.apply(null), this);
@@ -47,6 +49,7 @@ interface Channel <A, PREV extends Channel<?, ?>> extends Supplier<A> {
     }
 
     class OneThing<A, PREV extends Channel<?, ?>> implements Channel<A, PREV> {
+
         A a;
         PREV prev;
 
