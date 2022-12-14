@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -40,7 +41,8 @@ public class BooleanToIntFunctionFusionTests {
 
     @Test
     void dblToInt_to_intPred() {
-        assertTrue(Z.fuse(maybeTwoAsInt).fuse(isIntTwo).test(true));
+        assertTrue(Z.fuse(maybeTwoAsInt).fuse(isInt(2)).test(true));
+        assertFalse(Z.fuse(maybeTwoAsInt).fuse(isInt(3)).test(true));
     }
 
     @Evil

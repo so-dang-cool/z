@@ -90,7 +90,8 @@ public class ObjectFusionTests {
 
     @Test
     void object_to_bipred() {
-        assertTrue(Z.with("Z").fuse(startsWith).test("Z"));
+        assertTrue(Z.with("Z").fuse(doesStartWith).test("Z"));
+        assertFalse(Z.with("Z").fuse(doesNotStartWith).test("Z"));
     }
 
     @Evil

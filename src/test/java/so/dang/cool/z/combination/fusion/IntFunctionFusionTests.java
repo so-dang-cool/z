@@ -85,12 +85,16 @@ public class IntFunctionFusionTests {
 
     @Test
     void intFn_to_pred() {
-        assertFalse(Z.fuse(intToString).fuse(isEmpty).test(1));
+        assertTrue(Z.fuse(intToString).fuse("1"::equals).test(1));
+        assertFalse(Z.fuse(intToString).fuse("9999"::equals).test(1));
     }
 
     @Test
     void intFn_to_bipred() {
-        assertTrue(Z.fuse(intToString).fuse(startsWith).apply(1).test("1"));
+        assertTrue(Z.fuse(intToString).fuse(doesStartWith).apply(1).test("1"));
+        assertFalse(
+            Z.fuse(intToString).fuse(doesNotStartWith).apply(1).test("1")
+        );
     }
 
     @Evil

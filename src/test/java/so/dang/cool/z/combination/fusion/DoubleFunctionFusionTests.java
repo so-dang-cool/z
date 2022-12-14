@@ -95,12 +95,18 @@ public class DoubleFunctionFusionTests {
     @Test
     void dblFn_to_pred() {
         assertFalse(Z.fuse(doubleToString).fuse(isEmpty).test(1.0));
+        assertTrue(Z.fuse(doubleToString).fuse(isNotEmpty).test(1.0));
+        assertTrue(Z.fuse(doubleToString).fuse("1.0"::equals).test(1.0));
+        assertFalse(Z.fuse(doubleToString).fuse("9999.0"::equals).test(1.0));
     }
 
     @Test
     void dblFn_to_bipred() {
         assertTrue(
-            Z.fuse(doubleToString).fuse(startsWith).apply(1.0).test("1")
+            Z.fuse(doubleToString).fuse(doesStartWith).apply(1.0).test("1")
+        );
+        assertFalse(
+            Z.fuse(doubleToString).fuse(doesStartWith).apply(9999.0).test("1")
         );
     }
 

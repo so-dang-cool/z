@@ -5,11 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.function.IntPredicate;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class IntPredicateFusionTests {
+
+    private static final IntPredicate isIntTwo = isInt(2);
 
     @Test
     void intPred() {
@@ -47,6 +50,7 @@ public class IntPredicateFusionTests {
     @Test
     void intPred_to_boolPred() {
         assertFalse(Z.fuse(isIntTwo).fuse(not).test(2));
+        assertTrue(Z.fuse(isIntTwo).fuse(not).test(9999));
     }
 
     @Evil

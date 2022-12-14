@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -86,7 +87,12 @@ public class FunctionFusionTests {
 
     @Test
     void fn_to_bipred() {
-        assertTrue(Z.fuse(trim).fuse(startsWith).apply(" hello ").test("hell"));
+        assertTrue(
+            Z.fuse(trim).fuse(doesStartWith).apply(" hello ").test("hell")
+        );
+        assertFalse(
+            Z.fuse(trim).fuse(doesNotStartWith).apply(" hello ").test("hell")
+        );
     }
 
     @Evil

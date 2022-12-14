@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -43,7 +44,8 @@ public class DoubleUnaryOperatorFusionTests {
 
     @Test
     void dblUnop_to_dblPred() {
-        assertTrue(Z.fuse(addOneToDouble).fuse(isDoubleOne).test(0.0));
+        assertTrue(Z.fuse(addOneToDouble).fuse(isDouble(1.0)).test(0.0));
+        assertFalse(Z.fuse(addOneToDouble).fuse(isDouble(2.0)).test(0.0));
     }
 
     @Evil

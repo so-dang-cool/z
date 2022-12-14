@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -53,13 +54,8 @@ public class IntUnaryOperatorFusionTests {
 
     @Test
     void intUnop_to_intPred() {
-        Stream
-            .of(Z.fuse(addTwoToInt).fuse(isIntTwo))
-            .forEach(
-                fusion -> {
-                    assertTrue(fusion.test(0));
-                }
-            );
+        assertTrue(Z.fuse(addTwoToInt).fuse(isInt(2)).test(0));
+        assertFalse(Z.fuse(addTwoToInt).fuse(isInt(9999)).test(0));
     }
 
     @Evil

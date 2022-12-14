@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -47,13 +48,8 @@ public class LongBinaryOperatorFusionTests {
 
     @Test
     void longBiop_to_longPred() {
-        Stream
-            .of(Z.fuse(addLongs).fuse(isLongThree))
-            .forEach(
-                fusion -> {
-                    assertTrue(fusion.apply(-1L).test(4L));
-                }
-            );
+        assertTrue(Z.fuse(addLongs).fuse(isLong(3L)).apply(-1L).test(4L));
+        assertFalse(Z.fuse(addLongs).fuse(isLong(9999L)).apply(-1L).test(4L));
     }
 
     @Evil

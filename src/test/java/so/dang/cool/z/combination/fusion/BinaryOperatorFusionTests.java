@@ -117,7 +117,16 @@ public class BinaryOperatorFusionTests {
         assertTrue(
             Z
                 .fuse(relation)
-                .fuse(startsWith)
+                .fuse(doesStartWith)
+                .apply("hey")
+                .apply("HEY")
+                .test("same")
+        );
+
+        assertFalse(
+            Z
+                .fuse(relation)
+                .fuse(doesNotStartWith)
                 .apply("hey")
                 .apply("HEY")
                 .test("same")

@@ -13,19 +13,29 @@ public class BiPredicateFusionTests {
 
     @Test
     void bipred() {
-        assertTrue(startsWith.test("yolo", "yo"));
-    }
-
-    @Test
-    void bipred_deep() {
-        assertTrue(Z.fuse(startsWith).apply("yolo").test("yo"));
+        assertTrue(doesStartWith.test("yolo", "yo"));
+        assertTrue(Z.fuse(doesStartWith).apply("yolo").test("yo"));
+        assertFalse(Z.fuse(doesNotStartWith).apply("yolo").test("yo"));
     }
 
     @Test
     void bipred_to_boolFn() {
         assertEquals(
             "true",
-            Z.fuse(startsWith).fuse(booleanToString).apply("yolo").apply("yo")
+            Z
+                .fuse(doesStartWith)
+                .fuse(booleanToString)
+                .apply("yolo")
+                .apply("yo")
+        );
+
+        assertEquals(
+            "false",
+            Z
+                .fuse(doesStartWith)
+                .fuse(booleanToString)
+                .apply("yolo")
+                .apply("aaaaaaaagh!")
         );
     }
 
@@ -34,7 +44,7 @@ public class BiPredicateFusionTests {
         assertEquals(
             1.0,
             Z
-                .fuse(startsWith)
+                .fuse(doesStartWith)
                 .fuse(maybeOneAsDouble)
                 .apply("yolo")
                 .applyAsDouble("yo")
@@ -46,7 +56,7 @@ public class BiPredicateFusionTests {
         assertEquals(
             2,
             Z
-                .fuse(startsWith)
+                .fuse(doesStartWith)
                 .fuse(maybeTwoAsInt)
                 .apply("yolo")
                 .applyAsInt("yo")
@@ -58,7 +68,7 @@ public class BiPredicateFusionTests {
         assertEquals(
             3L,
             Z
-                .fuse(startsWith)
+                .fuse(doesStartWith)
                 .fuse(maybeThreeAsLong)
                 .apply("yolo")
                 .applyAsLong("yo")
@@ -67,7 +77,7 @@ public class BiPredicateFusionTests {
 
     @Test
     void bipred_to_pred() {
-        assertFalse(Z.fuse(startsWith).fuse(not).apply("yolo").test("yo"));
+        assertFalse(Z.fuse(doesStartWith).fuse(not).apply("yolo").test("yo"));
     }
 
     @Evil
@@ -76,7 +86,7 @@ public class BiPredicateFusionTests {
         synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
-            Z.fuse(startsWith).fuse(saveBooleanA).apply("yolo").accept("yo");
+            Z.fuse(doesStartWith).fuse(saveBooleanA).apply("yolo").accept("yo");
 
             assertTrue(consumedBooleanA);
         }
@@ -84,6 +94,8 @@ public class BiPredicateFusionTests {
 
     @Test
     void bipred_to_unop() {
-        assertTrue(Z.fuse(startsWith).fuse(booleanId).apply("yolo").test("yo"));
+        assertTrue(
+            Z.fuse(doesStartWith).fuse(booleanId).apply("yolo").test("yo")
+        );
     }
 }

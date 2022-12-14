@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
     id 'com.diffplug.spotless' version '5.12.5'
     id 'pmd'
-    id 'info.solidsoft.pitest' version '1.9.0'
+    id 'info.solidsoft.pitest' version '1.9.11'
 
     id 'maven-publish'
     id 'signing'
@@ -27,7 +27,7 @@ tasks.named('jacocoTestCoverageVerification') {
 }
 
 tasks.named('build') {
-    dependsOn jacocoTestCoverageVerification
+    dependsOn 'jacocoTestCoverageVerification', 'noGremlinsAllowed'
 }
 
 javadoc {
@@ -64,6 +64,19 @@ jacocoTestReport {
 pitest {
     junit5PluginVersion = '1.0.0'
     targetClasses = ['so.dang.cool.*']
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+}
+
+tasks.register('noGremlinsAllowed') {
+    dependsOn 'pitest'
+    doLast {
+        def mutations = new XmlParser().parse("${buildDir}/reports/pitest/mutations.xml")
+        def survivorCount = mutations.children().grep { it.attribute('status') != 'KILLED' }.size
+        if (survivorCount > 0) {
+            throw new Exception("$survivorCount gremlins survived! Details: ${buildDir}/reports/pitest/index.html")
+        }
+    }
 }
 
 spotless {

@@ -110,7 +110,18 @@ public class UnaryOperatorFusionTests {
     @Test
     void unop_to_bipred() {
         assertTrue(
-            Z.fuse(addQuestionMark).fuse(startsWith).apply("hello").test("hell")
+            Z
+                .fuse(addQuestionMark)
+                .fuse(doesStartWith)
+                .apply("hello")
+                .test("hell")
+        );
+        assertFalse(
+            Z
+                .fuse(addQuestionMark)
+                .fuse(doesNotStartWith)
+                .apply("hello")
+                .test("hell")
         );
     }
 

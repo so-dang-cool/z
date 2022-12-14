@@ -5,17 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.function.DoublePredicate;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class DoublePredicateFusionTests {
 
+    private static final DoublePredicate isDoubleOne = isDouble(1.0);
+
     @Test
     void dblPred() {
-        assertTrue(isDoubleOne.test(1.0));
-
-        assertTrue(Z.fuse(isDoubleOne).test(1.0));
+        assertTrue(Z.fuse(isDouble(1.0)).test(1.0));
+        assertFalse(Z.fuse(isDouble(1.0)).test(2.0));
     }
 
     @Test
@@ -53,6 +55,7 @@ public class DoublePredicateFusionTests {
     @Test
     void dblPred_to_boolPred() {
         assertFalse(Z.fuse(isDoubleOne).fuse(not).test(1.0));
+        assertTrue(Z.fuse(isDoubleOne).fuse(not).test(2.0));
     }
 
     @Evil

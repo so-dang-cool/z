@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -43,7 +44,10 @@ public class DoubleBinaryOperatorFusionTests {
 
     @Test
     void dblBiop_to_dblPred() {
-        assertTrue(Z.fuse(addDoubles).fuse(isDoubleOne).apply(0.5).test(0.5));
+        assertTrue(Z.fuse(addDoubles).fuse(isDouble(1.0)).apply(0.5).test(0.5));
+        assertFalse(
+            Z.fuse(addDoubles).fuse(isDouble(1.0)).apply(0.5).test(1.0)
+        );
     }
 
     @Evil

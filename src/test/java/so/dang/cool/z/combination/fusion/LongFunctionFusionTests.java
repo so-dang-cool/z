@@ -89,16 +89,24 @@ public class LongFunctionFusionTests {
 
     @Test
     void longFn_to_pred() {
-        Stream
-            .of(Z.fuse(longToString).fuse(isEmpty))
-            .forEach(fusion -> assertFalse(fusion.test(1L)));
+        assertFalse(Z.fuse(longToString).fuse("9999"::equals).test(1L));
+        assertTrue(Z.fuse(longToString).fuse("1"::equals).test(1L));
     }
 
     @Test
     void longFn_to_bipred() {
-        Stream
-            .of(Z.fuse(longToString).fuse(startsWith))
-            .forEach(fusion -> assertTrue(fusion.apply(1L).test("1")));
+        assertTrue(
+            Z.fuse(longToString).fuse(doesStartWith).apply(1L).test("1")
+        );
+        assertFalse(
+            Z.fuse(longToString).fuse(doesStartWith).apply(9999L).test("1")
+        );
+        assertTrue(
+            Z.fuse(longToString).fuse(doesNotStartWith).apply(9999L).test("1")
+        );
+        assertFalse(
+            Z.fuse(longToString).fuse(doesNotStartWith).apply(9999L).test("99")
+        );
     }
 
     @Evil

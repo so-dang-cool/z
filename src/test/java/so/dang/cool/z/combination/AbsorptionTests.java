@@ -169,9 +169,19 @@ public class AbsorptionTests {
 
             assertEquals(
                 true,
-                Z.fuse(saveStringA).absorb(getBooleanTrue).test("salut")
+                Z.fuse(saveStringA).absorb(getBoolean(true)).test("salut")
             );
             assertEquals("salut", consumedStringA);
+
+            /* --- */
+
+            consumedStringA = "";
+
+            assertEquals(
+                false,
+                Z.fuse(saveStringA).absorb(getBoolean(false)).test("ciao")
+            );
+            assertEquals("ciao", consumedStringA);
         }
     }
 
@@ -341,12 +351,28 @@ public class AbsorptionTests {
                     true,
                     Z
                         .fuse(saveStringsBandC)
-                        .absorb(getBooleanTrue)
+                        .absorb(getBoolean(true))
                         .apply("hei")
                         .test("hej")
                 );
                 assertEquals("hei", consumedStringB);
                 assertEquals("hej", consumedStringC);
+
+                /* --- */
+
+                consumedStringB = "";
+                consumedStringC = "";
+
+                assertEquals(
+                    false,
+                    Z
+                        .fuse(saveStringsBandC)
+                        .absorb(getBoolean(false))
+                        .apply("hej")
+                        .test("hei")
+                );
+                assertEquals("hej", consumedStringB);
+                assertEquals("hei", consumedStringC);
             }
         }
     }
@@ -445,13 +471,13 @@ public class AbsorptionTests {
     @Test
     void boolCns_to_sup() {
         synchronized (consumedBooleanA) {
-            consumedBooleanA = false;
+            consumedBooleanA = true;
 
             assertEquals(
                 suppliedString,
-                Z.fuse(saveBooleanA).absorb(getString).apply(true)
+                Z.fuse(saveBooleanA).absorb(getString).apply(false)
             );
-            assertEquals(true, consumedBooleanA);
+            assertEquals(false, consumedBooleanA);
         }
     }
 
@@ -463,9 +489,19 @@ public class AbsorptionTests {
 
             assertEquals(
                 true,
-                Z.fuse(saveBooleanA).absorb(getBooleanTrue).test(true)
+                Z.fuse(saveBooleanA).absorb(getBoolean(true)).test(true)
             );
             assertEquals(true, consumedBooleanA);
+
+            /* --- */
+
+            consumedBooleanA = true;
+
+            assertEquals(
+                false,
+                Z.fuse(saveBooleanA).absorb(getBoolean(false)).test(false)
+            );
+            assertEquals(false, consumedBooleanA);
         }
     }
 
@@ -549,9 +585,19 @@ public class AbsorptionTests {
 
             assertEquals(
                 true,
-                Z.fuse(saveDoubleA).absorb(getBooleanTrue).test(1.0)
+                Z.fuse(saveDoubleA).absorb(getBoolean(true)).test(1.0)
             );
             assertEquals(1.0, consumedDoubleA);
+
+            /* --- */
+
+            consumedDoubleA = 0.0;
+
+            assertEquals(
+                false,
+                Z.fuse(saveDoubleA).absorb(getBoolean(false)).test(2.0)
+            );
+            assertEquals(2.0, consumedDoubleA);
         }
     }
 
@@ -647,7 +693,23 @@ public class AbsorptionTests {
                     true,
                     Z
                         .fuse(saveStringDDoubleB)
-                        .absorb(getBooleanTrue)
+                        .absorb(getBoolean(true))
+                        .apply("yo")
+                        .test(1.0)
+                );
+                assertEquals("yo", consumedStringD);
+                assertEquals(1.0, consumedDoubleB);
+
+                /* --- */
+
+                consumedStringD = "";
+                consumedDoubleB = 0.0;
+
+                assertEquals(
+                    false,
+                    Z
+                        .fuse(saveStringDDoubleB)
+                        .absorb(getBoolean(false))
                         .apply("yo")
                         .test(1.0)
                 );
@@ -767,8 +829,21 @@ public class AbsorptionTests {
         synchronized (consumedIntA) {
             consumedIntA = 0;
 
-            assertEquals(true, Z.fuse(saveIntA).absorb(getBooleanTrue).test(1));
+            assertEquals(
+                true,
+                Z.fuse(saveIntA).absorb(getBoolean(true)).test(1)
+            );
             assertEquals(1, consumedIntA);
+
+            /* --- */
+
+            consumedIntA = 0;
+
+            assertEquals(
+                false,
+                Z.fuse(saveIntA).absorb(getBoolean(false)).test(2)
+            );
+            assertEquals(2, consumedIntA);
         }
     }
 
@@ -864,12 +939,28 @@ public class AbsorptionTests {
                     true,
                     Z
                         .fuse(saveStringEIntB)
-                        .absorb(getBooleanTrue)
+                        .absorb(getBoolean(true))
                         .apply("yo")
                         .test(1)
                 );
                 assertEquals("yo", consumedStringE);
                 assertEquals(1, consumedIntB);
+
+                /* --- */
+
+                consumedStringE = "";
+                consumedIntB = 0;
+
+                assertEquals(
+                    false,
+                    Z
+                        .fuse(saveStringEIntB)
+                        .absorb(getBoolean(false))
+                        .apply("oy")
+                        .test(2)
+                );
+                assertEquals("oy", consumedStringE);
+                assertEquals(2, consumedIntB);
             }
         }
     }
@@ -986,9 +1077,19 @@ public class AbsorptionTests {
 
             assertEquals(
                 true,
-                Z.fuse(saveLongA).absorb(getBooleanTrue).test(1L)
+                Z.fuse(saveLongA).absorb(getBoolean(true)).test(1L)
             );
             assertEquals(1L, consumedLongA);
+
+            /* --- */
+
+            consumedLongA = 0L;
+
+            assertEquals(
+                false,
+                Z.fuse(saveLongA).absorb(getBoolean(false)).test(2L)
+            );
+            assertEquals(2L, consumedLongA);
         }
     }
 
@@ -1084,12 +1185,28 @@ public class AbsorptionTests {
                     true,
                     Z
                         .fuse(saveStringFLongB)
-                        .absorb(getBooleanTrue)
+                        .absorb(getBoolean(true))
                         .apply("yo")
                         .test(1L)
                 );
                 assertEquals("yo", consumedStringF);
                 assertEquals(1L, consumedLongB);
+
+                /* --- */
+
+                consumedStringF = "";
+                consumedLongB = 0L;
+
+                assertEquals(
+                    false,
+                    Z
+                        .fuse(saveStringFLongB)
+                        .absorb(getBoolean(false))
+                        .apply("oy")
+                        .test(2L)
+                );
+                assertEquals("oy", consumedStringF);
+                assertEquals(2L, consumedLongB);
             }
         }
     }
@@ -1206,7 +1323,17 @@ public class AbsorptionTests {
 
             assertEquals(
                 true,
-                Z.fuse(doOperation).absorb(getBooleanTrue).getAsBoolean()
+                Z.fuse(doOperation).absorb(getBoolean(true)).getAsBoolean()
+            );
+            assertTrue(wasOperated);
+
+            /* --- */
+
+            wasOperated = false;
+
+            assertEquals(
+                false,
+                Z.fuse(doOperation).absorb(getBoolean(false)).getAsBoolean()
             );
             assertTrue(wasOperated);
         }

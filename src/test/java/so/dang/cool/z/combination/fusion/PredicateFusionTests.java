@@ -64,13 +64,8 @@ public class PredicateFusionTests {
 
     @Test
     void pred_to_boolPred() {
-        Stream
-            .of(Z.fuse(isEmpty).fuse(not))
-            .forEach(
-                fusion -> {
-                    assertFalse(fusion.test(""));
-                }
-            );
+        assertFalse(Z.fuse(isEmpty).fuse(not).test(""));
+        assertTrue(Z.fuse(isEmpty).fuse(not).test("blah"));
     }
 
     @Evil

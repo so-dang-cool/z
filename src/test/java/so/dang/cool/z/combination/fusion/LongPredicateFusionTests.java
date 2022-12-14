@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.function.LongPredicate;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
 
 public class LongPredicateFusionTests {
+
+    private static final LongPredicate isLongThree = isLong(3L);
 
     @Test
     void longPred() {
@@ -65,13 +68,8 @@ public class LongPredicateFusionTests {
 
     @Test
     void longPred_to_boolPred() {
-        Stream
-            .of(Z.fuse(isLongThree).fuse(not))
-            .forEach(
-                fusion -> {
-                    assertFalse(fusion.test(3L));
-                }
-            );
+        assertFalse(Z.fuse(isLongThree).fuse(not).test(3L));
+        assertTrue(Z.fuse(isLongThree).fuse(not).test(9999L));
     }
 
     @Evil

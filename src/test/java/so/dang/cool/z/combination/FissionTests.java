@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -188,7 +189,8 @@ public class FissionTests {
 
     @Test
     void split_bipred_test() {
-        assertTrue(Z.split(startsWith).apply("giraffe").test("gir"));
+        assertTrue(Z.split(doesStartWith).apply("giraffe").test("gir"));
+        assertFalse(Z.split(doesNotStartWith).apply("giraffe").test("gir"));
     }
 
     @Evil

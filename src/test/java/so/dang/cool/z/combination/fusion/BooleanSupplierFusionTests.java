@@ -13,15 +13,23 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup() {
-        assertTrue(getBooleanTrue.getAsBoolean());
-        assertTrue(Z.fuse(getBooleanTrue).getAsBoolean());
+        assertTrue(getBoolean(true).getAsBoolean());
+        assertTrue(Z.with(true).getAsBoolean());
+        assertTrue(Z.fuse(getBoolean(true)).getAsBoolean());
+        assertFalse(getBoolean(false).getAsBoolean());
+        assertFalse(Z.with(false).getAsBoolean());
+        assertFalse(Z.fuse(getBoolean(false)).getAsBoolean());
     }
 
     @Test
     void boolSup_to_boolFn() {
         assertEquals(
             "true",
-            Z.fuse(getBooleanTrue).fuse(booleanToString).get()
+            Z.fuse(getBoolean(true)).fuse(booleanToString).get()
+        );
+        assertEquals(
+            "false",
+            Z.fuse(getBoolean(false)).fuse(booleanToString).get()
         );
     }
 
@@ -29,26 +37,29 @@ public class BooleanSupplierFusionTests {
     void boolSup_to_toDblFn() {
         assertEquals(
             1.0,
-            Z.fuse(getBooleanTrue).fuse(maybeOneAsDouble).getAsDouble()
+            Z.fuse(getBoolean(true)).fuse(maybeOneAsDouble).getAsDouble()
         );
     }
 
     @Test
     void boolSup_to_toIntFn() {
-        assertEquals(2, Z.fuse(getBooleanTrue).fuse(maybeTwoAsInt).getAsInt());
+        assertEquals(
+            2,
+            Z.fuse(getBoolean(true)).fuse(maybeTwoAsInt).getAsInt()
+        );
     }
 
     @Test
     void boolSup_to_toLongFn() {
         assertEquals(
             3L,
-            Z.fuse(getBooleanTrue).fuse(maybeThreeAsLong).getAsLong()
+            Z.fuse(getBoolean(true)).fuse(maybeThreeAsLong).getAsLong()
         );
     }
 
     @Test
     void boolSup_to_pred() {
-        assertFalse(Z.fuse(getBooleanTrue).fuse(not).getAsBoolean());
+        assertFalse(Z.fuse(getBoolean(true)).fuse(not).getAsBoolean());
     }
 
     @Evil
@@ -57,7 +68,7 @@ public class BooleanSupplierFusionTests {
         synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
-            Z.fuse(getBooleanTrue).fuse(saveBooleanA).run();
+            Z.fuse(getBoolean(true)).fuse(saveBooleanA).run();
 
             assertTrue(consumedBooleanA);
         }
@@ -65,6 +76,6 @@ public class BooleanSupplierFusionTests {
 
     @Test
     void boolSup_to_toUnop() {
-        assertTrue(Z.fuse(getBooleanTrue).fuse(booleanId).getAsBoolean());
+        assertTrue(Z.fuse(getBoolean(true)).fuse(booleanId).getAsBoolean());
     }
 }

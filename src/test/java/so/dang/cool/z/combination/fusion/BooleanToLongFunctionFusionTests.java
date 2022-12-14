@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -43,7 +44,8 @@ public class BooleanToLongFunctionFusionTests {
 
     @Test
     void boolToLong_to_longPred() {
-        assertTrue(Z.fuse(maybeThreeAsLong).fuse(isLongThree).test(true));
+        assertTrue(Z.fuse(maybeThreeAsLong).fuse(isLong(3L)).test(true));
+        assertFalse(Z.fuse(maybeThreeAsLong).fuse(isLong(3L)).test(false));
     }
 
     @Evil

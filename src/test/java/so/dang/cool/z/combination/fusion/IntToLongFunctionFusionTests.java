@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -42,24 +43,13 @@ public class IntToLongFunctionFusionTests {
 
     @Test
     void intToLong_to_longToInt() {
-        Stream
-            .of(Z.fuse(intToLong).fuse(longToInt))
-            .forEach(
-                fusion -> {
-                    assertEquals(1, fusion.applyAsInt(1));
-                }
-            );
+        assertEquals(1, Z.fuse(intToLong).fuse(longToInt).applyAsInt(1));
     }
 
     @Test
     void intToLong_to_longPred() {
-        Stream
-            .of(Z.fuse(intToLong).fuse(isLongThree))
-            .forEach(
-                fusion -> {
-                    assertTrue(fusion.test(3));
-                }
-            );
+        assertTrue(Z.fuse(intToLong).fuse(isLong(3L)).test(3));
+        assertFalse(Z.fuse(intToLong).fuse(isLong(9999L)).test(3));
     }
 
     @Evil

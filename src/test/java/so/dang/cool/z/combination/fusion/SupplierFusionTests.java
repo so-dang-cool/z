@@ -96,17 +96,13 @@ public class SupplierFusionTests {
     @Test
     void sup_to_pred() {
         assertFalse(Z.fuse(getString).fuse(isEmpty).getAsBoolean());
+        assertTrue(Z.fuse(getString).fuse(isNotEmpty).getAsBoolean());
     }
 
     @Test
     void sup_to_bipred() {
-        Stream
-            .of(Z.fuse(getString).fuse(startsWith))
-            .forEach(
-                fusion -> {
-                    assertTrue(fusion.test("Z"));
-                }
-            );
+        assertTrue(Z.fuse(getString).fuse(doesStartWith).test("Z"));
+        assertFalse(Z.fuse(getString).fuse(doesNotStartWith).test("Z"));
     }
 
     @Evil

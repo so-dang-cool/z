@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -33,7 +34,8 @@ public class DoubleSupplierFusionTests {
 
     @Test
     void dblSup_to_dblPred() {
-        assertTrue(Z.fuse(getDouble).fuse(isDoubleOne).getAsBoolean());
+        assertTrue(Z.fuse(getDouble).fuse(isDouble(1.0)).getAsBoolean());
+        assertFalse(Z.fuse(getDouble).fuse(isDouble(2.0)).getAsBoolean());
     }
 
     @Evil

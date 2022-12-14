@@ -49,18 +49,27 @@ public class BooleanPredicateFusionTests {
 
     @Test
     void boolPred_to_boolPred() {
+        assertTrue(Z.fuse(booleanId).fuse(not).test(false));
         assertFalse(Z.fuse(booleanId).fuse(not).test(true));
     }
 
     @Evil
     @Test
-    void boolPred_to_cns() {
+    void boolPred_to_boolCns() {
         synchronized (consumedBooleanA) {
             consumedBooleanA = false;
 
             Z.fuse(booleanId).fuse(saveBooleanA).accept(true);
 
             assertTrue(consumedBooleanA);
+        }
+
+        synchronized (consumedBooleanA) {
+            consumedBooleanA = true;
+
+            Z.fuse(booleanId).fuse(saveBooleanA).accept(false);
+
+            assertFalse(consumedBooleanA);
         }
     }
 }

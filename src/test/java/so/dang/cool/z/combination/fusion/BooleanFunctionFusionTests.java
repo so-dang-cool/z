@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
+import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 import so.dang.cool.z.Z;
 import so.dang.cool.z.annotation.Evil;
@@ -99,14 +100,20 @@ public class BooleanFunctionFusionTests {
 
     @Test
     void boolFn_to_pred() {
-        assertFalse(Z.fuse(booleanToString).fuse(isEmpty).test(true));
+        var isTrue = Z
+            .fuse(booleanToString)
+            .fuse((Predicate<String>) (s -> s.equals("true")));
+        assertTrue(isTrue.test(true));
+        assertFalse(isTrue.test(false));
     }
 
     @Test
     void boolFn_to_bipred() {
-        assertTrue(
-            Z.fuse(booleanToString).fuse(startsWith).apply(true).test("t")
-        );
+        var boolStartPred = Z.fuse(booleanToString).fuse(doesStartWith);
+        assertTrue(boolStartPred.apply(true).test("t"));
+        assertTrue(boolStartPred.apply(false).test("f"));
+        assertFalse(boolStartPred.apply(true).test("f"));
+        assertFalse(boolStartPred.apply(false).test("t"));
     }
 
     @Evil

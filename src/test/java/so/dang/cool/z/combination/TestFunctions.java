@@ -106,9 +106,10 @@ public final class TestFunctions {
     public static BiFunction<String, String, String> concat = String::concat;
     public static BooleanFunction<String> booleanToString = String::valueOf;
     public static BooleanFunction<String> maybeOneAsString = b -> b ? "1" : "";
-    public static BooleanToDoubleFunction maybeOneAsDouble = b -> b ? 1.0 : 0.0;
+    public static BooleanToDoubleFunction maybeOneAsDouble = b ->
+        b ? 1.0 : Double.NaN;
     public static BooleanToIntFunction maybeTwoAsInt = b -> b ? 2 : 0;
-    public static BooleanToLongFunction maybeThreeAsLong = b -> b ? 3L : 0;
+    public static BooleanToLongFunction maybeThreeAsLong = b -> b ? 3L : 0L;
     public static DoubleFunction<String> doubleToString = String::valueOf;
     public static DoubleFunction<String> doubleFloorToString = (double d) ->
         String.valueOf(d).split("\\.")[0];
@@ -130,13 +131,13 @@ public final class TestFunctions {
     public static ToLongBiFunction<String, String> addStringsAsLong = (a, b) ->
         Long.parseLong(a) + Long.parseLong(b);
     public static Predicate<String> isEmpty = String::isEmpty;
-    public static BiPredicate<String, String> startsWith = String::startsWith;
+    public static Predicate<String> isNotEmpty = Predicate.not(isEmpty);
+    public static BiPredicate<String, String> doesStartWith =
+        String::startsWith;
+    public static BiPredicate<String, String> doesNotStartWith = (a, b) ->
+        !doesStartWith.test(a, b);
     public static BooleanPredicate booleanId = b -> b;
     public static BooleanPredicate not = b -> !b;
-    public static DoublePredicate isDoubleOne = d ->
-        Math.abs(d - 1.0) < Math.ulp(d);
-    public static IntPredicate isIntTwo = i -> i == 2;
-    public static LongPredicate isLongThree = n -> n == 3L;
     public static Consumer<String> saveStringA = a -> consumedStringA = a;
     public static BiConsumer<String, String> saveStringsBandC = (b, c) -> {
         consumedStringB = b;
@@ -160,7 +161,6 @@ public final class TestFunctions {
         consumedLongB = b;
     };
     public static Supplier<String> getString = () -> suppliedString;
-    public static BooleanSupplier getBooleanTrue = () -> true;
     public static DoubleSupplier getDouble = () -> suppliedDouble;
     public static IntSupplier getInt = () -> suppliedInt;
     public static LongSupplier getLong = () -> suppliedLong;
@@ -177,6 +177,26 @@ public final class TestFunctions {
     public static IntBinaryOperator addInts = (i1, i2) -> i1 + i2;
     public static LongUnaryOperator addThreeToLong = n -> n + 3L;
     public static LongBinaryOperator addLongs = (n1, n2) -> n1 + n2;
+
+    public static BooleanSupplier getBoolean(boolean b) {
+        return () -> b;
+    }
+
+    public static DoublePredicate isDouble(double d1) {
+        return d2 -> {
+            double greater = Math.max(d1, d2);
+            double lesser = Math.min(d1, d2);
+            return Math.abs(greater - lesser) < Math.ulp(lesser);
+        };
+    }
+
+    public static IntPredicate isInt(int i1) {
+        return i2 -> i1 == i2;
+    }
+
+    public static LongPredicate isLong(long n1) {
+        return n2 -> n1 == n2;
+    }
 
     // fmt:off
 

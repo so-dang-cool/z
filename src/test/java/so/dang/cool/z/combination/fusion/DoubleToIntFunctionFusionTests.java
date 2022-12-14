@@ -1,6 +1,7 @@
 package so.dang.cool.z.combination.fusion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static so.dang.cool.z.combination.TestFunctions.*;
 
@@ -37,7 +38,8 @@ public class DoubleToIntFunctionFusionTests {
 
     @Test
     void dblToInt_to_intPred() {
-        assertTrue(Z.fuse(doubleToInt).fuse(isIntTwo).test(2.1));
+        assertTrue(Z.fuse(doubleToInt).fuse(isInt(2)).test(2.1));
+        assertFalse(Z.fuse(doubleToInt).fuse(isInt(9999)).test(2.1));
     }
 
     @Evil
