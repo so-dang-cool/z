@@ -3,6 +3,7 @@ plugins {
     id 'jacoco'
     id 'com.diffplug.spotless' version '5.12.5'
     id 'pmd'
+    id 'info.solidsoft.pitest' version '1.9.0'
 
     id 'maven-publish'
     id 'signing'
@@ -58,6 +59,11 @@ jacocoTestReport {
         csv.required = true
         csv.destination file("${buildDir}/reports/jacoco/report.csv")
     }
+}
+
+pitest {
+    junit5PluginVersion = '1.0.0'
+    targetClasses = ['so.dang.cool.*']
 }
 
 spotless {
