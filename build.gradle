@@ -120,7 +120,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'so.dang.cool'
             artifactId = 'z'
-            version = '3.0.0-NEXT'
+            version = '3.0.1'
 
             from components.java
 
